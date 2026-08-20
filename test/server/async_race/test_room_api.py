@@ -174,7 +174,16 @@ async def test_create_room(clean_database, test_files_dir, mocker: pytest_mock.M
         "presets_raw": [ANY],
         "race_status": "scheduled",
         "self_status": "not-member",
+        "self_time": None,
         "visibility": "visible",
+        "world_count": 1,
+        "teams": [],
+        "self_team_id": None,
+        "self_has_exported": False,
+        "self_is_captain": False,
+        "allow_coop": False,
+        "allow_abandon_worlds": False,
+        "shared_team_timer": True,
     }
 
 
@@ -265,8 +274,17 @@ async def test_change_room_settings_valid(simple_room, mocker: pytest_mock.MockF
         "presets_raw": [ANY],
         "race_status": "scheduled",
         "self_status": "not-member",
+        "self_time": None,
         "visibility": "visible",
         "allow_pause": True,
+        "world_count": 1,
+        "teams": [],
+        "self_team_id": None,
+        "self_has_exported": False,
+        "self_is_captain": False,
+        "allow_coop": False,
+        "allow_abandon_worlds": False,
+        "shared_team_timer": True,
     }
 
 
@@ -322,8 +340,17 @@ async def test_get_room_valid_password(simple_room, mocker: pytest_mock.MockFixt
         "presets_raw": [ANY],
         "race_status": "scheduled",
         "self_status": "not-member",
+        "self_time": None,
         "visibility": "visible",
         "allow_pause": True,
+        "world_count": 1,
+        "teams": [],
+        "self_team_id": None,
+        "self_has_exported": False,
+        "self_is_captain": False,
+        "allow_coop": False,
+        "allow_abandon_worlds": False,
+        "shared_team_timer": True,
     }
 
 
@@ -375,8 +402,17 @@ async def test_refresh_room(simple_room, mocker: pytest_mock.MockFixture):
         "presets_raw": [ANY],
         "race_status": "scheduled",
         "self_status": "not-member",
+        "self_time": None,
         "visibility": "visible",
         "allow_pause": True,
+        "world_count": 1,
+        "teams": [],
+        "self_team_id": None,
+        "self_has_exported": False,
+        "self_is_captain": False,
+        "allow_coop": False,
+        "allow_abandon_worlds": False,
+        "shared_team_timer": True,
     }
 
 
@@ -438,7 +474,7 @@ async def test_change_state(
     else:
         _force_state(entry, before_state, after_state)
         entry.save()
-        assert AsyncRaceEntry.entry_for(room, user).user_status() == before_state
+        assert AsyncRaceEntry.entry_for(room, user).timer_status() == before_state
 
     valid_transition = (before_state, after_state) in VALID_TRANSITIONS
     if valid_transition or (before_state == after_state and before_state != AsyncRaceRoomUserStatus.NOT_MEMBER):
@@ -457,7 +493,7 @@ async def test_change_state(
 
     # Assert
     if before_state != AsyncRaceRoomUserStatus.NOT_MEMBER:
-        assert AsyncRaceEntry.entry_for(room, user).user_status() == expected_after
+        assert AsyncRaceEntry.entry_for(room, user).timer_status() == expected_after
 
     if (before_state, after_state) == (AsyncRaceRoomUserStatus.JOINED, AsyncRaceRoomUserStatus.STARTED):
         assert AsyncRaceEntry.entry_for(room, user).start_datetime == now
@@ -524,15 +560,19 @@ async def test_get_leaderboard(simple_room, mocker: pytest_mock.MockFixture):
     # Assert
     assert result == RaceRoomLeaderboard(
         entries=[
-            RaceRoomLeaderboardEntry(user=RandovaniaUser(1235, "The Player"), time=datetime.timedelta(hours=1)),
             RaceRoomLeaderboardEntry(
-                user=RandovaniaUser(1236, "Last Player"), time=datetime.timedelta(hours=1, minutes=30)
+                display_name="The Player",
+                time=datetime.timedelta(hours=1),
+                members=[RandovaniaUser(1235, "The Player")],
             ),
             RaceRoomLeaderboardEntry(
-                user=RandovaniaUser(1234, "The Name"),
-                time=None,
+                display_name="Last Player",
+                time=datetime.timedelta(hours=1, minutes=30),
+                members=[RandovaniaUser(1236, "Last Player")],
             ),
-        ]
+            RaceRoomLeaderboardEntry(display_name="The Name", time=None, members=[RandovaniaUser(1234, "The Name")]),
+        ],
+        uses_teams=False,
     )
 
 
@@ -599,6 +639,9 @@ async def test_admin_get_admin_data(simple_room):
                 "submission_notes": "",
                 "proof_url": "",
                 "pauses": [],
+                "team_id": None,
+                "team_name": None,
+                "members": [{"id": 1235, "name": "The Player"}],
             }
         ]
     }
@@ -654,8 +697,17 @@ async def test_admin_update_entries(simple_room, mocker: pytest_mock.MockFixture
         "presets_raw": [ANY],
         "race_status": "scheduled",
         "self_status": "not-member",
+        "self_time": None,
         "visibility": "visible",
         "allow_pause": True,
+        "world_count": 1,
+        "teams": [],
+        "self_team_id": None,
+        "self_has_exported": False,
+        "self_is_captain": False,
+        "allow_coop": False,
+        "allow_abandon_worlds": False,
+        "shared_team_timer": True,
     }
 
     actual = simple_room.audit_log[0].as_entry()
@@ -758,7 +810,7 @@ async def test_submit_proof_valid(simple_room):
 async def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
     # Setup
     sa = MagicMock()
-    user = User.get_by_id(1235)
+    user = User.get_by_id(1234)
     mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
 
     AsyncRaceAuditEntry.create(
@@ -776,6 +828,83 @@ async def test_get_audit_log(simple_room, mocker: pytest_mock.MockFixture):
     assert [entry.model_dump(mode="json") for entry in result] == [
         {"user": "The Player", "message": "Someone did a thing", "time": "2020-05-12T00:00:00Z"},
     ]
+
+
+async def test_get_audit_log_not_admin(simple_room, mocker: pytest_mock.MockFixture):
+    """
+    The log timestamps every participant's state changes, which is what the leaderboard withholds
+    until the race is over. Being in the room is not enough to read it.
+    """
+    # Setup
+    sa = MagicMock()
+    user = User.get_by_id(1235)
+    mock_verify = mocker.patch("randovania.server.async_race.room_api._verify_authorization")
+
+    AsyncRaceAuditEntry.create(room=simple_room, user=user, message="Someone did a thing")
+
+    # Run
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await room_api.get_audit_log(sa, user, simple_room.id, "AuthTokenx")
+
+    # Assert
+    # The room password is still checked first, so this doesn't tell an outsider who the admin is.
+    mock_verify.assert_awaited_once_with(sa, user, simple_room, "AuthTokenx")
+
+
+async def test_self_time_for_a_solo_run(simple_room):
+    """A race without teams reports the user's own entry, which is what holds their timer."""
+    # Setup
+    sa = MagicMock()
+    sa.encrypt_and_b85_dict.return_value = "AuthToken"
+    user = User.get_by_id(1235)
+    entry = AsyncRaceEntry.entry_for(simple_room, user)
+
+    # Nothing to report until the run is complete
+    room = AsyncRaceRoom.get_by_id(simple_room.id)
+    assert (await room.create_session_entry(sa, user)).self_time is None
+
+    entry.finish_datetime = entry.start_datetime + datetime.timedelta(hours=2, minutes=5)
+    entry.save()
+
+    # Run
+    result = await AsyncRaceRoom.get_by_id(simple_room.id).create_session_entry(sa, user)
+
+    # Assert
+    assert result.self_status == AsyncRaceRoomUserStatus.FINISHED
+    assert result.self_time == datetime.timedelta(hours=2, minutes=5)
+
+
+async def test_self_time_excludes_pauses(simple_room):
+    """The reported time is the run's, so time spent paused doesn't count towards it."""
+    # Setup
+    sa = MagicMock()
+    sa.encrypt_and_b85_dict.return_value = "AuthToken"
+    user = User.get_by_id(1235)
+    entry = AsyncRaceEntry.entry_for(simple_room, user)
+    entry.finish_datetime = entry.start_datetime + datetime.timedelta(hours=3)
+    entry.save()
+
+    AsyncRaceEntryPause.create(
+        entry=entry,
+        start=entry.start_datetime + datetime.timedelta(hours=1),
+        end=entry.start_datetime + datetime.timedelta(hours=1, minutes=30),
+    )
+
+    # Run
+    result = await AsyncRaceRoom.get_by_id(simple_room.id).create_session_entry(sa, user)
+
+    # Assert
+    assert result.self_time == datetime.timedelta(hours=2, minutes=30)
+
+
+async def test_self_time_for_a_non_member(simple_room):
+    """Someone who never joined has no run, and so no time."""
+    sa = MagicMock()
+    sa.encrypt_and_b85_dict.return_value = "AuthToken"
+    result = await AsyncRaceRoom.get_by_id(simple_room.id).create_session_entry(sa, User.get_by_id(1234))
+
+    assert result.self_status == AsyncRaceRoomUserStatus.NOT_MEMBER
+    assert result.self_time is None
 
 
 async def test_get_livesplit_url(test_client, simple_room):
@@ -857,7 +986,7 @@ async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplo
         websocket.close()
 
         entry = AsyncRaceEntry.entry_for(simple_room, User.get_by_id(1235))
-        assert entry.user_status() == AsyncRaceRoomUserStatus.FINISHED
+        assert entry.timer_status() == AsyncRaceRoomUserStatus.FINISHED
 
     server_logger = test_client.sa.logger.name
     assert [record.getMessage() for record in caplog.records if record.name == server_logger] == [

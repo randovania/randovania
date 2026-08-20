@@ -259,7 +259,7 @@ async def test_async_race_change_state(player: NetworkClient, simple_room, now, 
     assert result.self_status == new_state
     entry = AsyncRaceEntry.entry_for(simple_room, User.get_by_id(PLAYER_ID))
     assert entry is not None
-    assert entry.user_status() == new_state
+    assert entry.timer_status() == new_state
 
 
 async def test_async_race_change_state_invalid_transition(player: NetworkClient, simple_room, now):
@@ -291,18 +291,27 @@ async def test_async_race_submit_proof_before_finishing(player: NetworkClient, s
         await player.async_race_submit_proof(simple_room.id, "Notes", "https://example.com/vod")
 
 
-async def test_async_race_get_audit_log(player: NetworkClient, simple_room, now):
-    room = await player.get_async_race_room(simple_room.id, None)
+async def test_async_race_get_audit_log(creator: NetworkClient, player: NetworkClient, simple_room, now):
+    room = await creator.get_async_race_room(simple_room.id, None)
     await player.async_race_change_state(simple_room.id, AsyncRaceRoomUserStatus.FINISHED)
 
     # Run
-    result = await player.async_race_get_audit_log(room)
+    result = await creator.async_race_get_audit_log(room)
 
     # Assert
     assert [it.message for it in result] == ["Changed state from started to finished"]
     assert [it.user for it in result] == ["The Player"]
     # The time is set by a peewee field default, which isn't affected by the `now` fixture
     assert result[0].time.tzinfo is not None
+
+
+async def test_async_race_get_audit_log_not_admin(player: NetworkClient, simple_room, now):
+    """A racer can't read the log, even though they're in the room."""
+    room = await player.get_async_race_room(simple_room.id, None)
+
+    # Run
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await player.async_race_get_audit_log(room)
 
 
 async def test_async_race_admin_get_admin_data(creator: NetworkClient, simple_room, now):
@@ -384,7 +393,7 @@ async def test_async_race_get_leaderboard(creator: NetworkClient, simple_room, n
     result = await creator.async_race_get_leaderboard(room)
 
     # Assert
-    assert [it.user.name for it in result.entries] == ["The Player"]
+    assert [it.display_name for it in result.entries] == ["The Player"]
     # timedelta has to survive being json encoded
     assert result.entries[0].time == datetime.timedelta(hours=2, minutes=30)
 

@@ -188,12 +188,22 @@ class MultiplayerSession(BaseModel):
     allow_everyone_claim_world: bool = peewee.BooleanField(default=False)
     allow_abandon_worlds: bool = peewee.BooleanField(default=True)
 
+    race_team = peewee.DeferredForeignKey("AsyncRaceTeam", null=True, backref="sessions", unique=True)
+    race_team_id: int | None
+
     members: list[MultiplayerMembership]
     worlds: list[World]
     audit_log: list[MultiplayerAuditEntry]
 
     def has_layout_description(self) -> bool:
         return self.layout_description_json is not None
+
+    @property
+    def is_race_session(self) -> bool:
+        return self.race_team_id is not None
+
+    def get_race_team(self) -> AsyncRaceTeam | None:
+        return typing.cast("AsyncRaceTeam | None", self.race_team)
 
     def _get_layout_description(self, ordered_worlds: list[World]) -> LayoutDescription:
         assert self.layout_description_json is not None
@@ -391,6 +401,7 @@ class MultiplayerSession(BaseModel):
             allow_coop=self.allow_coop,
             allow_everyone_claim_world=self.allow_everyone_claim_world,
             allow_abandon_worlds=self.allow_abandon_worlds,
+            is_race_session=self.is_race_session,
         )
 
     def get_audit_log(self) -> MultiplayerSessionAuditLog:
@@ -562,6 +573,77 @@ class MultiplayerAuditEntry(BaseModel):
         )
 
 
+class AsyncRaceTimerHolder:
+    """
+    Shared timer logic for the two things that can hold a race timer:
+    an AsyncRaceEntry (rooms without teams) and an AsyncRaceTeam (rooms with them).
+
+    Implementors must provide the `start_date`, `finish_date`, `paused` and `forfeit` columns,
+    plus a `pauses` backref.
+    """
+
+    start_date: Any
+    finish_date: Any
+    paused: bool
+    forfeit: bool
+    submission_notes: str
+    proof_url: str
+    pauses: Sequence[AsyncRaceEntryPause]
+
+    if TYPE_CHECKING:
+        # Every implementor is also a BaseModel
+        def save(self) -> int: ...
+
+    @property
+    def start_datetime(self) -> datetime.datetime | None:
+        if self.start_date is not None:
+            return datetime.datetime.fromisoformat(self.start_date)
+        return None
+
+    @start_datetime.setter
+    def start_datetime(self, value: datetime.datetime | None) -> None:
+        self.start_date = value
+
+    @property
+    def finish_datetime(self) -> datetime.datetime | None:
+        if self.finish_date is not None:
+            return datetime.datetime.fromisoformat(self.finish_date)
+        return None
+
+    @finish_datetime.setter
+    def finish_datetime(self, value: datetime.datetime | None) -> None:
+        self.finish_date = value
+
+    def timer_status(self) -> async_race_room.AsyncRaceRoomUserStatus:
+        """
+        Calculates a AsyncRaceRoomUserStatus based on the presence of dates and flags.
+        """
+        if self.start_date is None:
+            return async_race_room.AsyncRaceRoomUserStatus.JOINED
+        elif self.forfeit:
+            return async_race_room.AsyncRaceRoomUserStatus.FORFEITED
+        elif self.paused:
+            return async_race_room.AsyncRaceRoomUserStatus.PAUSED
+        elif self.finish_date is None:
+            return async_race_room.AsyncRaceRoomUserStatus.STARTED
+        else:
+            return async_race_room.AsyncRaceRoomUserStatus.FINISHED
+
+    def total_pause_time(self) -> datetime.timedelta:
+        return sum(
+            (pause.length for pause in self.pauses if pause.length is not None),
+            start=datetime.timedelta(seconds=0),
+        )
+
+    def elapsed_time(self) -> datetime.timedelta | None:
+        """The final time for this run, or None if it hasn't both started and finished."""
+        start = self.start_datetime
+        finish = self.finish_datetime
+        if start is None or finish is None:
+            return None
+        return finish - start - self.total_pause_time()
+
+
 class AsyncRaceRoom(BaseModel):
     id: int
     name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
@@ -576,8 +658,12 @@ class AsyncRaceRoom(BaseModel):
     start_date: str = peewee.DateTimeField()
     end_date: str = peewee.DateTimeField()
     allow_pause: bool = peewee.BooleanField()
+    allow_coop: bool = peewee.BooleanField(default=False)
+    allow_abandon_worlds: bool = peewee.BooleanField(default=False)
+    shared_team_timer: bool = peewee.BooleanField(default=True)
 
     entries: list[AsyncRaceEntry]
+    teams: list[AsyncRaceTeam]
     audit_log: list[AsyncRaceAuditEntry]
 
     @property
@@ -592,6 +678,17 @@ class AsyncRaceRoom(BaseModel):
 
     def game_details(self) -> GameDetails:
         return GameDetails.from_json(json.loads(self.game_details_json))
+
+    @property
+    def world_count(self) -> int:
+        return self.layout_description.world_count
+
+    @property
+    def uses_teams(self) -> bool:
+        """
+        Whether this room is played by teams, each in their own multiplayer session.
+        """
+        return async_race_room.race_uses_teams(self.world_count, self.allow_coop)
 
     @property
     def creation_datetime(self) -> datetime.datetime:
@@ -622,13 +719,40 @@ class AsyncRaceRoom(BaseModel):
 
     async def create_session_entry(self, sa: ServerApp, user: User) -> async_race_room.AsyncRaceRoomEntry:
         game_details = self.game_details()
+        layout = self.layout_description
 
         now = lib.datetime_now()
 
-        if (entry := AsyncRaceEntry.entry_for(self, user)) is not None:
-            status = entry.user_status()
-        else:
+        entry = AsyncRaceEntry.entry_for(self, user)
+        own_team = entry.team if entry is not None else None
+
+        if entry is None:
             status = async_race_room.AsyncRaceRoomUserStatus.NOT_MEMBER
+        elif own_team is not None:
+            status = own_team.status_for_member(entry)
+        else:
+            status = entry.timer_status()
+
+        self_time = None
+        if entry is not None:
+            holder = entry.timer_holder()
+            if holder.timer_status() == async_race_room.AsyncRaceRoomUserStatus.FINISHED:
+                self_time = holder.elapsed_time()
+
+        is_admin = bool(user == self.creator)
+        own_team_id = own_team.id if own_team is not None else None
+        race_status = self.get_race_status(now)
+        race_is_over = race_status == async_race_room.AsyncRaceRoomRaceStatus.FINISHED
+        if self.uses_teams:
+            teams = [
+                team.create_team_entry(
+                    include_session=is_admin or team.id == own_team_id,
+                    include_progress=race_is_over or team.id == own_team_id,
+                )
+                for team in AsyncRaceTeam.select().where(AsyncRaceTeam.room == self).order_by(AsyncRaceTeam.id)
+            ]
+        else:
+            teams = []
 
         return async_race_room.AsyncRaceRoomEntry(
             id=self.id,
@@ -638,7 +762,7 @@ class AsyncRaceRoom(BaseModel):
             creation_date=self.creation_datetime,
             start_date=self.start_datetime,
             end_date=self.end_datetime,
-            race_status=self.get_race_status(now),
+            race_status=race_status,
             auth_token=sa.encrypt_and_b85_dict(
                 {
                     "room_id": self.id,
@@ -646,12 +770,19 @@ class AsyncRaceRoom(BaseModel):
                 }
             ),
             game_details=game_details,
-            presets_raw=[
-                VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
-            ],
-            is_admin=user == self.creator,  # type: ignore[arg-type]
+            presets_raw=[VersionedPreset.with_preset(preset).as_bytes() for preset in layout.all_presets],
+            is_admin=is_admin,
             self_status=status,
+            self_time=self_time,
             allow_pause=self.allow_pause,
+            world_count=layout.world_count,
+            teams=teams,
+            self_team_id=own_team_id,
+            self_has_exported=entry.has_exported if entry is not None else False,
+            self_is_captain=own_team is not None and own_team.is_captain(user),
+            allow_coop=self.allow_coop,
+            allow_abandon_worlds=self.allow_abandon_worlds,
+            shared_team_timer=self.shared_team_timer,
         )
 
 
@@ -671,10 +802,214 @@ class AsyncRaceAuditEntry(BaseModel):
         )
 
 
-class AsyncRaceEntry(BaseModel):
+class AsyncRaceTeam(BaseModel, AsyncRaceTimerHolder):
+    """
+    A group of users playing one multiworld async race together. The team holds the timer;
+    its individual members only hold their join date and export state.
+    """
+
+    id: int
+    room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="teams")
+    room_id: int
+    name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
+    creation_date = peewee.DateTimeField(default=lib.datetime_now)
+    captain: User | None = peewee.ForeignKeyField(User, null=True)
+    captain_id: int | None
+
+    start_date = peewee.DateTimeField(null=True)
+    finish_date = peewee.DateTimeField(null=True)
+    paused: bool = peewee.BooleanField(default=False)
+    forfeit: bool = peewee.BooleanField(default=False)
+    submission_notes: str = peewee.CharField(max_length=200, default="")
+    proof_url: str = peewee.CharField(default="")
+
+    members: Sequence[AsyncRaceEntry]
+    pauses: Sequence[AsyncRaceEntryPause]
+    sessions: Sequence[MultiplayerSession]
+
+    @property
+    def creation_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)  # type: ignore[arg-type]
+
+    @property
+    def session(self) -> MultiplayerSession | None:
+        """The hidden MultiplayerSession that hosts this team's multiworld."""
+        for session in MultiplayerSession.select().where(MultiplayerSession.race_team == self):
+            return session
+        return None
+
+    def all_members(self) -> list[AsyncRaceEntry]:
+        return list(
+            AsyncRaceEntry.select().where(AsyncRaceEntry.team == self).order_by(AsyncRaceEntry.id)  # type: ignore[attr-defined]
+        )
+
+    @property
+    def shared_timer(self) -> bool:
+        """Whether this team runs on one shared timer, rather than accumulating its members'."""
+        return self.room.shared_team_timer
+
+    def timer_status(self) -> async_race_room.AsyncRaceRoomUserStatus:
+        """
+        A team on a shared timer reads its own columns. A team accumulating its members' times
+        still has the captain start it and give it up, but from then on its state follows what
+        the members do: it is finished once every one of them is.
+        """
+        if self.shared_timer:
+            return AsyncRaceTimerHolder.timer_status(self)
+
+        status = async_race_room.AsyncRaceRoomUserStatus
+        if self.start_date is None:
+            return status.JOINED
+        if self.forfeit:
+            return status.FORFEITED
+
+        member_states = [member.timer_status() for member in self.all_members()]
+        if not member_states:
+            return status.STARTED
+        if all(state == status.FINISHED for state in member_states):
+            return status.FINISHED
+        return status.STARTED
+
+    def elapsed_time(self) -> datetime.timedelta | None:
+        """
+        The team's final time: the one shared timer, or the sum of every member's own time when
+        the room accumulates them.
+        """
+        if self.shared_timer:
+            return AsyncRaceTimerHolder.elapsed_time(self)
+
+        if self.start_date is None:
+            return None
+
+        total = datetime.timedelta(seconds=0)
+        for member in self.all_members():
+            member_time = member.elapsed_time()
+            if member_time is not None:
+                total += member_time
+        return total
+
+    def status_for_member(self, entry: AsyncRaceEntry) -> async_race_room.AsyncRaceRoomUserStatus:
+        """
+        The status to show a given member: the team's while the timer is shared, their own once
+        the race is accumulating each member's time. A forfeit is always the whole team's, so it
+        covers every member no matter how the room is timed.
+        """
+        if self.shared_timer or self.forfeit:
+            return self.timer_status()
+        return entry.timer_status()
+
+    def is_captain(self, user: User) -> bool:
+        return self.captain_id == user.id
+
+    def promote_new_captain(self) -> None:
+        """Hands the captaincy to the longest-standing remaining member, if there is one."""
+        members = self.all_members()
+        self.captain = members[0].user if members else None
+        self.save()
+
+    def unclaimed_worlds(self) -> list[World]:
+        """Worlds of this team's session that nobody has claimed yet."""
+        session = self.session
+        if session is None:
+            return []
+        return [world for world in session.get_ordered_worlds() if not list(world.associations)]
+
+    def members_without_world(self) -> list[AsyncRaceEntry]:
+        """
+        Members that haven't claimed any world. With co-op a team can have more members than
+        worlds, but everyone still has to be playing something.
+        """
+        session = self.session
+        if session is None:
+            return self.all_members()
+
+        claimed_by = {
+            association.user_id for world in session.get_ordered_worlds() for association in world.associations
+        }
+        return [member for member in self.all_members() if member.user_id not in claimed_by]
+
+    def create_team_entry(
+        self, *, include_session: bool = False, include_progress: bool = False
+    ) -> async_race_room.AsyncRaceTeamEntry:
+        worlds: list[async_race_room.AsyncRaceWorldEntry] = []
+        session_id = None
+
+        if include_session and (session := self.session) is not None:
+            session_id = session.id
+            for world in session.get_ordered_worlds():
+                assert world.order is not None
+                worlds.append(
+                    async_race_room.AsyncRaceWorldEntry(
+                        world_uuid=world.uuid,
+                        order=world.order,
+                        name=world.name,
+                        claimed_by=[assoc.user.as_randovania_user() for assoc in world.associations],
+                    )
+                )
+
+        report_time = include_progress and not self.shared_timer
+        members = [
+            async_race_room.AsyncRaceTeamMember(
+                user=member.user.as_randovania_user(),
+                status=self.status_for_member(member) if include_progress else None,
+                time=member.elapsed_time() if report_time else None,
+            )
+            for member in self.all_members()
+        ]
+
+        captain = self.captain
+        return async_race_room.AsyncRaceTeamEntry(
+            id=self.id,
+            name=self.name,
+            status=self.timer_status() if include_progress else None,
+            members=members,
+            worlds=worlds,
+            captain=captain.as_randovania_user() if captain is not None else None,
+            session_id=session_id,
+        )
+
+    def create_admin_entry(self) -> async_race_room.AsyncRaceEntryData:
+        """A team is presented to admins as a single entry, like a solo participant is."""
+        members = self.all_members()
+        return async_race_room.AsyncRaceEntryData(
+            user=members[0].user.as_randovania_user() if members else None,
+            team_id=self.id,
+            team_name=self.name,
+            members=[member.user.as_randovania_user() for member in members],
+            join_date=self.creation_datetime,
+            start_date=self.start_datetime,
+            finish_date=self.finish_datetime,
+            forfeit=self.forfeit,
+            submission_notes=self.submission_notes,
+            proof_url=self.proof_url,
+            pauses=[pause.create_admin_entry() for pause in self.pauses],
+        )
+
+    def delete_with_session(self) -> None:
+        """
+        Deletes this team, its members' entries and the hidden session backing it.
+        """
+        with db.atomic():
+            session = self.session
+            if session is not None:
+                session.delete_instance(recursive=True)
+            AsyncRaceEntryPause.delete().where(AsyncRaceEntryPause.team == self).execute()
+            AsyncRaceEntry.delete().where(AsyncRaceEntry.team == self).execute()
+            self.delete_instance()
+
+
+class AsyncRaceEntry(BaseModel, AsyncRaceTimerHolder):
+    """
+    One user's participation in a room. For rooms without teams this also holds the timer;
+    otherwise the timer lives on the entry's team instead, since a team shares one.
+    """
+
     room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="entries")
+    room_id: int
     user: User = peewee.ForeignKeyField(User)
     user_id: int
+    team: AsyncRaceTeam | None = peewee.ForeignKeyField(AsyncRaceTeam, null=True, backref="members")
+    team_id: int | None
     join_date = peewee.DateTimeField(default=lib.datetime_now)
     start_date = peewee.DateTimeField(null=True)
     finish_date = peewee.DateTimeField(null=True)
@@ -682,7 +1017,11 @@ class AsyncRaceEntry(BaseModel):
     forfeit: bool = peewee.BooleanField(default=False)
     submission_notes: str = peewee.CharField(max_length=200, default="")
     proof_url: str = peewee.CharField(default="")
+    has_exported: bool = peewee.BooleanField(default=False)
     pauses: Sequence[AsyncRaceEntryPause]
+
+    class Meta:
+        indexes = ((("room", "user"), True),)
 
     @classmethod
     def entry_for(cls, room: AsyncRaceRoom, user: User | int) -> Self | None:
@@ -693,24 +1032,16 @@ class AsyncRaceEntry(BaseModel):
             return entry
         return None
 
-    def user_status(self) -> async_race_room.AsyncRaceRoomUserStatus:
-        """
-        Calculates a AsyncRaceRoomUserStatus based on the presence of dates and flags.
-        """
-        if self.start_date is None:
-            return async_race_room.AsyncRaceRoomUserStatus.JOINED
-        elif self.forfeit:
-            return async_race_room.AsyncRaceRoomUserStatus.FORFEITED
-        elif self.paused:
-            return async_race_room.AsyncRaceRoomUserStatus.PAUSED
-        elif self.finish_date is None:
-            return async_race_room.AsyncRaceRoomUserStatus.STARTED
-        else:
-            return async_race_room.AsyncRaceRoomUserStatus.FINISHED
+    def timer_holder(self) -> AsyncRaceTimerHolder:
+        """Whichever of this entry or its team actually owns the race timer."""
+        return self.team if self.team is not None else self
 
     def create_admin_entry(self) -> async_race_room.AsyncRaceEntryData:
         return async_race_room.AsyncRaceEntryData(
             user=self.user.as_randovania_user(),
+            team_id=None,
+            team_name=None,
+            members=[self.user.as_randovania_user()],
             join_date=self.join_datetime,
             start_date=self.start_datetime,
             finish_date=self.finish_datetime,
@@ -724,29 +1055,12 @@ class AsyncRaceEntry(BaseModel):
     def join_datetime(self) -> datetime.datetime:
         return datetime.datetime.fromisoformat(self.join_date)  # type: ignore[arg-type]
 
-    @property
-    def start_datetime(self) -> datetime.datetime | None:
-        if self.start_date is not None:
-            return datetime.datetime.fromisoformat(self.start_date)  # type: ignore[arg-type]
-        return None
-
-    @start_datetime.setter
-    def start_datetime(self, value: datetime.datetime | None) -> None:
-        self.start_date = value
-
-    @property
-    def finish_datetime(self) -> datetime.datetime | None:
-        if self.finish_date is not None:
-            return datetime.datetime.fromisoformat(self.finish_date)  # type: ignore[arg-type]
-        return None
-
-    @finish_datetime.setter
-    def finish_datetime(self, value: datetime.datetime | None) -> None:
-        self.finish_date = value
-
 
 class AsyncRaceEntryPause(BaseModel):
-    entry: AsyncRaceEntry = peewee.ForeignKeyField(AsyncRaceEntry, backref="pauses")
+    """A pause of a race timer. Belongs to exactly one of an entry (solo) or a team (multiworld)."""
+
+    entry: AsyncRaceEntry | None = peewee.ForeignKeyField(AsyncRaceEntry, null=True, backref="pauses")
+    team: AsyncRaceTeam | None = peewee.ForeignKeyField(AsyncRaceTeam, null=True, backref="pauses")
     start: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
     end: datetime.datetime = peewee.DateTimeField(null=True)
 
@@ -767,8 +1081,20 @@ class AsyncRaceEntryPause(BaseModel):
         return self.end_datetime - self.start_datetime  # type: ignore[operator]
 
     @classmethod
-    def active_pause(cls, entry: AsyncRaceEntry) -> Self | None:
-        for it in cls.select().where(cls.entry == entry, cls.end.is_null()):  # type: ignore[attr-defined]
+    def _owner_matches(cls, holder: AsyncRaceTimerHolder) -> Any:
+        if isinstance(holder, AsyncRaceTeam):
+            return cls.team == holder
+        return cls.entry == holder
+
+    @classmethod
+    def create_for(cls, holder: AsyncRaceTimerHolder, start: datetime.datetime) -> Self:
+        if isinstance(holder, AsyncRaceTeam):
+            return cls.create(team=holder, start=start)
+        return cls.create(entry=holder, start=start)
+
+    @classmethod
+    def active_pause(cls, holder: AsyncRaceTimerHolder) -> Self | None:
+        for it in cls.select().where(cls._owner_matches(holder), cls.end.is_null()):  # type: ignore[attr-defined]
             return it
         return None
 
@@ -805,6 +1131,8 @@ class DatabaseMigrations(enum.Enum):
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
     ADD_GAME_BEATEN = "game_beaten"
     ADD_WORLD_ABANDONED = "world_abandoned"
+    ADD_ASYNC_RACE_TEAMS = "async_race_teams"
+    ADD_ASYNC_RACE_SESSION_SETTINGS = "async_race_session_settings"
 
 
 class PerformedDatabaseMigrations(BaseModel):
@@ -821,6 +1149,7 @@ all_classes: list[type[BaseModel]] = [
     WorldAction,
     MultiplayerAuditEntry,
     AsyncRaceRoom,
+    AsyncRaceTeam,
     AsyncRaceEntry,
     AsyncRaceEntryPause,
     AsyncRaceAuditEntry,
@@ -836,15 +1165,18 @@ async def database_lifespan(_app: RdvFastAPI) -> Lifespan[MonitoredDb]:
 
     db.init(db_path)
     db.connect(reuse_if_open=True)
+
+    if db_existed:
+        from randovania.server import database_migration
+
+        db.create_tables([PerformedDatabaseMigrations])
+        database_migration.apply_migrations()
+
     db.create_tables(all_classes)
 
     if not db_existed:
         for entry in DatabaseMigrations:
             PerformedDatabaseMigrations.create(migration=entry)
-
-    from randovania.server import database_migration
-
-    database_migration.apply_migrations()
 
     yield db
 
