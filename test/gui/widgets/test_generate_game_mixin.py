@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
@@ -18,6 +18,8 @@ from randovania.resolver.exceptions import ImpossibleForSolver
 
 if TYPE_CHECKING:
     import pytest_mock
+
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 @pytest.mark.parametrize("case", ["success", "ignore-solver", "abort", "retry", "error", "cancel"])
@@ -105,11 +107,11 @@ async def test_generate_layout_from_permalink(skip_qtbot, mocker: pytest_mock.Mo
         mock_dialog.assert_not_called()
 
 
-def _preset_with(name: str, unsupported: list[str]) -> MagicMock:
+def _preset_with(name: str, unsupported: list[str]) -> VersionedPreset:
     versioned_preset = MagicMock()
     versioned_preset.name = name
     versioned_preset.get_preset.return_value.configuration.unsupported_features.return_value = unsupported
-    return versioned_preset
+    return cast("VersionedPreset", versioned_preset)
 
 
 def _mixin_for_presets(mocker: pytest_mock.MockerFixture) -> tuple[GenerateGameMixin, AsyncMock]:
@@ -138,7 +140,7 @@ async def test_generate_layout_from_presets(mocker: pytest_mock.MockerFixture):
             GeneratorParameters(
                 seed_number=12341234,
                 spoiler=True,
-                presets=[preset.get_preset.return_value for preset in presets],
+                presets=[cast("MagicMock", preset).get_preset.return_value for preset in presets],
             )
         ),
         retries=None,
@@ -158,5 +160,6 @@ async def test_generate_layout_from_presets_checks_every_preset(mocker: pytest_m
     # Assert
     assert result is None
     mock_warning.assert_awaited_once()
+    assert mock_warning.await_args is not None
     assert "Preset 'Second'" in mock_warning.await_args[0][2]
     mock_from_permalink.assert_not_awaited()

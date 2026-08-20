@@ -739,7 +739,7 @@ def _cascade_start_to_members(team: AsyncRaceTeam, start: datetime.datetime | No
     if start is None:
         # Undoing the start resets whatever the members did after it.
         AsyncRaceEntryPause.delete().where(
-            AsyncRaceEntryPause.entry.in_([member.id for member in members])  # type: ignore[attr-defined]
+            AsyncRaceEntryPause.entry.in_([member.id for member in members])  # type: ignore[union-attr]
         ).execute()
 
     for member in members:

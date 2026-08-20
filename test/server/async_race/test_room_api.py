@@ -474,7 +474,9 @@ async def test_change_state(
     else:
         _force_state(entry, before_state, after_state)
         entry.save()
-        assert AsyncRaceEntry.entry_for(room, user).timer_status() == before_state
+        forced = AsyncRaceEntry.entry_for(room, user)
+        assert forced is not None
+        assert forced.timer_status() == before_state
 
     valid_transition = (before_state, after_state) in VALID_TRANSITIONS
     if valid_transition or (before_state == after_state and before_state != AsyncRaceRoomUserStatus.NOT_MEMBER):
@@ -493,7 +495,9 @@ async def test_change_state(
 
     # Assert
     if before_state != AsyncRaceRoomUserStatus.NOT_MEMBER:
-        assert AsyncRaceEntry.entry_for(room, user).timer_status() == expected_after
+        after = AsyncRaceEntry.entry_for(room, user)
+        assert after is not None
+        assert after.timer_status() == expected_after
 
     if (before_state, after_state) == (AsyncRaceRoomUserStatus.JOINED, AsyncRaceRoomUserStatus.STARTED):
         assert AsyncRaceEntry.entry_for(room, user).start_datetime == now
@@ -858,12 +862,15 @@ async def test_self_time_for_a_solo_run(simple_room):
     sa.encrypt_and_b85_dict.return_value = "AuthToken"
     user = User.get_by_id(1235)
     entry = AsyncRaceEntry.entry_for(simple_room, user)
+    assert entry is not None
+    assert entry.start_datetime is not None
+    start = entry.start_datetime
 
     # Nothing to report until the run is complete
     room = AsyncRaceRoom.get_by_id(simple_room.id)
     assert (await room.create_session_entry(sa, user)).self_time is None
 
-    entry.finish_datetime = entry.start_datetime + datetime.timedelta(hours=2, minutes=5)
+    entry.finish_datetime = start + datetime.timedelta(hours=2, minutes=5)
     entry.save()
 
     # Run
@@ -881,13 +888,16 @@ async def test_self_time_excludes_pauses(simple_room):
     sa.encrypt_and_b85_dict.return_value = "AuthToken"
     user = User.get_by_id(1235)
     entry = AsyncRaceEntry.entry_for(simple_room, user)
-    entry.finish_datetime = entry.start_datetime + datetime.timedelta(hours=3)
+    assert entry is not None
+    assert entry.start_datetime is not None
+    start = entry.start_datetime
+    entry.finish_datetime = start + datetime.timedelta(hours=3)
     entry.save()
 
     AsyncRaceEntryPause.create(
         entry=entry,
-        start=entry.start_datetime + datetime.timedelta(hours=1),
-        end=entry.start_datetime + datetime.timedelta(hours=1, minutes=30),
+        start=start + datetime.timedelta(hours=1),
+        end=start + datetime.timedelta(hours=1, minutes=30),
     )
 
     # Run
@@ -986,6 +996,7 @@ async def test_livesplit_socket(test_client, simple_room, can_pause: bool, caplo
         websocket.close()
 
         entry = AsyncRaceEntry.entry_for(simple_room, User.get_by_id(1235))
+        assert entry is not None
         assert entry.timer_status() == AsyncRaceRoomUserStatus.FINISHED
 
     server_logger = test_client.sa.logger.name

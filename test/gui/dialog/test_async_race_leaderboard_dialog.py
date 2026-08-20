@@ -13,6 +13,15 @@ if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot
 
 
+def _cells(table: QtWidgets.QTableWidget) -> list[list[str]]:
+    def text(row: int, column: int) -> str:
+        item = table.item(row, column)
+        assert item is not None
+        return item.text()
+
+    return [[text(row, column) for column in range(table.columnCount())] for row in range(table.rowCount())]
+
+
 def test_create_widget(skip_qtbot: QtBot):
     parent = QtWidgets.QMainWindow()
     skip_qtbot.add_widget(parent)
@@ -33,10 +42,7 @@ def test_create_widget(skip_qtbot: QtBot):
     )
 
     assert dialog.table_widget.columnCount() == 2
-    data = [
-        [dialog.table_widget.item(row, column).text() for column in range(dialog.table_widget.columnCount())]
-        for row in range(dialog.table_widget.rowCount())
-    ]
+    data = _cells(dialog.table_widget)
     assert data == [
         ["A", "1h 0min 0s"],
         ["B", "2h 0min 0s"],
@@ -64,14 +70,10 @@ def test_create_widget_with_teams(skip_qtbot: QtBot):
         ),
     )
 
-    assert [
-        dialog.table_widget.horizontalHeaderItem(column).text() for column in range(dialog.table_widget.columnCount())
-    ] == ["Team", "Time", "Members"]
+    headers = [dialog.table_widget.horizontalHeaderItem(column) for column in range(dialog.table_widget.columnCount())]
+    assert [header.text() for header in headers if header is not None] == ["Team", "Time", "Members"]
 
-    data = [
-        [dialog.table_widget.item(row, column).text() for column in range(dialog.table_widget.columnCount())]
-        for row in range(dialog.table_widget.rowCount())
-    ]
+    data = _cells(dialog.table_widget)
     assert data == [
         ["The Winners", "1h 0min 0s", "A, B"],
         ["The Others", "Forfeited", "C"],

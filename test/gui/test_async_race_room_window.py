@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 import uuid
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
@@ -458,9 +458,12 @@ def create_team_room(
 
 
 def table_contents(table: QtWidgets.QTableWidget) -> list[list[str]]:
-    return [
-        [table.item(row, column).text() for column in range(table.columnCount())] for row in range(table.rowCount())
-    ]
+    def text(row: int, column: int) -> str:
+        item = table.item(row, column)
+        assert item is not None
+        return item.text()
+
+    return [[text(row, column) for column in range(table.columnCount())] for row in range(table.rowCount())]
 
 
 def test_teams_group_hidden_without_teams(skip_qtbot, options, default_blank_preset):
@@ -601,7 +604,7 @@ async def test_on_create_team(skip_qtbot, options, default_blank_preset, mocker:
     mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
 
     window = create_window(skip_qtbot, create_team_room(default_blank_preset), options)
-    network_client: AsyncMock = window._network_client
+    network_client = cast("AsyncMock", window._network_client)
     network_client.async_race_create_team.return_value = create_team_room(
         default_blank_preset, self_team_id=1, self_is_captain=True, self_status=AsyncRaceRoomUserStatus.JOINED
     )
@@ -626,7 +629,7 @@ async def test_on_create_team_cancelled(skip_qtbot, options, default_blank_prese
     await window._on_create_team()
 
     # Assert
-    window._network_client.async_race_create_team.assert_not_called()
+    cast("AsyncMock", window._network_client).async_race_create_team.assert_not_called()
 
 
 async def test_on_join_team(skip_qtbot, options, default_blank_preset, mocker: pytest_mock.MockFixture):
@@ -635,7 +638,7 @@ async def test_on_join_team(skip_qtbot, options, default_blank_preset, mocker: p
     )
 
     window = create_window(skip_qtbot, create_team_room(default_blank_preset), options)
-    network_client: AsyncMock = window._network_client
+    network_client = cast("AsyncMock", window._network_client)
     network_client.async_race_join_team.return_value = create_team_room(
         default_blank_preset, self_team_id=1, self_status=AsyncRaceRoomUserStatus.JOINED
     )
@@ -657,7 +660,7 @@ async def test_on_leave_team(skip_qtbot, options, default_blank_preset, mocker: 
         create_team_room(default_blank_preset, self_team_id=1, self_status=AsyncRaceRoomUserStatus.JOINED),
         options,
     )
-    network_client: AsyncMock = window._network_client
+    network_client = cast("AsyncMock", window._network_client)
     network_client.async_race_leave_team.return_value = create_team_room(default_blank_preset)
 
     # Run
@@ -682,7 +685,7 @@ async def test_on_copy_join_code(skip_qtbot, options, default_blank_preset, mock
         create_team_room(default_blank_preset, self_team_id=1, self_status=AsyncRaceRoomUserStatus.JOINED),
         options,
     )
-    window._network_client.async_race_get_team_join_code.return_value = "TheCode"
+    cast("AsyncMock", window._network_client).async_race_get_team_join_code.return_value = "TheCode"
 
     # Run
     await window._on_copy_join_code()
@@ -708,7 +711,7 @@ async def test_on_open_own_session(skip_qtbot, options, default_blank_preset):
     await window._on_open_session()
 
     # Assert
-    network_client: AsyncMock = window._network_client
+    network_client = cast("AsyncMock", window._network_client)
     network_client.join_multiplayer_session.assert_not_called()
     network_client.listen_to_session.assert_awaited_once_with(55, True)
     window._window_manager.ensure_multiplayer_session_window.assert_awaited_once_with(network_client, 55, options)
@@ -726,7 +729,7 @@ async def test_on_open_another_teams_session(skip_qtbot, options, default_blank_
     await window._on_open_session()
 
     # Assert
-    network_client: AsyncMock = window._network_client
+    network_client = cast("AsyncMock", window._network_client)
     network_client.join_multiplayer_session.assert_awaited_once_with(66, None)
     network_client.listen_to_session.assert_awaited_once_with(66, True)
 
@@ -739,7 +742,7 @@ async def test_on_open_session_without_one(skip_qtbot, options, default_blank_pr
     await window._on_open_session()
 
     # Assert
-    window._network_client.listen_to_session.assert_not_called()
+    cast("AsyncMock", window._network_client).listen_to_session.assert_not_called()
 
 
 @pytest.mark.parametrize("is_admin", [False, True])

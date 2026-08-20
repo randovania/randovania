@@ -162,7 +162,9 @@ def test_team_world_lookups():
 
     assert team.member_count == 2
     assert [user.id for user in team.member_users] == [10, 11]
-    assert team.member_for(10).user.name == "Alice"
+    alice = team.member_for(10)
+    assert alice is not None
+    assert alice.user.name == "Alice"
     assert team.member_for(99) is None
     assert [world.order for world in team.worlds_for(10)] == [0]
     assert team.worlds_for(11) == []

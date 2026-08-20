@@ -24,6 +24,7 @@ from randovania.server.database import (
     AsyncRaceEntry,
     AsyncRaceRoom,
     AsyncRaceTeam,
+    AsyncRaceTimerHolder,
     MultiplayerSession,
     User,
     World,
@@ -72,6 +73,7 @@ async def create_team(sa: MagicMock, room: AsyncRaceRoom, user_id: int, name: st
 
 
 async def join_team(sa: MagicMock, room: AsyncRaceRoom, user_id: int, team: AsyncRaceTeam) -> AsyncRaceRoomEntry:
+    assert team.captain_id is not None
     code = await room_api.get_team_join_code(sa, User.get_by_id(team.captain_id), room.id)
     return await room_api.join_team(sa, User.get_by_id(user_id), room.id, code)
 
@@ -80,6 +82,13 @@ async def change_state(
     sa: MagicMock, room: AsyncRaceRoom, user_id: int, new_state: AsyncRaceRoomUserStatus
 ) -> AsyncRaceRoomEntry:
     return await room_api.change_state(sa, User.get_by_id(user_id), room.id, new_state)
+
+
+def finish_run(holder: AsyncRaceTimerHolder, **delta: float) -> None:
+    """Ends a run the given time after it started, without going through the API."""
+    assert holder.start_datetime is not None
+    holder.finish_datetime = holder.start_datetime + datetime.timedelta(**delta)
+    holder.save()
 
 
 def claim_world(team: AsyncRaceTeam, order: int, user_id: int) -> World:
@@ -165,6 +174,7 @@ async def test_join_team(sa, team_room):
     assert not result.self_is_captain
 
     session = team.session
+    assert session is not None
     assert sorted(membership.user_id for membership in session.members) == [1235, 1236]
 
     assert [entry.as_entry().message for entry in team_room.audit_log] == [
@@ -223,6 +233,7 @@ async def test_join_team_code_of_another_room(sa, team_room, test_files_dir):
         allow_pause=True,
     )
 
+    assert team.captain_id is not None
     code = await room_api.get_team_join_code(sa, User.get_by_id(team.captain_id), team_room.id)
 
     with pytest.raises(error.InvalidActionError, match="Invalid join code"):
@@ -252,6 +263,7 @@ async def test_leave_team_promotes_new_captain(sa, team_room):
 
     # The world they claimed is released along with their access to the session
     session = team.session
+    assert session is not None
     assert [membership.user_id for membership in session.members] == [1236]
     assert [assoc.user_id for world in session.get_ordered_worlds() for assoc in world.associations] == []
 
@@ -269,7 +281,9 @@ async def test_leave_team_promotes_new_captain(sa, team_room):
 @pytest.mark.usefixtures("_during_race")
 async def test_leave_team_last_member_deletes_team(sa, team_room):
     await create_team(sa, team_room, 1235, "The Team")
-    session_id = AsyncRaceTeam.get_by_id(1).session.id
+    session = AsyncRaceTeam.get_by_id(1).session
+    assert session is not None
+    session_id = session.id
 
     # Run
     await room_api.leave_team(sa, User.get_by_id(1235), team_room.id)
@@ -284,6 +298,7 @@ async def test_leave_team_last_member_deletes_team(sa, team_room):
 async def test_leave_team_after_exporting(sa, team_room):
     await create_team(sa, team_room, 1235, "The Team")
     entry = AsyncRaceEntry.entry_for(team_room, 1235)
+    assert entry is not None
     entry.has_exported = True
     entry.save()
 
@@ -573,7 +588,9 @@ async def test_create_session_entry_hides_other_teams_sessions(sa, team_room):
 
     entry = await AsyncRaceRoom.get_by_id(team_room.id).create_session_entry(sa, User.get_by_id(1235))
     assert [(team.name, team.session_id is not None) for team in entry.teams] == [("First", True), ("Second", False)]
-    assert entry.self_team.name == "First"
+    own_team = entry.self_team
+    assert own_team is not None
+    assert own_team.name == "First"
 
     # The room's creator checks every team for cheating, so they see all of them
     admin_entry = await AsyncRaceRoom.get_by_id(team_room.id).create_session_entry(sa, User.get_by_id(1234))
@@ -593,6 +610,7 @@ async def test_create_session_entry_reports_claimed_worlds(sa, team_room):
 
     entry = await AsyncRaceRoom.get_by_id(team_room.id).create_session_entry(sa, User.get_by_id(1235))
     own_team = entry.self_team
+    assert own_team is not None
 
     assert [(world.order, [user.id for user in world.claimed_by]) for world in own_team.worlds] == [
         (0, [1235]),
@@ -764,10 +782,8 @@ async def test_accumulated_time_is_the_sum_of_the_members(sa, accumulating_room)
     team = AsyncRaceTeam.get_by_id(team.id)
     first, second = team.all_members()
 
-    first.finish_datetime = first.start_datetime + datetime.timedelta(hours=1)
-    first.save()
-    second.finish_datetime = second.start_datetime + datetime.timedelta(hours=2)
-    second.save()
+    finish_run(first, hours=1)
+    finish_run(second, hours=2)
 
     assert AsyncRaceTeam.get_by_id(team.id).elapsed_time() == datetime.timedelta(hours=3)
 
@@ -801,7 +817,9 @@ async def test_accumulated_members_are_reported_individually(sa, accumulating_ro
 
     entry = await AsyncRaceRoom.get_by_id(accumulating_room.id).create_session_entry(sa, User.get_by_id(1236))
     assert not entry.shared_team_timer
-    assert [(member.user.id, member.status) for member in entry.self_team.members] == [
+    own_team = entry.self_team
+    assert own_team is not None
+    assert [(member.user.id, member.status) for member in own_team.members] == [
         (1235, AsyncRaceRoomUserStatus.STARTED),
         (1236, AsyncRaceRoomUserStatus.FINISHED),
     ]
@@ -901,8 +919,7 @@ async def test_self_time_shared_is_the_teams_timer(sa, team_room):
         assert entry.self_time is None
 
     team = AsyncRaceTeam.get_by_id(team.id)
-    team.finish_datetime = team.start_datetime + datetime.timedelta(hours=1, minutes=30)
-    team.save()
+    finish_run(team, hours=1, minutes=30)
 
     # The captain and a regular member are told the same thing
     for user_id in (1235, 1236):
@@ -921,16 +938,14 @@ async def test_self_time_accumulated_waits_for_every_member(sa, accumulating_roo
 
     team = AsyncRaceTeam.get_by_id(team.id)
     first, second = team.all_members()
-    first.finish_datetime = first.start_datetime + datetime.timedelta(hours=1)
-    first.save()
+    finish_run(first, hours=1)
 
     # One member down, so the sum isn't final yet
     entry = await AsyncRaceRoom.get_by_id(accumulating_room.id).create_session_entry(sa, User.get_by_id(1235))
     assert entry.self_status == AsyncRaceRoomUserStatus.FINISHED
     assert entry.self_time is None
 
-    second.finish_datetime = second.start_datetime + datetime.timedelta(hours=2)
-    second.save()
+    finish_run(second, hours=2)
 
     for user_id in (1235, 1236):
         entry = await AsyncRaceRoom.get_by_id(accumulating_room.id).create_session_entry(sa, User.get_by_id(user_id))
@@ -944,8 +959,7 @@ async def test_self_time_is_not_reported_for_a_forfeit(sa, team_room):
     await change_state(sa, team_room, 1235, AsyncRaceRoomUserStatus.STARTED)
 
     team = AsyncRaceTeam.get_by_id(team.id)
-    team.finish_datetime = team.start_datetime + datetime.timedelta(hours=1)
-    team.save()
+    finish_run(team, hours=1)
     await change_state(sa, team_room, 1235, AsyncRaceRoomUserStatus.FORFEITED)
 
     entry = await AsyncRaceRoom.get_by_id(team_room.id).create_session_entry(sa, User.get_by_id(1236))
@@ -965,8 +979,7 @@ async def test_self_time_says_nothing_about_other_teams(sa, team_room):
     claim_world(other, 1, 1237)
     await change_state(sa, team_room, 1237, AsyncRaceRoomUserStatus.STARTED)
     other = AsyncRaceTeam.get_by_id(other.id)
-    other.finish_datetime = other.start_datetime + datetime.timedelta(hours=1)
-    other.save()
+    finish_run(other, hours=1)
 
     entry = await AsyncRaceRoom.get_by_id(team_room.id).create_session_entry(sa, User.get_by_id(1235))
     assert entry.self_time is None

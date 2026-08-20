@@ -839,9 +839,7 @@ class AsyncRaceTeam(BaseModel, AsyncRaceTimerHolder):
         return None
 
     def all_members(self) -> list[AsyncRaceEntry]:
-        return list(
-            AsyncRaceEntry.select().where(AsyncRaceEntry.team == self).order_by(AsyncRaceEntry.id)  # type: ignore[attr-defined]
-        )
+        return list(AsyncRaceEntry.select().where(AsyncRaceEntry.team == self).order_by(AsyncRaceEntry.id))
 
     @property
     def shared_timer(self) -> bool:
@@ -1004,6 +1002,7 @@ class AsyncRaceEntry(BaseModel, AsyncRaceTimerHolder):
     otherwise the timer lives on the entry's team instead, since a team shares one.
     """
 
+    id: int
     room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="entries")
     room_id: int
     user: User = peewee.ForeignKeyField(User)
@@ -1060,7 +1059,9 @@ class AsyncRaceEntryPause(BaseModel):
     """A pause of a race timer. Belongs to exactly one of an entry (solo) or a team (multiworld)."""
 
     entry: AsyncRaceEntry | None = peewee.ForeignKeyField(AsyncRaceEntry, null=True, backref="pauses")
+    entry_id: int | None
     team: AsyncRaceTeam | None = peewee.ForeignKeyField(AsyncRaceTeam, null=True, backref="pauses")
+    team_id: int | None
     start: datetime.datetime = peewee.DateTimeField(default=lib.datetime_now)
     end: datetime.datetime = peewee.DateTimeField(null=True)
 

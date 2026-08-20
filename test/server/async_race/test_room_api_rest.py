@@ -321,6 +321,7 @@ async def test_async_race_admin_get_admin_data(creator: NetworkClient, simple_ro
     # Assert
     assert len(result.users) == 1
     entry = result.users[0]
+    assert entry.user is not None
     assert entry.user.id == PLAYER_ID
     assert entry.join_date == datetime.datetime(2020, 5, 6, tzinfo=datetime.UTC)
     assert entry.start_date == datetime.datetime(2020, 5, 11, tzinfo=datetime.UTC)

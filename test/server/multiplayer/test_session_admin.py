@@ -1319,6 +1319,7 @@ async def test_admin_player_unclaim_after_exporting(mock_sa, race_team_session):
     mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
 
     entry = database.AsyncRaceEntry.entry_for(race_team_session.get_race_team().room, 1234)
+    assert entry is not None
     entry.has_exported = True
     entry.save()
 
@@ -1356,7 +1357,9 @@ async def test_admin_session_patcher_file_in_race_session(
     assert result is data_factory.create_data.return_value
 
     room = race_team_session.get_race_team().room
-    assert database.AsyncRaceEntry.entry_for(room, 1235).has_exported
+    exporter = database.AsyncRaceEntry.entry_for(room, 1235)
+    assert exporter is not None
+    assert exporter.has_exported
     assert [entry.as_entry().message for entry in room.audit_log] == ["Exported World 2 of team The Team."]
 
 
@@ -1375,4 +1378,6 @@ async def test_admin_session_patcher_file_outside_race_window(mock_sa, mocker: M
         )
 
     room = race_team_session.get_race_team().room
-    assert not database.AsyncRaceEntry.entry_for(room, 1235).has_exported
+    exporter = database.AsyncRaceEntry.entry_for(room, 1235)
+    assert exporter is not None
+    assert not exporter.has_exported
