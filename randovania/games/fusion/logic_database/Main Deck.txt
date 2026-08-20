@@ -355,8 +355,8 @@ Extra - minimap_coordinates:
           All Infants Collected
           Any of the following:
               Have Any Jump Upgrade
-              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY
-              Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check
+              Speed Booster and After Main Deck Operations Deck Save Visited and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
               # Single Wall Jump
               Wall Jump (Beginner) and Can Single Walljump
               # Jump 2-BombJump: https://youtu.be/416jYaEuveg
@@ -1123,8 +1123,14 @@ Hint Features - Climbable Surface, Geron
   > Event - Upper Maintainance Geron
       Any of the following:
           Can Kill Missile Geron
-          # Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y
-          Level 0 Keycard and Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          All of the following:
+              # Destroy with Speed Booster
+              Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Disabled Entrance Rando
+              Any of the following:
+                  # Run from edge of Operations Deck. TODO: vid.
+                  Movement (Intermediate)
+                  # Run from Save Station, spark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y . This can safely have no DLR check
+                  After Main Deck Operations Deck Save Visited and Shinespark Tricks (Advanced)
 
 > Other to Operations Ventilation Storage; Heals? False
   * Layers: default
@@ -1380,6 +1386,14 @@ Extra - unlocked_save_recharge_station: True
   * Extra - X: 8
   * Extra - Y: 10
   > Door to Operations Deck Recharge Room
+      Trivial
+  > Event - Operations Save Visited
+      Trivial
+
+> Event - Operations Save Visited; Heals? False
+  * Layers: default
+  * Event Main Deck Operations Deck Save Visited
+  > Save Station
       Trivial
 
 ----------------
