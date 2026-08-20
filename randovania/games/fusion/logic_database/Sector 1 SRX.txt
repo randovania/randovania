@@ -1523,8 +1523,8 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 6}, {'x': 11, 'y': 7}]
   > Event - Bomb Blocks
       Any of the following:
           Can Break Single Bomb Blocks
-          # Speed Boosting from Hornoad Housing
-          Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Speed Boosting from Hornoad Housing. This can safely not have DLR check, because its a one way dead-end
+          Level 0 Keycard and Speed Booster and After Sector 1 Central Save Room Visited and Knowledge (Intermediate) and Disabled Entrance Rando
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
@@ -1633,8 +1633,8 @@ Hint Features - Multiple Pickups
   * Extra - door_idx: [82]
   > Pickup (Energy Tank)
       All of the following:
-          # Shinespark from Hornoad Housing -> Access
-          Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Gadora
+          # Shinespark from Hornoad Housing -> Access. This can safely not have DLR check because this door cannot be permanently locked, unless in the future a way to leave Lower Access is added
+          Level 0 Keycard and Speed Booster and After Sector 1 Central Save Room Visited and Disabled Entrance Rando and Can Kill Gadora
           Any of the following:
               # After Fight, Trickless: https://youtu.be/Z6_miH4qoQY
               Hi-Jump and After Boss Charge Core-X Defeated
@@ -1726,6 +1726,14 @@ Extra - unlocked_save_recharge_station: True
   * Extra - X: 8
   * Extra - Y: 10
   > Door to Hornoad Housing
+      Trivial
+  > Event - Central Save Room Visited
+      Trivial
+
+> Event - Central Save Room Visited; Heals? False
+  * Layers: default
+  * Event Sector 1 Central Save Room Visited
+  > Save Station
       Trivial
 
 ----------------
@@ -1836,7 +1844,9 @@ Hint Features - Climbable Surface
   * Extra - door_idx: [101]
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Level 0 Keycard and Morph Ball and Speed Booster and After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed and Disabled Door Lock Rando and Disabled Entrance Rando and Can Bounce in Ball
+          Level 0 Keycard and Morph Ball and After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed and Can Bounce in Ball
+          # This can safely not have DLR check because its a one way dead-end
+          Speed Booster and After Sector 1 Central Save Room Visited and Disabled Entrance Rando
           Any of the following:
               # Deal with water
               Gravity Suit
