@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 4 (AQA)
+- Added: Evir Enclosure: A video to go up by freezing the Evir and performing Underwater Walljumps.
+
 ### Metroid: Samus Returns
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
