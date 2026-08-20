@@ -17,6 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+- Changed: Watery Hole: Getting the item is now possible in Door Lock Rando.
+- Changed: Charge Core Arena: Getting the upper item locked by a Shinespark is now possible in Door Lock Rando.
+
 ### Metroid: Samus Returns
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.

@@ -10948,7 +10948,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Speed Boosting from Hornoad Housing",
+                                            "comment": "Speed Boosting from Hornoad Housing. This can safely not have DLR check, because its a one way dead-end",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10972,15 +10972,6 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
                                                         "name": "EntranceRando",
                                                         "amount": 1,
                                                         "negate": true
@@ -10992,6 +10983,15 @@
                                                         "type": "tricks",
                                                         "name": "Knowledge",
                                                         "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "S1ChargeSave",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -11592,7 +11592,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "Shinespark from Hornoad Housing -> Access",
+                                "comment": "Shinespark from Hornoad Housing -> Access. This can safely not have DLR check because this door cannot be permanently locked, unless in the future a way to leave Lower Access is added",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -11610,15 +11610,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -11709,6 +11700,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S1ChargeSave",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -12194,6 +12194,38 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Hornoad Housing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Central Save Room Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Central Save Room Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 75.6,
+                        "y": 139.66,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "S1ChargeSave",
+                    "connections": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12693,7 +12725,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "This can safely not have DLR check because its a one way dead-end",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -12708,7 +12740,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "misc",
-                                                        "name": "DoorLockRando",
+                                                        "name": "EntranceRando",
                                                         "amount": 1,
                                                         "negate": true
                                                     }
@@ -12716,10 +12748,10 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
+                                                        "type": "events",
+                                                        "name": "S1ChargeSave",
                                                         "amount": 1,
-                                                        "negate": true
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
