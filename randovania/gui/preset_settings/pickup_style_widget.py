@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Signal
@@ -11,6 +10,8 @@ from randovania.gui.lib import signal_handling
 from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from PySide6 import QtWidgets
 
     from randovania.interface_common.preset_editor import PresetEditor

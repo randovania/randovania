@@ -5,6 +5,13 @@ import uuid
 from dataclasses import dataclass
 
 INVALID_UUID = uuid.UUID("00000000-0000-1111-0000-000000000000")
+SOLO_UUID_VERSION = 8
+
+
+def is_uuid_multiworld(world_uuid: uuid.UUID) -> bool:
+    """Whether a uuid read back from an exported game belongs to a game played in a session.
+    Sessions assign uuid4s; solo exports get a seed-derived uuid8, or INVALID_UUID before those existed."""
+    return world_uuid != INVALID_UUID and world_uuid.version != SOLO_UUID_VERSION
 
 
 @dataclass(frozen=True)

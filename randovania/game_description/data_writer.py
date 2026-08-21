@@ -94,7 +94,7 @@ def write_requirement(requirement: Requirement) -> dict:
         return write_node_requirement(requirement)
 
     else:
-        raise ValueError(f"Unknown requirement type: {type(requirement)}")
+        raise TypeError(f"Unknown requirement type: {type(requirement)}")
 
 
 def write_optional_requirement(requirement: Requirement | None) -> dict | None:
@@ -234,6 +234,7 @@ def write_dock_weakness_distributor_settings(settings: WeaknessDistributorSettin
         "locked": settings.locked.name,
         "change_from": sorted(weakness.name for weakness in settings.change_from),
         "change_to": sorted(weakness.name for weakness in settings.change_to),
+        "indirect_change_from": sorted(weakness.name for weakness in settings.indirect_change_from),
         "force_change_two_way": settings.force_change_two_way,
         "resolver_attempts": settings.resolver_attempts,
         "to_shuffle_proportion": settings.to_shuffle_proportion,
@@ -341,7 +342,7 @@ def write_node(node: Node) -> dict:
         data["requirement_to_activate"] = write_requirement(node.requirement_to_activate)
 
     else:
-        raise ValueError(f"Unknown node class: {node}")
+        raise TypeError(f"Unknown node class: {node}")
 
     return data
 

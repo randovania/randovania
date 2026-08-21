@@ -1,57 +1,85 @@
 ====================
 Templates
 
-* Shoot Super Missile:
-      Charge Beam and Missile ≥ 5 and Super Missile and Shoot Power Beam
-
-* Have all Beams:
-      Ice Beam and Plasma Beam and Power Beam and Wave Beam and Can Use Arm Cannon
-
-* Heat-Resisting Suit:
+* Have Heat-Resisting Suit:
       Any of the following:
           Varia Suit
           All of the following:
               Enabled Vanilla Heat Resistance
               Gravity Suit or Phazon Suit
 
-* Can Use Arm Cannon:
+* Can Target Enemy:
       Combat Visor or Thermal Visor or X-Ray Visor
 
-* Shoot Any Beam:
+* Have Any Visor:
+      Combat Visor or Scan Visor or Thermal Visor or X-Ray Visor
+
+* Fight (Trivial):
       All of the following:
-          Can Use Arm Cannon
-          Ice Beam or Plasma Beam or Power Beam or Wave Beam
+          # Use for encounters which require killing an enemy and is trivial with Combat, X-Ray or Thermal Visor equipped
+          Shoot Any Beam
+          Combat (Beginner) or Can Target Enemy
 
-* Shoot Power Beam:
-      Power Beam and Can Use Arm Cannon
+* Fight (Beginner):
+      All of the following:
+          # Use for encounters which require killing an enemy in a way that requires Combat (Beginner) competency with Combat, X-Ray or Thermal Visor equipped
+          Shoot Any Beam
+          Any of the following:
+              Combat (Intermediate)
+              Combat (Beginner) and Can Target Enemy
 
-* Shoot Wave Beam:
-      Wave Beam and Can Use Arm Cannon
+* Fight (Intermediate):
+      All of the following:
+          # Use for encounters which require killing an enemy in a way that requires Combat (Intermediate) competency with Combat, X-Ray or Thermal Visor equipped
+          Shoot Any Beam
+          Any of the following:
+              Combat (Advanced)
+              Combat (Intermediate) and Can Target Enemy
 
-* Shoot Ice Beam:
-      Ice Beam and Can Use Arm Cannon
+* Fight (Advanced):
+      All of the following:
+          # Use for encounters which require killing an enemy in a way that requires Combat (Advanced) competency with Combat, X-Ray or Thermal Visor equipped
+          Shoot Any Beam
+          Any of the following:
+              Combat (Expert)
+              Combat (Advanced) and Can Target Enemy
 
-* Shoot Plasma Beam:
-      Plasma Beam and Can Use Arm Cannon
+* Fight (Expert):
+      All of the following:
+          # Use for encounters which require killing an enemy in a way that requires Combat (Expert) competency with Combat, X-Ray or Thermal Visor equipped
+          Shoot Any Beam
+          Any of the following:
+              Combat (Ludicrous)
+              Combat (Expert) and Can Target Enemy
 
-* Use Grapple Beam:
-      Grapple Beam and Can Use Arm Cannon
+* Fight (Ludicrous):
+      # Use for encounters which require killing an enemy, regardless of how difficult
+      Combat (Ludicrous) and Shoot Any Beam
+
+* Shoot Any Beam:
+      Ice Beam or Plasma Beam or Power Beam or Wave Beam
+
+* Shoot All Beams:
+      Ice Beam and Plasma Beam and Power Beam and Wave Beam
+
+* Shoot Missile:
+      Missile and Shoot Any Beam
+
+* Shoot Super Missile:
+      Charge Beam and Missile ≥ 5 and Power Beam and Super Missile
 
 * Open Normal Door:
       Any of the following:
           Shoot Any Beam
-          Morph Ball Bomb and Morph Ball and Scan Visor
+          Morph Ball Bomb and Morph Ball
 
 * Move Past Scatter Bombu:
       Any of the following:
-          Morph Ball or Movement (Intermediate) or Normal Damage ≥ 30 or Shoot Wave Beam
+          Morph Ball or Wave Beam or Movement (Intermediate) or Normal Damage ≥ 30
           Movement (Beginner) and Normal Damage ≥ 12
 
 * Can Use Boost Ball:
       Boost Ball and Morph Ball
-
-* Can Use Spider Ball:
-      Morph Ball and Spider Ball
 
 * Can Use Bombs:
       Morph Ball Bomb and Morph Ball
@@ -59,18 +87,20 @@ Templates
 * Can Use Power Bombs:
       Morph Ball and Power Bomb
 
+* Can Use Spider Ball:
+      Morph Ball and Spider Ball
+
 * Kill Elite Pirate:
       All of the following:
           # Used for killing Elite Pirates. Note that the Phazon Elite in Elite Research does not use this template.
-          Shoot Any Beam
           Any of the following:
               Any of the following:
                   # Circle around Pirate: https://youtu.be/20peXRPG-e0
                   # Beam only
-                  Combat (Intermediate)
+                  Fight (Intermediate)
                   All of the following:
                       # Missile-spam strat
-                      Combat (Beginner)
+                      Fight (Beginner)
                       Any of the following:
                           Missile ≥ 10 and Disabled Hard Mode
                           Missile ≥ 20 and Enabled Hard Mode
@@ -78,34 +108,31 @@ Templates
                   # Normal Fight
                   Any of the following:
                       # Damage requirements
-                      Normal Damage ≥ 200
-                      Combat (Beginner) and Normal Damage ≥ 40
+                      Normal Damage ≥ 200 and Fight (Trivial)
+                      Normal Damage ≥ 40 and Fight (Beginner)
                   # Weaponry
-                  Charge Beam or Shoot Plasma Beam
+                  Charge Beam or Plasma Beam
                   # Dodging
-                  Space Jump Boots or Combat (Beginner)
-
-* Has Any Visor:
-      Combat Visor or Scan Visor or Thermal Visor or X-Ray Visor
+                  Space Jump Boots or Fight (Beginner)
 
 * Kill Multiple Chozo Ghosts:
       All of the following:
-          Shoot Power Beam
+          Power Beam
           Any of the following:
-              Combat (Intermediate)
+              Fight (Intermediate)
               All of the following:
                   # Charge Beam makes the fight easier and faster
-                  Charge Beam
+                  Charge Beam and Fight (Trivial)
                   Any of the following:
                       Normal Damage ≥ 90
                       X-Ray Visor and Normal Damage ≥ 15
 
 * Kill Single Chozo Ghost:
       All of the following:
-          Shoot Power Beam
+          Power Beam
           Any of the following:
-              Combat (Beginner)
-              Charge Beam and Normal Damage ≥ 15
+              Fight (Beginner)
+              Charge Beam and Normal Damage ≥ 15 and Fight (Trivial)
 
 ====================
 Dock Weaknesses
@@ -128,28 +155,28 @@ Dock Weaknesses
   * Ice Door
       Extra - shieldType: Ice Beam
       Open:
-          Shoot Ice Beam
+          Ice Beam
       No lock
 
 
   * Wave Door
       Extra - shieldType: Wave Beam
       Open:
-          Shoot Wave Beam
+          Wave Beam
       No lock
 
 
   * Plasma Door
       Extra - shieldType: Plasma Beam
       Open:
-          Shoot Plasma Beam
+          Plasma Beam
       No lock
 
 
   * Power Beam Only Door
       Extra - shieldType: Power Beam Only
       Open:
-          Shoot Power Beam
+          Power Beam
       No lock
 
 
@@ -157,7 +184,7 @@ Dock Weaknesses
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_BLAST
-          Missile and Shoot Any Beam
+          Shoot Missile
 
 
   * Missile Blast Shield (randomprime)
@@ -167,7 +194,7 @@ Dock Weaknesses
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Missile and Shoot Any Beam
+          Shoot Missile
 
 
   * Permanently Locked
@@ -212,27 +239,27 @@ Dock Weaknesses
       Extra - shieldType: Wavebuster
       Extra - blastShieldType: Wavebuster
       Open:
-          Shoot Wave Beam
+          Wave Beam
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Charge Beam and Missile ≥ 10 and Wavebuster and Shoot Wave Beam
+          Charge Beam and Missile ≥ 10 and Wave Beam and Wavebuster
 
 
   * Ice Spreader Blast Shield
       Extra - shieldType: Ice Spreader
       Extra - blastShieldType: Ice Spreader
       Open:
-          Shoot Ice Beam
+          Ice Beam
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Charge Beam and Ice Spreader and Missile ≥ 10 and Shoot Ice Beam
+          Charge Beam and Ice Beam and Ice Spreader and Missile ≥ 10
 
 
   * Flamethrower Blast Shield
       Extra - shieldType: Flamethrower
       Extra - blastShieldType: Flamethrower
       Open:
-          Shoot Plasma Beam
+          Plasma Beam
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
-          Charge Beam and Flamethrower and Missile ≥ 10 and Shoot Plasma Beam
+          Charge Beam and Flamethrower and Missile ≥ 10 and Plasma Beam
 
 
   * Charge Beam Blast Shield
@@ -276,6 +303,7 @@ Dock Weaknesses
           Super Missile Blast Shield
           Wave Door
           Wavebuster Blast Shield
+      Indirect Change from:
 
 
 > Morph Ball Door

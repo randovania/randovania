@@ -6,7 +6,7 @@ import json
 import re
 import uuid
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
@@ -26,6 +26,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+from randovania.network_common.async_race_room_endpoints import async_race_room_endpoints as race_endpoints
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.error import (
     InvalidActionError,
@@ -43,11 +44,13 @@ if TYPE_CHECKING:
     import pytest_mock
 
     from randovania.lib.json_lib import JsonType_RO
+    from randovania.network_common.configuration import NetworkConfiguration
 
 
 @pytest.fixture
 def client(tmp_path, mocker: pytest_mock.MockerFixture):
-    mocker.patch("randovania.lib.http_lib.http_session")
+    mock_http_session = mocker.patch("randovania.lib.http_lib.http_session")
+    mock_http_session.return_value.closed = False
     client = NetworkClient(
         tmp_path,
         {
@@ -58,17 +61,93 @@ def client(tmp_path, mocker: pytest_mock.MockerFixture):
     return client
 
 
-async def test_shutdown(tmp_path):
+@pytest.fixture
+async def make_client():
+    clients: list[NetworkClient] = []
+
+    def create(user_data_dir: Path, configuration: NetworkConfiguration) -> NetworkClient:
+        client = NetworkClient(user_data_dir, configuration)
+        clients.append(client)
+        return client
+
+    yield create
+
+    for client in clients:
+        await client.shutdown()
+
+
+async def test_shutdown(tmp_path, make_client):
     # Explicitly not mocking http_session
     # The assert is not leaking a resource.
-    client = NetworkClient(
+    client = make_client(
         tmp_path,
         {
             "server_address": "http://localhost:5000",
             "socketio_path": "/socket.io",
         },
     )
+    session = client.http
+
     await client.shutdown()
+
+    assert session.closed
+    with pytest.raises(RuntimeError, match="was shut down"):
+        _ = client.http
+
+
+async def test_http_recreated_when_closed(tmp_path, make_client):
+    # Explicitly not mocking http_session
+    client = make_client(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
+
+    # Run
+    # A ClientSession can be closed by something outside our control, and can't be re-opened.
+    first_session = client.http
+    await first_session.close()
+    second_session = client.http
+
+    # Assert
+    assert second_session is not first_session
+    assert not second_session.closed
+
+
+async def test_rest_headers_come_from_the_client(client: NetworkClient):
+    # The authentication state lives in the client and is applied per-request, so that the session
+    # can be re-created at any point without losing it.
+    client._session_id = "the-sid"
+    client._encoded_session = "the-session"
+    http = cast("MagicMock", client.http)
+
+    expected_headers = {
+        **connection_headers(),
+        "Accept": "application/json",
+        "X-Randovania-Sid": "the-sid",
+        "X-Randovania-Session": "the-session",
+    }
+
+    # Run
+    client.server_get("some-path")
+    client.server_post("some-path")
+
+    # Assert
+    http.get.assert_called_once_with("http://localhost:5000/some-path", headers=expected_headers)
+    http.post.assert_called_once_with("http://localhost:5000/some-path", headers=expected_headers)
+
+
+async def test_rest_headers_does_not_override_given_headers(client: NetworkClient):
+    http = cast("MagicMock", client.http)
+
+    client.server_get("some-path", headers={"Accept": "text/plain"})
+
+    http.get.assert_called_once_with(
+        "http://localhost:5000/some-path",
+        headers={**connection_headers(), "Accept": "text/plain"},
+    )
 
 
 class MockResponse:
@@ -97,8 +176,8 @@ class MockResponse:
         return self
 
 
-async def test_on_connect_no_restore(tmp_path):
-    client = NetworkClient(
+async def test_on_connect_no_restore(tmp_path, make_client):
+    client = make_client(
         tmp_path,
         {
             "server_address": "http://localhost:5000",
@@ -114,8 +193,8 @@ async def test_on_connect_no_restore(tmp_path):
 
 
 @pytest.mark.parametrize("valid_session", [False, True])
-async def test_on_connect_restore(tmpdir, valid_session: bool):
-    client = NetworkClient(
+async def test_on_connect_restore(tmpdir, valid_session: bool, make_client):
+    client = make_client(
         Path(tmpdir),
         {
             "server_address": "http://localhost:5000",
@@ -147,7 +226,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
 
     # Assert
     if valid_session:
-        assert client.http.headers["X-Randovania-Sid"] == 12341234
+        assert client._session_id == 12341234
     client.sio.call.assert_awaited_once_with("restore_user_session", b"foo", namespace=None, timeout=30)
 
     if valid_session:
@@ -172,9 +251,9 @@ async def test_on_connect_restore_timeout(client: NetworkClient):
     client.disconnect_from_server.assert_awaited_once_with()
 
 
-async def test_connect_to_server(tmp_path):
+async def test_connect_to_server(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         assert client._waiting_for_on_connect is not None
@@ -193,9 +272,9 @@ async def test_connect_to_server(tmp_path):
     )
 
 
-async def test_connect_to_server_cancel(tmp_path):
+async def test_connect_to_server_cancel(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     client.sio.disconnect = AsyncMock()
     client._internal_connect_to_server = AsyncMock(side_effect=asyncio.CancelledError())
@@ -207,9 +286,9 @@ async def test_connect_to_server_cancel(tmp_path):
     client.sio.disconnect.assert_awaited_once_with()
 
 
-async def test_internal_connect_to_server_failure(tmp_path):
+async def test_internal_connect_to_server_failure(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         raise (aiohttp.client_exceptions.ContentTypeError(MagicMock(), (), message="thing"))
@@ -268,6 +347,32 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
         assert client._sessions_interested_in == {1234}
     else:
         assert client._sessions_interested_in == set()
+
+
+@pytest.mark.parametrize("connected", [False, True])
+@pytest.mark.parametrize("was_listening", [False, True])
+async def test_remove_interest_in_session(client: NetworkClient, was_listening, connected):
+    client.server_call = AsyncMock()
+    client._connection_state = ConnectionState.Connected if connected else ConnectionState.Disconnected
+    if was_listening:
+        client._sessions_interested_in.add(1234)
+
+    # Run
+    client.remove_interest_in_session(1234)
+
+    # Let any scheduled background task run to completion.
+    for task in list(client._background_tasks):
+        await task
+
+    # Assert
+    assert client._sessions_interested_in == set()
+    assert client._background_tasks == set()
+    if connected:
+        client.server_call.assert_awaited_once_with(
+            "multiplayer_listen_to_session", (1234, False), namespace=None, handle_invalid_session=True
+        )
+    else:
+        client.server_call.assert_not_awaited()
 
 
 @pytest.mark.parametrize("was_listening", [False, True])
@@ -436,7 +541,7 @@ async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.Moc
     client.server_post = MagicMock(return_value=AsyncMock())
     response = client.server_post.return_value.__aenter__.return_value
     response.raise_for_status = MagicMock()
-    client.http.headers["X-Randovania-Sid"] = "1234"
+    client._session_id = "1234"
 
     # Run
     result = await client.create_new_session("The Session")
@@ -467,7 +572,7 @@ async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock
         "status_message": "422 Unprocessable Entity",
     }
     response.raise_for_status = MagicMock()
-    client.http.headers["X-Randovania-Sid"] = "1234"
+    client._session_id = "1234"
 
     # Run
     with pytest.raises(
@@ -586,7 +691,10 @@ async def test_login_as_guest(client: NetworkClient):
 
 
 async def test_async_race_get_livesplit_url(client: NetworkClient):
-    client.server_call = AsyncMock()
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 200
+    response.json.return_value = "https://example.com/livesplit/1234"
 
     room = MagicMock()
     room.id = 1234
@@ -595,10 +703,8 @@ async def test_async_race_get_livesplit_url(client: NetworkClient):
     result = await client.async_race_get_livesplit_url(room)
 
     # Assert
-    assert result == client.server_call.return_value
-    client.server_call.assert_awaited_once_with(
-        "async_race_get_livesplit_url", 1234, namespace=None, handle_invalid_session=True
-    )
+    assert result == "https://example.com/livesplit/1234"
+    client.server_get.assert_called_once_with(race_endpoints.room_livesplit_url(1234))
 
 
 async def test_on_async_race_room_update_raw(client: NetworkClient):

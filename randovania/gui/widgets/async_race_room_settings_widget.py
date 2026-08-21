@@ -13,6 +13,15 @@ def _from_date(date: datetime.datetime) -> QtCore.QDateTime:
     return QtCore.QDateTime.fromSecsSinceEpoch(int(date.timestamp()))
 
 
+def _to_date(date_time: QtCore.QDateTime) -> datetime.datetime:
+    """
+    The time edits are in the user's local time, but the network API always uses aware UTC datetimes.
+    """
+    result = date_time.toUTC().toPython()
+    assert isinstance(result, datetime.datetime)
+    return result.replace(tzinfo=datetime.UTC)
+
+
 class AsyncRaceRoomSettingsWidget(QtWidgets.QWidget):
     ui: Ui_AsyncRaceRoomSettingsWidget
 
@@ -48,8 +57,8 @@ class AsyncRaceRoomSettingsWidget(QtWidgets.QWidget):
         return AsyncRaceSettings(
             name=self.ui.name_edit.text(),
             password=self.ui.password_edit.text() if self.ui.password_edit.isEnabled() else None,
-            start_date=self.ui.start_time_edit.dateTime().toPython(),
-            end_date=self.ui.end_time_edit.dateTime().toPython(),
+            start_date=_to_date(self.ui.start_time_edit.dateTime()),
+            end_date=_to_date(self.ui.end_time_edit.dateTime()),
             visibility=self.ui.visibility_combo_box.currentData(),
             allow_pause=self.ui.allow_pause_check.isChecked(),
         )
