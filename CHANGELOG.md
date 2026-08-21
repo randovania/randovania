@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- When enabling Door Lock Rando for the default presets, Open Hatches are now also shuffled by default.
+
 #### Logic Database
 
 ##### Main Deck
