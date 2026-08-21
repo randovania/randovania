@@ -63,9 +63,9 @@ def test_change_to_type_retains_array_data(echoes_varied_requirement, echoes_gam
     region_list = echoes_game_description.region_list
 
     current_requirement = requirement_tree._at_path(echoes_varied_requirement, OR_PATH)
-    current_requirement = cast(RequirementOr, current_requirement)
+    current_requirement = cast("RequirementOr", current_requirement)
     changed_requirement = requirement_tree.change_to_type(current_requirement, RequirementAnd, db, region_list)
-    changed_requirement = cast(RequirementAnd, changed_requirement)
+    changed_requirement = cast("RequirementAnd", changed_requirement)
 
     assert changed_requirement.items == current_requirement.items
     assert changed_requirement.comment == current_requirement.comment

@@ -144,7 +144,7 @@ class ResourceEditor(Editor):
         return resource_info.long_name
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._combo_name):
             self._set_name_combo(requirement.resource)
 
@@ -175,7 +175,7 @@ class CountedResourceEditor(ResourceEditor):
 
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._combo_negate):
             self._set_negate_combo(requirement.negate)
         with signals_blocked(self._spinbox_amount):
@@ -211,7 +211,7 @@ class TrickResourceEditor(ResourceEditor):
 
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._combo_difficulty):
             self._set_difficulty_combo(requirement.amount)
 
@@ -236,7 +236,7 @@ class SimpleResourceEditor(ResourceEditor):
 
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._checkbox_negate):
             self._set_negate_combo(requirement)
 
@@ -269,7 +269,7 @@ class TemplateEditor(Editor):
         return template.display_name
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(RequirementTemplate, requirement)
+        requirement = cast("RequirementTemplate", requirement)
         with signals_blocked(self._combo_name):
             self._set_name_combo(requirement.template_name)
 
@@ -306,7 +306,7 @@ class NodeEditor(Editor):
             combo.addItem(self.to_string(item), item)
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(NodeRequirement, requirement)
+        requirement = cast("NodeRequirement", requirement)
         region: Region = self._region_list.region_with_name(requirement.node_identifier.region)
         area: Area = region.area_by_identifier(requirement.node_identifier.area_identifier)
         node: Node = self._region_list.node_by_identifier(requirement.node_identifier)
@@ -363,7 +363,7 @@ class ArrayEditor(Editor):
         return _type.combinator().strip().title()
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(RequirementArrayBase, requirement)
+        requirement = cast("RequirementArrayBase", requirement)
         with signals_blocked(self._combo_type):
             self._set_type_combo(requirement)
         with signals_blocked(self._line_edit_comment):

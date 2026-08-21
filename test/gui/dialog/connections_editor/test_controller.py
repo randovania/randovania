@@ -111,7 +111,7 @@ def test_on_add_requirement_pressed_rejects_add(controller, select, single_requi
 def test_on_delete_requirement_pressed_deletes(controller, select):
     select(POWER)
     controller._on_delete_requirement_pressed()
-    result = cast(RequirementAnd, controller._model.build_requirement())
+    result = cast("RequirementAnd", controller._model.build_requirement())
     assert len(result.items) == 2
 
 

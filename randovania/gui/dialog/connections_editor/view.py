@@ -42,7 +42,7 @@ class RequirementView(QObject):
         self.selection_changed.emit(current)
 
     def restore_selection(self, path: RequirementTreePath) -> None:
-        model = cast(RequirementModel, self._tree.model())
+        model = cast("RequirementModel", self._tree.model())
         index = model.index_from_path(path)
 
         selection_model = self._tree.selectionModel()
