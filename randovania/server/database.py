@@ -6,6 +6,8 @@ import collections
 import datetime
 import enum
 import json
+import secrets
+import string
 import typing
 import uuid
 import zlib
@@ -802,6 +804,11 @@ class AsyncRaceAuditEntry(BaseModel):
         )
 
 
+def _generate_join_code() -> str:
+    alphabet = string.ascii_uppercase + string.digits
+    return "".join(secrets.choice(alphabet) for _ in range(8))
+
+
 class AsyncRaceTeam(BaseModel, AsyncRaceTimerHolder):
     """
     A group of users playing one multiworld async race together. The team holds the timer;
@@ -812,6 +819,7 @@ class AsyncRaceTeam(BaseModel, AsyncRaceTimerHolder):
     room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="teams")
     room_id: int
     name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
+    join_code: str = peewee.CharField(max_length=8)
     creation_date = peewee.DateTimeField(default=lib.datetime_now)
     captain: User | None = peewee.ForeignKeyField(User, null=True)
     captain_id: int | None
@@ -826,6 +834,18 @@ class AsyncRaceTeam(BaseModel, AsyncRaceTimerHolder):
     members: Sequence[AsyncRaceEntry]
     pauses: Sequence[AsyncRaceEntryPause]
     sessions: Sequence[MultiplayerSession]
+
+    class Meta:
+        indexes = ((("room", "join_code"), True),)
+
+    @classmethod
+    def new_join_code(cls, room: AsyncRaceRoom) -> str:
+        for _ in range(10):
+            code = _generate_join_code()
+            if cls.get_or_none(cls.room == room, cls.join_code == code) is None:
+                return code
+
+        raise error.ServerError
 
     @property
     def creation_datetime(self) -> datetime.datetime:

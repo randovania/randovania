@@ -14,7 +14,12 @@ from randovania.server.database import AsyncRaceTeam, User, World, WorldUserAsso
 @pytest.fixture
 def team(team_room) -> AsyncRaceTeam:
     """A team of one, with the hidden session that hosts its multiworld."""
-    new_team = AsyncRaceTeam.create(room=team_room, name="The Team", captain=User.get_by_id(1235))
+    new_team = AsyncRaceTeam.create(
+        room=team_room,
+        name="The Team",
+        captain=User.get_by_id(1235),
+        join_code=AsyncRaceTeam.new_join_code(team_room),
+    )
     session = team_session.create_session_for_team(team_room, new_team)
     team_session.add_member(session, User.get_by_id(1235))
     database.AsyncRaceEntry.create(room=team_room, user=User.get_by_id(1235), team=new_team)

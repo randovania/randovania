@@ -196,7 +196,12 @@ def race_team_session(two_player_session, solo_two_world_session_layout) -> data
         end_date=datetime.datetime(2020, 6, 10, 0, 0, tzinfo=datetime.UTC),
         allow_pause=True,
     )
-    team = database.AsyncRaceTeam.create(room=room, name="The Team", captain=database.User.get_by_id(1234))
+    team = database.AsyncRaceTeam.create(
+        room=room,
+        name="The Team",
+        captain=database.User.get_by_id(1234),
+        join_code=database.AsyncRaceTeam.new_join_code(room),
+    )
     for user_id in (1234, 1235):
         database.AsyncRaceEntry.create(room=room, user=database.User.get_by_id(user_id), team=team)
 

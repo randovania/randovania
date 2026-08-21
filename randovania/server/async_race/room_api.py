@@ -568,7 +568,9 @@ async def create_team(
         raise error.InvalidActionError("You are already part of a team in this room")
 
     with database.db.atomic():
-        team = AsyncRaceTeam.create(room=room, name=team_name, captain=user)
+        team = AsyncRaceTeam.create(
+            room=room, name=team_name, captain=user, join_code=AsyncRaceTeam.new_join_code(room)
+        )
         session = team_session.create_session_for_team(room, team)
         team_session.add_member(session, user)
         database.AsyncRaceEntry.create(room=room, user=user, team=team)
@@ -578,19 +580,14 @@ async def create_team(
 
 
 @router.get(endpoints.room_team_join_code_template)
-async def get_team_join_code(sa: ServerAppDep, user: UserDep, room_id: int) -> str:
+async def get_team_join_code(user: UserDep, room_id: int) -> str:
     """
     Returns the code that lets someone else join the current user's team.
     """
     room = AsyncRaceRoom.get_by_id(room_id)
     team = _get_own_team(room, user)
 
-    return sa.encrypt_and_b85_dict(
-        {
-            "room_id": room.id,
-            "team_id": team.id,
-        }
-    )
+    return team.join_code
 
 
 @router.post(endpoints.room_join_team_template)
@@ -604,13 +601,8 @@ async def join_team(sa: ServerAppDep, user: UserDep, room_id: int, join_code: st
     if room.get_race_status(lib.datetime_now()) == AsyncRaceRoomRaceStatus.FINISHED:
         raise error.NotAuthorizedForActionError("Room has already finished")
 
-    try:
-        code_data = sa.decrypt_and_b85_dict(join_code)
-        team = AsyncRaceTeam.get_by_id(code_data["team_id"])
-    except Exception:
-        raise error.InvalidActionError("Invalid join code")
-
-    if team.room_id != room.id:
+    team = AsyncRaceTeam.get_or_none(AsyncRaceTeam.room == room, AsyncRaceTeam.join_code == join_code)
+    if team is None:
         raise error.InvalidActionError("Invalid join code")
 
     if database.AsyncRaceEntry.entry_for(room, user) is not None:

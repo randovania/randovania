@@ -74,7 +74,7 @@ async def create_team(sa: MagicMock, room: AsyncRaceRoom, user_id: int, name: st
 
 async def join_team(sa: MagicMock, room: AsyncRaceRoom, user_id: int, team: AsyncRaceTeam) -> AsyncRaceRoomEntry:
     assert team.captain_id is not None
-    code = await room_api.get_team_join_code(sa, User.get_by_id(team.captain_id), room.id)
+    code = await room_api.get_team_join_code(User.get_by_id(team.captain_id), room.id)
     return await room_api.join_team(sa, User.get_by_id(user_id), room.id, code)
 
 
@@ -234,7 +234,7 @@ async def test_join_team_code_of_another_room(sa, team_room, test_files_dir):
     )
 
     assert team.captain_id is not None
-    code = await room_api.get_team_join_code(sa, User.get_by_id(team.captain_id), team_room.id)
+    code = await room_api.get_team_join_code(User.get_by_id(team.captain_id), team_room.id)
 
     with pytest.raises(error.InvalidActionError, match="Invalid join code"):
         await room_api.join_team(sa, User.get_by_id(1236), other_room.id, code)
@@ -243,7 +243,7 @@ async def test_join_team_code_of_another_room(sa, team_room, test_files_dir):
 @pytest.mark.usefixtures("_during_race")
 async def test_get_team_join_code_without_team(sa, team_room):
     with pytest.raises(error.NotAuthorizedForActionError):
-        await room_api.get_team_join_code(sa, User.get_by_id(1236), team_room.id)
+        await room_api.get_team_join_code(User.get_by_id(1236), team_room.id)
 
 
 @pytest.mark.usefixtures("_during_race")
