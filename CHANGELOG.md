@@ -27,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Operations Deck: Shinesparking up to reach the Operations Room Door is now possible in Door Lock Rando.
 - Added: Operations Ventilation: It is now possible to destroy the Missile Geron by running into it from Operations Deck.
 - Changed: Operations Ventilation: Shinesparking the Missile Geron is now possible in Door Lock Rando.
+- Changed: Quarantine Junction: The Speedboost through the blocks from Main Elevator Access is now possible in Door Lock Rando.
+- Central Reactor: Adjusted the Shinespark from Silo Checkpoint to Silo Tunnel:
+  - Doing it without Hi-Jump is now a ludicrous Shinespark instead of intermediate Movement.
+  - The Beam requirements have been adjusted. Having Wave Beam does not change the difficulty of the shinespark, not having Wave Beam bumps it to a ludicrous Shinespark.
+- Central Reactor: Shinesparking up from the Save Station is now always possible in Door Lock Rando.
+- Quarantine Bay: Added a node to refill infinitely, as it's very quick to do with the Hornoad.
 
 ##### Sector 1 (SRX)
 - Changed: Watering Hole: Getting the item is now possible in Door Lock Rando.
