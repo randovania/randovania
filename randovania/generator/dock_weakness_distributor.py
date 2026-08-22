@@ -145,7 +145,10 @@ def distribute_pre_fill_weaknesses(
         ]
 
         mode = dock_rando_config.get_mode_for(dock_type)
-        if mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK:
+        if (
+            mode == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+            or mode == DockWeaknessDistributorMode.INDIVIDUAL_THOROUGH
+        ):
             distributor_settings = dock_type.get_weakness_distributor()
             docks_to_unlock = [(node, distributor_settings.unlocked) for node in nodes_to_shuffle]
             if distributor_settings.force_change_two_way:
@@ -280,6 +283,7 @@ async def _run_dock_resolver(
     base_graph: WorldGraph,
     filtered_game: GameDescription,
     patches: GamePatches,
+    run_until_end: bool,
 ) -> tuple[State | None, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
@@ -309,11 +313,14 @@ async def _run_dock_resolver(
 
     logic = DockRandoLogic.from_logic(initial_logic, dock, target)
 
+    if run_until_end:
+        logic.victory_condition = initial_logic.victory_condition
+
     try:
         new_state = await _run_resolver(
             state,
             logic,
-            dock.dock_type.get_weakness_distributor().resolver_attempts,
+            dock.dock_type.get_weakness_distributor().resolver_attempts * (2 if run_until_end else 1),
         )
     except exceptions.ResolverTimeoutError:
         new_state = None
@@ -327,21 +334,36 @@ async def _run_dock_resolver(
     return new_state, logic
 
 
-def _determine_valid_weaknesses(
+async def _determine_valid_weaknesses(
     dock: DockNode,
     target: DockNode,
     dock_type_params: WeaknessDistributorSettings,
     dock_type_state: WeaknessDistributorTypeState,
     state: State | None,
     logic: Logic,
+    weaknesses_placed_dict: dict[DockWeakness, int],
+    base_graph: WorldGraph,
+    game: GameDescription,
+    patches: GamePatches,
 ) -> dict[DockWeakness, float]:
     """
     Determine the valid weaknesses to assign to the dock given a reach
     """
 
-    weighted_weaknesses = {dock_type_params.unlocked: 1.0}
+    # NOTE Due to the locked percentage limit, this function is now attempting to place a door every single time, in
+    # order to reach the limit as fast as possible. So, unlocked won't be added to weighted_weaknesses unless absolutely
+    # necessary.
+    # This change will probably have big ramifications on other features that I haven't considered. Also, please note
+    # that it also effects INDIVIDUAL_DOCK mode, not just my new INDIVIDUAL_THOROUGH mode. I can see why this might not
+    # be preferable, but I think it greatly benefits that mode because of how quick the generation time is now.
+    weighted_weaknesses: dict[DockWeakness, float] = {}
 
     if state is not None:
+        thorough_placement = (
+            patches.configuration.dock_weakness_distributor.get_mode_for(dock.dock_type)
+            == DockWeaknessDistributorMode.INDIVIDUAL_THOROUGH
+        )
+
         reach = ResolverReach.calculate_reach(logic, state)
         state_node = state.database_node
         if state_node == target:
@@ -359,7 +381,8 @@ def _determine_valid_weaknesses(
         is_locked_door_not_excluded = dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions)
         is_target_node_reachable = reach.is_node_in_reach(target_graph_node)
 
-        if is_locked_door_not_excluded and is_target_node_reachable:
+        is_source_reachable_from_target = False
+        if is_target_node_reachable and (thorough_placement or is_locked_door_not_excluded):
             # Small optimization to only calculate the reach back, if the locked door is even a viable option
             state_from_target = state.copy()
             state_from_target.node = target_graph_node
@@ -369,28 +392,90 @@ def _determine_valid_weaknesses(
             reach_from_target = ResolverReach.calculate_reach(logic, state_from_target)
             is_source_reachable_from_target = reach_from_target.is_node_in_reach(dock_graph_node)
 
-            if is_source_reachable_from_target:
+            if is_locked_door_not_excluded and is_source_reachable_from_target:
                 weighted_weaknesses[dock_type_params.locked] = 2.0
 
-        exclusions.update(weighted_weaknesses.keys())
+        # Separated into two statements from exclusions.update(weighted_weaknesses.keys()) because it's safe to add
+        # permalocked to exclusions no matter what, and some later code will rely on it being in exclusions reliably
+        exclusions.update([dock_type_params.unlocked, dock_type_params.locked])
 
         converter = logic.graph.converter.convert_db
 
-        weighted_weaknesses.update(
-            {
-                weakness: 1.0
-                for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
-                if (
-                    converter(weakness.requirement).satisfied(state.resources, state.health_for_damage_requirements)
-                    and (
-                        weakness.lock is None
-                        or converter(weakness.lock.requirement).satisfied(
-                            state.resources, state.health_for_damage_requirements
-                        )
+        if thorough_placement and is_source_reachable_from_target:
+            # If "thorough mode", and target is reachable from source, every weakness is valid
+            weighted_weaknesses.update(dict.fromkeys(sorted(dock_type_state.can_change_to.difference(exclusions)), 1.0))
+        else:
+            # Cool interesting well-designed beautiful .update() internal loop reformatted into normal-ass loop
+            # because A) I understand it better and am dumb and B) I need to be able to break from it early.
+            for weakness in sorted(dock_type_state.can_change_to.difference(exclusions)):
+                if converter(weakness.requirement).satisfied(
+                    state.resources, state.health_for_damage_requirements
+                ) and (
+                    weakness.lock is None
+                    or converter(weakness.lock.requirement).satisfied(
+                        state.resources, state.health_for_damage_requirements
                     )
-                )
-            }
-        )
+                ):
+                    weighted_weaknesses.update({weakness: 1.0})
+                elif thorough_placement:
+                    # If in "thorough mode", even one missing weakness means it has to be unlocked, so no need to check
+                    # other weaknesses
+                    break
+
+        # Whether any weaknesses that can be changed to are missing from this dock's options. Does not include unlocked
+        # or permalocked.
+        # TODO might want to doublecheck whether incompatible_dock_weaknesses are being handled appropriately. also
+        # might wanna doublecheck what those even are
+        missing_weaknesses = (
+            len(dock_type_state.can_change_to.difference(exclusions))
+            - len(set(weighted_weaknesses.keys()).difference(exclusions))
+        ) > 0
+
+        # Get the highest non-unlocked weakness counter
+        weaknesses_placed_dict_no_unlocked = weaknesses_placed_dict.copy()
+        weaknesses_placed_dict_no_unlocked.pop(dock_type_params.unlocked)
+        max_counter = max(weaknesses_placed_dict_no_unlocked.values())
+
+        # For resolver run later
+        game_solvable_if_locked = False
+
+        # If any weaknesses are missing, run the resolver
+        if thorough_placement and missing_weaknesses:
+            endgame_state, _endgame_logic = await _run_dock_resolver(dock, target, base_graph, game, patches, True)
+
+            if endgame_state is not None:
+                game_solvable_if_locked = True
+
+        # In order for its weight to be adjusted, permalocked can't be in exclusions
+        if dock_type_params.locked in weighted_weaknesses:
+            exclusions.pop(dock_type_params.locked)
+
+        # Run through weaknesses again to make adjustments to weighted_weaknesses
+        for weakness in sorted(dock_type_state.can_change_to.difference(exclusions)):
+            if weakness not in weighted_weaknesses and game_solvable_if_locked:
+                weighted_weaknesses.update({weakness: 1.0})
+
+            if (
+                weakness in weighted_weaknesses
+                and weakness in weaknesses_placed_dict
+                and patches.configuration.dock_weakness_distributor.attempt_similar_quantities
+            ):
+                # Make weaknesses that haven't been placed as much exponentially more likely
+                difference_from_max = max_counter - weaknesses_placed_dict[weakness]
+                weighted_weaknesses[weakness] *= (difference_from_max + 1) ** 3
+
+        if (
+            # No weaknesses were placed (mostly here for non-"thorough" mode)
+            len(weighted_weaknesses) == 0
+            or (
+                # In "thorough mode", there were missing weaknesses and the game wasn't beatable
+                thorough_placement and missing_weaknesses and not game_solvable_if_locked
+            )
+        ):
+            weighted_weaknesses = {dock_type_params.unlocked: 1.0}
+
+    else:
+        weighted_weaknesses = {dock_type_params.unlocked: 1.0}
 
     return weighted_weaknesses
 
@@ -401,7 +486,6 @@ async def distribute_post_fill_weaknesses(
     """
     Distributes dock weaknesses using a modified assume fill algorithm
     """
-
     unassigned_docks = _get_docks_to_assign(rng, filler_results)
 
     new_patches: list[GamePatches] = [result.patches for result in filler_results.player_results]
@@ -410,6 +494,22 @@ async def distribute_post_fill_weaknesses(
     docks_to_place = len(unassigned_docks)
     filtered_games: dict[int, GameDescription] = {}
     base_graphs: dict[int, WorldGraph] = {}
+
+    # TODO need to get docks_to_place per player
+
+    # Feels a bit odd to do this whole loop here. Wish there was a better way to do it. Maybe there is and I am unaware
+    docks_to_place_per_player: dict[int, int] = {}
+    for player, _dock in unassigned_docks:
+        docks_to_place_per_player.update({player: docks_to_place_per_player.get(player, 0) + 1})
+
+    # For adding variety to placed weaknesses. Related to attempt_similar_quantities
+    # Full dicts of weakness/counter pairs are placed in this list per player
+    # Hierarchy:
+    # - player index is first key
+    #   - dock_type is next key
+    #     - dock_weakness is next key
+    #       - counter for that particular weakness is final value
+    player_weaknesses_placed_dict: dict[int, dict[DockType, dict[DockWeakness, int]]] = {}
 
     start_time = time.perf_counter()
 
@@ -429,9 +529,20 @@ async def distribute_post_fill_weaknesses(
         if not any(
             configuration.dock_weakness_distributor.get_mode_for(dock_type)
             == DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+            or configuration.dock_weakness_distributor.get_mode_for(dock_type)
+            == DockWeaknessDistributorMode.INDIVIDUAL_THOROUGH
             for dock_type in compatible_dock_types
         ):
             continue
+
+        player_weaknesses_placed_dict.update({player: {}})
+
+        # Place all relevant dock types and weaknesses in the counter dict
+        for dock_type in compatible_dock_types:
+            player_weaknesses_placed_dict[player].update({dock_type: {}})
+
+            for dock_weakness in configuration.dock_weakness_distributor.types_state[dock_type].can_change_to:
+                player_weaknesses_placed_dict[player][dock_type].update({dock_weakness: 0.0})
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")
         filtered_games[player] = filtered_database.game_description_for_layout(configuration).get_mutable()
@@ -480,7 +591,6 @@ async def distribute_post_fill_weaknesses(
 
     while unassigned_docks:
         await asyncio.sleep(0)
-        status_update(f"{docks_placed}/{docks_to_place} door locks placed")
 
         player, dock = unassigned_docks.pop()
 
@@ -492,8 +602,30 @@ async def distribute_post_fill_weaknesses(
         target = game.typed_node_by_identifier(patches.get_dock_connection_for(dock), DockNode)
         dock_type_settings = dock.dock_type.get_weakness_distributor()
         dock_type_state = patches.configuration.dock_weakness_distributor.types_state[dock.dock_type]
+        dock_type_mode = patches.configuration.dock_weakness_distributor.get_mode_for(dock.dock_type)
+
+        # Get how many locked doors have been placed
+        weaknesses_placed_dict_no_unlocked = player_weaknesses_placed_dict[player][dock.dock_type].copy()
+        weaknesses_placed_dict_no_unlocked.pop(dock_type_settings.unlocked)
+        locked_counter = sum(weaknesses_placed_dict_no_unlocked.values())
+
+        # Get the percentage of docks that should be locked
+        percentage_limit = float(patches.configuration.dock_weakness_distributor.locked_percentage) / 100.0
+
+        # For display purposes
+        current_percentage = locked_counter / docks_to_place_per_player[player]
+        percentage_for_display = int(current_percentage * 100)
+
+        # Moved this down here so that the percentage can be displayed. Was formerly closer to the top of the while loop
+        # TODO this status_update likely shouldn't feature percentage_for_display during multiplayer. maybe. it could
+        # have a (1/3 players' placements finished) or something. I guess it doesn't matter if individual dock placement
+        # isn't allowed in multiplayer, though?
+        status_update(f"{docks_placed}/{docks_to_place} door locks placed ({percentage_for_display}% locked)")
 
         def should_skip() -> bool:
+            if locked_counter >= docks_to_place_per_player[player] * percentage_limit:
+                return True
+
             if dock_type_state.can_change_to == {dock_type_settings.unlocked}:
                 # no need to run the resolver if doors can only be unlocked
                 return True
@@ -505,6 +637,61 @@ async def distribute_post_fill_weaknesses(
                 # guaranteed to be impossible to reach the dock
                 return True
 
+            # Should prevent simple hallways with only 2 doors and no other docks from having BOTH doors locked
+            # (Shouldn't prevent hallways with, say, 2 doors and an elevator from having both locked. Same applies
+            # to pickups)
+            if dock_type_mode == DockWeaknessDistributorMode.INDIVIDUAL_THOROUGH:
+                # Get all docks and doors in source area
+                source_docks_in_area = [dock_node for dock_node in dock_area.nodes if isinstance(dock_node, DockNode)]
+                source_doors_in_area = [
+                    dock_node for dock_node in source_docks_in_area if dock_node.dock_type == dock_type
+                ]
+
+                # Get all docks and doors in target area
+                target_docks_in_area = [dock_node for dock_node in target_area.nodes if isinstance(dock_node, DockNode)]
+                target_doors_in_area = [
+                    dock_node for dock_node in target_docks_in_area if dock_node.dock_type == dock_type
+                ]
+
+                # Check whether the source area has any pickups
+                # TODO check if there's a better way to do this
+                source_has_pickups = False
+                for _ in dock_area.pickup_indices:
+                    source_has_pickups = True
+                    break
+
+                # Determine whether the source area should be checked for an existing locked door
+                check_source_area = (
+                    len(source_docks_in_area) <= 2  # If there are only two docks in the room
+                    and len(source_docks_in_area) == len(source_doors_in_area)  # If all 2 docks are doors
+                    and not source_has_pickups  # If there are no pickups in the room
+                )
+
+                # Repeat previous for target area
+                target_has_pickups = False
+                for _ in target_area.pickup_indices:
+                    target_has_pickups = True
+                    break
+
+                check_target_area = (
+                    len(target_docks_in_area) <= 2
+                    and len(target_docks_in_area) == len(target_doors_in_area)
+                    and not target_has_pickups
+                )
+
+                # Skip this dock if either the source or target area meet all conditions described above
+                if check_source_area or check_target_area:
+                    for node, weakness in patches.all_dock_weaknesses(patches.game):
+                        if (
+                            (
+                                (check_source_area and node in source_doors_in_area)
+                                or (check_target_area and node in target_doors_in_area)
+                            )
+                            and weakness != dock_type_settings.unlocked
+                            and weakness in dock_type_settings.change_to
+                        ):
+                            return True
+
             return False
 
         if should_skip():
@@ -514,10 +701,19 @@ async def distribute_post_fill_weaknesses(
         else:
             # Determine the reach and possible weaknesses given that reach
             new_state, logic = await _run_dock_resolver(
-                dock, target, base_graphs[player], filtered_games[player], patches
+                dock, target, base_graphs[player], filtered_games[player], patches, False
             )
-            weighted_weaknesses = _determine_valid_weaknesses(
-                dock, target, dock_type_settings, dock_type_state, new_state, logic
+            weighted_weaknesses = await _determine_valid_weaknesses(
+                dock,
+                target,
+                dock_type_settings,
+                dock_type_state,
+                new_state,
+                logic,
+                player_weaknesses_placed_dict[player][dock_type],
+                base_graphs[player],
+                game,
+                patches,
             )
 
         # Assign the dock (and its target if desired/possible)
@@ -528,7 +724,9 @@ async def distribute_post_fill_weaknesses(
         if target.default_dock_weakness in dock_type_state.can_change_from or dock_type_settings.force_change_two_way:
             new_assignment.append((target, weakness))
 
+        player_weaknesses_placed_dict[player][dock_type][weakness] += 1
         docks_placed += 1
+
         debug.debug_print(f"Possibilities: {weighted_weaknesses}")
         debug.debug_print(f"Chosen: {weakness}\n")
 
