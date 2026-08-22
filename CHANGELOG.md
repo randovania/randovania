@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
-- When enabling Door Lock Rando for the default presets, Open Hatches are now also shuffled by default.
+- Changed: When enabling Door Lock Rando for the default presets, Open Hatches are now also shuffled by default.
+- Changed: Rephrased the text that appears when the Operations Deck Navigation Terminal or Restricted Navigation Terminal hints 0 Metroids.
 
 #### Logic Database
 
