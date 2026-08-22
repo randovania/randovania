@@ -50,27 +50,21 @@ class GenerateGameMixin:
         :param retries:
         :return:
         """
-        unsupported_features = preset.get_preset().configuration.unsupported_features()
-        if unsupported_features:
-            if randovania.is_dev_version():
-                confirmation = "Are you sure you want to continue?"
-                buttons = async_dialog.StandardButton.Yes | async_dialog.StandardButton.No
-            else:
-                confirmation = "These features are not available outside of development builds."
-                buttons = async_dialog.StandardButton.No
+        return await self.generate_layout_from_presets([preset] * num_worlds, spoiler=spoiler, retries=retries)
 
-            result = await async_dialog.warning(
-                self.generate_parent_widget,
-                "Unsupported Features",
-                "Preset '{}' uses the unsupported features:\n{}\n\n{}".format(
-                    preset.name,
-                    ", ".join(unsupported_features),
-                    confirmation,
-                ),
-                buttons=buttons,
-                default_button=async_dialog.StandardButton.No,
-            )
-            if result != async_dialog.StandardButton.Yes:
+    async def generate_layout_from_presets(
+        self, presets: list[VersionedPreset], spoiler: bool, retries: int | None = None
+    ) -> LayoutDescription | None:
+        """
+        Generates a new LayoutDescription with one world per given preset
+        Checks every preset for unsupported features.
+        :param presets: One preset per world, in world order.
+        :param spoiler:
+        :param retries:
+        :return:
+        """
+        for preset in presets:
+            if not await self._confirm_unsupported_features(preset):
                 return None
 
         while True:
@@ -80,13 +74,39 @@ class GenerateGameMixin:
                         GeneratorParameters(
                             seed_number=random_seed_number(),
                             spoiler=spoiler,
-                            presets=[preset.get_preset()] * num_worlds,
+                            presets=[preset.get_preset() for preset in presets],
                         )
                     ),
                     retries=retries,
                 )
             except RetryGeneration:
                 pass
+
+    async def _confirm_unsupported_features(self, preset: VersionedPreset) -> bool:
+        """Asks the user to confirm a preset's unsupported features. Returns False to abort."""
+        unsupported_features = preset.get_preset().configuration.unsupported_features()
+        if not unsupported_features:
+            return True
+
+        if randovania.is_dev_version():
+            confirmation = "Are you sure you want to continue?"
+            buttons = async_dialog.StandardButton.Yes | async_dialog.StandardButton.No
+        else:
+            confirmation = "These features are not available outside of development builds."
+            buttons = async_dialog.StandardButton.No
+
+        result = await async_dialog.warning(
+            self.generate_parent_widget,
+            "Unsupported Features",
+            "Preset '{}' uses the unsupported features:\n{}\n\n{}".format(
+                preset.name,
+                ", ".join(unsupported_features),
+                confirmation,
+            ),
+            buttons=buttons,
+            default_button=async_dialog.StandardButton.No,
+        )
+        return result == async_dialog.StandardButton.Yes
 
     async def generate_layout_from_permalink(
         self, permalink: Permalink, retries: int | None = None

@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
 - Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
 - Fixed: Certain interactions with the server will no longer permanently fails in certain cases.
+- Added: Async race rooms can now be multiworld. A room can be created with any number of worlds, each with its own preset, and is then played by teams instead of individual players. Each team races the multiworld on their own, and the teams' times are compared. An async race played in teams can either give the whole team one shared timer, or time every member separately and add their times up. Either way the team's captain starts the race for the team.
+- Added: An async race room now tells you your own finished time as soon as your run is complete, rather than only once the whole race is over. In a race played in teams this is the team's time, however that team is timed.
+- Fixed: The audit log of an async race room can now only be read by the room's creator.
+
 
 ### Metroid Dread
 
