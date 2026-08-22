@@ -3,26 +3,6 @@
     "game": "prime_origins",
     "resource_database": {
         "items": {
-            "Weapon": {
-                "long_name": "Powerful Weapon",
-                "max_capacity": 1,
-                "extra": {}
-            },
-            "VictoryKey": {
-                "long_name": "Victory Key",
-                "max_capacity": 1,
-                "extra": {}
-            },
-            "Health": {
-                "long_name": "Health",
-                "max_capacity": 500,
-                "extra": {}
-            },
-            "Power Beam": {
-                "long_name": "IGNOREME",
-                "max_capacity": 1,
-                "extra": {}
-            },
             "PowerBeam": {
                 "long_name": "Power Beam",
                 "max_capacity": 1,
@@ -59,42 +39,42 @@
                 "extra": {}
             },
             "VariaSuit": {
-                "long_name": "VariaSuit",
+                "long_name": "Varia Suit",
                 "max_capacity": 1,
                 "extra": {}
             },
             "GravitySuit": {
-                "long_name": "GravitySuit",
+                "long_name": "Gravity Suit",
                 "max_capacity": 1,
                 "extra": {}
             },
             "PhazonSuit": {
-                "long_name": "PhazonSuit",
+                "long_name": "Phazon Suit",
                 "max_capacity": 1,
                 "extra": {}
             },
             "BoostBall": {
-                "long_name": "BoostBall",
+                "long_name": "Boost Ball",
                 "max_capacity": 1,
                 "extra": {}
             },
             "SpiderBall": {
-                "long_name": "SpiderBall",
+                "long_name": "Spider Ball",
                 "max_capacity": 1,
                 "extra": {}
             },
             "GrappleBeam": {
-                "long_name": "GrappleBeam",
+                "long_name": "Grapple Beam",
                 "max_capacity": 1,
                 "extra": {}
             },
             "ScrewAttack": {
-                "long_name": "ScrewAttack",
+                "long_name": "Screw Attack",
                 "max_capacity": 1,
                 "extra": {}
             },
             "SpaceJump": {
-                "long_name": "SpaceJump",
+                "long_name": "Space Jump",
                 "max_capacity": 1,
                 "extra": {}
             },
@@ -104,7 +84,7 @@
                 "extra": {}
             },
             "SuperMissile": {
-                "long_name": "SuperMissile",
+                "long_name": "Super Missile",
                 "max_capacity": 1,
                 "extra": {}
             },
@@ -114,7 +94,7 @@
                 "extra": {}
             },
             "IceSpreader": {
-                "long_name": "IceSpreader",
+                "long_name": "Ice Spreader",
                 "max_capacity": 1,
                 "extra": {}
             },
@@ -124,34 +104,160 @@
                 "extra": {}
             },
             "MissileLauncher": {
-                "long_name": "MissileLauncher",
+                "long_name": "Missile Launcher",
                 "max_capacity": 1,
                 "extra": {}
             },
             "MissileExpansion": {
-                "long_name": "MissileExpansion",
+                "long_name": "Missile Expansion",
                 "max_capacity": 1,
                 "extra": {}
             },
             "EnergyTank": {
-                "long_name": "EnergyTank",
+                "long_name": "Energy Tank",
                 "max_capacity": 1,
                 "extra": {}
             },
             "PowerBombExpansion": {
-                "long_name": "PowerBombExpansion",
+                "long_name": "Power Bomb Expansion",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "PowerBombLauncher": {
+                "long_name": "Power Bomb Launcher",
                 "max_capacity": 1,
                 "extra": {}
             }
         },
-        "events": {},
+        "events": {
+            "HOTEWaveBomb": {
+                "long_name": "Hall of the Elders Wave Slot",
+                "extra": {}
+            }
+        },
         "tricks": {},
         "damage": {},
         "versions": {},
         "misc": {},
-        "requirement_template": {},
+        "requirement_template": {
+            "Can Lay Bomb": {
+                "display_name": "Can Lay Bomb",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Bomb",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Lay Power Bomb": {
+                "display_name": "Can Lay Power Bomb",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "PowerBombLauncher",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "PowerBombExpansion",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Break Bomb Blocks": {
+                "display_name": "Can Break Bomb Blocks",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Lay Bomb"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Lay Power Bomb"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Use Spider Ball": {
+                "display_name": "Can Use Spider Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SpiderBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
         "damage_reductions": [],
-        "energy_tank_item_index": "Health"
+        "energy_tank_item_index": "EnergyTank"
     },
     "layers": [
         "default"
@@ -166,7 +272,7 @@
         "type": "resource",
         "data": {
             "type": "items",
-            "name": "VictoryKey",
+            "name": "ScrewAttack",
             "amount": 1,
             "negate": false
         }
@@ -177,7 +283,7 @@
                 "name": "Door",
                 "extra": {},
                 "items": {
-                    "Power Beam": {
+                    "Beam Door": {
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -188,15 +294,71 @@
                         },
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
+                    },
+                    "Missile Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileLauncher",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    },
+                    "Wave Beam Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "WaveBeam",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    },
+                    "Ice Beam Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "IceBeam",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    },
+                    "Plasma Beam Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "PlasmaBeam",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
                 "weakness_distributor": null
             },
-            "Other": {
-                "name": "Other",
+            "Elevator": {
+                "name": "Elevator",
                 "extra": {},
                 "items": {
-                    "Not Determined": {
+                    "Elevator": {
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -210,11 +372,67 @@
                     }
                 },
                 "weakness_distributor": null
+            },
+            "Morph Ball Tunnel": {
+                "name": "Morph Ball Tunnel",
+                "extra": {},
+                "items": {
+                    "Morph Ball Tunnel": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    }
+                },
+                "weakness_distributor": null
+            },
+            "Open Access": {
+                "name": "Open Access",
+                "extra": {},
+                "items": {
+                    "Open Access (Horizontal)": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    },
+                    "Open Access (Vertical)": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    }
+                },
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
-            "type": "Other",
-            "name": "Not Determined"
+            "type": "Open Access",
+            "name": "Open Access (Horizontal)"
         }
     },
     "hint_feature_database": {},
