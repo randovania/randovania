@@ -2081,7 +2081,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY",
+                                                        "comment": "Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2105,15 +2105,6 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "misc",
-                                                                    "name": "DoorLockRando",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
                                                                     "name": "EntranceRando",
                                                                     "amount": 1,
                                                                     "negate": true
@@ -2122,8 +2113,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "L0Locks",
+                                                                    "type": "events",
+                                                                    "name": "OpDeckSave",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -5432,6 +5423,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "MAIN_HUB_BOTTOM",
                         "door_idx": [
                             50
                         ],
@@ -5706,6 +5699,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_2",
                         "door_idx": [
                             68
                         ]
@@ -5857,6 +5852,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_4",
                         "door_idx": [
                             70
                         ]
@@ -5960,6 +5957,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_6",
                         "door_idx": [
                             72
                         ]
@@ -6111,6 +6110,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_1",
                         "door_idx": [
                             67
                         ]
@@ -6262,6 +6263,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_3",
                         "door_idx": [
                             69
                         ]
@@ -6365,6 +6368,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_5",
                         "door_idx": [
                             71
                         ]
@@ -6962,7 +6967,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y",
+                                            "comment": "Destroy with Speed Booster",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6976,37 +6981,10 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
                                                         "type": "misc",
                                                         "name": "EntranceRando",
                                                         "amount": 1,
                                                         "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -7025,6 +7003,57 @@
                                                         "name": "Knowledge",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Run from edge of Operations Deck. TODO: vid.",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Run from Save Station, spark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y . This can safely have no DLR check",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "OpDeckSave",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -8109,6 +8138,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TOP",
                         "door_idx": [
                             94,
                             49
@@ -8408,6 +8439,38 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Operations Deck Recharge Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Operations Save Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Operations Save Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 88.56,
+                        "y": 131.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "OpDeckSave",
+                    "connections": {
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11480,6 +11543,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "OPERATIONS_DECK_TOP",
                         "door_idx": [
                             26
                         ]
@@ -11582,6 +11647,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "OPERATIONS_DECK_BOTTOM",
                         "door_idx": [
                             25
                         ]
@@ -12278,6 +12345,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "RESTRICTED_LAB_TO_SECTOR_1",
                         "door_idx": [
                             154
                         ]
@@ -13307,6 +13376,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "HABITATION_DECK_BOTTOM",
                         "door_idx": [
                             177
                         ]
@@ -13409,6 +13480,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "HABITATION_DECK_TOP",
                         "door_idx": [
                             178
                         ]

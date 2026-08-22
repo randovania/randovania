@@ -334,6 +334,7 @@ ConstructDockTypeDatabase = Struct(
                     locked=String,
                     change_from=PrefixedArray(VarInt, String),
                     change_to=PrefixedArray(VarInt, String),
+                    indirect_change_from=PrefixedArray(VarInt, String),
                     force_change_two_way=Flag,
                     resolver_attempts=VarInt,
                     to_shuffle_proportion=Float64b,

@@ -150,7 +150,11 @@ if should_compile:
             extra_compile_args.extend(["-O0", "-fno-omit-frame-pointer"])  # no optimization
 
     # Conditionally add coverage tracing macros
-    define_macros = [("CYTHON_TRACE", "1"), ("CYTHON_TRACE_NOGIL", "1")] if enable_coverage_tracing else []
+    define_macros = (
+        [("CYTHON_TRACE", "1"), ("CYTHON_TRACE_NOGIL", "1"), ("CYTHON_USE_SYS_MONITORING", "0")]
+        if enable_coverage_tracing
+        else []
+    )
 
     ext_modules = cythonize(
         [

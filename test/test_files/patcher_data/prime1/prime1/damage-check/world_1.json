@@ -28,7 +28,8 @@
         "quickplay": false,
         "quiet": false,
         "suitColors": {},
-        "forceFusion": false
+        "forceFusion": false,
+        "rainbowPhazonBall": false
     },
     "gameConfig": {
         "resultsString": "1.2.3 | Seed Hash - Some Words (XXXXXXXX)",
@@ -85,7 +86,14 @@
             "variaSuit": false,
             "phazonSuit": false,
             "energyTanks": 1,
-            "wavebuster": false
+            "wavebuster": false,
+            "missileLauncher": true,
+            "powerBombLauncher": true,
+            "powerSuit": 0,
+            "springBall": false,
+            "unknownItem1": 0,
+            "unlimitedMissiles": false,
+            "unlimitedPowerBombs": false
         },
         "etankCapacity": 100,
         "itemMaxCapacity": {
@@ -106,6 +114,7 @@
             "description": "Seed Hash: Some Words"
         },
         "mainMenuMessage": "Randovania v1.2.3\nSome Words",
+        "saveName": "Some Words",
         "creditsString": "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Charge Beam&pop;\nChozo Ruins - Transport Access North\nPhazon Mines - Fungal Hall B\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Wave Beam&pop;\nAs a random starting item\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Ice Beam&pop;\nPhendrana Drifts - Chapel of the Elders\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Plasma Beam&pop;\nTallon Overworld - Alcove\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Missile Launcher&pop;\nAs a random starting item\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Grapple Beam&pop;\nChozo Ruins - Main Plaza\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Thermal Visor&pop;\nTallon Overworld - Biohazard Containment\n\n&push;&font=C29C51F1;&main-color=#33ffd6;X-Ray Visor&pop;\nPhazon Mines - Phazon Mining Tunnel\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Space Jump Boots&pop;\nChozo Ruins - Antechamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Morph Ball&pop;\nMagmoor Caverns - Lava Lake\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Morph Ball Bomb&pop;\nTallon Overworld - Hydro Access Tunnel\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Boost Ball&pop;\nChozo Ruins - Ruined Shrine\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Spider Ball&pop;\nChozo Ruins - Crossway\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Power Bomb&pop;\nPhendrana Drifts - Ice Ruins West\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Varia Suit&pop;\nChozo Ruins - Gathering Hall\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Gravity Suit&pop;\nTallon Overworld - Great Tree Chamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Phazon Suit&pop;\nChozo Ruins - Tower Chamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Super Missile&pop;\nChozo Ruins - Burn Dome\nMagmoor Caverns - Shore Tunnel\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Wavebuster&pop;\nMagmoor Caverns - Fiery Shores\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Ice Spreader&pop;\nChozo Ruins - Elder Chamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Flamethrower&pop;\nPhendrana Drifts - Research Lab Aether\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Elder&pop;\nPhazon Mines - Metroid Quarantine A\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Lifegiver&pop;\nPhendrana Drifts - Phendrana Shorelines\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Strength&pop;\nPhazon Mines - Metroid Quarantine B\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Truth&pop;\nPhendrana Drifts - Research Core\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Warrior&pop;\nPhendrana Drifts - Chozo Ice Temple\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Wild&pop;\nChozo Ruins - Ruined Gallery",
         "artifactHints": {
             "Artifact of Chozo": "&push;&main-color=#c300ff;Artifact of Chozo&pop; has no need to be located.",
@@ -1509,7 +1518,22 @@
                             "shieldType": "Blue",
                             "blastShieldType": "None"
                         }
-                    }
+                    },
+                    "timers": [
+                        {
+                            "id": 15597568,
+                            "time": 0.5,
+                            "startImmediately": true
+                        }
+                    ],
+                    "addConnections": [
+                        {
+                            "senderId": 15597568,
+                            "state": "ZERO",
+                            "targetId": 262170,
+                            "message": "SET_TO_ZERO"
+                        }
+                    ]
                 },
                 "Security Access A": {
                     "pickups": [
@@ -3678,22 +3702,22 @@
         "enemy_rando_diff_xyz": false
     },
     "uuid": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        17,
-        17,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
+        98,
+        4,
+        141,
+        241,
+        10,
+        98,
+        137,
+        56,
+        142,
+        68,
+        128,
+        214,
+        11,
+        91,
+        122,
+        86
     ],
     "_randovania_meta": {
         "layout_was_user_modified": false,

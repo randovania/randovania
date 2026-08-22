@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import dataclasses
 import datetime
 import inspect
@@ -11,10 +12,11 @@ from enum import Enum
 from frozendict import frozendict
 
 from randovania.lib import type_lib
-from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 if typing.TYPE_CHECKING:
     from _typeshed import DataclassInstance
+
+    from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 T = typing.TypeVar("T")
 
@@ -76,6 +78,9 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict, metadata: 
     elif type_ is uuid.UUID:
         return uuid.UUID(arg)
 
+    elif type_ is bytes:
+        return base64.b64decode(arg)
+
     elif type_ is datetime.datetime:
         return datetime.datetime.fromisoformat(arg)
 
@@ -107,6 +112,9 @@ def _encode_value(value: typing.Any, metadata: Metadata) -> typing.Any:
 
     elif isinstance(value, uuid.UUID):
         return str(value)
+
+    elif isinstance(value, bytes):
+        return base64.b64encode(value).decode("ascii")
 
     elif type_lib.is_named_tuple(type(value)):
         if metadata.get("store_named_tuple_without_names"):

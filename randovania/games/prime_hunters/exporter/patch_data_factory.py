@@ -251,7 +251,7 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
                 self.description.all_patches,
                 self.worlds_config,
                 exporter.namer,
-                True if octoliths_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                octoliths_precision == SpecificPickupHintMode.HIDE_AREA,
                 octoliths,
                 False,
             )

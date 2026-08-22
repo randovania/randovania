@@ -5,7 +5,7 @@ import typing
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import data_reader, default_database, integrity_check
+from randovania.game_description import data_reader, data_writer, default_database, integrity_check
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
@@ -31,13 +31,12 @@ def test_find_database_errors(game_enum: RandovaniaGame):
     assert errors == []
 
 
-def test_invalid_db(test_files_dir):
+def test_invalid_db(test_files_dir, acceptance_check):
     data_path = test_files_dir.joinpath("integrity_check_invalid_db.json")
     sample_data = typing.cast("dict", json_lib.read_path(data_path))
     gd = data_reader.decode_data(sample_data)
 
-    # # uncomment this line to migrate the test database format
-    # json_lib.write_path(data_path, data_writer.write_game_description(gd)); assert False
+    acceptance_check(data_path, data_writer.write_game_description(gd))
 
     # Run
     errors = integrity_check.find_database_errors(gd)

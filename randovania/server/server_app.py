@@ -251,6 +251,32 @@ class ServerApp:
                 status_code=status_code,
             )
 
+        @self.app.exception_handler(error.BaseNetworkError)
+        async def network_error_handler(request: fastapi.Request, exc: error.BaseNetworkError) -> fastapi.Response:
+            error_map: dict[type[error.BaseNetworkError], int] = {
+                error.NotLoggedInError: 401,
+                error.WrongPasswordError: 401,
+                error.NotAuthorizedForActionError: 403,
+                error.InvalidActionError: 400,
+                error.InvalidSessionError: 401,
+                error.ServerError: 500,
+                error.RequestTimeoutError: 408,
+                error.UserNotAuthorizedToUseServerError: 403,
+                error.UnsupportedClientError: 426,
+                error.WorldDoesNotExistError: 404,
+                error.WorldNotAssociatedError: 404,
+            }
+            status_code = next(
+                (code for cls, code in error_map.items() if isinstance(exc, cls)),
+                400,
+            )
+            return JSONResponse(exc.as_json, status_code=status_code)
+
+        # e.g. when a room id is not found
+        @self.app.exception_handler(peewee.DoesNotExist)
+        async def not_found_handler(request: fastapi.Request, exc: peewee.DoesNotExist) -> fastapi.Response:
+            return JSONResponse({"status_message": "404 Not Found", "detail": "Resource not found"}, status_code=404)
+
     async def get_current_user(self, sid: str) -> User:
         """Returns the User associated with this sid."""
 

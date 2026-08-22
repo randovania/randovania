@@ -206,6 +206,10 @@
             "AllowDownwardShots": {
                 "long_name": "Allow Downward Shots",
                 "extra": {}
+            },
+            "AllowScrewAttackToBreakBlocks": {
+                "long_name": "Allow Screw Attack To Break Blocks",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -400,6 +404,39 @@
                                 "data": {
                                     "type": "misc",
                                     "name": "AllowDownwardShots",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Break Blocks with Screw Attack"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Break Blocks with Screw Attack": {
+                "display_name": "Can Break Blocks with Screw Attack",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "AllowScrewAttackToBreakBlocks",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Screw Attack",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -697,6 +734,7 @@
                         "Screw Attack Door",
                         "Wave Beam Door"
                     ],
+                    "indirect_change_from": [],
                     "force_change_two_way": false,
                     "resolver_attempts": 125,
                     "to_shuffle_proportion": 1.0,

@@ -235,7 +235,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 self.description.all_patches,
                 self.worlds_config,
                 exporter.namer,
-                True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                metroid_precision == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
                 True,
             )
@@ -244,7 +244,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 self.description.all_patches,
                 self.worlds_config,
                 exporter.namer,
-                True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                charge_precision == SpecificPickupHintMode.HIDE_AREA,
                 [self.resource_db.get_item("ChargeBeam")],
                 True,
             )

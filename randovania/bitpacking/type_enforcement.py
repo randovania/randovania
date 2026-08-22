@@ -32,7 +32,7 @@ class DataclassPostInitTypeCheck:
                 type_args = None
 
             if not isinstance(v, resolved_type):
-                raise ValueError(f"Unexpected type for field {f.name} ({v}): Got {type(v)}, expected {f_type}.")
+                raise TypeError(f"Unexpected type for field {f.name} ({v}): Got {type(v)}, expected {f_type}.")
 
             if resolved_type is dict and type_args is not None:
                 assert isinstance(v, dict)

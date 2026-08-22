@@ -696,6 +696,14 @@
             "Animals": {
                 "long_name": "Main Deck Animal Controls",
                 "extra": {}
+            },
+            "S1ChargeSave": {
+                "long_name": "Sector 1 Central Save Room Visited",
+                "extra": {}
+            },
+            "OpDeckSave": {
+                "long_name": "Main Deck Operations Deck Save Visited",
+                "extra": {}
             }
         },
         "tricks": {
@@ -719,7 +727,7 @@
             },
             "Knowledge": {
                 "long_name": "Knowledge",
-                "description": "The player may be expected to know alternate enemy/block weaknesses or be able to identify potential softlocks risks.",
+                "description": "The player may be expected to know alternate enemy/block weaknesses or be able to identify potential softlock risks.",
                 "require_documentation_above": 1,
                 "extra": {}
             },
@@ -2316,7 +2324,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": "Dev Note: Most instances can also be shinesparked. Also, Central Stabilizer contains extra rules.",
+                        "comment": "Dev Note: Most instances can also be shinesparked. Also, Central and Southeast Stabilizer contains extra rules.",
                         "items": [
                             {
                                 "type": "or",
@@ -2871,6 +2879,7 @@
                         "Locked Hatch",
                         "Open Hatch"
                     ],
+                    "indirect_change_from": [],
                     "force_change_two_way": true,
                     "resolver_attempts": 100,
                     "to_shuffle_proportion": 1.0,

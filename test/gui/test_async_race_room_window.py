@@ -229,7 +229,7 @@ async def test_on_view_user_entries(skip_qtbot, options, default_blank_preset, m
     )
     window._network_client.async_race_admin_update_entries = AsyncMock(return_value=window.room)
     window._network_client.async_race_admin_get_admin_data.return_value = AsyncRaceRoomAdminData(
-        [
+        users=[
             AsyncRaceEntryData(
                 user=RandovaniaUser(id=1235, name="user"),
                 join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),

@@ -5,7 +5,6 @@ import datetime
 import functools
 import logging
 import uuid
-from collections.abc import Callable
 from typing import TYPE_CHECKING, NamedTuple
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -24,7 +23,6 @@ from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_WORLD_NAME_LENGTH,
     WORLD_NAME_RE,
@@ -35,9 +33,12 @@ from randovania.network_common.multiplayer_session import (
 )
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.network_common.game_details import GameDetails
     from randovania.network_common.user import UserID
 
 logger = logging.getLogger(__name__)
@@ -621,7 +622,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
                     self._create_world_item(world_uid, unclaimed_world_item, self.UNCLAIMED_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
                     )
 
@@ -634,7 +635,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in abandoned_worlds:
                     self._create_world_item(world_uid, abandoned_world_item, self.ABANDONED_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 
@@ -645,7 +646,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in world_by_id.keys():
                     self._create_world_item(world_uid, total_world_item, self.ALL_WORLDS_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 

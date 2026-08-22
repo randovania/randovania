@@ -13,9 +13,12 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
+    import uuid
+
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -73,6 +76,16 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         self.game = filtered_database.game_description_for_layout(self.configuration)
         self.resource_db = self.game.get_resource_database_view()
         self.memo_data = self.create_memo_data()
+
+    @property
+    def world_uuid(self) -> uuid.UUID:
+        """A stable identifier for this world: the session-assigned uuid, or one derived from the seed
+        so solo games get a unique value too. Multiworld games exported outside a session have no
+        per-world identity to derive, so they stay invalid."""
+        own_uuid = self.worlds_config.get_own_uuid()
+        if own_uuid == INVALID_UUID and not self.worlds_config.is_multiworld:
+            return self.description.seed_uuid
+        return own_uuid
 
     def game_enum(self) -> RandovaniaGame:
         """Returns the game for which this PatchDataFactory is for."""

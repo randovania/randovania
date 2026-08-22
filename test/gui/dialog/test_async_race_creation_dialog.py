@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import datetime
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
@@ -64,8 +63,8 @@ async def test_validate(skip_qtbot, preset_manager, options, mocker: pytest_mock
     settings = AsyncRaceSettings(
         name="The Name",
         password=None,
-        start_date=datetime.datetime(2020, 1, 1, 0, 0),
-        end_date=datetime.datetime(2021, 1, 1, 0, 0),
+        start_date=QtCore.QDateTime(2020, 1, 1, 0, 0, 0).toUTC().toPython().replace(tzinfo=datetime.UTC),
+        end_date=QtCore.QDateTime(2021, 1, 1, 0, 0, 0).toUTC().toPython().replace(tzinfo=datetime.UTC),
         visibility=MultiplayerSessionVisibility.VISIBLE,
         allow_pause=False,
     )
@@ -76,7 +75,7 @@ async def test_validate(skip_qtbot, preset_manager, options, mocker: pytest_mock
 
     dialog.ui.settings_widget.ui.password_edit.setText("The Secret")
     assert dialog.ui.button_box.button(QtWidgets.QDialogButtonBox.StandardButton.Ok).isEnabled()
-    assert dialog.create_settings_object() == dataclasses.replace(settings, password="The Secret")
+    assert dialog.create_settings_object() == settings.model_copy(update={"password": "The Secret"})
 
 
 @pytest.mark.parametrize(
@@ -125,9 +124,9 @@ def test_settings_dialog(skip_qtbot) -> None:
             id=1000,
             name="Async Room",
             creator="TheCreator",
-            creation_date=datetime.datetime(2020, 1, 1),
-            start_date=datetime.datetime(2020, 2, 1),
-            end_date=datetime.datetime(2020, 3, 1),
+            creation_date=datetime.datetime(2020, 1, 1, tzinfo=datetime.UTC),
+            start_date=datetime.datetime(2020, 2, 1, tzinfo=datetime.UTC),
+            end_date=datetime.datetime(2020, 3, 1, tzinfo=datetime.UTC),
             visibility=MultiplayerSessionVisibility.HIDDEN,
             race_status=AsyncRaceRoomRaceStatus.SCHEDULED,
             auth_token="Token",
@@ -142,8 +141,8 @@ def test_settings_dialog(skip_qtbot) -> None:
     assert dialog.create_settings_object() == AsyncRaceSettings(
         name="Async Room",
         password=None,
-        start_date=datetime.datetime(2020, 2, 1, 0, 0),
-        end_date=datetime.datetime(2020, 3, 1, 0, 0),
+        start_date=datetime.datetime(2020, 2, 1, tzinfo=datetime.UTC),
+        end_date=datetime.datetime(2020, 3, 1, tzinfo=datetime.UTC),
         visibility=MultiplayerSessionVisibility.HIDDEN,
         allow_pause=False,
     )

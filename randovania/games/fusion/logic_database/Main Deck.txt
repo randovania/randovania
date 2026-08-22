@@ -355,8 +355,8 @@ Extra - minimap_coordinates:
           All Infants Collected
           Any of the following:
               Have Any Jump Upgrade
-              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY
-              Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check
+              Speed Booster and After Main Deck Operations Deck Save Visited and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
               # Single Wall Jump
               Wall Jump (Beginner) and Can Single Walljump
               # Jump 2-BombJump: https://youtu.be/416jYaEuveg
@@ -811,6 +811,8 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 11}, {'x': 6, 'y': 11}, {'x': 7, 'y'
 > Elevator to Main Elevator Shaft; Heals? False; Spawn Point
   * Layers: default
   * Elevator to Main Elevator Shaft/Other to Sector Hub
+  * Extra - direction: up
+  * Extra - name: MAIN_HUB_BOTTOM
   * Extra - door_idx: [50]
   * Extra - X: 24
   * Extra - Y: 18
@@ -869,6 +871,8 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 12}, {'x': 8, 'y': 13}]
 > Elevator to Sector 2 (TRO); Heals? False
   * Layers: default
   * Elevator to Sector 2 (TRO) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_2
   * Extra - door_idx: [68]
   > Door to Sector Hub
       Trivial
@@ -899,6 +903,8 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 12}, {'x': 9, 'y': 13}]
 > Elevator to Sector 4 (AQA); Heals? False
   * Layers: default
   * Elevator to Sector 4 (AQA) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_4
   * Extra - door_idx: [70]
   > Door to Sector Hub Lift 2
       Trivial
@@ -919,6 +925,8 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 12}, {'x': 10, 'y': 13}]
 > Elevator to Sector 6 (NOC); Heals? False
   * Layers: default
   * Elevator to Sector 6 (NOC) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_6
   * Extra - door_idx: [72]
   > Door to Sector Hub Lift 4
       Trivial
@@ -949,6 +957,8 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 12}, {'x': 4, 'y': 13}]
 > Elevator to Sector 1 (SRX); Heals? False
   * Layers: default
   * Elevator to Sector 1 (SRX) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_1
   * Extra - door_idx: [67]
   > Door to Sector Hub
       Trivial
@@ -979,6 +989,8 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 12}, {'x': 3, 'y': 13}]
 > Elevator to Sector 3 (PYR); Heals? False
   * Layers: default
   * Elevator to Sector 3 (PYR) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_3
   * Extra - door_idx: [69]
   > Door to Sector Hub Lift 1
       Trivial
@@ -999,6 +1011,8 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 12}, {'x': 2, 'y': 13}]
 > Elevator to Sector 5 (ARC); Heals? False
   * Layers: default
   * Elevator to Sector 5 (ARC) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_5
   * Extra - door_idx: [71]
   > Door to Sector Hub Lift 3
       Trivial
@@ -1123,8 +1137,14 @@ Hint Features - Climbable Surface, Geron
   > Event - Upper Maintainance Geron
       Any of the following:
           Can Kill Missile Geron
-          # Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y
-          Level 0 Keycard and Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          All of the following:
+              # Destroy with Speed Booster
+              Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Disabled Entrance Rando
+              Any of the following:
+                  # Run from edge of Operations Deck. TODO: vid.
+                  Movement (Intermediate)
+                  # Run from Save Station, spark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y . This can safely have no DLR check
+                  After Main Deck Operations Deck Save Visited and Shinespark Tricks (Advanced)
 
 > Other to Operations Ventilation Storage; Heals? False
   * Layers: default
@@ -1323,6 +1343,8 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 8}, {'x': 6, 'y': 9}]
 > Elevator to Main Elevator Shaft; Heals? False
   * Layers: default
   * Elevator to Main Elevator Shaft/Other to Main Elevator
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TOP
   * Extra - door_idx: [94, 49]
   > Other to Main Elevator Access
       Trivial
@@ -1380,6 +1402,14 @@ Extra - unlocked_save_recharge_station: True
   * Extra - X: 8
   * Extra - Y: 10
   > Door to Operations Deck Recharge Room
+      Trivial
+  > Event - Operations Save Visited
+      Trivial
+
+> Event - Operations Save Visited; Heals? False
+  * Layers: default
+  * Event Main Deck Operations Deck Save Visited
+  > Save Station
       Trivial
 
 ----------------
@@ -1899,6 +1929,8 @@ Extra - minimap_coordinates: [{'x': 19, 'y': 2}, {'x': 19, 'y': 3}]
 > Elevator to Crew Quarters Elevator; Heals? False
   * Layers: default
   * Elevator to Crew Quarters Elevator/Elevator to Operations Deck Elevator
+  * Extra - direction: down
+  * Extra - name: OPERATIONS_DECK_TOP
   * Extra - door_idx: [26]
   > Door to Operations Deck
       Trivial
@@ -1918,6 +1950,8 @@ Extra - minimap_coordinates: [{'x': 19, 'y': 4}, {'x': 19, 'y': 5}]
 > Elevator to Operations Deck Elevator; Heals? False
   * Layers: default
   * Elevator to Operations Deck Elevator/Elevator to Crew Quarters Elevator
+  * Extra - direction: up
+  * Extra - name: OPERATIONS_DECK_BOTTOM
   * Extra - door_idx: [25]
   > Door to Crew Quarters West
       Trivial
@@ -2048,6 +2082,8 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 20}, {'x': 7, 'y': 21}]
 > Elevator to Tourian Elevator; Heals? False
   * Layers: default
   * Elevator to Tourian Elevator/Elevator to Restricted Zone Elevator
+  * Extra - direction: up
+  * Extra - name: RESTRICTED_LAB_TO_SECTOR_1
   * Extra - door_idx: [154]
   > Door to Restricted Navigation Room
       Trivial
@@ -2259,6 +2295,8 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 6}, {'x': 12, 'y': 7}]
 > Elevator to Habitation Deck Elevator; Heals? False
   * Layers: default
   * Elevator to Habitation Deck Elevator/Elevator to Nexus Elevator
+  * Extra - direction: up
+  * Extra - name: HABITATION_DECK_BOTTOM
   * Extra - door_idx: [177]
   > Door to Central Nexus
       Trivial
@@ -2278,6 +2316,8 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 4}, {'x': 12, 'y': 5}]
 > Elevator to Nexus Elevator; Heals? False
   * Layers: default
   * Elevator to Nexus Elevator/Elevator to Habitation Deck Elevator
+  * Extra - direction: down
+  * Extra - name: HABITATION_DECK_TOP
   * Extra - door_idx: [178]
   > Door to Habitation Deck Entrance
       Trivial

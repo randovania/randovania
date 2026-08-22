@@ -5,7 +5,6 @@ import datetime
 import re
 import typing
 import uuid
-from collections.abc import Mapping
 from functools import cached_property
 from typing import TYPE_CHECKING, Self
 
@@ -13,9 +12,7 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.lib.json_lib import JsonObject_RO
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.game_details import GameDetails
@@ -24,6 +21,10 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 from randovania.network_common.user import RandovaniaUser, UserID
 
 if TYPE_CHECKING:
+    from collections.abc import Mapping
+
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.lib.json_lib import JsonObject_RO
     from randovania.network_common.remote_inventory import RemoteInventory
 
 MAX_SESSION_NAME_LENGTH = 50
