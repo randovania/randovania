@@ -1,9 +1,9 @@
-from collections.abc import Callable, Iterator
+from __future__ import annotations
+
 from contextlib import contextmanager
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, cast
 
 from PySide6.QtCore import QObject, QSize, Qt, Signal
-from PySide6.QtGui import QKeyEvent
 from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
@@ -14,11 +14,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
@@ -27,14 +23,24 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor.model import ROLE
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+
+    from PySide6.QtGui import QKeyEvent
+
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.region import Region
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.resources.resource_database import NamedRequirementTemplate, ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 class Editor(QObject):
@@ -144,7 +150,7 @@ class ResourceEditor(Editor):
         return resource_info.long_name
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._combo_name):
             self._set_name_combo(requirement.resource)
 
@@ -175,7 +181,7 @@ class CountedResourceEditor(ResourceEditor):
 
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._combo_negate):
             self._set_negate_combo(requirement.negate)
         with signals_blocked(self._spinbox_amount):
@@ -211,7 +217,7 @@ class TrickResourceEditor(ResourceEditor):
 
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._combo_difficulty):
             self._set_difficulty_combo(requirement.amount)
 
@@ -236,7 +242,7 @@ class SimpleResourceEditor(ResourceEditor):
 
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
-        requirement = cast(ResourceRequirement, requirement)
+        requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._checkbox_negate):
             self._set_negate_combo(requirement)
 
@@ -269,7 +275,7 @@ class TemplateEditor(Editor):
         return template.display_name
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(RequirementTemplate, requirement)
+        requirement = cast("RequirementTemplate", requirement)
         with signals_blocked(self._combo_name):
             self._set_name_combo(requirement.template_name)
 
@@ -306,7 +312,7 @@ class NodeEditor(Editor):
             combo.addItem(self.to_string(item), item)
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(NodeRequirement, requirement)
+        requirement = cast("NodeRequirement", requirement)
         region: Region = self._region_list.region_with_name(requirement.node_identifier.region)
         area: Area = region.area_by_identifier(requirement.node_identifier.area_identifier)
         node: Node = self._region_list.node_by_identifier(requirement.node_identifier)
@@ -359,11 +365,11 @@ class ArrayEditor(Editor):
 
         self._add_to_layout([self._combo_type, self._line_edit_comment])
 
-    def to_string(self, _type: type[RequirementAnd] | type[RequirementOr]) -> str:
+    def to_string(self, _type: type[RequirementAnd | RequirementOr]) -> str:
         return _type.combinator().strip().title()
 
     def populate(self, requirement: Requirement) -> None:
-        requirement = cast(RequirementArrayBase, requirement)
+        requirement = cast("RequirementArrayBase", requirement)
         with signals_blocked(self._combo_type):
             self._set_type_combo(requirement)
         with signals_blocked(self._line_edit_comment):

@@ -1,17 +1,21 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable
+from typing import TYPE_CHECKING
 
 import pytest
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
+    from randovania.game_description.requirements.base import Requirement
 
 
 @pytest.fixture

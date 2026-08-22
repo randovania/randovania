@@ -1,8 +1,11 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6.QtCore import QModelIndex, QPersistentModelIndex, Qt, Signal
 from PySide6.QtGui import QStandardItem, QStandardItemModel
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -10,6 +13,10 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 from randovania.layout.base.trick_level import LayoutTrickLevel
+
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.base import Requirement
+
 
 ROLE = Qt.ItemDataRole.UserRole
 

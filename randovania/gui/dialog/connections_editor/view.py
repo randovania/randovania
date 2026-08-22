@@ -1,4 +1,6 @@
-from typing import cast
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, cast
 
 from PySide6.QtCore import QItemSelectionModel, QModelIndex, QObject, QPersistentModelIndex, QSize, Qt, Signal
 from PySide6.QtGui import QAbstractTextDocumentLayout, QPainter, QPalette, QTextDocument
@@ -14,7 +16,9 @@ from PySide6.QtWidgets import (
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.gui.dialog.connections_editor.model import ROLE, RequirementModel
-from randovania.gui.dialog.connections_editor.path import RequirementTreePath
+
+if TYPE_CHECKING:
+    from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
 class RequirementView(QObject):
@@ -42,7 +46,7 @@ class RequirementView(QObject):
         self.selection_changed.emit(current)
 
     def restore_selection(self, path: RequirementTreePath) -> None:
-        model = cast(RequirementModel, self._tree.model())
+        model = cast("RequirementModel", self._tree.model())
         index = model.index_from_path(path)
 
         selection_model = self._tree.selectionModel()

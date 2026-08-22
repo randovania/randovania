@@ -1,17 +1,21 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from PySide6.QtGui import QAction, QKeySequence, Qt, QUndoStack
 from PySide6.QtWidgets import QDialog, QMessageBox, QWidget
 
-from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.dialog.connections_editor.controller import RequirementController
 from randovania.gui.dialog.connections_editor.model import RequirementModel
 from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 from randovania.gui.dialog.connections_editor.view import RequirementView
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class ConnectionsEditor(QDialog, Ui_ConnectionEditor):

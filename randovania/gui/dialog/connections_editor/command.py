@@ -1,9 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from PySide6.QtGui import QUndoCommand
 
-from randovania.game_description.requirements.base import Requirement
-from randovania.gui.dialog.connections_editor.model import RequirementModel
-from randovania.gui.dialog.connections_editor.path import RequirementTreePath
-from randovania.gui.dialog.connections_editor.view import RequirementView
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.gui.dialog.connections_editor.model import RequirementModel
+    from randovania.gui.dialog.connections_editor.path import RequirementTreePath
+    from randovania.gui.dialog.connections_editor.view import RequirementView
 
 
 class RequirementEditCommand(QUndoCommand):

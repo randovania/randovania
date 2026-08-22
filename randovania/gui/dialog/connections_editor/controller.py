@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-from PySide6.QtCore import QModelIndex, QObject, Signal
-from PySide6.QtGui import QUndoStack
-from PySide6.QtWidgets import QComboBox, QStackedWidget, QWidget
+from typing import TYPE_CHECKING
 
-from randovania.game_description.db.region_list import RegionList
+from PySide6.QtCore import QModelIndex, QObject, Signal
+
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor import requirement_tree
 from randovania.gui.dialog.connections_editor.command import RequirementEditCommand
@@ -23,8 +21,15 @@ from randovania.gui.dialog.connections_editor.editor import (
     signals_blocked,
 )
 from randovania.gui.dialog.connections_editor.model import ROLE, RequirementModel
-from randovania.gui.dialog.connections_editor.path import RequirementTreePath
-from randovania.gui.dialog.connections_editor.view import RequirementView
+
+if TYPE_CHECKING:
+    from PySide6.QtGui import QUndoStack
+    from PySide6.QtWidgets import QComboBox, QStackedWidget, QWidget
+
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.gui.dialog.connections_editor.path import RequirementTreePath
+    from randovania.gui.dialog.connections_editor.view import RequirementView
 
 
 class RequirementController(QObject):

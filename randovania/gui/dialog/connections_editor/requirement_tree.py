@@ -1,18 +1,20 @@
 from __future__ import annotations
 
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
-from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.gui.dialog.connections_editor.path import RequirementTreePath
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
 def tuple_insert[T](items: tuple[T, ...], idx: int, value: T) -> tuple[T, ...]:
@@ -33,7 +35,7 @@ def insert_at_path(root: RequirementArrayBase, path: RequirementTreePath, requir
         return type(root)(new_items, root.comment)
 
     idx = path.head()
-    next_root = cast(RequirementArrayBase, root.items[idx])
+    next_root = cast("RequirementArrayBase", root.items[idx])
     child = insert_at_path(next_root, path.tail(), requirement)
     new_items = tuple_replace(root.items, idx, child)
     return type(root)(new_items, root.comment)
@@ -46,7 +48,7 @@ def remove_at_path(root: RequirementArrayBase, path: RequirementTreePath) -> Req
         new_items = tuple_remove(root.items, idx)
         return type(root)(new_items, root.comment)
 
-    next_root = cast(RequirementArrayBase, root.items[idx])
+    next_root = cast("RequirementArrayBase", root.items[idx])
     child = remove_at_path(next_root, path.tail())
     new_items = tuple_replace(root.items, idx, child)
     return type(root)(new_items, root.comment)
@@ -56,7 +58,7 @@ def replace_at_path(root: RequirementArrayBase, path: RequirementTreePath, requi
     if len(path) == 0:
         return requirement
 
-    next_root = cast(RequirementArrayBase, root.items[path.head()])
+    next_root = cast("RequirementArrayBase", root.items[path.head()])
     child = replace_at_path(next_root, path.tail(), requirement)
     new_items = tuple_replace(root.items, path.head(), child)
     return type(root)(new_items, root.comment)
@@ -99,4 +101,4 @@ def change_to_type(
 def _at_path(requirement: Requirement, path: RequirementTreePath) -> Requirement:
     if len(path) == 0:
         return requirement
-    return _at_path(cast(RequirementArrayBase, requirement).items[path.head()], path.tail())
+    return _at_path(cast("RequirementArrayBase", requirement).items[path.head()], path.tail())

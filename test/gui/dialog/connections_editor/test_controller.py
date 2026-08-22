@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
 import pytest
 from PySide6.QtGui import QUndoStack
@@ -8,7 +8,6 @@ from PySide6.QtWidgets import QComboBox, QStackedWidget, QTreeView, QWidget
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.node_requirement import NodeRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -18,6 +17,9 @@ from randovania.gui.dialog.connections_editor.controller import RequirementContr
 from randovania.gui.dialog.connections_editor.model import ROLE, RequirementModel
 from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 from randovania.gui.dialog.connections_editor.view import RequirementView
+
+if TYPE_CHECKING:
+    from randovania.game_description.requirements.requirement_and import RequirementAnd
 
 
 @pytest.fixture
@@ -111,7 +113,7 @@ def test_on_add_requirement_pressed_rejects_add(controller, select, single_requi
 def test_on_delete_requirement_pressed_deletes(controller, select):
     select(POWER)
     controller._on_delete_requirement_pressed()
-    result = cast(RequirementAnd, controller._model.build_requirement())
+    result = cast("RequirementAnd", controller._model.build_requirement())
     assert len(result.items) == 2
 
 

@@ -1,11 +1,10 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pytest
 from PySide6.QtWidgets import QWidget
 
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.region import Region
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor import requirement_tree
 from randovania.gui.dialog.connections_editor.editor import (
@@ -18,6 +17,11 @@ from randovania.gui.dialog.connections_editor.editor import (
     TrickResourceEditor,
 )
 from randovania.gui.dialog.connections_editor.model import ROLE
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.region import Region
 
 
 @pytest.fixture
