@@ -133,6 +133,14 @@
             "HOTEWaveBomb": {
                 "long_name": "Hall of the Elders Wave Slot",
                 "extra": {}
+            },
+            "ElderIceBeam": {
+                "long_name": "Hall of the Elders Ice Slot",
+                "extra": {}
+            },
+            "ElderPlasmaBeam": {
+                "long_name": "Hall of the Elders Plasma Slot",
+                "extra": {}
             }
         },
         "tricks": {},
@@ -247,6 +255,64 @@
                                 "data": {
                                     "type": "items",
                                     "name": "SpiderBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Climb High Ledge": {
+                "display_name": "Climb High Ledge",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SpaceJump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "GrappleBeam",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Use Boost Ball": {
+                "display_name": "Can Use Boost Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "BoostBall",
                                     "amount": 1,
                                     "negate": false
                                 }
