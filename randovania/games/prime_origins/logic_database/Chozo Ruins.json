@@ -726,7 +726,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subD": {
+                        "Morph Ball Tunnel to Furnace (Boiler Room)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -737,12 +737,12 @@
                         }
                     }
                 },
-                "Door to Furnace subD": {
+                "Morph Ball Tunnel to Furnace (Boiler Room)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16.0,
-                        "y": 96.0,
+                        "x": 7.95,
+                        "y": 104.13,
                         "z": 0.0
                     },
                     "description": "",
@@ -755,13 +755,13 @@
                         "dest_room": "cho_Furnace_subD"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subD",
-                        "node": "Door to Crossway Access West"
+                        "area": "Furnace (Boiler Room)",
+                        "node": "Morph Ball Tunnel to Crossway Access West"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -826,14 +826,28 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Boost Ball"
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Boost Ball"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -862,7 +876,7 @@
                         "area": "Crossway Access South",
                         "node": "Door to Crossway"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Ice Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -873,7 +887,12 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Boost Ball"
+                                    }
+                                ]
                             }
                         },
                         "Door to Elder Hall Access": {
@@ -1310,7 +1329,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subD": {
+                        "Door to Furnace (Boiler Room)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1319,7 +1338,7 @@
                         }
                     }
                 },
-                "Door to Furnace subD": {
+                "Door to Furnace (Boiler Room)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1340,7 +1359,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subD",
+                        "area": "Furnace (Boiler Room)",
                         "node": "Door to East Furnace Access"
                     },
                     "default_dock_weakness": "Beam Door",
@@ -1861,7 +1880,7 @@
                 }
             }
         },
-        "Furnace subB": {
+        "Furnace (Boost Tunnel)": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -1871,12 +1890,12 @@
                 "room_height": 224
             },
             "nodes": {
-                "Door to Furnace": {
+                "Morph Ball Tunnel to Furnace (Entrance)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16.0,
-                        "y": 96.0,
+                        "x": 20.235181185505176,
+                        "y": 104.89656827453804,
                         "z": 0.0
                     },
                     "description": "",
@@ -1889,41 +1908,50 @@
                         "dest_room": "cho_Furnace"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace",
-                        "node": "Door to Furnace subB"
+                        "area": "Furnace (Entrance)",
+                        "node": "Morph Ball Tunnel to Furnace (Boost Tunnel)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subE": {
+                        "Open Access to Furnace (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Furnace subD": {
-                            "type": "and",
+                        "Morph Ball Tunnel to Furnace (Boiler Room)": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Boost Ball"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Door to Furnace subE": {
+                "Open Access to Furnace (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 320.0,
-                        "y": -16.0,
+                        "x": 165.75953923686106,
+                        "y": 8.904247660187167,
                         "z": 0.0
                     },
                     "description": "",
@@ -1936,13 +1964,13 @@
                         "dest_room": "cho_Furnace_subE"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Open Access",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subE",
-                        "node": "Door to Furnace subB"
+                        "area": "Furnace (Bottom)",
+                        "node": "Open Access to Furnace (Boost Tunnel)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Open Access (Vertical)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1950,12 +1978,12 @@
                     "ui_custom_name": null,
                     "connections": {}
                 },
-                "Door to Furnace subD": {
+                "Morph Ball Tunnel to Furnace (Boiler Room)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 336.0,
-                        "y": 96.0,
+                        "x": 295.93,
+                        "y": 102.59,
                         "z": 0.0
                     },
                     "description": "",
@@ -1968,27 +1996,36 @@
                         "dest_room": "cho_Furnace_subD"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subD",
-                        "node": "Door to Furnace subB"
+                        "area": "Furnace (Boiler Room)",
+                        "node": "Morph Ball Tunnel to Furnace (Boost Tunnel)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace": {
-                            "type": "and",
+                        "Morph Ball Tunnel to Furnace (Entrance)": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Boost Ball"
+                                    }
+                                ]
                             }
                         },
-                        "Door to Furnace subE": {
+                        "Open Access to Furnace (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1999,7 +2036,7 @@
                 }
             }
         },
-        "Furnace subC": {
+        "Furnace (Alcove)": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -2009,12 +2046,12 @@
                 "room_height": 224
             },
             "nodes": {
-                "Door to Furnace subE": {
+                "Morph Ball Tunnel to Furnace (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16.0,
-                        "y": 96.0,
+                        "x": 23.31,
+                        "y": 102.21,
                         "z": 0.0
                     },
                     "description": "",
@@ -2027,13 +2064,13 @@
                         "dest_room": "cho_Furnace_subE"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subE",
-                        "node": "Door to Furnace subC"
+                        "area": "Furnace (Bottom)",
+                        "node": "Morph Ball Tunnel to Furnace (Alcove)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2073,7 +2110,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Furnace subE": {
+                        "Morph Ball Tunnel to Furnace (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2084,7 +2121,7 @@
                 }
             }
         },
-        "Furnace subD": {
+        "Furnace (Boiler Room)": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -2094,12 +2131,12 @@
                 "room_height": 448
             },
             "nodes": {
-                "Door to Furnace subB": {
+                "Morph Ball Tunnel to Furnace (Boost Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16.0,
-                        "y": 112.0,
+                        "x": 8.22,
+                        "y": 120.71,
                         "z": 0.0
                     },
                     "description": "",
@@ -2112,13 +2149,13 @@
                         "dest_room": "cho_Furnace_subB"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subB",
-                        "node": "Door to Furnace subD"
+                        "area": "Furnace (Boost Tunnel)",
+                        "node": "Morph Ball Tunnel to Furnace (Boiler Room)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2136,17 +2173,35 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerBombExpansion",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Boost Ball"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Door to Crossway Access West": {
+                "Morph Ball Tunnel to Crossway Access West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 656.0,
-                        "y": 240.0,
+                        "x": 629.48,
+                        "y": 249.73,
                         "z": 0.0
                     },
                     "description": "",
@@ -2159,13 +2214,13 @@
                         "dest_room": "cho_Crossway_Access_West"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
                         "area": "Crossway Access West",
-                        "node": "Door to Furnace subD"
+                        "node": "Morph Ball Tunnel to Furnace (Boiler Room)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2185,8 +2240,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 640.0,
-                        "y": 80.0,
+                        "x": 626.407487401008,
+                        "y": 105.35349172066236,
                         "z": 0.0
                     },
                     "description": "",
@@ -2203,23 +2258,23 @@
                     "default_connection": {
                         "region": "Chozo Ruins",
                         "area": "East Furnace Access",
-                        "node": "Door to Furnace subD"
+                        "node": "Door to Furnace (Boiler Room)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Ice Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subB": {
+                        "Morph Ball Tunnel to Furnace (Boost Tunnel)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Crossway Access West": {
+                        "Morph Ball Tunnel to Crossway Access West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2252,7 +2307,7 @@
                     "custom_index_group": null,
                     "hint_features": [],
                     "connections": {
-                        "Door to Furnace subB": {
+                        "Morph Ball Tunnel to Furnace (Boost Tunnel)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2263,7 +2318,7 @@
                 }
             }
         },
-        "Furnace subE": {
+        "Furnace (Bottom)": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -2273,12 +2328,12 @@
                 "room_height": 224
             },
             "nodes": {
-                "Door to Furnace": {
+                "Morph Ball Tunnel to Furnace (Entrance)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16.0,
-                        "y": 48.0,
+                        "x": 23.31,
+                        "y": 55.75,
                         "z": 0.0
                     },
                     "description": "",
@@ -2291,20 +2346,20 @@
                         "dest_room": "cho_Furnace"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace",
-                        "node": "Door to Furnace subE"
+                        "area": "Furnace (Entrance)",
+                        "node": "Morph Ball Tunnel to Furnace (Bottom)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subC": {
+                        "Morph Ball Tunnel to Furnace (Alcove)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2313,12 +2368,12 @@
                         }
                     }
                 },
-                "Door to Furnace subC": {
+                "Morph Ball Tunnel to Furnace (Alcove)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 336.0,
-                        "y": 48.0,
+                        "x": 293.62,
+                        "y": 55.36,
                         "z": 0.0
                     },
                     "description": "",
@@ -2331,20 +2386,20 @@
                         "dest_room": "cho_Furnace_subC"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subC",
-                        "node": "Door to Furnace subE"
+                        "area": "Furnace (Alcove)",
+                        "node": "Morph Ball Tunnel to Furnace (Bottom)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace": {
+                        "Morph Ball Tunnel to Furnace (Entrance)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2353,12 +2408,12 @@
                         }
                     }
                 },
-                "Door to Furnace subB": {
+                "Open Access to Furnace (Boost Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 320.0,
-                        "y": 240.0,
+                        "x": 157.7,
+                        "y": 218.55,
                         "z": 0.0
                     },
                     "description": "",
@@ -2371,20 +2426,20 @@
                         "dest_room": "cho_Furnace_subB"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Open Access",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subB",
-                        "node": "Door to Furnace subE"
+                        "area": "Furnace (Boost Tunnel)",
+                        "node": "Open Access to Furnace (Bottom)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Open Access (Vertical)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subC": {
+                        "Morph Ball Tunnel to Furnace (Alcove)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2395,7 +2450,7 @@
                 }
             }
         },
-        "Furnace": {
+        "Furnace (Entrance)": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -2427,7 +2482,7 @@
                     "default_connection": {
                         "region": "Chozo Ruins",
                         "area": "West Furnace Access",
-                        "node": "Door to Furnace"
+                        "node": "Door to Furnace (Entrance)"
                     },
                     "default_dock_weakness": "Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2436,7 +2491,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subE": {
+                        "Morph Ball Tunnel to Furnace (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2445,12 +2500,12 @@
                         }
                     }
                 },
-                "Door to Furnace subE": {
+                "Morph Ball Tunnel to Furnace (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 336.0,
-                        "y": 48.0,
+                        "x": 297.84,
+                        "y": 55.25,
                         "z": 0.0
                     },
                     "description": "",
@@ -2463,13 +2518,13 @@
                         "dest_room": "cho_Furnace_subE"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subE",
-                        "node": "Door to Furnace"
+                        "area": "Furnace (Bottom)",
+                        "node": "Morph Ball Tunnel to Furnace (Entrance)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2483,21 +2538,30 @@
                                 "items": []
                             }
                         },
-                        "Door to Furnace subB": {
+                        "Morph Ball Tunnel to Furnace (Boost Tunnel)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Break Bomb Blocks"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Spider Ball"
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Door to Furnace subB": {
+                "Morph Ball Tunnel to Furnace (Boost Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 336.0,
-                        "y": 368.0,
+                        "x": 297.46,
+                        "y": 375.09,
                         "z": 0.0
                     },
                     "description": "",
@@ -2510,25 +2574,22 @@
                         "dest_room": "cho_Furnace_subB"
                     },
                     "valid_starting_location": false,
-                    "dock_type": "Door",
+                    "dock_type": "Morph Ball Tunnel",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace subB",
-                        "node": "Door to Furnace"
+                        "area": "Furnace (Boost Tunnel)",
+                        "node": "Morph Ball Tunnel to Furnace (Entrance)"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Morph Ball Tunnel",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace subE": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Morph Ball Tunnel to Furnace (Bottom)": {
+                            "type": "template",
+                            "data": "Can Break Bomb Blocks"
                         }
                     }
                 }
@@ -2892,7 +2953,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Chozo Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Reflecting Pool Access": {
                     "node_type": "dock",
@@ -2974,7 +3043,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Chozo Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Crossway Access South": {
                     "node_type": "dock",
@@ -3000,13 +3077,21 @@
                         "area": "Crossway Access South",
                         "node": "Door to Hall of the Elders"
                     },
-                    "default_dock_weakness": "Beam Door",
+                    "default_dock_weakness": "Ice Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Chozo Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to East Furnace Access": {
                     "node_type": "dock",
@@ -3038,7 +3123,15 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
-                    "connections": {}
+                    "connections": {
+                        "Chozo Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Elder Chamber": {
                     "node_type": "dock",
@@ -3095,7 +3188,15 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
-                    "connections": {}
+                    "connections": {
+                        "Chozo Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Chozo Statue": {
                     "node_type": "generic",
@@ -3112,13 +3213,54 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Reflecting Pool Access": {
-                            "type": "resource",
+                        "Door to Missile Station": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "HOTEWaveBomb",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Reflecting Pool Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "HOTEWaveBomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GrappleBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Elder Hall Access": {
@@ -3134,8 +3276,178 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GrappleBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Door to Crossway Access South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb High Ledge"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to East Furnace Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ElderIceBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GrappleBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Hall of the Elders Wave Slot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "WaveBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Bomb"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Hall of the Elders Ice Slot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "IceBeam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Lay Bomb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Hall of the Elders Wave Slot": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 853.22,
+                        "y": 122.32,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "HOTEWaveBomb",
+                    "connections": {
+                        "Chozo Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Hall of the Elders Ice Slot": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 855.52,
+                        "y": 90.07,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ElderIceBeam",
+                    "connections": {
+                        "Chozo Statue": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8902,7 +9214,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Furnace": {
+                        "Door to Furnace (Entrance)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8911,7 +9223,7 @@
                         }
                     }
                 },
-                "Door to Furnace": {
+                "Door to Furnace (Entrance)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8932,7 +9244,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Chozo Ruins",
-                        "area": "Furnace",
+                        "area": "Furnace (Entrance)",
                         "node": "Door to West Furnace Access"
                     },
                     "default_dock_weakness": "Beam Door",
