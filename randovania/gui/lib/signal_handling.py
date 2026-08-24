@@ -6,7 +6,7 @@ from contextlib import contextmanager
 from typing import TYPE_CHECKING, TypeVar
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Generator
 
     from PySide6 import QtWidgets
 
@@ -59,7 +59,7 @@ def clear_without_notify(combo: QtWidgets.QComboBox) -> None:
 
 
 @contextmanager
-def signals_blocked(widget: QtWidgets.QWidget):
+def signals_blocked(widget: QtWidgets.QWidget) -> Generator[None]:
     try:
         previous = widget.signalsBlocked()
         widget.blockSignals(True)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, cast, override
 
 from PySide6.QtCore import QObject, QSize, Qt, Signal
 from PySide6.QtWidgets import (
@@ -77,7 +77,7 @@ class Editor(QObject):
         """Returns the user-facing name for the Editor"""
         return self._display_name
 
-    def type(self) -> ResourceType | type[Requirement]:
+    def type_of(self) -> ResourceType | type[Requirement]:
         return self._type
 
     def _create_base(self, parent: QWidget) -> None:
@@ -142,12 +142,14 @@ class ResourceEditor(Editor):
 
         self._add_to_layout([self._combo_name])
 
-    def type(self) -> ResourceType:
+    @override
+    def type_of(self) -> ResourceType:
         return self._resource_type
 
     def to_string(self, resource_info: ResourceInfo) -> str:
         return resource_info.long_name
 
+    @override
     def populate(self, requirement: Requirement) -> None:
         requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._combo_name):
@@ -160,6 +162,7 @@ class ResourceEditor(Editor):
         resource_info: ResourceInfo = self._combo_name.currentData(ROLE)
         return ResourceRequirement.create(resource_info, amount, negate)
 
+    @override
     def requirement(self) -> Requirement:
         raise NotImplementedError
 
@@ -180,6 +183,7 @@ class CountedResourceEditor(ResourceEditor):
 
         self._add_to_layout([self._combo_negate, self._spinbox_amount])
 
+    @override
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
         requirement = cast("ResourceRequirement", requirement)
@@ -197,6 +201,7 @@ class CountedResourceEditor(ResourceEditor):
 
         self._spinbox_amount.setValue(requirement.amount)
 
+    @override
     def requirement(self) -> ResourceRequirement:
         resource_info: ResourceInfo = self._combo_name.currentData(ROLE)
 
@@ -219,6 +224,7 @@ class TrickResourceEditor(ResourceEditor):
 
         self._add_to_layout([self._combo_difficulty])
 
+    @override
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
         requirement = cast("ResourceRequirement", requirement)
@@ -228,6 +234,7 @@ class TrickResourceEditor(ResourceEditor):
     def _set_difficulty_combo(self, value: int) -> None:
         set_combo_with_value(self._combo_difficulty, LayoutTrickLevel.from_number(value))
 
+    @override
     def requirement(self) -> ResourceRequirement:
         return self._make_requirement(self._combo_difficulty.currentData(ROLE).as_number, False)
 
@@ -244,6 +251,7 @@ class SimpleResourceEditor(ResourceEditor):
 
         self._add_to_layout([self._checkbox_negate])
 
+    @override
     def populate(self, requirement: Requirement) -> None:
         super().populate(requirement)
         requirement = cast("ResourceRequirement", requirement)
@@ -260,6 +268,7 @@ class SimpleResourceEditor(ResourceEditor):
         else:
             self._checkbox_negate.setText("Negate?")
 
+    @override
     def requirement(self) -> ResourceRequirement:
         return self._make_requirement(1, self._checkbox_negate.isChecked())
 
@@ -278,6 +287,7 @@ class TemplateEditor(Editor):
     def to_string(self, template: NamedRequirementTemplate) -> str:
         return template.display_name
 
+    @override
     def populate(self, requirement: Requirement) -> None:
         requirement = cast("RequirementTemplate", requirement)
         with signals_blocked(self._combo_name):
@@ -287,6 +297,7 @@ class TemplateEditor(Editor):
         template: NamedRequirementTemplate = self._db.requirement_template[template_name]
         set_combo_with_value(self._combo_name, template)
 
+    @override
     def requirement(self) -> RequirementTemplate:
         display_name: str = self.to_string(self._combo_name.currentData(ROLE))
         name: str = self.template_key_from_display_name(display_name)
@@ -328,6 +339,7 @@ class NodeEditor(Editor):
         for item in data:
             combo.addItem(self.to_string(item), item)
 
+    @override
     def populate(self, requirement: Requirement) -> None:
         requirement = cast("NodeRequirement", requirement)
         region: Region = self._region_list.region_with_name(requirement.node_identifier.region)
@@ -362,6 +374,7 @@ class NodeEditor(Editor):
         set_combo_with_value(self._combo_node, node)
         self._notify_changed()
 
+    @override
     def requirement(self) -> NodeRequirement:
         node_identifier = NodeIdentifier(
             self.to_string(self._combo_region.currentData(ROLE)),
@@ -395,6 +408,7 @@ class ArrayEditor(Editor):
     def to_string(self, _type: type[RequirementAnd | RequirementOr]) -> str:
         return _type.combinator().strip().title()
 
+    @override
     def populate(self, requirement: Requirement) -> None:
         requirement = cast("RequirementArrayBase", requirement)
         with signals_blocked(self._combo_type):
@@ -411,6 +425,7 @@ class ArrayEditor(Editor):
             return
         self._line_edit_comment.setText(text)
 
+    @override
     def requirement(self) -> RequirementArrayBase:
         _type: type = self._combo_type.currentData(ROLE)
         text: str = self._line_edit_comment.text()

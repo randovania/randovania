@@ -123,17 +123,10 @@ class RequirementModel(QStandardItemModel):
         return walk(self.invisibleRootItem().child(0))
 
     def flags(self, index: QModelIndex | QPersistentModelIndex) -> Qt.ItemFlag:
-        """Overrides Qt's default item flags"""
+        """
+        Overrides Qt's default item flags <br>
+        Effectively disables default editable and drag-and-drop behavior
+        """
         if not index.isValid():
             return Qt.ItemFlag.NoItemFlags
-
-        flags = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
-
-        # if index.parent().isValid():
-        #    flags |= Qt.ItemFlag.ItemIsDragEnabled
-
-        # requirement = self.itemFromIndex(index).data(ROLE)
-        # if isinstance(requirement, RequirementArrayBase):
-        #    flags |= Qt.ItemFlag.ItemIsDropEnabled
-
-        return flags
+        return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable

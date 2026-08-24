@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 class RequirementEditCommand(QUndoCommand):
     """
-    An undoable/redoable edit to a requirement tree.
+    A reversible edit to a requirement tree.
 
     Stores a snapshot of the tree and the selection path both before and after the edit.
     """

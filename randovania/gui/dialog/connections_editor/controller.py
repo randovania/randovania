@@ -91,10 +91,10 @@ class RequirementController(QObject):
         editors.append(NodeEditor(self._db, self._stacked_widget, self._region_list))
 
         for editor in editors:
-            self._editors[editor.type()] = editor
+            self._editors[editor.type_of()] = editor
             self._stacked_widget.addWidget(editor.widget())
 
-            self._combo_type.addItem(editor.name(), editor.type())
+            self._combo_type.addItem(editor.name(), editor.type_of())
 
             editor.changed.connect(self._on_editor_field_changed)
 
@@ -124,7 +124,7 @@ class RequirementController(QObject):
         if editor is not None:
             editor.populate(requirement)
             self._show_editor(editor)
-            type_idx = self._combo_type.findData(editor.type(), ROLE)
+            type_idx = self._combo_type.findData(editor.type_of(), ROLE)
 
         with signals_blocked(self._combo_type):
             self._combo_type.setCurrentIndex(type_idx)

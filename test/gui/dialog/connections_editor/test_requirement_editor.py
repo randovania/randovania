@@ -94,7 +94,7 @@ def test_editor_populate_and_return_requirement_round_trip(request, editor_fixtu
     editor: Editor = request.getfixturevalue(editor_fixture_name)
 
     original = requirement_tree.default_from_type(
-        editor.type(), echoes_game_description.resource_database, echoes_game_description.region_list
+        editor.type_of(), echoes_game_description.resource_database, echoes_game_description.region_list
     )
 
     editor.populate(original)

@@ -108,9 +108,7 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
 
     @property
     def final_requirement(self) -> Requirement:
-        result = self._model.build_requirement()
-        assert result is not None
-        return result
+        return self._model.build_requirement()
 
     def accept(self) -> None:
         result = self._model.build_requirement()
