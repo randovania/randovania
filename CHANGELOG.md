@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: Playing on the same seed will now always have consistent patterns for Gadoras, Zazabi and Yakuza, instead of it being RNG dependant.
 - Changed: When enabling Door Lock Rando for the default presets, Open Hatches are now also shuffled by default.
 - Changed: Rephrased the text that appears when the Operations Deck Navigation Terminal or Restricted Navigation Terminal hints 0 Metroids.
 
