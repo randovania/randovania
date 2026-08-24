@@ -31,7 +31,7 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
 
     from PySide6.QtGui import QKeyEvent
 
@@ -309,7 +309,7 @@ class NodeEditor(Editor):
 
         # If there is only 1 region, _region_changed never runs to filter out areas with no nodes
         # Filtering for valid areas here is insurance e.g. Blank Development Game
-        valid_areas: list[Area] = self.get_valid_in(valid_regions)
+        valid_areas = self.get_valid_in(valid_regions)
         self._combo_area = self._create_combo_with_data(valid_areas)
 
         self._combo_node = self._create_combo_with_data([])
@@ -370,8 +370,8 @@ class NodeEditor(Editor):
         )
         return NodeRequirement(node_identifier)
 
-    def get_valid_in(self, seq: list[Region | Area]) -> list[Region | Area]:
-        def is_valid(item: Region | Area):
+    def get_valid_in[T: (Region | Area)](self, seq: Sequence[T]) -> list[T]:
+        def is_valid(item: Region | Area) -> bool:
             if isinstance(item, Area):
                 return len(item.nodes) > 0
             else:
