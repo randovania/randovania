@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from PySide6.QtGui import QAction, QKeySequence, Qt, QUndoStack
-from PySide6.QtWidgets import QDialog, QMessageBox, QWidget
+from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.gui.dialog.connections_editor.controller import ConnectionsEditorController
 from randovania.gui.dialog.connections_editor.model import RequirementModel
@@ -109,10 +109,3 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
     @property
     def final_requirement(self) -> Requirement:
         return self._model.build_requirement()
-
-    def accept(self) -> None:
-        result = self._model.build_requirement()
-        if result is None:
-            QMessageBox.critical(self, "Invalid Configuration", "Unable to confirm selection, invalid values found.")
-        else:
-            super().accept()
