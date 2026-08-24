@@ -8,10 +8,10 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.gui.dialog.connections_editor.model import RequirementModel
     from randovania.gui.dialog.connections_editor.path import RequirementTreePath
-    from randovania.gui.dialog.connections_editor.view import RequirementView
+    from randovania.gui.dialog.connections_editor.view import ConnectionsEditorView
 
 
-class RequirementEditCommand(QUndoCommand):
+class ConnectionsEditorCommand(QUndoCommand):
     """
     A reversible edit to a requirement tree.
 
@@ -21,7 +21,7 @@ class RequirementEditCommand(QUndoCommand):
     def __init__(
         self,
         model: RequirementModel,
-        view: RequirementView,
+        view: ConnectionsEditorView,
         before: Requirement,
         after: Requirement,
         before_selection_path: RequirementTreePath,

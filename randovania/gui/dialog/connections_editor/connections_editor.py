@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING
 from PySide6.QtGui import QAction, QKeySequence, Qt, QUndoStack
 from PySide6.QtWidgets import QDialog, QMessageBox, QWidget
 
-from randovania.gui.dialog.connections_editor.controller import RequirementController
+from randovania.gui.dialog.connections_editor.controller import ConnectionsEditorController
 from randovania.gui.dialog.connections_editor.model import RequirementModel
 from randovania.gui.dialog.connections_editor.path import RequirementTreePath
-from randovania.gui.dialog.connections_editor.view import RequirementView
+from randovania.gui.dialog.connections_editor.view import ConnectionsEditorView
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 
@@ -47,8 +47,8 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         self.addAction(redo_action)
 
         self._model = RequirementModel()
-        self._view = RequirementView(self, self.tree_view, self._model)
-        self._controller = RequirementController(
+        self._view = ConnectionsEditorView(self, self.tree_view, self._model)
+        self._controller = ConnectionsEditorController(
             self,
             self.stacked_widget,
             self.combo_requirement_type,
@@ -59,40 +59,40 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
             self._undo_stack,
         )
 
-        # Misc actions
+        # Keyboard Shortcuts
         add_action = QAction("Add", self._view._tree)
         add_action.setShortcut(QKeySequence("Insert"))
         add_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
-        add_action.triggered.connect(self._controller._on_add_requirement_pressed)
+        add_action.triggered.connect(self._controller.on_add_requirement_pressed)
 
         delete_action = QAction("Delete", self._view._tree)
         delete_action.setShortcut(QKeySequence("Delete"))
         delete_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
-        delete_action.triggered.connect(self._controller._on_delete_requirement_pressed)
+        delete_action.triggered.connect(self._controller.on_delete_requirement_pressed)
 
         move_up_action = QAction("Move Up", self._view._tree)
         move_up_action.setShortcut(QKeySequence("Alt+Up"))
         move_up_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
-        move_up_action.triggered.connect(self._controller._on_shift_up_pressed)
+        move_up_action.triggered.connect(self._controller.on_shift_up_pressed)
 
         move_down_action = QAction("Move Down", self._view._tree)
         move_down_action.setShortcut(QKeySequence("Alt+Down"))
         move_down_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
-        move_down_action.triggered.connect(self._controller._on_shift_down_pressed)
+        move_down_action.triggered.connect(self._controller.on_shift_down_pressed)
 
-        self._view._tree.addAction(add_action)
-        self._view._tree.addAction(delete_action)
-        self._view._tree.addAction(move_up_action)
-        self._view._tree.addAction(move_down_action)
+        self.tree_view.addAction(add_action)
+        self.tree_view.addAction(delete_action)
+        self.tree_view.addAction(move_up_action)
+        self.tree_view.addAction(move_down_action)
 
         # Connect Signals
-        self._model.model_rebuilt.connect(self._view._on_model_rebuilt)
-        self._view.selection_changed.connect(self._controller._on_item_selected)
+        self._model.model_rebuilt.connect(self._view.on_model_rebuilt)
+        self._view.selection_changed.connect(self._controller.on_item_selected)
 
-        self.button_add_requirement.clicked.connect(self._controller._on_add_requirement_pressed)
-        self.button_delete.clicked.connect(self._controller._on_delete_requirement_pressed)
-        self.button_shift_up.clicked.connect(self._controller._on_shift_up_pressed)
-        self.button_shift_down.clicked.connect(self._controller._on_shift_down_pressed)
+        self.button_add_requirement.clicked.connect(self._controller.on_add_requirement_pressed)
+        self.button_delete.clicked.connect(self._controller.on_delete_requirement_pressed)
+        self.button_shift_up.clicked.connect(self._controller.on_shift_up_pressed)
+        self.button_shift_down.clicked.connect(self._controller.on_shift_down_pressed)
         self.button_undo.clicked.connect(self._undo_stack.undo)
         self.button_redo.clicked.connect(self._undo_stack.redo)
 

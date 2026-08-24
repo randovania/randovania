@@ -106,7 +106,7 @@ def test_editor_populate_and_return_requirement_round_trip(request, editor_fixtu
 @pytest.mark.parametrize("target_idx", [1, 3, 4, 7, 8])
 def test_node_editor_region_change_propogates(node_editor, echoes_game_description, target_idx):
     requirement = requirement_tree.default_from_type(
-        node_editor.type(), echoes_game_description.resource_database, echoes_game_description.region_list
+        node_editor.type_of(), echoes_game_description.resource_database, echoes_game_description.region_list
     )
     node_editor.populate(requirement)
 

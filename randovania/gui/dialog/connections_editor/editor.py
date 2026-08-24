@@ -260,13 +260,10 @@ class SimpleResourceEditor(ResourceEditor):
 
     def _set_negate_combo(self, requirement: ResourceRequirement) -> None:
         self._checkbox_negate.setChecked(requirement.negate)
-
-        if requirement.resource.resource_type == ResourceType.EVENT:
-            self._checkbox_negate.setText(
-                ResourceType.EVENT.negated_prefix if requirement.negate else ResourceType.EVENT.non_negated_prefix
-            )
-        else:
-            self._checkbox_negate.setText("Negate?")
+        text = requirement.resource.resource_type.non_negated_prefix.strip()
+        if requirement.negate:
+            text = requirement.resource.resource_type.negated_prefix.strip()
+        self._checkbox_negate.setText(text)
 
     @override
     def requirement(self) -> ResourceRequirement:

@@ -8,7 +8,7 @@ from randovania.game_description.requirements.array_base import RequirementArray
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor import requirement_tree
-from randovania.gui.dialog.connections_editor.command import RequirementEditCommand
+from randovania.gui.dialog.connections_editor.command import ConnectionsEditorCommand
 from randovania.gui.dialog.connections_editor.editor import (
     ArrayEditor,
     CountedResourceEditor,
@@ -29,10 +29,10 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.gui.dialog.connections_editor.path import RequirementTreePath
-    from randovania.gui.dialog.connections_editor.view import RequirementView
+    from randovania.gui.dialog.connections_editor.view import ConnectionsEditorView
 
 
-class RequirementController(QObject):
+class ConnectionsEditorController(QObject):
     """
     Translates UI actions into Requirement tree edits.
 
@@ -47,7 +47,7 @@ class RequirementController(QObject):
         db: ResourceDatabase,
         region_list: RegionList,
         model: RequirementModel,
-        view: RequirementView,
+        view: ConnectionsEditorView,
         undo_stack: QUndoStack,
     ) -> None:
         super().__init__(parent)
@@ -112,7 +112,7 @@ class RequirementController(QObject):
         else:
             return self._editors[type(requirement)]
 
-    def _on_item_selected(self, index: QModelIndex) -> None:
+    def on_item_selected(self, index: QModelIndex) -> None:
         """
         Switch to the editor for the selected Requirement type and update fields
         """
@@ -140,12 +140,12 @@ class RequirementController(QObject):
     ) -> None:
         before_selection_path = self._model.path_from_index(self._active_item_index)
         self._undo_stack.push(
-            RequirementEditCommand(
+            ConnectionsEditorCommand(
                 self._model, self._view, before, after, before_selection_path, after_selection_path, description
             )
         )
 
-    def _on_add_requirement_pressed(self) -> None:
+    def on_add_requirement_pressed(self) -> None:
         active = self._active_item_index.data(ROLE)
         path = self._model.path_from_index(self._active_item_index)
 
@@ -166,7 +166,7 @@ class RequirementController(QObject):
 
         self._push_command(before, after, path, "Add Requirement")
 
-    def _on_delete_requirement_pressed(self) -> None:
+    def on_delete_requirement_pressed(self) -> None:
         # Can't delete root
         if self._active_is_root():
             return
@@ -187,7 +187,7 @@ class RequirementController(QObject):
 
         self._push_command(before, after, path, "Delete Requirement")
 
-    def _on_shift_up_pressed(self) -> None:
+    def on_shift_up_pressed(self) -> None:
         # Can't shift root
         if self._active_is_root():
             return
@@ -215,7 +215,7 @@ class RequirementController(QObject):
 
         self._push_command(before, after, path, "Move Up")
 
-    def _on_shift_down_pressed(self) -> None:
+    def on_shift_down_pressed(self) -> None:
         # Can't shift root
         if self._active_is_root():
             return

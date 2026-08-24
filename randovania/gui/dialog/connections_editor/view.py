@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.gui.dialog.connections_editor.path import RequirementTreePath
 
 
-class RequirementView(QObject):
+class ConnectionsEditorView(QObject):
     """Owns the tree widget's selection and rendering behavior."""
 
     selection_changed = Signal(QModelIndex)
@@ -30,7 +30,7 @@ class RequirementView(QObject):
         super().__init__(parent)
 
         tree.setModel(model)
-        tree.setItemDelegate(RequirementDelegate(tree))
+        tree.setItemDelegate(ConnectionsEditorDelegate(tree))
         tree.expandAll()
 
         tree.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
@@ -39,7 +39,7 @@ class RequirementView(QObject):
 
         self._tree = tree
 
-    def _on_model_rebuilt(self) -> None:
+    def on_model_rebuilt(self) -> None:
         self._tree.expandAll()
 
     def _notify_selection_changed(self, current: QModelIndex, previous: QModelIndex) -> None:
@@ -56,7 +56,7 @@ class RequirementView(QObject):
         self._tree.scrollTo(index, QAbstractItemView.ScrollHint.EnsureVisible)
 
 
-class RequirementDelegate(QStyledItemDelegate):
+class ConnectionsEditorDelegate(QStyledItemDelegate):
     """
     Renders an array requirement's comment on a second line, in bold-green.
 
