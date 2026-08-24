@@ -33,6 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 1 (SRX)
 - Changed: Watering Hole: Getting the item is now possible in Door Lock Rando.
 - Changed: Charge Core Arena: Getting the upper item locked by a Shinespark is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Central: Sparking the Stabilizer from Stabilizer Checkpoint is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Southeast: Sparking the Stabilizer from Tourian Trapdoor or Zebesian Zag is now possible in Door Lock Rando.
+- Changed: Zebesian Zag: Sparking the room up from Atmospheric Stabilizer Southeast is now possible in Door Lock Rando.
 
 ##### Sector 4 (AQA)
 - Added: Evir Enclosure: A video to go up by freezing the Evir and performing Underwater Walljumps.
