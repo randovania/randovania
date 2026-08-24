@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
-- Changed: The following pickups will now be placed in bulk at the same step during generation when they multiple pickups are necessary to progress:
+- Changed: The following pickups will now be placed in bulk at the same step during generation when multiple pickups are necessary to progress:
   - Missile Tank
   - Missile+ Tank
   - Energy Part
