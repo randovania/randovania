@@ -2,10 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from PySide6.QtCore import QModelIndex, QObject, Signal
+from PySide6.QtCore import QModelIndex, QObject
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor import requirement_tree
@@ -27,6 +26,7 @@ if TYPE_CHECKING:
     from PySide6.QtWidgets import QComboBox, QStackedWidget, QWidget
 
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.gui.dialog.connections_editor.path import RequirementTreePath
     from randovania.gui.dialog.connections_editor.view import RequirementView
@@ -38,8 +38,6 @@ class RequirementController(QObject):
 
     Edits are executed by pushing a RequirementEditCommand.
     """
-
-    requirement_changed = Signal(QModelIndex, Requirement)
 
     def __init__(
         self,
@@ -178,7 +176,7 @@ class RequirementController(QObject):
         path = self._model.path_from_index(self._active_item_index)
         after = requirement_tree.remove_at_path(before, path)
 
-        sibling_count: int = self._model.sibling_count(path)
+        sibling_count: int = self._model.last_sibling_index(path)
 
         if sibling_count == 0:
             # No siblings remain, point to parent
@@ -224,7 +222,7 @@ class RequirementController(QObject):
 
         active: Requirement = self._active_item_index.data(ROLE)
         path = self._model.path_from_index(self._active_item_index)
-        sibling_count: int = self._model.sibling_count(path)
+        sibling_count: int = self._model.last_sibling_index(path)
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)

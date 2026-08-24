@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import functools
 import typing
+from contextlib import contextmanager
 from typing import TYPE_CHECKING, TypeVar
 
 if TYPE_CHECKING:
@@ -55,3 +56,13 @@ def clear_without_notify(combo: QtWidgets.QComboBox) -> None:
     old_blocking = combo.blockSignals(True)
     combo.clear()
     combo.blockSignals(old_blocking)
+
+
+@contextmanager
+def signals_blocked(widget: QtWidgets.QWidget):
+    try:
+        previous = widget.signalsBlocked()
+        widget.blockSignals(True)
+        yield
+    finally:
+        widget.blockSignals(previous)

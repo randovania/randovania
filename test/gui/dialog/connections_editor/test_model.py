@@ -41,5 +41,5 @@ MISC = RequirementTreePath((5,))
     ("path", "expected"),
     [(OR, 7), (ANNIHILATOR, 3), (MISC, 7)],
 )
-def test_sibling_count_is_last_index(model, path, expected):
-    assert model.sibling_count(path) == expected
+def test_last_sibling_index_is_last_index(model, path, expected):
+    assert model.last_sibling_index(path) == expected

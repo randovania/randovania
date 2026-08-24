@@ -47,9 +47,9 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         self.addAction(redo_action)
 
         self._model = RequirementModel()
-        self._view = RequirementView(parent, self.tree_view, self._model)
+        self._view = RequirementView(self, self.tree_view, self._model)
         self._controller = RequirementController(
-            parent,
+            self,
             self.stacked_widget,
             self.combo_requirement_type,
             resource_database,
@@ -101,6 +101,7 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         self._view.restore_selection(RequirementTreePath())
 
     def deleteLater(self) -> None:
+        super().deleteLater()
         self._controller.deleteLater()
         self._view.deleteLater()
         self._model.deleteLater()

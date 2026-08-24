@@ -84,7 +84,7 @@ class RequirementModel(QStandardItemModel):
             index = next_index
         return index
 
-    def sibling_count(self, path: RequirementTreePath) -> int:
+    def last_sibling_index(self, path: RequirementTreePath) -> int:
         index = self.index_from_path(path)
         return self.itemFromIndex(index).parent().rowCount() - 1
 

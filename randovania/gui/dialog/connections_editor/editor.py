@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from contextlib import contextmanager
 from typing import TYPE_CHECKING, Any, cast
 
 from PySide6.QtCore import QObject, QSize, Qt, Signal
@@ -14,6 +13,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from randovania.game_description.db.area import Area
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -25,17 +25,16 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.dialog.connections_editor.model import ROLE
-from randovania.gui.lib.signal_handling import set_combo_with_value
+from randovania.gui.lib.signal_handling import set_combo_with_value, signals_blocked
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable
 
     from PySide6.QtGui import QKeyEvent
 
-    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
@@ -168,11 +167,13 @@ class ResourceEditor(Editor):
 class CountedResourceEditor(ResourceEditor):
     """Editor for resources with varying amounts: Item, Damage"""
 
+    SPINBOX_MAX = 10_000  # NOTE - Arbitrary value for damage
+
     def __init__(self, db: ResourceDatabase, parent: QWidget, display_name: str, resource_type: ResourceType) -> None:
         super().__init__(db, parent, display_name, resource_type)
 
         self._combo_negate = self._create_boolean_combo()
-        self._spinbox_amount = self._create_spin_box(1, 1)
+        self._spinbox_amount = self._create_spin_box(1, self.SPINBOX_MAX)
 
         self._combo_negate.currentIndexChanged.connect(self._notify_changed)
         self._spinbox_amount.valueChanged.connect(self._notify_changed)
@@ -191,16 +192,19 @@ class CountedResourceEditor(ResourceEditor):
         set_combo_with_value(self._combo_negate, value)
 
     def _set_spinbox(self, requirement: ResourceRequirement) -> None:
-        resource_info: ResourceInfo = requirement.resource
-        max: int = 10_000  # NOTE - Arbitrary value for damage
+        if isinstance(requirement.resource, ItemResourceInfo):
+            self._spinbox_amount.setMaximum(requirement.resource.max_capacity)
 
-        if isinstance(resource_info, ItemResourceInfo):
-            max = resource_info.max_capacity
-
-        self._spinbox_amount.setMaximum(max)
         self._spinbox_amount.setValue(requirement.amount)
 
     def requirement(self) -> ResourceRequirement:
+        resource_info: ResourceInfo = self._combo_name.currentData(ROLE)
+
+        # Clamp item amounts to their max capacity
+        if isinstance(resource_info, ItemResourceInfo):
+            amount = min(self._spinbox_amount.value(), resource_info.max_capacity)
+            return self._make_requirement(amount, self._combo_negate.currentData(ROLE))
+
         return self._make_requirement(self._spinbox_amount.value(), self._combo_negate.currentData(ROLE))
 
 
@@ -284,8 +288,15 @@ class TemplateEditor(Editor):
         set_combo_with_value(self._combo_name, template)
 
     def requirement(self) -> RequirementTemplate:
-        name: str = self.to_string(self._combo_name.currentData(ROLE))
+        display_name: str = self.to_string(self._combo_name.currentData(ROLE))
+        name: str = self.template_key_from_display_name(display_name)
         return RequirementTemplate(name)
+
+    def template_key_from_display_name(self, display_name: str) -> str:
+        for name, requirement_template in self._db.requirement_template.items():
+            if display_name == requirement_template.display_name:
+                return name
+        raise KeyError(f"Game `{self._db.game_enum.long_name}` has no template with display name: {display_name}")
 
 
 class NodeEditor(Editor):
@@ -293,8 +304,14 @@ class NodeEditor(Editor):
         super().__init__(db, parent, "Node", NodeRequirement)
         self._region_list = region_list
 
-        self._combo_region = self._create_combo_with_data(self._region_list.regions, self.to_string)
-        self._combo_area = self._create_combo_with_data([])
+        valid_regions: list[Region] = self.get_valid_in(self._region_list.regions)
+        self._combo_region = self._create_combo_with_data(valid_regions, self.to_string)
+
+        # If there is only 1 region, _region_changed never runs to filter out areas with no nodes
+        # Filtering for valid areas here is insurance e.g. Blank Development Game
+        valid_areas: list[Area] = self.get_valid_in(valid_regions)
+        self._combo_area = self._create_combo_with_data(valid_areas)
+
         self._combo_node = self._create_combo_with_data([])
 
         self._add_to_layout([self._combo_region, self._combo_area, self._combo_node])
@@ -321,7 +338,7 @@ class NodeEditor(Editor):
             set_combo_with_value(self._combo_region, region)
 
         with signals_blocked(self._combo_area):
-            self._repopulate_combo(self._combo_area, region.areas)
+            self._repopulate_combo(self._combo_area, self.get_valid_in(region.areas))
             set_combo_with_value(self._combo_area, area)
 
         with signals_blocked(self._combo_node):
@@ -330,9 +347,10 @@ class NodeEditor(Editor):
 
     def _region_changed(self, idx: int = -1) -> None:
         region: Region = self._combo_region.currentData(ROLE)
+        valid_areas = self.get_valid_in(region.areas)
         with signals_blocked(self._combo_area):
-            self._repopulate_combo(self._combo_area, region.areas)
-        area: Area = next(iter(region.areas))
+            self._repopulate_combo(self._combo_area, valid_areas)
+        area: Area = next(iter(valid_areas))
         set_combo_with_value(self._combo_area, area)
         self._area_changed()
 
@@ -351,6 +369,15 @@ class NodeEditor(Editor):
             self.to_string(self._combo_node.currentData(ROLE)),
         )
         return NodeRequirement(node_identifier)
+
+    def get_valid_in(self, seq: list[Region | Area]) -> list[Region | Area]:
+        def is_valid(item: Region | Area):
+            if isinstance(item, Area):
+                return len(item.nodes) > 0
+            else:
+                return len(item.areas) > 0
+
+        return list(filter(is_valid, seq))
 
 
 class ArrayEditor(Editor):
@@ -400,11 +427,3 @@ class NonPropgatingLineEdit(QLineEdit):
             event.accept()
             return
         super().keyPressEvent(event)
-
-
-@contextmanager
-def signals_blocked(widget: QWidget) -> Iterator[None]:
-    previous = widget.signalsBlocked()
-    widget.blockSignals(True)
-    yield
-    widget.blockSignals(previous)
