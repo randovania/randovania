@@ -292,7 +292,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
             metroid_hint_base = f"{FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected at the following"
             no_metroids_hint = (
-                f"This terminal was unable to scan for any {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value}."
+                f"No {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected from this terminal."
             )
 
             if operations_hint:
