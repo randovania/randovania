@@ -47,6 +47,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 4 (AQA)
 - Added: Evir Enclosure: A video to go up by freezing the Evir and performing Underwater Walljumps.
 
+##### Sector 6 (NOC)
+- Changed: Spaceboost Alley: It is now possible to escape with an intermediate Walljump, instead of being able to Single-Wall Walljump.
+- Changed: X-B.O.X Arena Access: Shinesparking out of Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of Forbidden Entrance to Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of X-B.O.X. Arena is now possible in Door Lock Rando.
+- Changed: Nocturnal Shaft: Shinesparking out of Forbidden Entrance to Pillar Highway is now possible in Door Lock Rando.
+
 ### Metroid: Samus Returns
 
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
