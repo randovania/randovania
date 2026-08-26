@@ -198,6 +198,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Entrance Lobby Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -569,6 +576,31 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Entrance Lobby Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 325.0,
+                        "y": 300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "S6EntranceLobby",
+                    "connections": {
+                        "Door to Entrance Recharge Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1185,10 +1217,10 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "misc",
-                                                                    "name": "DoorLockRando",
+                                                                    "type": "events",
+                                                                    "name": "S6EntranceLobby",
                                                                     "amount": 1,
-                                                                    "negate": true
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
@@ -1317,10 +1349,10 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
+                                                        "type": "events",
+                                                        "name": "S6EntranceLobby",
                                                         "amount": 1,
-                                                        "negate": true
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
