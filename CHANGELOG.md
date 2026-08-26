@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.11.0] - 2026-09-01
 
+- **Major** - Added: Metroid Prime Hunters has been added. Shuffle the items including Artifacts and Refills, shuffle portal destinations, Force Field weaknesses, and even Shield Keys.
 - Added: The Map Tracker can now be opened directly from the Open menu, by selecting which preset to use.
 - Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
