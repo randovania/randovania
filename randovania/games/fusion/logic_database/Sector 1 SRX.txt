@@ -325,8 +325,8 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 4}, {'x': 12, 'y': 5}, {'x': 13, 'y
   > Room Center
       Trivial
   > Event - Stabilizer 5 Online
-      # Kill with Shinespark from Checkpoint - https://youtu.be/2biI4SB_wAs
-      Level 0 Keycard and Speed Booster and Wave Beam and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+      # Kill with Shinespark from Checkpoint: https://youtu.be/2biI4SB_wAs . Can safely not have DLR check, as this door cant be permanently locked
+      Speed Booster and Wave Beam and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
 
 > Room Center; Heals? False
   * Layers: default
@@ -563,8 +563,8 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 8}, {'x': 14, 'y': 9}, {'x': 15, 'y
       After Stabilizer Southeast Restored
   > Event - Stabilizer 4 Online
       All of the following:
-          # Shinespark from Screw Shaft or Zebesian Zag: https://youtu.be/SrshBBv-MCw
-          Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark from Tourian Trapdoor or Zebesian Zag: https://youtu.be/SrshBBv-MCw . This can safely not have DLR check, as both lower doors cannot be permanently locked, so once you reach this room you have the spark
+          Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Entrance Rando
           Any of the following:
               Hi-Jump or Wall Jump (Advanced)
               # Possible without wall jumps or jump upgrades: https://youtu.be/WsY4pSmBAyo
@@ -1299,6 +1299,8 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 11}, {'x': 2, 'y': 12}]
 > Elevator to Restricted Zone Elevator; Heals? False
   * Layers: default
   * Elevator to Restricted Zone Elevator/Elevator to Tourian Elevator
+  * Extra - direction: down
+  * Extra - name: SECTOR_1_TO_RESTRICTED_LAB
   * Extra - door_idx: [65]
   > Door to Ripper Maze
       Trivial
@@ -1452,12 +1454,12 @@ Extra - minimap_coordinates: [{'x': 16, 'y': 6}, {'x': 16, 'y': 7}, {'x': 16, 'y
           Charge Beam or Missiles ≥ 10 or Can Freeze Enemies With Any Weapon or Can Use Power Bombs
           All of the following:
               Screw Attack
-              # Screw Attack an also (accidentally) destroy the platforms, unless cancelling spins: https://youtu.be/rsQZgb4xF6Y
+              # Screw Attack can also (accidentally) destroy the platforms, unless cancelling spins: https://youtu.be/rsQZgb4xF6Y
               Space Jump or Movement (Beginner)
           # Navigate the room Damageless: https://youtu.be/Lh9D7Ye3rw8
           Combat (Intermediate)
-          # Shinespark from Atmospheric Stabilizer Room: https://youtu.be/_PmmHN9YvKw
-          Level 0 Keycard and Speed Booster and After Stabilizer Southeast Restored and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark from Atmospheric Stabilizer Room: https://youtu.be/_PmmHN9YvKw . Can safely not have DLR check as this door cannot be permanently locked.
+          Speed Booster and After Stabilizer Southeast Restored and Disabled Entrance Rando
           # Damage Boost through Pirates. Holding into the ladder lets you climb it: https://youtu.be/cqHI8tNmNVw
           Damage Boosts (Intermediate) and Movement (Beginner) and Normal Damage ≥ 170
 
@@ -1523,8 +1525,8 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 6}, {'x': 11, 'y': 7}]
   > Event - Bomb Blocks
       Any of the following:
           Can Break Single Bomb Blocks
-          # Speed Boosting from Hornoad Housing
-          Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Speed Boosting from Hornoad Housing. This can safely not have DLR check, because its a one way dead-end
+          Level 0 Keycard and Speed Booster and After Sector 1 Central Save Room Visited and Knowledge (Intermediate) and Disabled Entrance Rando
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
@@ -1633,8 +1635,8 @@ Hint Features - Multiple Pickups
   * Extra - door_idx: [82]
   > Pickup (Energy Tank)
       All of the following:
-          # Shinespark from Hornoad Housing -> Access
-          Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Gadora
+          # Shinespark from Hornoad Housing -> Access. This can safely not have DLR check because this door cannot be permanently locked, unless in the future a way to leave Lower Access is added
+          Level 0 Keycard and Speed Booster and After Sector 1 Central Save Room Visited and Disabled Entrance Rando and Can Kill Gadora
           Any of the following:
               # After Fight, Trickless: https://youtu.be/Z6_miH4qoQY
               Hi-Jump and After Boss Charge Core-X Defeated
@@ -1697,6 +1699,8 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 0}, {'x': 1, 'y': 1}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Sector Hub Lift 1/Elevator to Sector 1 (SRX)
+  * Extra - direction: up
+  * Extra - name: SECTOR_1_TO_MAIN_HUB
   * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
@@ -1726,6 +1730,14 @@ Extra - unlocked_save_recharge_station: True
   * Extra - X: 8
   * Extra - Y: 10
   > Door to Hornoad Housing
+      Trivial
+  > Event - Central Save Room Visited
+      Trivial
+
+> Event - Central Save Room Visited; Heals? False
+  * Layers: default
+  * Event Sector 1 Central Save Room Visited
+  > Save Station
       Trivial
 
 ----------------
@@ -1836,7 +1848,9 @@ Hint Features - Climbable Surface
   * Extra - door_idx: [101]
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Level 0 Keycard and Morph Ball and Speed Booster and After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed and Disabled Door Lock Rando and Disabled Entrance Rando and Can Bounce in Ball
+          Level 0 Keycard and Morph Ball and After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed and Can Bounce in Ball
+          # This can safely not have DLR check because its a one way dead-end
+          Speed Booster and After Sector 1 Central Save Room Visited and Disabled Entrance Rando
           Any of the following:
               # Deal with water
               Gravity Suit
@@ -1867,6 +1881,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 0}]
 > Area Transition to Sector 2 (TRO); Heals? False
   * Layers: default
   * Open Passage to Sector 2 (TRO) Westbound Glass Tube/Area Transition to Sector 1 (SRX)
+  * Extra - direction: right
   * Extra - door_idx: [104]
   > Door to Antechamber
       Trivial
@@ -1886,6 +1901,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 2}]
 > Area Transition to Sector 3 (PYR); Heals? False
   * Layers: default
   * Open Passage to Sector 3 (PYR) Eastbound Glass Tube/Area Transition to Sector 1 (SRX)
+  * Extra - direction: left
   * Extra - door_idx: [107]
   > Door to Lava Lake Annex
       Trivial

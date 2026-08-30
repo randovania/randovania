@@ -21,7 +21,6 @@ from qasync import asyncSlot
 import randovania
 from randovania import VERSION, get_readme_section, monitoring
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.game_description import GameDescription
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -36,6 +35,7 @@ from randovania.lib import enum_lib, json_lib, version_lib
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
@@ -303,6 +303,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_audible_generation_alert.triggered.connect(self._on_menu_action_audible_generation_alert)
         self.menu_action_visual_generation_alert.triggered.connect(self._on_menu_action_visual_generation_alert)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
+        self.menu_action_open_map_tracker.triggered.connect(self._on_menu_action_open_map_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
         self.menu_action_help.triggered.connect(self._on_menu_action_help)
@@ -795,6 +796,28 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         self.auto_tracker_window = AutoTrackerWindow(common_qt_lib.get_game_connection(), self, self._options)
         self.auto_tracker_window.show()
+
+    @asyncSlot()
+    async def _on_menu_action_open_map_tracker(self) -> None:
+        from randovania.gui.dialog.select_preset_dialog import SelectPresetDialog
+
+        dialog = SelectPresetDialog(
+            self,
+            self._options,
+            for_multiworld=False,
+            allowed_games=[
+                game for game in RandovaniaGame.sorted_all_games() if game.data.development_state.can_view()
+            ],
+            description=(
+                "The Map Tracker requires a preset in order to be configured properly. "
+                "Select below which preset to use."
+            ),
+        )
+
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.DialogCode.Accepted:
+            selected_preset = dialog.selected_preset
+            assert selected_preset is not None
+            await self.open_map_tracker(selected_preset.get_preset())
 
     def _on_menu_action_previously_generated_games(self) -> None:
         path = self._options.game_history_path

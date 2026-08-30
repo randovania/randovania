@@ -20,10 +20,10 @@ def test_create_widget(skip_qtbot: QtBot):
     dialog = AsyncRaceLeaderboardDialog(
         parent,
         RaceRoomLeaderboard(
-            [
-                RaceRoomLeaderboardEntry(RandovaniaUser(0, "A"), datetime.timedelta(hours=1)),
-                RaceRoomLeaderboardEntry(RandovaniaUser(1, "B"), datetime.timedelta(hours=2)),
-                RaceRoomLeaderboardEntry(RandovaniaUser(2, "C"), None),
+            entries=[
+                RaceRoomLeaderboardEntry(user=RandovaniaUser(0, "A"), time=datetime.timedelta(hours=1)),
+                RaceRoomLeaderboardEntry(user=RandovaniaUser(1, "B"), time=datetime.timedelta(hours=2)),
+                RaceRoomLeaderboardEntry(user=RandovaniaUser(2, "C"), time=None),
             ]
         ),
     )

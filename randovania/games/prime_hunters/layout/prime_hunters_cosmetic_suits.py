@@ -2,13 +2,16 @@ from __future__ import annotations
 
 import dataclasses
 from enum import Enum
-from pathlib import Path
-from random import Random
+from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import enum_lib
+
+if TYPE_CHECKING:
+    from pathlib import Path
+    from random import Random
 
 
 class SuitColor(BitPackEnum, Enum):

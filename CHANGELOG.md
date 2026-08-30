@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [10.11.0] - 2026-09-01
 
+- **Major** - Added: Metroid Prime Hunters has been added. Shuffle the items including Artifacts and Refills, portal destinations, Force Field weaknesses, and even Shield Keys.
+- Added: The Map Tracker can now be opened directly from the Open menu, by selecting which preset to use.
 - Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
@@ -15,7 +17,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: The following pickups will now be placed in bulk at the same step during generation when multiple pickups are necessary to progress:
+  - Missile Tank
+  - Missile+ Tank
+  - Energy Part
+  - Energy Tank
+  - Power Bomb Tank
+  - Flash Shift Uprade
+  - Speed Booster Upgrade
 - Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
+
+### Metroid Fusion
+
+- Added: Playing on the same seed will now always have consistent patterns for Gadoras, Zazabi and Yakuza, instead of it being RNG dependant.
+- Changed: When enabling Door Lock Rando for the default presets, Open Hatches are now also shuffled by default.
+- Changed: Rephrased the text that appears when the Operations Deck Navigation Terminal or Restricted Navigation Terminal hints 0 Metroids.
+
+#### Logic Database
+
+##### Main Deck
+- Changed: Operations Deck: Shinesparking up to reach the Operations Room Door is now possible in Door Lock Rando.
+- Added: Operations Ventilation: It is now possible to destroy the Missile Geron by running into it from Operations Deck.
+- Changed: Operations Ventilation: Shinesparking the Missile Geron is now possible in Door Lock Rando.
+- Changed: Quarantine Junction: The Speedboost through the blocks from Main Elevator Access is now possible in Door Lock Rando.
+- Central Reactor: Adjusted the Shinespark from Silo Checkpoint to Silo Tunnel:
+  - Doing it without Hi-Jump is now a ludicrous Shinespark instead of intermediate Movement.
+  - The Beam requirements have been adjusted. Having Wave Beam does not change the difficulty of the shinespark, not having Wave Beam bumps it to a ludicrous Shinespark.
+- Central Reactor: Shinesparking up from the Save Station is now always possible in Door Lock Rando.
+- Quarantine Bay: Added a node to refill infinitely, as it's very quick to do with the Hornoad.
+
+##### Sector 1 (SRX)
+- Changed: Watering Hole: Getting the item is now possible in Door Lock Rando.
+- Changed: Charge Core Arena: Getting the upper item locked by a Shinespark is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Central: Sparking the Stabilizer from Stabilizer Checkpoint is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Southeast: Sparking the Stabilizer from Tourian Trapdoor or Zebesian Zag is now possible in Door Lock Rando.
+- Changed: Zebesian Zag: Sparking the room up from Atmospheric Stabilizer Southeast is now possible in Door Lock Rando.
+
+##### Sector 4 (AQA)
+- Added: Evir Enclosure: A video to go up by freezing the Evir and performing Underwater Walljumps.
+
+##### Sector 6 (NOC)
+- Changed: Spaceboost Alley: It is now possible to escape with an intermediate Walljump, instead of being able to Single-Wall Walljump.
+- Changed: X-B.O.X Arena Access: Shinesparking out of Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of Forbidden Entrance to Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of X-B.O.X. Arena is now possible in Door Lock Rando.
+- Changed: Nocturnal Shaft: Shinesparking out of Forbidden Entrance to Pillar Highway is now possible in Door Lock Rando.
 
 ### Metroid: Samus Returns
 

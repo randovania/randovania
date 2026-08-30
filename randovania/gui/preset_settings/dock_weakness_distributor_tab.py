@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING, Literal, override
 import natsort
 from PySide6 import QtWidgets
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -18,6 +17,7 @@ from randovania.layout.base.dock_weakness_distributor_configuration import DockW
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.dock import DockType, DockWeakness, WeaknessDistributorSettings
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
