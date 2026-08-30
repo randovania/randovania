@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Self
 from frozendict import frozendict
 
 import randovania.graph.world_graph_factory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock import (
     DockLock,
     DockLockType,
@@ -345,6 +346,7 @@ async def _determine_valid_weaknesses(
     base_graph: WorldGraph,
     game: GameDescription,
     patches: GamePatches,
+    beatable_weaknesses_placed_dict: dict[DockWeakness, bool],
 ) -> dict[DockWeakness, float]:
     """
     Determine the valid weaknesses to assign to the dock given a reach
@@ -405,8 +407,8 @@ async def _determine_valid_weaknesses(
             # If "thorough mode", and target is reachable from source, every weakness is valid
             weighted_weaknesses.update(dict.fromkeys(sorted(dock_type_state.can_change_to.difference(exclusions)), 1.0))
         else:
-            # Cool interesting well-designed beautiful .update() internal loop reformatted into normal-ass loop
-            # because A) I understand it better and am dumb and B) I need to be able to break from it early.
+            # TODO this can now be changed back to the .update() internal loop, as breaking from it early is no longer
+            # a good idea
             for weakness in sorted(dock_type_state.can_change_to.difference(exclusions)):
                 if converter(weakness.requirement).satisfied(
                     state.resources, state.health_for_damage_requirements
@@ -417,10 +419,6 @@ async def _determine_valid_weaknesses(
                     )
                 ):
                     weighted_weaknesses.update({weakness: 1.0})
-                elif thorough_placement:
-                    # If in "thorough mode", even one missing weakness means it has to be unlocked, so no need to check
-                    # other weaknesses
-                    break
 
         # Whether any weaknesses that can be changed to are missing from this dock's options. Does not include unlocked
         # or permalocked.
@@ -464,15 +462,24 @@ async def _determine_valid_weaknesses(
                 difference_from_max = max_counter - weaknesses_placed_dict[weakness]
                 weighted_weaknesses[weakness] *= (difference_from_max + 1) ** 3
 
-        if (
-            # No weaknesses were placed (mostly here for non-"thorough" mode)
-            len(weighted_weaknesses) == 0
-            or (
-                # In "thorough mode", there were missing weaknesses and the game wasn't beatable
-                thorough_placement and missing_weaknesses and not game_solvable_if_locked
-            )
-        ):
+            # If a guaranteed-beatable instance of this weakness has already been placed, don't do it again
+            if (
+                missing_weaknesses
+                and not game_solvable_if_locked
+                and beatable_weaknesses_placed_dict[weakness]
+                and weakness in weighted_weaknesses
+                and thorough_placement
+            ):
+                weighted_weaknesses.pop(weakness)
+
+        if missing_weaknesses and not game_solvable_if_locked:
+            # add unlocked back, just to signal to distribute_post_fill_weaknesses that this needs to be beatable
+            # (could also check all exclusions and everything back there. definitely possible, if annoying)
+            weighted_weaknesses.update({dock_type_params.unlocked: 1.0})
+
+        if len(weighted_weaknesses) == 0:
             weighted_weaknesses = {dock_type_params.unlocked: 1.0}
+        # TODO could definitely combine these last two ifs
 
     else:
         weighted_weaknesses = {dock_type_params.unlocked: 1.0}
@@ -480,7 +487,10 @@ async def _determine_valid_weaknesses(
     return weighted_weaknesses
 
 
-async def distribute_post_fill_weaknesses(
+# I assume this C901 is what's preventing me from committing. I think it's related to the match statement,
+# which I think is important enough for testing purposes that it should be left in until testing's all done.
+# SO, TODO remove that match statement
+async def distribute_post_fill_weaknesses(  # noqa: C901
     rng: Random, filler_results: FillerResults, status_update: Callable[[str], None]
 ) -> FillerResults:
     """
@@ -511,6 +521,14 @@ async def distribute_post_fill_weaknesses(
     #       - counter for that particular weakness is final value
     player_weaknesses_placed_dict: dict[int, dict[DockType, dict[DockWeakness, int]]] = {}
 
+    # For keeping track of weaknesses that have had a guaranteed-beatable instance placed
+    # Hierarchy is same as player_weaknesses_placed_dict, just ends with bool instead
+    player_beatable_weaknesses_placed_bools: dict[int, dict[DockType, dict[DockWeakness, bool]]] = {}
+
+    # For keeping track of the number of guaranteed-beatable weaknesses
+    # Hierarchy is shorter, does not depend on DockWeaknesses at all
+    player_beatable_weaknesses_placed_counters: dict[int, dict[DockType, int]] = {}
+
     start_time = time.perf_counter()
 
     for patches in new_patches:
@@ -537,12 +555,22 @@ async def distribute_post_fill_weaknesses(
 
         player_weaknesses_placed_dict.update({player: {}})
 
+        player_beatable_weaknesses_placed_bools.update({player: {}})
+
+        player_beatable_weaknesses_placed_counters.update({player: {}})
+
         # Place all relevant dock types and weaknesses in the counter dict
         for dock_type in compatible_dock_types:
             player_weaknesses_placed_dict[player].update({dock_type: {}})
 
+            player_beatable_weaknesses_placed_bools[player].update({dock_type: {}})
+
+            player_beatable_weaknesses_placed_counters[player].update({dock_type: 0})
+
             for dock_weakness in configuration.dock_weakness_distributor.types_state[dock_type].can_change_to:
                 player_weaknesses_placed_dict[player][dock_type].update({dock_weakness: 0.0})
+
+                player_beatable_weaknesses_placed_bools[player][dock_type].update({dock_weakness: False})
 
         status_update(f"Preparing door lock randomizer for player {player + 1}.")
         filtered_games[player] = filtered_database.game_description_for_layout(configuration).get_mutable()
@@ -611,6 +639,23 @@ async def distribute_post_fill_weaknesses(
 
         # Get the percentage of docks that should be locked
         percentage_limit = float(patches.configuration.dock_weakness_distributor.locked_percentage) / 100.0
+
+        # FOR TESTING ONLY! Eventually these values should be part of the games' default presets
+        match game.game_enum:
+            case RandovaniaGame.METROID_PRIME:
+                percentage_limit = 0.2
+            case RandovaniaGame.METROID_PRIME_ECHOES:
+                percentage_limit = 0.2
+            case RandovaniaGame.METROID_PRIME_ECHOES_OPR:
+                percentage_limit = 0.2
+            case RandovaniaGame.FUSION:
+                percentage_limit = 0.25
+            case RandovaniaGame.AM2R:
+                percentage_limit = 0.25
+            case RandovaniaGame.METROID_SAMUS_RETURNS:
+                percentage_limit = 0.25
+            case RandovaniaGame.METROID_DREAD:
+                percentage_limit = 0.25
 
         # For display purposes
         current_percentage = locked_counter / docks_to_place_per_player[player]
@@ -714,7 +759,20 @@ async def distribute_post_fill_weaknesses(
                 base_graphs[player],
                 game,
                 patches,
+                player_beatable_weaknesses_placed_bools[player][dock_type],
             )
+
+        forced_beatable = False
+        if dock_type_settings.unlocked in weighted_weaknesses and len(weighted_weaknesses) > 1:
+            if (
+                # Up to 10% of locks can be guaranteed beatable
+                player_beatable_weaknesses_placed_counters[player][dock_type]
+                < (docks_to_place_per_player[player] * (percentage_limit * 0.1))
+            ):
+                weighted_weaknesses.pop(dock_type_settings.unlocked)
+                forced_beatable = True
+            else:
+                weighted_weaknesses = {dock_type_settings.unlocked: 1.0}
 
         # Assign the dock (and its target if desired/possible)
         weakness = random_lib.select_element_with_weight(rng, weighted_weaknesses)
@@ -726,6 +784,20 @@ async def distribute_post_fill_weaknesses(
 
         player_weaknesses_placed_dict[player][dock_type][weakness] += 1
         docks_placed += 1
+
+        if forced_beatable:
+            player_beatable_weaknesses_placed_bools[player][dock_type][weakness] = True
+
+            # if all are placed, reset everything to False
+            # ("all" meaning all but one, as if all are possible, docks will be capable of being any door anyway.
+            # <= 2 to account for that, in addition to unlocked, which I don't want to bother getting rid of.)
+            # NOTE to be honest, not sure how often this will even run. Might not be worth doing at all, or might be
+            # worth changing to <= 3 to give more chances it'll happen
+            if list(player_beatable_weaknesses_placed_bools[player][dock_type].values()).count(False) <= 2:
+                for key in player_beatable_weaknesses_placed_bools[player][dock_type].keys():
+                    player_beatable_weaknesses_placed_bools[player][dock_type][key] = False
+
+            player_beatable_weaknesses_placed_counters[player][dock_type] += 1
 
         debug.debug_print(f"Possibilities: {weighted_weaknesses}")
         debug.debug_print(f"Chosen: {weakness}\n")
