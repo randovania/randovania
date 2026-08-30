@@ -92,7 +92,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Hive Totem: Removed door lock present on NTSC 0-02+.
 - Changed: Research Lab Aether: Unlock door when the Metroid dies in addition to the breakable wall.
 - Changed: Sunchamber: Doors no longer instantly lock upon entering.
-- Changed: Fiery Shores, Monitor Station, Sunchamber Access, Sun Tower Access: Restored crate destruction debris.
 
 #### Logic Database
 
