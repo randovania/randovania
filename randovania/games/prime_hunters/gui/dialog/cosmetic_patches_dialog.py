@@ -10,10 +10,10 @@ from randovania.games.prime_hunters.gui.generated.prime_hunters_cosmetic_patches
     Ui_HuntersCosmeticPatchesDialog,
 )
 from randovania.games.prime_hunters.layout.prime_hunters_cosmetic_patches import HuntersCosmeticPatches
-from randovania.games.prime_hunters.layout.prime_hunters_cosmetic_suits import HuntersSuitPreferences
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 
 if TYPE_CHECKING:
+    from randovania.games.prime_hunters.layout.prime_hunters_cosmetic_suits import HuntersSuitPreferences
     from randovania.interface_common.options import Options
 
 

@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import multiprocessing
 import operator
-import sys
 from concurrent.futures import Future, ProcessPoolExecutor
 from typing import TYPE_CHECKING, Any
 
@@ -16,6 +15,7 @@ from randovania.lib.status_update_lib import ConstantPercentageCallback, Progres
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
+    import sys
     from collections.abc import Callable
 
     from randovania.interface_common.options import Options

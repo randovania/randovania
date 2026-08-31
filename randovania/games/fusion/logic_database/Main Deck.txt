@@ -355,8 +355,8 @@ Extra - minimap_coordinates:
           All Infants Collected
           Any of the following:
               Have Any Jump Upgrade
-              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY
-              Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check
+              Speed Booster and After Main Deck Operations Deck Save Visited and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
               # Single Wall Jump
               Wall Jump (Beginner) and Can Single Walljump
               # Jump 2-BombJump: https://youtu.be/416jYaEuveg
@@ -367,7 +367,7 @@ Extra - minimap_coordinates:
 > Door to Operations Room; Heals? False
   * Layers: default
   * L0 Hatch to Operations Room/Door to Operations Deck
-  * This door is currently an event door and thus always Level-0
+  * Room Graphics are incorrect, this is an L0 door.
   * Extra - door_idx: [193]
   > Beside Operations Room Hatch
       Trivial
@@ -676,8 +676,12 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 8}, {'x': 11, 'y': 9}, {'x': 11, 'y
   > Other to Central Nexus
       All of the following:
           Morph Ball and Screw Attack and Knowledge (Beginner)
-          # Kickclimb off the platform
-          Wall Jump (Intermediate) or Have Any Jump Upgrade
+          Any of the following:
+              # Reach the upper spot
+              Have Any Jump Upgrade
+              # Walljump off the platform
+              Wall Jump (Intermediate)
+          # Get into tunnel
           Mid-Air Morph (Advanced) or Can Bounce in Ball
 
 > Door to Quarantine Junction; Heals? False
@@ -793,8 +797,8 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 8}, {'x': 10, 'y': 8}, {'x': 10, 'y'
   > Door to Dark Stairwell
       Any of the following:
           Morph Ball
-          # Speedboost from other room
-          Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Speedboost from other room. This can safely not have DLR check; either you come from here in which case you opened the door, or you arrived here, in which case you can go back the way you came from.
+          Level 0 Keycard and Speed Booster and Disabled Entrance Rando
 
 > Door to Quarantine Bay; Heals? False
   * Layers: default
@@ -811,6 +815,8 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 11}, {'x': 6, 'y': 11}, {'x': 7, 'y'
 > Elevator to Main Elevator Shaft; Heals? False; Spawn Point
   * Layers: default
   * Elevator to Main Elevator Shaft/Other to Sector Hub
+  * Extra - direction: up
+  * Extra - name: MAIN_HUB_BOTTOM
   * Extra - door_idx: [50]
   * Extra - X: 24
   * Extra - Y: 18
@@ -869,6 +875,8 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 12}, {'x': 8, 'y': 13}]
 > Elevator to Sector 2 (TRO); Heals? False
   * Layers: default
   * Elevator to Sector 2 (TRO) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_2
   * Extra - door_idx: [68]
   > Door to Sector Hub
       Trivial
@@ -899,6 +907,8 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 12}, {'x': 9, 'y': 13}]
 > Elevator to Sector 4 (AQA); Heals? False
   * Layers: default
   * Elevator to Sector 4 (AQA) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_4
   * Extra - door_idx: [70]
   > Door to Sector Hub Lift 2
       Trivial
@@ -919,6 +929,8 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 12}, {'x': 10, 'y': 13}]
 > Elevator to Sector 6 (NOC); Heals? False
   * Layers: default
   * Elevator to Sector 6 (NOC) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_6
   * Extra - door_idx: [72]
   > Door to Sector Hub Lift 4
       Trivial
@@ -949,6 +961,8 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 12}, {'x': 4, 'y': 13}]
 > Elevator to Sector 1 (SRX); Heals? False
   * Layers: default
   * Elevator to Sector 1 (SRX) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_1
   * Extra - door_idx: [67]
   > Door to Sector Hub
       Trivial
@@ -979,6 +993,8 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 12}, {'x': 3, 'y': 13}]
 > Elevator to Sector 3 (PYR); Heals? False
   * Layers: default
   * Elevator to Sector 3 (PYR) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_3
   * Extra - door_idx: [69]
   > Door to Sector Hub Lift 1
       Trivial
@@ -999,6 +1015,8 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 12}, {'x': 2, 'y': 13}]
 > Elevator to Sector 5 (ARC); Heals? False
   * Layers: default
   * Elevator to Sector 5 (ARC) Entrance Elevator/Elevator to Main Deck
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TO_SECTOR_5
   * Extra - door_idx: [71]
   > Door to Sector Hub Lift 3
       Trivial
@@ -1123,8 +1141,14 @@ Hint Features - Climbable Surface, Geron
   > Event - Upper Maintainance Geron
       Any of the following:
           Can Kill Missile Geron
-          # Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y
-          Level 0 Keycard and Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          All of the following:
+              # Destroy with Speed Booster
+              Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Disabled Entrance Rando
+              Any of the following:
+                  # Run from edge of Operations Deck. TODO: vid.
+                  Movement (Intermediate)
+                  # Run from Save Station, spark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y . This can safely have no DLR check
+                  After Main Deck Operations Deck Save Visited and Shinespark Tricks (Advanced)
 
 > Other to Operations Ventilation Storage; Heals? False
   * Layers: default
@@ -1323,6 +1347,8 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 8}, {'x': 6, 'y': 9}]
 > Elevator to Main Elevator Shaft; Heals? False
   * Layers: default
   * Elevator to Main Elevator Shaft/Other to Main Elevator
+  * Extra - direction: down
+  * Extra - name: MAIN_HUB_TOP
   * Extra - door_idx: [94, 49]
   > Other to Main Elevator Access
       Trivial
@@ -1380,6 +1406,14 @@ Extra - unlocked_save_recharge_station: True
   * Extra - X: 8
   * Extra - Y: 10
   > Door to Operations Deck Recharge Room
+      Trivial
+  > Event - Operations Save Visited
+      Trivial
+
+> Event - Operations Save Visited; Heals? False
+  * Layers: default
+  * Event Main Deck Operations Deck Save Visited
+  > Save Station
       Trivial
 
 ----------------
@@ -1540,8 +1574,8 @@ Extra - minimap_coordinates:
       All of the following:
           # Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw
           Morph Ball and Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
-          # Get high enough to spark
-          Hi-Jump or Wall Jump (Intermediate)
+          # Get high enough to the third platform to spark
+          Hi-Jump or Shinespark Tricks (Ludicrous)
           Any of the following:
               # Get into tunnel
               After Boss Nettori Defeated or Mid-Air Morph (Advanced) or Can Bounce in Ball
@@ -1549,15 +1583,8 @@ Extra - minimap_coordinates:
               Movement (Intermediate)
           Any of the following:
               # Beam requirements.
-              Charge Beam and Wave Beam
-              All of the following:
-                  # Having only one beam makes this harder to hit / have only one attempt
-                  Shinespark Tricks (Expert)
-                  Any of the following:
-                      Wave Beam
-                      # If you only have charge, you need to have access to the other side
-                      Charge Beam and After Access Right of Silo Checkpoint Shutter
-              # Without Wave nor Charge, there's only one attempt and its hard.
+              Wave Beam
+              # Without Wave, there's only one attempt and its hard.
               After Access Right of Silo Checkpoint Shutter and Shinespark Tricks (Ludicrous)
   > Door to Silo Save Room
       Trivial
@@ -1576,8 +1603,8 @@ Extra - minimap_coordinates:
   > Door to Silo Entry
       Any of the following:
           Space Jump
-          # Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4
-          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
+          # Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4 .  Can safely not have DLR check as Save Station is a dead-end
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
   > Door to Silo Catwalk
       Wall Jump (Beginner) or Have Any Jump Upgrade
   > Door to Silo Checkpoint
@@ -1899,6 +1926,8 @@ Extra - minimap_coordinates: [{'x': 19, 'y': 2}, {'x': 19, 'y': 3}]
 > Elevator to Crew Quarters Elevator; Heals? False
   * Layers: default
   * Elevator to Crew Quarters Elevator/Elevator to Operations Deck Elevator
+  * Extra - direction: down
+  * Extra - name: OPERATIONS_DECK_TOP
   * Extra - door_idx: [26]
   > Door to Operations Deck
       Trivial
@@ -1918,6 +1947,8 @@ Extra - minimap_coordinates: [{'x': 19, 'y': 4}, {'x': 19, 'y': 5}]
 > Elevator to Operations Deck Elevator; Heals? False
   * Layers: default
   * Elevator to Operations Deck Elevator/Elevator to Crew Quarters Elevator
+  * Extra - direction: up
+  * Extra - name: OPERATIONS_DECK_BOTTOM
   * Extra - door_idx: [25]
   > Door to Crew Quarters West
       Trivial
@@ -1952,7 +1983,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 23}, {'x': 9, 'y': 24}]
               Space Jump
               # SWJ
               Wall Jump (Beginner) and Can Single Walljump
-              # Equipment manip
+              # Disable Screw during the walljump to ledge grab on the left side and jump to the right side
               Wall Jump (Beginner) and Enabled Equipment Manipulation
 
 ----------------
@@ -2048,6 +2079,8 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 20}, {'x': 7, 'y': 21}]
 > Elevator to Tourian Elevator; Heals? False
   * Layers: default
   * Elevator to Tourian Elevator/Elevator to Restricted Zone Elevator
+  * Extra - direction: up
+  * Extra - name: RESTRICTED_LAB_TO_SECTOR_1
   * Extra - door_idx: [154]
   > Door to Restricted Navigation Room
       Trivial
@@ -2184,7 +2217,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 9}, {'x': 9, 'y': 9}]
   * Layers: default
   * Open Hatch to Quarantine Junction/Door to Quarantine Bay
   * Extra - door_idx: [167]
-  > Pickup (Hornoad)
+  > Hornoad
       Trivial
 
 > Pickup (Hornoad); Heals? False
@@ -2195,7 +2228,15 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 9}, {'x': 9, 'y': 9}]
   * Extra - blockx: 6
   * Extra - blocky: 9
   * Extra - infant_weight: 0.4
+  > Hornoad
+      Trivial
+
+> Hornoad; Heals? True
+  * Layers: default
+  * Always drops Refill-X.
   > Door to Quarantine Junction
+      Trivial
+  > Pickup (Hornoad)
       Trivial
 
 ----------------
@@ -2259,6 +2300,8 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 6}, {'x': 12, 'y': 7}]
 > Elevator to Habitation Deck Elevator; Heals? False
   * Layers: default
   * Elevator to Habitation Deck Elevator/Elevator to Nexus Elevator
+  * Extra - direction: up
+  * Extra - name: HABITATION_DECK_BOTTOM
   * Extra - door_idx: [177]
   > Door to Central Nexus
       Trivial
@@ -2278,6 +2321,8 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 4}, {'x': 12, 'y': 5}]
 > Elevator to Nexus Elevator; Heals? False
   * Layers: default
   * Elevator to Nexus Elevator/Elevator to Habitation Deck Elevator
+  * Extra - direction: down
+  * Extra - name: HABITATION_DECK_TOP
   * Extra - door_idx: [178]
   > Door to Habitation Deck Entrance
       Trivial
@@ -2326,7 +2371,7 @@ Extra - minimap_coordinates: [{'x': 15, 'y': 0}, {'x': 16, 'y': 0}]
 > Door to Operations Deck; Heals? False
   * Layers: default
   * L0 Hatch to Operations Deck/Door to Operations Room
-  * This door is currently an event door and thus always Level-0
+  * Room Graphics are incorrect, this is an L0 door.
   * Extra - door_idx: [194]
   > Event - Flight Controls
       Trivial

@@ -9,7 +9,6 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
@@ -22,7 +21,6 @@ from randovania.games.prime2.layout.echoes_configuration import (
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.generator.pickup_pool import PoolResults
-from randovania.lib.json_lib import JsonType
 from randovania.resolver.bootstrap import Bootstrap, ConfigurableNodeBootstrap
 from randovania.resolver.damage_state import DamageState
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -34,9 +32,11 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.lib.json_lib import JsonType
     from randovania.resolver.damage_state import DamageState
 
 

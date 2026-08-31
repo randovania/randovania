@@ -18,7 +18,6 @@ import time
 from typing import TYPE_CHECKING
 
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.pickup_pool import PoolResults, pool_creator
@@ -35,6 +34,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
 
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph

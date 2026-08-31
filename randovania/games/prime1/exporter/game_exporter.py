@@ -275,7 +275,8 @@ class PrimeGameExporter(GameExporter[PrimeGameExportParams]):
             if isinstance(e, Exception):
                 raise
             else:
-                raise RuntimeError(f"randomprime panic: {e}") from e
+                # PyO3 exceptions inherits BaseException
+                raise RuntimeError(f"randomprime panic: {e}") from e  # noqa: TRY004
 
         if random_enemy_attributes is not None:
             assert enemy_updater is not None

@@ -43,9 +43,13 @@
 
 from __future__ import annotations
 
-from PySide6 import QtWidgets
+from typing import TYPE_CHECKING
+
 from PySide6.QtCore import QMargins, QPoint, QRect, QSize, Qt
 from PySide6.QtWidgets import QLayout, QLayoutItem, QSizePolicy, QWidgetItem
+
+if TYPE_CHECKING:
+    from PySide6 import QtWidgets
 
 
 class FlowLayout(QLayout):

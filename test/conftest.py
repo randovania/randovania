@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import functools
 import uuid
+from collections.abc import Callable
 from importlib.util import find_spec
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -53,6 +54,40 @@ class TestFilesDir:
 @pytest.fixture(scope="session")
 def test_files_dir() -> TestFilesDir:
     return TestFilesDir(Path(__file__).parent.joinpath("test_files"))
+
+
+AcceptanceCheck = Callable[[Path, "dict | list | bytes"], None]
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
+    """Applies the `acceptance` mark to every test requesting `acceptance_check`."""
+    for item in items:
+        if "acceptance_check" in getattr(item, "fixturenames", ()):
+            item.add_marker(pytest.mark.acceptance)
+
+
+@pytest.fixture
+def acceptance_check(request: pytest.FixtureRequest) -> AcceptanceCheck:
+    """Asserts that a value still matches the committed file it is expected to equal.
+
+    Given --update-committed, the committed file is rewritten to match the value first, so that a
+    deliberate change is reviewed as a git diff rather than pasted into the repository by hand.
+    """
+    rewrite_committed_file = request.config.option.update_committed
+
+    def check(committed_path: Path, value: dict | list | bytes) -> None:
+        if isinstance(value, bytes):
+            if rewrite_committed_file:
+                committed_path.write_bytes(value)
+            assert value == committed_path.read_bytes()
+            return
+
+        if rewrite_committed_file:
+            json_lib.write_path(committed_path, value)
+        assert value == json_lib.read_path(committed_path)
+
+    return check
 
 
 @pytest.fixture(scope="session")
@@ -601,6 +636,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         default=False,
         help="Skips running tests that uses the echo tool",
     )
+    parser.addoption(
+        "--update-committed",
+        action="store_true",
+        dest="update_committed",
+        default=False,
+        help="Makes acceptance tests rewrite the git-tracked reference files instead of only asserting against them",
+    )
 
 
 if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
@@ -665,7 +707,7 @@ else:
 
 
 def pytest_configure(config: pytest.Config) -> None:
-    markers = []
+    markers = [config.option.markexpr] if config.option.markexpr else []
 
     if config.option.skip_generation_tests:
         markers.append("not skip_generation_tests")
@@ -725,6 +767,7 @@ SOLO_RDVGAMES = [
     # Planets (Zebeth)
     ("planets_zebeth/starter_preset.rdvgame", True),  # starter preset (vanilla keys)
     ("planets_zebeth/starter_preset_shuffle_keys.rdvgame", True),  # starter preset (shuffled keys)
+    ("planets_zebeth/starter_preset_with_nothing.rdvgame", True),  # starter preset with nothing
     # Prime Hunters
     ("prime_hunters/starter_preset.rdvgame", True),  # starter preset
     ("prime_hunters/shuffled_force_fields.rdvgame", True),  # starter preset with shuffled force fields

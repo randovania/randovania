@@ -221,6 +221,38 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         }
         return palette_dict
 
+    def _create_boss_rng(self) -> dict:
+        # slightly adjusted rates from vanilla to feel better with it repeating over and over
+        # goes from 0 beams to 4 beams
+        gadora_beams_probs = [
+            0.45,
+            0.30,
+            0.15,
+            0.07,
+            0.03,
+        ]
+        beams = self.rng.choices(list(range(5)), gadora_beams_probs, k=10)
+
+        # vanilla rates/calculations
+        zazabi_extras = [self.rng.choice(list(range(4))) for _ in range(3)]
+        zazabi_extras.append(self.rng.choice(list(range(16))) * 8)
+
+        # adjusted rates from vanilla to feel better with it repeating over and over
+        # goes from 0 extra rounds to 3 extra rounds
+        yakuza_extra_rounds_probs = [
+            0.45,
+            0.30,
+            0.18,
+            0.07,
+        ]
+        extra_rounds = self.rng.choices(list(range(4)), yakuza_extra_rounds_probs)[0]
+
+        return {
+            "Gadora": beams,
+            "Zazabi": zazabi_extras,
+            "Yakuza": extra_rounds,
+        }
+
     def _create_nav_text(self) -> dict:
         exporter = self.create_hint_exporter(FUSION_JOKE_HINTS)
 
@@ -235,7 +267,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 self.description.all_patches,
                 self.worlds_config,
                 exporter.namer,
-                True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                metroid_precision == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
                 True,
             )
@@ -244,7 +276,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 self.description.all_patches,
                 self.worlds_config,
                 exporter.namer,
-                True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                charge_precision == SpecificPickupHintMode.HIDE_AREA,
                 [self.resource_db.get_item("ChargeBeam")],
                 True,
             )
@@ -292,7 +324,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
             metroid_hint_base = f"{FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected at the following"
             no_metroids_hint = (
-                f"This terminal was unable to scan for any {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value}."
+                f"No {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected from this terminal."
             )
 
             if operations_hint:
@@ -536,6 +568,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "door_locks": self._create_door_locks(),
             "hide_doors_on_minimap": self.configuration.dock_weakness_distributor.is_enabled_for_any_type(),
             "palettes": self._create_palette(),
+            "rng": self._create_boss_rng(),
             "navigation_text": self._create_nav_text(),
             "nav_station_locks": self._create_nav_locks(),
             "title_text": self._create_title_text(),

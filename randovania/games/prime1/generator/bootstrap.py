@@ -75,7 +75,6 @@ class PrimeBootstrap(Bootstrap):
         enabled_resources = set()
 
         logical_patches = {
-            "allow_underwater_movement_without_gravity": "NoGravity",
             "main_plaza_door": "main_plaza_door",
             "backwards_frigate": "backwards_frigate",
             "backwards_labs": "backwards_labs",
@@ -91,6 +90,7 @@ class PrimeBootstrap(Bootstrap):
             "superheated_probability": "superheated_probability",
             "submerged_probability": "submerged_probability",
             "remove_bars_great_tree_hall": "remove_bars_great_tree_hall",
+            "blue_save_doors": "blue_save_doors",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
