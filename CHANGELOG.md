@@ -110,7 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Fixed: Viewing the Debug Info tracker layout causes no disconnects anymore.
+- Fixed: Viewing the Debug Info tracker layout doesn't cause disconnects anymore.
 
 #### Logic Database
 
