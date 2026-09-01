@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.12.0] - 2026-10-??
+
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+Changed: Shinesparking the Geron's Crossing super geron is now possible in Door Lock Rando.
+Changed: Shinesparking the lower left bomb block in Geron's Crossing is now possible in Door Lock Rando.
+
 ## [10.11.0] - 2026-09-01
 
 - **Major** - Added: Metroid Prime Hunters has been added. Shuffle the items including Artifacts and Refills, portal destinations, Force Field weaknesses, and even Shield Keys.
