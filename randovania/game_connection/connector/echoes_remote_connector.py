@@ -144,7 +144,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             return all(op is not None for op in ops)
 
         # multiple passes are required, as 128 bytes is too much at once for Nintendont
-        PASSES = math.ceil((4 * 32) // self.executor.max_output)
+        PASSES = math.ceil((4 * 32) / self.executor.max_output)
         arr_raws = [
             await self.executor.perform_single_memory_operation(
                 MemoryOperation(
