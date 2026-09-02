@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [11.1.0] - 2026-10-01
 
+- Nothing yet.
+
+## [11.0.1] - 2026-10-02
+
 ### Metroid Prime Hunters
 
 - Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
 - Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
+- Fixed: Sic Transit: The scan door will now unlock in the post-boss layers if the shuffled Shield Key is collected.
 
 ## [11.0.0] - 2026-09-01
 
