@@ -252,6 +252,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: Slightly reworked the way the inventory is read for the sake of a slight speedup. No expected changes in fuctionality.
 - Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
 
 ### Metroid Prime 2: Echoes
