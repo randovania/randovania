@@ -12,6 +12,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException,
     MemoryOperationExecutor,
 )
+from randovania.game_description.resources.inventory import InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime1.patcher import prime_items
 
@@ -27,11 +28,9 @@ if TYPE_CHECKING:
 def format_received_item(item_name: str, player_name: str) -> str:
     special = {
         "Locked Power Bomb Expansion": (
-            "Received Power Bomb Expansion from {provider_name}, but the main Power Bomb is required to use it."
+            "Received Power Bomb Expansion from {provider_name}. Main Power Bomb required."
         ),
-        "Locked Missile Expansion": (
-            "Received Missile Expansion from {provider_name}, but the Missile Launcher is required to use it."
-        ),
+        "Locked Missile Expansion": ("Received Missile Expansion from {provider_name}. Missile Launcher required."),
     }
 
     generic = "Received {item_name} from {provider_name}."
@@ -57,6 +56,21 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         powerups_offset = 0x24
         vector_data_offset = 0x4
         return (powerups_offset + vector_data_offset) + (item_index * self.powerup_size)
+
+    async def get_inventory(self) -> Inventory:
+        inventory = await super().get_inventory()
+
+        resource_db = self.game.get_resource_database_view()
+        unknown2 = inventory.get(resource_db.get_item("Unknown2"))
+        custom_bits = unknown2.capacity
+
+        for item_name in ("MissileLauncher", "MainPB"):
+            item = resource_db.get_item(item_name)
+            bitmask = item.extra["unk2_bitmask_value"]
+            owned = int(bool(custom_bits & bitmask))
+            inventory[item] = InventoryItem(owned, owned)
+
+        return inventory
 
     def _asset_id_format(self) -> str:
         return ">I"
@@ -124,13 +138,29 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
             assert isinstance(item, ItemResourceInfo)
 
+            game_item_id = item.extra.get("game_item_id", item.extra["item_id"])
+
+            if item.extra.get("unk2_bitmask_value") is not None:
+                if delta != 1:
+                    raise ValueError(f"Unexpected custom item delta for {item.long_name}: {delta}")
+
+                patches.append(
+                    all_prime_dol_patches.increment_item_capacity_patch(
+                        self.version.powerup_functions,
+                        self.version.game,
+                        game_item_id,
+                        0,
+                    )
+                )
+                continue
+
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
                 if item.extra.get("max_increase", None) == 0:
                     patches.append(
                         all_prime_dol_patches.adjust_item_amount_patch(
                             self.version.powerup_functions,
                             self.version.game,
-                            item.extra["refill_id"] if item.extra.get("is_refill", None) else item.extra["item_id"],
+                            item.extra["refill_id"] if item.extra.get("is_refill", None) else game_item_id,
                             delta,
                         )
                     )
@@ -139,7 +169,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                         all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                             self.version.powerup_functions,
                             self.version.game,
-                            item.extra["item_id"],
+                            game_item_id,
                             delta,
                         )
                     )
@@ -151,7 +181,10 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
                 patches.append(
                     all_prime_dol_patches.increment_item_capacity_patch(
-                        self.version.powerup_functions, self.version.game, item.extra["item_id"], delta
+                        self.version.powerup_functions,
+                        self.version.game,
+                        game_item_id,
+                        delta,
                     )
                 )
                 patches.append(dol_patches.set_artifact_layer_active_patch(self.version, layer_id, delta > 0))

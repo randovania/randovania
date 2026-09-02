@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [11.1.0] - 2026-10-01
 
+### Metroid Prime
+
+- Added: Missile Expansions and Power Bomb Expansions can now require the Missile Launcher and Main Power Bomb respectively. Expansions collected before their main item are retained and become usable once the main item is acquired.
+
 ### Metroid Prime Hunters
 
 - Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.

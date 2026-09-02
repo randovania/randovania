@@ -6,10 +6,14 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from retro_data_structures.game_check import Game as RDSGame
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperationException
+from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
+from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.base.standard_pickup_configuration import StandardPickupState
 from randovania.network_common.remote_pickup import RemotePickup
 
 if TYPE_CHECKING:
@@ -229,3 +233,147 @@ async def test_interact_with_game(
         connector.executor.disconnect.assert_called_once_with()
     else:
         connector.executor.disconnect.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    ("custom_bits", "missile_owned", "pb_owned"),
+    [
+        (0, 0, 0),
+        (4, 1, 0),
+        (8, 0, 1),
+        (12, 1, 1),
+    ],
+)
+async def test_get_inventory_custom_main_bits(
+    connector: Prime1RemoteConnector,
+    mocker,
+    custom_bits: int,
+    missile_owned: int,
+    pb_owned: int,
+):
+    resource_db = connector.game.get_resource_database_view()
+    unknown2 = resource_db.get_item("Unknown2")
+    missile_launcher = resource_db.get_item("MissileLauncher")
+    main_pb = resource_db.get_item("MainPB")
+
+    base_inventory = Inventory(
+        {
+            unknown2: InventoryItem(0, custom_bits),
+            connector.multiworld_magic_item: InventoryItem(0, 0),
+        }
+    )
+
+    mocker.patch(
+        "randovania.game_connection.connector.prime_remote_connector.PrimeRemoteConnector.get_inventory",
+        AsyncMock(return_value=base_inventory),
+    )
+
+    inventory = await connector.get_inventory()
+
+    assert inventory.get(missile_launcher) == InventoryItem(missile_owned, missile_owned)
+    assert inventory.get(main_pb) == InventoryItem(pb_owned, pb_owned)
+
+
+@pytest.mark.parametrize(
+    ("resource_name", "expected_game_item_id"),
+    [
+        ("LockedMissile", 4),
+        ("LockedPB", 7),
+    ],
+)
+async def test_patches_for_locked_ammo_uses_physical_item_id(
+    connector: Prime1RemoteConnector,
+    mocker,
+    resource_name: str,
+    expected_game_item_id: int,
+    generic_pickup_category,
+    default_generator_params,
+):
+    mock_patch = mocker.patch(
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch"
+    )
+
+    db = connector.game.resource_database
+    resource = db.get_item(resource_name)
+
+    pickup = PickupEntry(
+        "Pickup",
+        MagicMock(),
+        generic_pickup_category,
+        frozenset((generic_pickup_category,)),
+        progression=(),
+        generator_params=default_generator_params,
+        extra_resources=((resource, 1),),
+    )
+
+    inventory = Inventory(
+        {
+            connector.multiworld_magic_item: InventoryItem(0, 0),
+        }
+    )
+
+    await connector._patches_for_pickup("Someone", pickup, inventory)
+
+    mock_patch.assert_called_once_with(
+        connector.version.powerup_functions,
+        RDSGame.PRIME,
+        expected_game_item_id,
+        1,
+    )
+
+
+@pytest.mark.parametrize(
+    ("pickup_name", "ammo_name", "included_ammo", "expected_game_item_id", "expected_ammo_id"),
+    [
+        ("Missile Launcher", "Missile Expansion", 5, 43, 4),
+        ("Power Bomb", "Power Bomb Expansion", 4, 44, 7),
+    ],
+)
+async def test_patches_for_required_main_uses_custom_item_id(
+    connector: Prime1RemoteConnector,
+    mocker,
+    pickup_name: str,
+    ammo_name: str,
+    included_ammo: int,
+    expected_game_item_id: int,
+    expected_ammo_id: int,
+):
+    pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_PRIME)
+    resource_db = connector.game.resource_database
+
+    pickup = pickup_creator.create_standard_pickup(
+        pickup_database.standard_pickups[pickup_name],
+        StandardPickupState(included_ammo=(included_ammo,)),
+        resource_db,
+        pickup_database.ammo_pickups[ammo_name],
+        True,
+    )
+
+    mock_increment = mocker.patch("open_prime_rando.dol_patching.all_prime_dol_patches.increment_item_capacity_patch")
+    mock_normal = mocker.patch(
+        "open_prime_rando.dol_patching.all_prime_dol_patches.adjust_item_amount_and_capacity_patch"
+    )
+
+    inventory = Inventory(
+        {
+            connector.multiworld_magic_item: InventoryItem(0, 0),
+            resource_db.get_item("MissileLauncher"): InventoryItem(0, 0),
+            resource_db.get_item("MainPB"): InventoryItem(0, 0),
+        }
+    )
+
+    await connector._patches_for_pickup("Someone", pickup, inventory)
+
+    mock_increment.assert_called_once_with(
+        connector.version.powerup_functions,
+        RDSGame.PRIME,
+        expected_game_item_id,
+        0,
+    )
+
+    mock_normal.assert_called_once_with(
+        connector.version.powerup_functions,
+        RDSGame.PRIME,
+        expected_ammo_id,
+        included_ammo,
+    )
