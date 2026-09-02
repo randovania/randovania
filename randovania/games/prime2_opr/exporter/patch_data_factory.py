@@ -2,20 +2,14 @@ from __future__ import annotations
 
 import functools
 from collections import defaultdict
-from collections.abc import Callable, Iterable
 from random import Random
 from typing import TYPE_CHECKING, Literal, NotRequired, TypedDict, override
 
-from randovania.exporter import pickup_exporter
 from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock import DockType
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.region import Region
 from randovania.game_description.hint import HintDarkTemple
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.common import elevators
@@ -37,8 +31,15 @@ from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
+    from randovania.exporter import pickup_exporter
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.exporter.patch_data_factory import PatcherDataMeta
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.dock import DockType
+    from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.db.region import Region
 
 type SoundType = Literal["standard", "expansion", "key"]
 
@@ -72,8 +73,8 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         data = {
             "title_screen_text": "",
             "game_title": f"Echoes OPR - {self.description.shareable_word_hash}"[:64],
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
-            "world_uuid": str(self.players_config.get_own_uuid()),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
+            "world_uuid": str(self.world_uuid),
         }
 
         # starting location/items
@@ -277,15 +278,15 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     @property
     def _door_dock_type(self) -> DockType:
-        return self.game.dock_weakness_database.find_type("door")
+        return self.game.dock_type_database.find_type("door")
 
     @property
     def _elevator_dock_type(self) -> DockType:
-        return self.game.dock_weakness_database.find_type("elevator")
+        return self.game.dock_type_database.find_type("elevator")
 
     @property
     def _portal_dock_type(self) -> DockType:
-        return self.game.dock_weakness_database.find_type("portal")
+        return self.game.dock_type_database.find_type("portal")
 
     def _get_pickup_appearance(self, exported_pickup: pickup_exporter.ExportedPickupDetails, index: int) -> dict:
         """Returns a patcher-format dict for this pickup stage's appearance."""
@@ -379,7 +380,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             self.configuration,
             self.game,
             self.patches,
-            self.players_config,
+            self.worlds_config,
             self.rng,
         )
 
@@ -460,7 +461,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
                 "source_dock_name": node.extra["dock_name"],
                 "target_mrea_id": self._asset_ids_for_area(target_dock.identifier.area_identifier)[1],
                 "target_dock_name": target_dock.extra["dock_name"],
-                # "portal_scan_destination": target_dock.identifier.area,  # For next OPR
+                "portal_scan_destination": target_dock.identifier.area,
             }
             yield mlvl, mrea, change
 
@@ -528,7 +529,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
         else:
             return hints.create_stk_hints(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 self.game.get_resource_database_view(),
                 namer,
                 hide_area=(stk_mode == SpecificPickupHintMode.HIDE_AREA),
@@ -553,7 +554,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
             else:
                 hint = create_temple_key_hint(
                     self.description.all_patches,
-                    self.players_config.player_index,
+                    self.worlds_config.world_index,
                     temple,
                     namer,
                     with_color=True,
@@ -606,7 +607,7 @@ class EchoesOPRPatchDataFactory(PatchDataFactory[EchoesOPRConfiguration, EchoesO
 
     def create_suit_mapping(self) -> dict:
         """Returns a patcher-format dict for custom suit changes."""
-        suit_rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+        suit_rng = Random(self.description.get_seed_for_world(self.worlds_config.world_index))
 
         suits = self.cosmetic_patches.suit_colors.randomized(suit_rng).as_json
         suits.pop("randomize_separately")

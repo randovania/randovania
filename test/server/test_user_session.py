@@ -125,6 +125,7 @@ async def test_browser_discord_login_callback_success(mock_sa, mock_request, exi
             },
             to="TheSid",
             namespace="/",
+            room=None,
         )
         mock_sa.templates.TemplateResponse.assert_called_once_with(
             ANY,  # Request

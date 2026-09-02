@@ -23,27 +23,29 @@ def _get_license(dist: importlib.metadata.Distribution) -> str:
 class DependenciesModel(QtCore.QAbstractTableModel):
     _headers = ("Dependency", "Version", "License")
 
-    def __init__(self, parent):
+    def __init__(self, parent: QtCore.QObject | None = None) -> None:
         super().__init__(parent)
         self._packages = [(dist.name, dist.version, _get_license(dist)) for dist in importlib.metadata.distributions()]
 
-    def columnCount(self, parent: QtCore.QModelIndex = ...) -> int:
+    def columnCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = QtCore.QModelIndex()) -> int:
         return len(self._headers)
 
-    def headerData(self, section: int, orientation: Qt.Orientation, role: int = ...) -> Any:
-        if role != Qt.DisplayRole:
+    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.ItemDataRole.DisplayRole) -> Any:
+        if role != Qt.ItemDataRole.DisplayRole:
             return None
 
-        if orientation != Qt.Horizontal:
+        if orientation != Qt.Orientation.Horizontal:
             return section
 
         return self._headers[section]
 
-    def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
+    def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = QtCore.QModelIndex()) -> int:
         return len(self._packages)
 
-    def data(self, index: QtCore.QModelIndex, role: int = ...) -> Any:
-        if role not in {Qt.DisplayRole, Qt.EditRole}:
+    def data(
+        self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int = Qt.ItemDataRole.DisplayRole
+    ) -> Any:
+        if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
             return None
 
         if index.row() < len(self._packages):
@@ -53,7 +55,7 @@ class DependenciesModel(QtCore.QAbstractTableModel):
 
 
 class DependenciesWidget(QtWidgets.QTableView):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(None)
         self.root_model = DependenciesModel(self)
         self.proxy_model = QtCore.QSortFilterProxyModel(self)
@@ -62,4 +64,4 @@ class DependenciesWidget(QtWidgets.QTableView):
         self.setModel(self.proxy_model)
         self.horizontalHeader().setStretchLastSection(True)
         self.setSortingEnabled(True)
-        self.sortByColumn(0, Qt.AscendingOrder)
+        self.sortByColumn(0, Qt.SortOrder.AscendingOrder)

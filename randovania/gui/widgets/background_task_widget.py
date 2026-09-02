@@ -9,7 +9,7 @@ class BackgroundTaskWidget(QtWidgets.QWidget, BackgroundTaskMixin):
 
     can_stop_background_process: bool = True
 
-    def __init__(self, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget) -> None:
         super().__init__(parent)
 
         self.root_layout = QtWidgets.QGridLayout(self)

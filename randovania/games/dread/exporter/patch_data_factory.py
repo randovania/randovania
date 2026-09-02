@@ -312,8 +312,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         return credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            DreadHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            DreadHintNamer(self.description.all_patches, self.worlds_config),
         )
 
     def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
@@ -343,7 +343,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
     def _build_teleporter_name_dict(self) -> dict[str, dict[str, str]]:
         cc_dict: dict = {}
         for node, connection in self.patches.all_dock_connections(self.game):
-            if node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types:
+            if node.dock_type in self.game.dock_type_database.all_teleporter_dock_types:
                 src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
                     node.identifier.area_identifier
                 )
@@ -458,8 +458,8 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
         artifacts = [self.resource_db.get_item(f"Artifact{i + 1}") for i in range(12)]
         artifact_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
-            self.players_config,
-            DreadHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            DreadHintNamer(self.description.all_patches, self.worlds_config),
             True,
             artifacts,
             True,
@@ -528,7 +528,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             }
             for node, connection in self.patches.all_dock_connections(self.game)
             if (
-                node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                node.dock_type in self.game.dock_type_database.all_teleporter_dock_types
                 or node.dock_type.extra.get("is_teleportal", False)
             )
         ]
@@ -572,7 +572,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
             "has_flash_upgrades": has_flash_upgrades,
             "has_speed_upgrades": has_speed_upgrades,
-            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.players_config.is_multiworld,
+            "enable_remote_lua": self.cosmetic_patches.enable_auto_tracker or self.worlds_config.is_multiworld,
             "enable_logging": self.cosmetic_patches.enable_debug_logging,
             "skip_item_popups": self.configuration.skip_item_popups,
             "constant_environment_damage": {
@@ -588,7 +588,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
                 "nerf_power_bombs": self.configuration.nerf_power_bombs,
                 "warp_to_start": self.configuration.warp_to_start,
             },
-            "show_shields_on_minimap": not self.configuration.dock_rando.is_enabled(),
+            "show_shields_on_minimap": not self.configuration.dock_weakness_distributor.is_enabled_for_any_type(),
             "door_patches": self._door_patches(),
             "tile_group_patches": self._tilegroup_patches(),
             "new_spawn_points": list(self.new_spawn_points.values()),
@@ -596,7 +596,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "mass_delete_actors": {
                 "to_remove": self._light_patches(),
             },
-            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "layout_uuid": str(self.world_uuid),
         }
 
 

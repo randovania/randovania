@@ -4,7 +4,6 @@ import io
 import json
 import logging
 import math
-import random
 import re
 import subprocess
 import time
@@ -21,7 +20,7 @@ from randovania.discord_bot.randovania_cog import RandovaniaCog
 from randovania.generator import generator
 from randovania.layout import layout_description, preset_describer
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters, random_seed_number
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
@@ -105,8 +104,7 @@ async def look_for_permalinks(message: discord.Message) -> None:
             if e.__cause__ is not None:
                 error_message += f"\n{e.__cause__}"
 
-        except (ValueError, UnsupportedPermalink):
-            # TODO: handle the incorrect version permalink
+        except ValueError:
             continue
 
         version = get_version(word.group(1), randovania_version)
@@ -218,7 +216,7 @@ class RequestPresetsView(discord.ui.View):
         try:
             title = (await interaction.original_response()).embeds[0].title
             if not isinstance(title, str):
-                raise ValueError("no title in embed")
+                raise TypeError("no title in embed")
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
@@ -337,7 +335,7 @@ class PermalinkLookupCog(RandovaniaCog):
             layout: LayoutDescription = await asyncio.wait_for(
                 generator.generate_and_validate_description(
                     generator_params=GeneratorParameters(
-                        seed_number=random.randint(0, 2**31),
+                        seed_number=random_seed_number(),
                         spoiler=True,
                         presets=presets,
                     ),

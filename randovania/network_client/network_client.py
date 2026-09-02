@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import asyncio
 import base64
-import functools
+import contextlib
 import hashlib
 import logging
-import ssl
 import time
+import typing
 import uuid
 from enum import Enum
-from typing import TYPE_CHECKING, Unpack
+from typing import TYPE_CHECKING, Any, Unpack
 
 import aiofiles
 import aiohttp
@@ -20,9 +20,6 @@ import socketio.exceptions
 
 import randovania
 from randovania.bitpacking import bitpacking, construct_pack
-from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import default_database
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import container_lib, http_lib
 from randovania.network_common import (
     admin_actions,
@@ -31,7 +28,6 @@ from randovania.network_common import (
     multiplayer_session,
     pickup_serializer,
     remote_inventory,
-    signals,
 )
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
@@ -42,6 +38,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceSettings,
     RaceRoomLeaderboard,
 )
+from randovania.network_common.async_race_room_endpoints import async_race_room_endpoints as race_endpoints
 from randovania.network_common.audit import AuditEntry
 from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.multiplayer_session import (
@@ -52,7 +49,7 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerWorldPickups,
     WorldUserInventory,
 )
-from randovania.network_common.remote_pickup import RemotePickup
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.network_common.user import CurrentUser
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
@@ -62,10 +59,13 @@ if TYPE_CHECKING:
 
     from aiohttp.client import _RequestContextManager, _RequestOptions
 
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
-    from randovania.lib.json_lib import JsonType
+    from randovania.lib.json_lib import JsonObject_RO
     from randovania.network_common.configuration import NetworkConfiguration
+    from randovania.network_common.signals.common import SioDataType, TypedBytes, TypedJsonObject
 
 
 class ConnectionState(Enum):
@@ -86,9 +86,9 @@ def _hash_address(server_address: str) -> str:
     )
 
 
-def _decode_pickup(d: str, resource_database):
+def _decode_pickup(d: str, resource_database: ResourceDatabase) -> PickupEntry:
     decoder = bitpacking.BitPackDecoder(base64.b85decode(d))
-    return pickup_serializer.BitPackPickupEntry.bit_pack_unpack(decoder, resource_database)
+    return pickup_serializer.BitPackPickupEntry.bit_pack_unpack(decoder, {"database": resource_database}).value
 
 
 class UnableToConnect(Exception):
@@ -102,6 +102,8 @@ _MAXIMUM_TIMEOUT = 180
 _TIMEOUTS_TO_DISCONNECT = 4
 _TIMEOUT_STEP = 10
 
+# Explicitly trusted when connecting to the server, in addition to the certificates from `certifi`.
+# Kept from when the DST Root CA X3 expiration caused this root to be missing from some hosts.
 isrgrootx1 = """-----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
 TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
@@ -135,21 +137,12 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 -----END CERTIFICATE-----"""
 
 
-def _apply_default_rest_headers(kwargs: _RequestOptions) -> None:
-    """Adds the default headers we should send to every REST request."""
-    headers = kwargs.get("headers")
-    if headers is None:
-        kwargs["headers"] = headers = {}
-    else:
-        assert isinstance(headers, dict)
-
-    if "Accept" not in headers:
-        headers["Accept"] = "application/json"
-
-
 class NetworkClient:
+    _background_tasks: set[asyncio.Task]
+    _was_shut_down: bool = False
+
+    # socketio
     sio: socketio.AsyncClient
-    _current_user: CurrentUser | None = None
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
     _connect_lock: asyncio.Lock
@@ -157,37 +150,39 @@ class NetworkClient:
     _restore_session_task: asyncio.Task | None = None
     _connect_error: str | None = None
     _num_emit_failures: int = 0
+
+    # REST
+    _http: aiohttp.ClientSession | None = None
+
+    # Authentication / State
+    _session_id: str | None = None
+    _encoded_session: str | None = None
     _sessions_interested_in: set[int]
     _tracking_worlds: set[tuple[uuid.UUID, int]]
+    _current_user: CurrentUser | None = None
+
+    # Preferences
     _allow_reporting_username: bool = False
 
     def __init__(self, user_data_dir: Path, configuration: NetworkConfiguration):
         self.logger = logging.getLogger("NetworkClient")
 
-        old_connect = aiohttp.ClientSession.ws_connect
-
-        @functools.wraps(old_connect)
-        def wrap_ws_connect(*args, **kwargs):
-            if any("randovania.metroidprime.run" in x for x in args if isinstance(x, str)):
-                kwargs["ssl"] = ssl.create_default_context(cadata=isrgrootx1)
-            return old_connect(*args, **kwargs)
-
-        aiohttp.ClientSession.ws_connect = wrap_ws_connect
-
         self._connection_state = ConnectionState.Disconnected
-        self.http = http_lib.http_session(
-            headers=connection_headers(),
-        )
+        self._ssl_context = http_lib.ssl_context(isrgrootx1)
+
+        verify_ssl = configuration.get("verify_ssl", True)
         self.sio = socketio.AsyncClient(
-            ssl_verify=configuration.get("verify_ssl", True),
+            ssl_verify=verify_ssl,
             reconnection=False,
-            http_session=self.http,
+            # Ensures the websocket connection uses our certificates, instead of the host's.
+            websocket_extra_options={"ssl": self._ssl_context} if verify_ssl else {},
         )
         self._call_lock = asyncio.Lock()
         self._connect_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
         self._sessions_interested_in = set()
         self._tracking_worlds = set()
+        self._background_tasks = set()
 
         self.configuration = configuration
         encoded_address = _hash_address(self.configuration["server_address"])
@@ -197,21 +192,66 @@ class NetworkClient:
         self.sio.on("connect", self.on_connect)
         self.sio.on("connect_error", self.on_connect_error)
         self.sio.on("disconnect", self.on_disconnect)
-        self.sio.on("user_session_update", self.on_user_session_updated)
-        self.sio.on(signals.SESSION_META_UPDATE, self._on_multiplayer_session_meta_update_raw)
-        self.sio.on(signals.SESSION_ACTIONS_UPDATE, self._on_multiplayer_session_actions_update_raw)
-        self.sio.on(signals.SESSION_AUDIT_UPDATE, self._on_multiplayer_session_audit_update_raw)
-        self.sio.on(signals.WORLD_PICKUPS_UPDATE, self._on_world_pickups_update_raw)
-        self.sio.on(signals.WORLD_BINARY_INVENTORY, self._on_world_user_inventory_raw)
-        self.sio.on(signals.WORLD_JSON_INVENTORY, print)
-        self.sio.on(signals.ASYNC_RACE_ROOM_UPDATE, self._on_async_race_room_update_raw)
+
+        client_signals.UserSessionUpdate.register(self.sio, self.on_user_session_updated)
+        client_signals.SessionMetaUpdate.register(self.sio, self._on_multiplayer_session_meta_update_raw)
+        client_signals.SessionActionsUpdate.register(self.sio, self._on_multiplayer_session_actions_update_raw)
+        client_signals.SessionAuditUpdate.register(self.sio, self._on_multiplayer_session_audit_update_raw)
+        client_signals.WorldPickupsUpdate.register(self.sio, self._on_world_pickups_update_raw)
+        client_signals.WorldBinaryInventory.register(self.sio, self._on_world_user_inventory_raw)
+        client_signals.WorldJsonInventory.register(self.sio, self._on_world_user_inventory_json)
+        client_signals.AsyncRaceRoomUpdate.register(self.sio, self._on_async_race_room_update_raw)
+
+    @property
+    def http(self) -> aiohttp.ClientSession:
+        """
+        The session used for all REST requests to the server.
+
+        A `aiohttp.ClientSession` can be closed for reasons outside our control and can't be re-opened,
+        so a new one is created whenever that happens. For this reason, no state can be kept in the
+        session itself: `_rest_headers` provides the headers every request needs.
+        """
+        if self._was_shut_down:
+            raise RuntimeError("This NetworkClient was shut down and can't be used anymore.")
+
+        if self._http is None:
+            self._http = http_lib.http_session(context=self._ssl_context)
+        elif self._http.closed:
+            self.logger.warning("The http session was closed. Creating a new one.")
+            self._http = http_lib.http_session(context=self._ssl_context)
+
+        return self._http
+
+    def _rest_headers(self) -> dict[str, str]:
+        """The headers we should send with every REST request."""
+        headers = connection_headers()
+        headers["Accept"] = "application/json"
+
+        if self._session_id is not None:
+            headers["X-Randovania-Sid"] = self._session_id
+
+        if self._encoded_session is not None:
+            headers["X-Randovania-Session"] = self._encoded_session
+
+        return headers
+
+    def _apply_default_rest_headers(self, kwargs: _RequestOptions) -> None:
+        """Adds the default headers we should send to every REST request, without overriding given ones."""
+        headers = kwargs.get("headers")
+        if headers is None:
+            kwargs["headers"] = self._rest_headers()
+        else:
+            assert isinstance(headers, dict)
+            for name, value in self._rest_headers().items():
+                if name not in headers:
+                    headers[name] = value
 
     @property
     def connection_state(self) -> ConnectionState:
         return self._connection_state
 
     @connection_state.setter
-    def connection_state(self, value: ConnectionState):
+    def connection_state(self, value: ConnectionState) -> None:
         self.logger.debug(f"updated connection_state: {value.value}")
         self._connection_state = value
 
@@ -262,6 +302,7 @@ class NetworkClient:
                 else:
                     message = str(e)
                 await self.on_connect_error(message)
+                assert self._connect_error is not None
             err = self._connect_error
             await self.sio.disconnect()
             raise UnableToConnect(err)
@@ -276,7 +317,7 @@ class NetworkClient:
             self.sio.connected = False
             raise
 
-    def notify_on_connect(self, error_message: Exception | None):
+    def notify_on_connect(self, error_message: Exception | None) -> None:
         if self._waiting_for_on_connect is not None:
             if error_message is None:
                 self._waiting_for_on_connect.set_result(None)
@@ -291,31 +332,39 @@ class NetworkClient:
             except asyncio.CancelledError:
                 return await self.disconnect_from_server()
 
-    async def disconnect_from_server(self):
+    async def disconnect_from_server(self) -> None:
         self.logger.debug("will disconnect")
         await self.sio.disconnect()
         self.logger.debug("disconnected. sio connected? %s", self.sio.connected)
 
     async def shutdown(self) -> None:
         await self.disconnect_from_server()
-        await self.http.close()
+        self._was_shut_down = True
+        if self._http is not None:
+            await self._http.close()
+            self._http = None
 
-    async def _restore_session(self):
+    async def _restore_session(self) -> None:
         persisted_session = await self.read_persisted_session()
         if persisted_session is not None:
             try:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
                 self.logger.debug("session restoring session")
                 await self.on_user_session_updated(
-                    await self.server_call("restore_user_session", persisted_session, handle_invalid_session=False)
+                    await server_signals.RestoreUserSession.call_server(
+                        self,
+                        handle_invalid_session=False,
+                    )(persisted_session)
                 )
 
                 # re-join rooms
                 self.logger.info("calling listen to session for %s", self._sessions_interested_in)
                 for session_id in list(self._sessions_interested_in):
-                    await self.server_call("multiplayer_listen_to_session", (session_id, True))
+                    await server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, True)
                 for world_uid, user_id in list(self._tracking_worlds):
-                    await self.server_call("multiplayer_watch_inventory", (str(world_uid), user_id, True, True))
+                    await server_signals.Multiplayer.WatchInventory.call_server(self)(
+                        str(world_uid), user_id, True, True
+                    )
 
                 self.logger.info("session restored successful")
 
@@ -334,7 +383,7 @@ class NetworkClient:
             self.logger.info("no session to restore")
             self.connection_state = ConnectionState.ConnectedNotLogged
 
-    async def on_connect(self):
+    async def on_connect(self) -> None:
         self.logger.debug("Received on_connect")
         error_message = None
         try:
@@ -351,7 +400,7 @@ class NetworkClient:
         finally:
             self.notify_on_connect(error_message)
 
-    async def on_connect_error(self, error_message: str):
+    async def on_connect_error(self, error_message: str) -> None:
         if isinstance(error_message, dict) and "message" in error_message:
             error_message = error_message["message"]
 
@@ -364,7 +413,7 @@ class NetworkClient:
         finally:
             self.notify_on_connect(socketio.exceptions.ConnectionError(error_message))
 
-    async def on_disconnect(self):
+    async def on_disconnect(self) -> None:
         self.logger.info("on_disconnect")
         self.connection_state = ConnectionState.Disconnected
         if self._restore_session_task is not None:
@@ -372,7 +421,7 @@ class NetworkClient:
 
     async def on_user_session_updated(self, new_session: dict) -> None:
         if new_session["sid"] is not None:
-            self.http.headers["X-Randovania-Sid"] = new_session["sid"]
+            self._session_id = new_session["sid"]
 
         self._current_user = CurrentUser.from_json(new_session["user"])
         self._update_reported_username()
@@ -382,7 +431,7 @@ class NetworkClient:
 
         self.logger.info(f"{self._current_user.name}, state: {self.connection_state}")
 
-        self.http.headers["X-Randovania-Session"] = new_session["encoded_session_b85"]
+        self._encoded_session = new_session["encoded_session_b85"]
         encoded_session_data = base64.b85decode(new_session["encoded_session_b85"])
 
         self.server_data_path.mkdir(exist_ok=True, parents=True)
@@ -391,54 +440,40 @@ class NetworkClient:
 
     # Multiplayer Session Updated
 
-    async def _on_multiplayer_session_meta_update_raw(self, data: dict):
+    async def _on_multiplayer_session_meta_update_raw(self, data: TypedJsonObject[MultiplayerSessionEntry]) -> None:
         entry = MultiplayerSessionEntry.from_json(data)
         self.logger.debug("%s: %s", entry.id, hashlib.blake2b(str(data).encode("utf-8")).hexdigest())
         await self.on_multiplayer_session_meta_update(entry)
 
-    async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry):
+    async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry) -> None:
         self.logger.info("name: %s, users: %d, game: %s", entry.name, len(entry.users), str(entry.game_details))
 
-    async def _on_multiplayer_session_actions_update_raw(self, data: bytes):
+    async def _on_multiplayer_session_actions_update_raw(self, data: bytes) -> None:
         await self.on_multiplayer_session_actions_update(
             construct_pack.decode(data, multiplayer_session.MultiplayerSessionActions)
         )
 
-    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions):
+    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions) -> None:
         self.logger.info("num actions: %d", len(actions.actions))
 
-    async def _on_multiplayer_session_audit_update_raw(self, data: bytes):
+    async def _on_multiplayer_session_audit_update_raw(self, data: bytes) -> None:
         await self.on_multiplayer_session_audit_update(
             construct_pack.decode(data, multiplayer_session.MultiplayerSessionAuditLog)
         )
 
-    async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog):
+    async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog) -> None:
         self.logger.info("num audit: %d", len(audit_log.entries))
 
     # World Events
-    async def _on_world_pickups_update_raw(self, data):
-        game = RandovaniaGame(data["game"])
-        resource_database = default_database.resource_database_for(game)
+    async def _on_world_pickups_update_raw(self, data: TypedJsonObject[MultiplayerWorldPickups]) -> None:
+        await self.on_world_pickups_update(MultiplayerWorldPickups.from_json(data))
 
-        await self.on_world_pickups_update(
-            MultiplayerWorldPickups(
-                world_id=uuid.UUID(data["world"]),
-                game=game,
-                pickups=tuple(
-                    RemotePickup(
-                        item["provider_name"],
-                        _decode_pickup(item["pickup"], resource_database),
-                        PickupIndex(item["coop_location"]) if item["coop_location"] is not None else None,
-                    )
-                    for item in data["pickups"]
-                ),
-            )
-        )
-
-    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups):
+    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups) -> None:
         self.logger.info("world %s, num pickups: %d", pickups.world_id, len(pickups.pickups))
 
-    async def _on_world_user_inventory_raw(self, entry_id: str, user_id: int, raw_inventory: bytes):
+    async def _on_world_user_inventory_raw(
+        self, entry_id: str, user_id: int, raw_inventory: TypedBytes[remote_inventory.RemoteInventory]
+    ) -> None:
         inventory_or_error = remote_inventory.decode_remote_inventory(raw_inventory)
         if isinstance(inventory_or_error, construct.ConstructError):
             self.logger.debug("Unable to parse inventory for entry %d: %s", entry_id, str(inventory_or_error))
@@ -453,17 +488,20 @@ class NetworkClient:
         )
         await self.on_world_user_inventory(session_inventory)
 
-    async def on_world_user_inventory(self, inventory: WorldUserInventory):
+    async def on_world_user_inventory(self, inventory: WorldUserInventory) -> None:
         pass
 
-    async def _on_async_race_room_update_raw(self, data: dict) -> None:
+    async def _on_world_user_inventory_json(self, *args: Any, **kwargs: Any) -> None:
+        print(*args, **kwargs)
+
+    async def _on_async_race_room_update_raw(self, data: TypedJsonObject[AsyncRaceRoomEntry]) -> None:
         """Event triggered when the server pushes an e"""
         await self.on_async_race_room_update(AsyncRaceRoomEntry.from_json(data))
 
     async def on_async_race_room_update(self, room: AsyncRaceRoomEntry) -> None:
         pass
 
-    def _update_timeout_with(self, request_time: float, success: bool):
+    def _update_timeout_with(self, request_time: float, success: bool) -> None:
         if success:
             if request_time < self._current_timeout - _TIMEOUT_STEP and self._current_timeout > _MINIMUM_TIMEOUT:
                 self._current_timeout -= _TIMEOUT_STEP
@@ -478,11 +516,11 @@ class NetworkClient:
     async def server_call(
         self,
         event: str,
-        data: JsonType | bytes | tuple[JsonType | bytes, ...] | None = None,
+        data: SioDataType | tuple[SioDataType, ...] | None = None,
         *,
         namespace: str | None = None,
         handle_invalid_session: bool = True,
-    ) -> JsonType | bytes | None:
+    ) -> SioDataType | None:
         self.logger.debug("performing call for %s", event)
 
         if self.connection_state.is_disconnected:
@@ -495,7 +533,15 @@ class NetworkClient:
             timeout = self._current_timeout
             self.logger.debug("%s, will call with timeout %d", event, timeout)
             try:
-                result = await self.sio.call(event, data, namespace=namespace, timeout=timeout)
+                result = typing.cast(
+                    "dict | None",
+                    await self.sio.call(
+                        event,
+                        data,  # type: ignore[arg-type]
+                        namespace=namespace,
+                        timeout=timeout,
+                    ),
+                )
                 request_time = time.time() - request_start
                 self._update_timeout_with(request_time, True)
 
@@ -523,159 +569,211 @@ class NetworkClient:
     async def create_async_race_room(
         self, layout: LayoutDescription, settings: AsyncRaceSettings
     ) -> AsyncRaceRoomEntry:
-        """
+        """POST /async-race-room"""
+        body = {
+            "layout_bin": base64.b64encode(layout.as_binary(force_spoiler=True)).decode("ascii"),
+            "settings": settings.as_json,
+        }
 
-        :param layout:
-        :param settings:
-        :return:
-        """
-        result = await self.server_call(
-            "async_race_create_room",
-            (
-                layout.as_binary(force_spoiler=True),
-                settings.as_json,
-            ),
-        )
-        return AsyncRaceRoomEntry.from_json(result)
+        async with self.server_post(race_endpoints.create_room(), json=body) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def get_async_race_room_list(self, ignore_limit: bool) -> list[AsyncRaceRoomListEntry]:
-        return [
-            AsyncRaceRoomListEntry.from_json(item)
-            for item in await self.server_call("async_race_list_rooms", (None if ignore_limit else 100,))
-        ]
+        """GET /async-race-room"""
+        params = {} if ignore_limit else {"limit": "100"}
+        async with self.server_get(race_endpoints.list_rooms(), params=params) as response:
+            return [AsyncRaceRoomListEntry.from_json(item) for item in await self._rest_json_or_raise(response)]
 
     async def get_async_race_room(self, room_id: int, password: str | None) -> AsyncRaceRoomEntry:
         """
+        GET /async-race-room/{room_id}
+
         Gets details about the given room id.
         :param room_id:
         :param password: The room password
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_get_room", (room_id, password)))
+        params = {"password": password} if password is not None else {}
+        async with self.server_get(race_endpoints.get_room(room_id), params=params) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_refresh_room(self, room: AsyncRaceRoomEntry) -> AsyncRaceRoomEntry:
         """
+        GET /async-race-room/{room_id}/refresh
+
         Gets details about the given room id.
         :param room: The room's data from get_async_race_room
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(
-            await self.server_call("async_race_refresh_room", (room.id, room.auth_token))
-        )
+        async with self.server_get(
+            race_endpoints.refresh_room(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_get_leaderboard(self, room: AsyncRaceRoomEntry) -> RaceRoomLeaderboard:
         """
+        GET /async-race-room/{room_id}/leaderboard
+
         Gets the leaderboard for the given room. Must have already finished to work.
         :param room: The room's data from get_async_race_room
         :return: The room's leaderboard
         """
-        return RaceRoomLeaderboard.from_json(
-            await self.server_call("async_race_get_leaderboard", (room.id, room.auth_token))
-        )
+        async with self.server_get(
+            race_endpoints.room_leaderboard(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            return RaceRoomLeaderboard.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_get_layout(self, room: AsyncRaceRoomEntry) -> LayoutDescription:
         """
+        GET /async-race-room/{room_id}/layout
+
         Gets the LayoutDescription for the given room. Must have already finished to work.
         :param room: The room's data from get_async_race_room
         :return: The room's layout
         """
         from randovania.layout.layout_description import LayoutDescription
 
-        return LayoutDescription.from_bytes(await self.server_call("async_race_get_layout", (room.id, room.auth_token)))
+        async with self.server_get(
+            race_endpoints.room_layout(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            await self._raise_for_rest_error(response)
+            return LayoutDescription.from_bytes(await response.read())
 
     async def async_race_get_audit_log(self, room: AsyncRaceRoomEntry) -> list[AuditEntry]:
         """
+        GET /async-race-room/{room_id}/audit-log
+
         Gets all the AuditEntry for the given room.
         :param room: The room's data from get_async_race_room
         :return: The room's audit log entries
         """
-        log_entries = await self.server_call("async_race_get_audit_log", (room.id, room.auth_token))
-        return [AuditEntry.from_json(entry) for entry in log_entries]
+        async with self.server_get(
+            race_endpoints.room_audit_log(room.id), params={"auth_token": room.auth_token}
+        ) as response:
+            log_entries = await self._rest_json_or_raise(response)
+            return [AuditEntry.from_json(entry) for entry in log_entries]
 
     async def async_race_get_livesplit_url(self, room: AsyncRaceRoomEntry) -> str:
         """
+        GET /async-race-room/{room_id}/livesplit-url
+
         Gets a URL that lets LiveSplit One control this user's Start/Finish/Pause events.
         :param room: The room's data from get_async_race_room
         :return: the URL to configure LiveSplit One with
         """
-        return await self.server_call("async_race_get_livesplit_url", room.id)
+        async with self.server_get(race_endpoints.room_livesplit_url(room.id)) as response:
+            return typing.cast("str", await self._rest_json_or_raise(response))
 
     async def async_race_admin_get_admin_data(self, room_id: int) -> AsyncRaceRoomAdminData:
         """
+        GET /async-race-room/{room_id}/admin-data
+
         Gets all details regarding a room that are exclusive to administrators
         :param room_id:
         :return: The room's data exclusive to administrators
         """
-        return AsyncRaceRoomAdminData.from_json(await self.server_call("async_race_admin_get_admin_data", room_id))
+        async with self.server_get(race_endpoints.room_admin_data(room_id)) as response:
+            return AsyncRaceRoomAdminData.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_admin_update_entries(
         self, room_id: int, modified_entries: Sequence[AsyncRaceEntryData]
     ) -> AsyncRaceRoomEntry:
         """
+        POST /async-race-room/{room_id}/admin-entries
+
         :param room_id:
         :param modified_entries: the user entries that were modified.
         :return: The room details
         """
-        return AsyncRaceRoomEntry.from_json(
-            await self.server_call(
-                "async_race_admin_update_entries", (room_id, [entry.as_json for entry in modified_entries])
-            )
-        )
+        async with self.server_post(
+            race_endpoints.room_admin_entries(room_id),
+            json=[entry.as_json for entry in modified_entries],
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
-    async def async_race_join_and_export(self, room: AsyncRaceRoomEntry, cosmetic: BaseCosmeticPatches) -> dict:
+    async def async_race_join_and_export(
+        self, room: AsyncRaceRoomEntry, cosmetic: BaseCosmeticPatches
+    ) -> JsonObject_RO:
         """
+        POST /async-race-room/{room_id}/join-and-export
+
         Requests to join the given room, along with some patcher data to export the game.
         :param room: The room's data from get_async_race_room
         :param cosmetic: Cosmetic Patches to use for creating the patcher data
         :return: The patcher data necessary for exporting the game
         """
-        return await self.server_call("async_race_join_and_export", (room.id, room.auth_token, cosmetic.as_json))
+        async with self.server_post(
+            race_endpoints.room_join_and_export(room.id),
+            params={"auth_token": room.auth_token},
+            json=cosmetic.as_json,
+        ) as response:
+            return await self._rest_json_or_raise(response)
 
     async def async_race_change_state(self, room_id: int, status: AsyncRaceRoomUserStatus) -> AsyncRaceRoomEntry:
         """
+        POST /async-race-room/{room_id}/state
+
         Requests the server to transition the user's state to the requested one.
         :param room_id:
         :param status:
         :return: Updated room details
         """
-        return AsyncRaceRoomEntry.from_json(await self.server_call("async_race_change_state", (room_id, status.value)))
+        async with self.server_post(
+            race_endpoints.room_state(room_id),
+            params={"new_state": status.value},
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def async_race_get_own_proof(self, room_id: int) -> tuple[str, str]:
         """
+        GET /async-race-room/{room_id}/own-proof
+
         Gets your own submission_notes and proof_url in the given room.
         :param room_id:
         :return: submission_notes and proof_url
         """
-        return await self.server_call("async_race_get_own_proof", (room_id,))
+        async with self.server_get(race_endpoints.room_own_proof(room_id)) as response:
+            submission_notes, proof_url = await self._rest_json_or_raise(response)
+            return submission_notes, proof_url
 
     async def async_race_submit_proof(self, room_id: int, submission_notes: str, proof_url: str) -> None:
         """
+        POST /async-race-room/{room_id}/proof
+
         Uploads the proof data for the given room.
         :param room_id:
         :param submission_notes:
         :param proof_url:
         :return:
         """
-        await self.server_call("async_race_submit_proof", (room_id, submission_notes, proof_url))
+        async with self.server_post(
+            race_endpoints.room_submit_proof(room_id),
+            params={"submission_notes": submission_notes, "proof_url": proof_url},
+        ) as response:
+            await self._raise_for_rest_error(response)
 
     async def async_race_change_room_settings(self, room_id: int, settings: AsyncRaceSettings) -> AsyncRaceRoomEntry:
         """
+        PATCH /async-race-room/{room_id}
+
         Updates the settings for the given room.
         :param room_id:
         :param settings: The settings to replace with. Password is ignored.
         :return: The updated room entry.
         """
-        return AsyncRaceRoomEntry.from_json(
-            await self.server_call("async_race_change_room_settings", (room_id, settings.as_json))
-        )
+        async with self.server_patch(
+            race_endpoints.change_room(room_id),
+            json=settings.as_json,
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
 
     async def get_multiplayer_session_list(self, ignore_limit: bool) -> list[MultiplayerSessionListEntry]:
         return [
             MultiplayerSessionListEntry.from_json(item)
-            for item in await self.server_call("multiplayer_list_sessions", (None if ignore_limit else 100,))
+            for item in await server_signals.Multiplayer.ListSessions.call_server(self)(None if ignore_limit else 100)
         ]
 
-    def _with_new_session(self, data: dict) -> MultiplayerSessionEntry:
+    def _with_new_session(self, data: JsonObject_RO) -> MultiplayerSessionEntry:
         result = MultiplayerSessionEntry.from_json(data)
         self._sessions_interested_in.add(result.id)
         return result
@@ -686,7 +784,7 @@ class NetworkClient:
         :param session_name: The name of the session to create.
         :return:
         """
-        assert self.http.headers["X-Randovania-Sid"] is not None
+        assert self._session_id is not None
 
         async with self.server_post("session", json={"name": session_name}) as response:
             # TODO: this can very much be a generic component
@@ -697,32 +795,68 @@ class NetworkClient:
             response.raise_for_status()
             return self._with_new_session(await response.json())
 
-    async def join_multiplayer_session(self, session_id: int, password: str | None):
-        result = await self.server_call("multiplayer_join_session", (session_id, password))
+    async def get_abandoned_world_data(self, world_uid: uuid.UUID) -> dict:
+        """Fetches the data needed to drive an abandoned world connector."""
+        try:
+            async with self.server_get(f"world/{world_uid}/abandoned-data") as response:
+                if response.status == 403:
+                    raise error.WorldNotAssociatedError
+
+                if response.status != 200:
+                    detail = ""
+                    with contextlib.suppress(Exception):
+                        detail = (await response.json()).get("detail", "")
+                    raise error.InvalidActionError(detail or f"Server returned status {response.status}")
+                return await response.json()
+        except aiohttp.ClientError as e:
+            raise UnableToConnect(str(e))
+
+    async def join_multiplayer_session(self, session_id: int, password: str | None) -> MultiplayerSessionEntry:
+        result = await server_signals.Multiplayer.JoinSession.call_server(self)(session_id, password)
         return self._with_new_session(result)
 
-    async def listen_to_session(self, session_id: int, listen: bool):
-        result = await self.server_call("multiplayer_listen_to_session", (session_id, listen))
+    def _run_in_background(self, coro: typing.Coroutine[Any, Any, Any], description: str) -> None:
+        """Schedules a coroutine to run without awaiting it, logging any error it raises."""
+
+        async def wrapper() -> None:
+            try:
+                await coro
+            except Exception:
+                self.logger.exception("Error while running background task: %s", description)
+
+        task = asyncio.ensure_future(wrapper())
+        self._background_tasks.add(task)
+        task.add_done_callback(self._background_tasks.discard)
+
+    def remove_interest_in_session(self, session_id: int) -> None:
+        self._sessions_interested_in.discard(session_id)
+        if not self.connection_state.is_disconnected:
+            self._run_in_background(
+                server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, False),
+                f"stop listening to session {session_id}",
+            )
+
+    async def listen_to_session(self, session_id: int, listen: bool) -> None:
+        await server_signals.Multiplayer.ListenToSession.call_server(self)(session_id, listen)
         container_lib.ensure_in_set(session_id, self._sessions_interested_in, listen)
-        return result
 
     async def session_admin_global(
-        self, session: MultiplayerSessionEntry, action: admin_actions.SessionAdminGlobalAction, arg
-    ):
-        return await self.server_call("multiplayer_admin_session", (session.id, action.value, arg))
+        self, session: MultiplayerSessionEntry, action: admin_actions.SessionAdminGlobalAction, arg: Any
+    ) -> Any:
+        return await server_signals.Multiplayer.AdminSession.call_server(self)(session.id, action.value, arg)
 
     async def session_admin_player(
-        self, session: MultiplayerSessionEntry, user_id: int, action: admin_actions.SessionAdminUserAction, arg
-    ):
-        return await self.server_call("multiplayer_admin_player", (session.id, user_id, action.value, arg))
+        self, session: MultiplayerSessionEntry, user_id: int, action: admin_actions.SessionAdminUserAction, arg: Any
+    ) -> Any:
+        return await server_signals.Multiplayer.AdminPlayer.call_server(self)(session.id, user_id, action.value, arg)
 
-    async def world_track_inventory(self, world_uid: uuid.UUID, user_id: int, enable: bool):
-        await self.server_call("multiplayer_watch_inventory", (str(world_uid), user_id, enable, True))
+    async def world_track_inventory(self, world_uid: uuid.UUID, user_id: int, enable: bool) -> None:
+        await server_signals.Multiplayer.WatchInventory.call_server(self)(str(world_uid), user_id, enable, True)
         container_lib.ensure_in_set((world_uid, user_id), self._tracking_worlds, enable)
 
     async def perform_world_sync(self, request: ServerSyncRequest) -> ServerSyncResponse:
         return construct_pack.decode(
-            await self.server_call("multiplayer_world_sync", construct_pack.encode(request)),
+            await server_signals.Multiplayer.WorldSync.call_server(self)(construct_pack.encode(request)),
             ServerSyncResponse,
         )
 
@@ -736,17 +870,17 @@ class NetworkClient:
             return self._current_user.id
         return None
 
-    async def logout(self):
+    async def logout(self) -> None:
         self.logger.info("Logging out")
         self.session_data_path.unlink()
-        self.http.headers["X-Randovania-Session"] = None
+        self._encoded_session = None
         self._current_user = None
         self._update_reported_username()
 
         if self.connection_state != ConnectionState.Connected:
             return
         self.connection_state = ConnectionState.ConnectedNotLogged
-        await self.server_call("logout")
+        await server_signals.Logout.call_server(self)()
 
     def _update_reported_username(self) -> None:
         if self.allow_reporting_username and self._current_user and self._current_user.discord_id:
@@ -807,7 +941,7 @@ class NetworkClient:
         >>>         return CurrentUser.from_json(await response.json())
         """
 
-        _apply_default_rest_headers(kwargs)
+        self._apply_default_rest_headers(kwargs)
         return self.http.get(f"{self.configuration['server_address']}/{url}", **kwargs)
 
     def server_post(
@@ -817,5 +951,42 @@ class NetworkClient:
     ) -> _RequestContextManager:
         """Perform HTTP POST request to Randovania's REST Server."""
 
-        _apply_default_rest_headers(kwargs)
+        self._apply_default_rest_headers(kwargs)
         return self.http.post(f"{self.configuration['server_address']}/{url}", **kwargs)
+
+    def server_patch(
+        self,
+        url: str,
+        **kwargs: Unpack[_RequestOptions],
+    ) -> _RequestContextManager:
+        """Perform HTTP PATCH request to Randovania's REST Server."""
+
+        self._apply_default_rest_headers(kwargs)
+        return self.http.patch(f"{self.configuration['server_address']}/{url}", **kwargs)
+
+    async def _raise_for_rest_error(self, response: aiohttp.ClientResponse) -> None:
+        """
+        Mirrors the error-handling half of `server_call`: if the response indicates
+        a failure, try to decode it as one of our `error.BaseNetworkError` and raise
+        that.
+        """
+        if response.status < 400:
+            return
+
+        body = None
+        with contextlib.suppress(Exception):
+            body = await response.json()
+
+        if body is not None:
+            possible_error = error.BaseNetworkError.from_json(body)
+            if possible_error is not None:
+                if isinstance(possible_error, error.InvalidSessionError):
+                    self.logger.info("Received InvalidSession during a REST call to %s", response.url)
+                    await self.logout()
+                raise possible_error
+
+        response.raise_for_status()
+
+    async def _rest_json_or_raise(self, response: aiohttp.ClientResponse) -> Any:
+        await self._raise_for_rest_error(response)
+        return await response.json()

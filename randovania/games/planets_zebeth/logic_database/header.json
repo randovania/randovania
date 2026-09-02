@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "planets_zebeth",
     "resource_database": {
         "items": {
@@ -202,6 +202,14 @@
             "OpenMissileDoorWithOneMissile": {
                 "long_name": "Open Missile Door With One Missile",
                 "extra": {}
+            },
+            "AllowDownwardShots": {
+                "long_name": "Allow Downward Shots",
+                "extra": {}
+            },
+            "AllowScrewAttackToBreakBlocks": {
+                "long_name": "Allow Screw Attack To Break Blocks",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -317,6 +325,125 @@
                         ]
                     }
                 }
+            },
+            "Climb High Ledge": {
+                "display_name": "Climb High Ledge",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": "This template is used when the player is expected to climb a high ledge that is intended to be reached with Hi-Jump Boots.",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Hi-Jump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Use Bombs"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "UnmorphJump",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Use Bombs"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "IBJ",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Break Floor Blocks": {
+                "display_name": "Can Break Floor Blocks",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Use Bombs"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "AllowDownwardShots",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Break Blocks with Screw Attack"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Break Blocks with Screw Attack": {
+                "display_name": "Can Break Blocks with Screw Attack",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "AllowScrewAttackToBreakBlocks",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Screw Attack",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],
@@ -376,7 +503,7 @@
             ]
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -391,7 +518,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Missile Door": {
                         "extra": {},
@@ -447,7 +575,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "10 Missiles Door": {
                         "extra": {},
@@ -477,7 +606,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Wave Beam Door": {
                         "extra": {},
@@ -507,7 +637,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Ice Beam Door": {
                         "extra": {},
@@ -537,7 +668,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Bomb Door": {
                         "extra": {},
@@ -545,7 +677,8 @@
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Screw Attack Door": {
                         "extra": {},
@@ -558,7 +691,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Locked Door": {
                         "extra": {},
@@ -578,10 +712,11 @@
                                     "items": []
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": true
                     }
                 },
-                "dock_rando": {
+                "weakness_distributor": {
                     "unlocked": "Normal Door",
                     "locked": "Locked Door",
                     "change_from": [
@@ -598,7 +733,12 @@
                         "Normal Door",
                         "Screw Attack Door",
                         "Wave Beam Door"
-                    ]
+                    ],
+                    "indirect_change_from": [],
+                    "force_change_two_way": false,
+                    "resolver_attempts": 125,
+                    "to_shuffle_proportion": 1.0,
+                    "ui_label": "Door Locks"
                 }
             },
             "other": {
@@ -614,7 +754,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -625,10 +766,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "teleporter": {
                 "name": "Teleporter",
@@ -646,20 +788,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {},
@@ -672,14 +810,14 @@
         "IBJ": [
             1,
             2,
-            3
+            3,
+            4
         ],
         "UnmorphJump": [
             1
         ],
         "Knowledge": [
-            1,
-            3
+            1
         ],
         "Damage Boost": [
             2

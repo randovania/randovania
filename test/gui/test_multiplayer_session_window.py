@@ -18,7 +18,7 @@ from randovania.gui.lib import model_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.gui.multiworld_client import MultiworldClient
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
@@ -52,7 +52,7 @@ if TYPE_CHECKING:
 
 @pytest.fixture
 async def window(skip_qtbot: QtBot) -> MultiplayerSessionWindow:
-    window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
+    window = MultiplayerSessionWindow(MagicMock(), 1234, MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
 
@@ -117,6 +117,7 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
 
 
@@ -236,6 +237,7 @@ async def test_on_session_meta_update(
         allowed_games=[RandovaniaGame.METROID_PRIME_ECHOES],
         allow_coop=False,
         allow_everyone_claim_world=True,
+        allow_abandon_worlds=True,
     )
     window = await MultiplayerSessionWindow.create_and_update(
         network_client, initial_session.id, MagicMock(spec=WindowManager), MagicMock()
@@ -244,7 +246,12 @@ async def test_on_session_meta_update(
 
     # Run
     await window.on_meta_update(second_session)
-    network_client.server_call.assert_awaited_once_with("multiplayer_request_session_update", 1234)
+    network_client.server_call.assert_awaited_once_with(
+        "multiplayer_request_session_update",
+        1234,
+        namespace=None,
+        handle_invalid_session=True,
+    )
 
 
 async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry):
@@ -518,7 +525,9 @@ async def test_generate_game(
 ):
     mock_alert: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.alert_user_on_generation")
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
-    mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
+    mock_seed_number: MagicMock = mocker.patch(
+        "randovania.gui.multiplayer_session_window.random_seed_number", return_value=5000
+    )
     mock_yes_no_prompt: AsyncMock = mocker.patch(
         "randovania.gui.lib.async_dialog.yes_no_prompt", new_callable=AsyncMock, return_value=True
     )
@@ -566,11 +575,11 @@ async def test_generate_game(
         "Multiworld Limitation",
         ANY,
     )
-    mock_randint.assert_called_once_with(0, 2**31)
+    mock_seed_number.assert_called_once_with()
     mock_generate_layout.assert_called_once_with(
         progress_update=ANY,
         parameters=GeneratorParameters(
-            seed_number=mock_randint.return_value,
+            seed_number=mock_seed_number.return_value,
             spoiler=spoiler,
             presets=[
                 preset_manager.default_preset.get_preset(),
@@ -788,7 +797,7 @@ async def test_import_permalink_unsupported_games(window: MultiplayerSessionWind
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     execute_dialog.return_value = QtWidgets.QDialog.DialogCode.Accepted
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mocker.patch.object(window, "_on_close_event", AsyncMock())
+    mocker.patch.object(window, "_on_close_event", MagicMock())
 
     unsupported_preset = MagicMock()
     unsupported_preset.game.data.defaults_available_in_game_sessions = False
@@ -913,7 +922,7 @@ async def test_import_layout_unsupported_games(window: MultiplayerSessionWindow,
     mock_load_layout = mocker.patch(
         "randovania.gui.lib.layout_loader.prompt_and_load_layout_description", new_callable=AsyncMock
     )
-    mocker.patch.object(window, "_on_close_event", AsyncMock())
+    mocker.patch.object(window, "_on_close_event", MagicMock())
 
     unsupported_preset = MagicMock()
     unsupported_preset.game.data.defaults_available_in_game_sessions = False
@@ -1027,18 +1036,38 @@ async def test_on_close_event(window: MultiplayerSessionWindow, mocker, is_membe
     event = MagicMock()
     window._session = MagicMock()
     window._session.users = [window.network_client.current_user.id] if is_member else []
-    window.network_client.listen_to_session = AsyncMock()
+    window.network_client.remove_interest_in_session = MagicMock()
     window.network_client.connection_state.is_disconnected = False
 
     # Run
-    await window._on_close_event(event)
+    window._on_close_event(event)
     event.ignore.assert_not_called()
     super_close_event.assert_called_once_with(event)
 
     if is_member:
-        window.network_client.listen_to_session.assert_awaited_once_with(window._session.id, False)
+        window.network_client.remove_interest_in_session.assert_called_once_with(1234)
     else:
-        window.network_client.listen_to_session.assert_not_awaited()
+        window.network_client.remove_interest_in_session.assert_not_called()
+
+
+@pytest.mark.parametrize("should_close", [False, True])
+async def test_close_event(window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture, should_close: bool):
+    # Setup
+    mock_on_close_event = mocker.patch.object(window, "_on_close_event")
+    mock_background_task = mocker.patch.object(
+        window, "background_task_on_close_event", return_value=should_close, autospec=True
+    )
+    event = MagicMock()
+
+    # Run
+    window.closeEvent(event)
+
+    # Assert
+    mock_background_task.assert_called_once_with(window, event)
+    if should_close:
+        mock_on_close_event.assert_called_once_with(event)
+    else:
+        mock_on_close_event.assert_not_called()
 
 
 async def test_update_session_audit_log(window: MultiplayerSessionWindow):
@@ -1047,7 +1076,7 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
 
     log = MultiplayerSessionAuditLog(
         session_id=window._session.id,
-        entries=[AuditEntry("You", f"Did something for the {i}-th time.", now) for i in range(50)],
+        entries=[AuditEntry(user="You", message=f"Did something for the {i}-th time.", time=now) for i in range(50)],
     )
     scrollbar = window.tab_audit.verticalScrollBar()
 
@@ -1188,7 +1217,7 @@ async def test_update_multiworld_client_status(
     window_manager = MagicMock()
     window_manager.multiworld_client = multiworld_client
 
-    window = MultiplayerSessionWindow(MagicMock(), window_manager, options)
+    window = MultiplayerSessionWindow(MagicMock(), 1234, window_manager, options)
     skip_qtbot.addWidget(window)
 
     # Don't use threads during tests

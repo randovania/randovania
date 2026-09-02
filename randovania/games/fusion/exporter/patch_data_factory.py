@@ -214,12 +214,44 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                     "hue_max": getattr(cosmetics, f"{attr_name}_hue_override_max"),
                 }
         palette_dict = {
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             "randomize": palettes,
             "color_space": cosmetics.color_space.long_name,
             "symmetric": getattr(cosmetics, "enable_symmetric"),
         }
         return palette_dict
+
+    def _create_boss_rng(self) -> dict:
+        # slightly adjusted rates from vanilla to feel better with it repeating over and over
+        # goes from 0 beams to 4 beams
+        gadora_beams_probs = [
+            0.45,
+            0.30,
+            0.15,
+            0.07,
+            0.03,
+        ]
+        beams = self.rng.choices(list(range(5)), gadora_beams_probs, k=10)
+
+        # vanilla rates/calculations
+        zazabi_extras = [self.rng.choice(list(range(4))) for _ in range(3)]
+        zazabi_extras.append(self.rng.choice(list(range(16))) * 8)
+
+        # adjusted rates from vanilla to feel better with it repeating over and over
+        # goes from 0 extra rounds to 3 extra rounds
+        yakuza_extra_rounds_probs = [
+            0.45,
+            0.30,
+            0.18,
+            0.07,
+        ]
+        extra_rounds = self.rng.choices(list(range(4)), yakuza_extra_rounds_probs)[0]
+
+        return {
+            "Gadora": beams,
+            "Zazabi": zazabi_extras,
+            "Yakuza": extra_rounds,
+        }
 
     def _create_nav_text(self) -> dict:
         exporter = self.create_hint_exporter(FUSION_JOKE_HINTS)
@@ -233,18 +265,18 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         if metroid_precision != SpecificPickupHintMode.DISABLED:
             metroid_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 exporter.namer,
-                True if metroid_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                metroid_precision == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
                 True,
             )
         if charge_precision != SpecificPickupHintMode.DISABLED:
             charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 exporter.namer,
-                True if charge_precision == SpecificPickupHintMode.HIDE_AREA else False,
+                charge_precision == SpecificPickupHintMode.HIDE_AREA,
                 [self.resource_db.get_item("ChargeBeam")],
                 True,
             )
@@ -253,7 +285,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         restricted_hint = ""
         operations_hint = ""
         artifact_locations = guaranteed_item_hint.find_locations_that_gives_items(
-            artifacts, self.description.all_patches, self.players_config.player_index
+            artifacts, self.description.all_patches, self.worlds_config.world_index
         )
         fusion_bosses = [
             "ARACHNUS",
@@ -292,7 +324,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
 
             metroid_hint_base = f"{FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected at the following"
             no_metroids_hint = (
-                f"This terminal was unable to scan for any {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value}."
+                f"No {FusionColor.YELLOW.value}Metroids{FusionColor.RESET.value} detected from this terminal."
             )
 
             if operations_hint:
@@ -378,7 +410,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
     def _credits_elements(self) -> defaultdict[str, list[dict]]:
         elements = defaultdict(list)
         majors = credits_spoiler.generic_credits(
-            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.worlds_config
         )
 
         for pickup, locations in majors:
@@ -534,8 +566,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "tank_increments": self._create_tank_increments(),
             "missile_limit": 3,
             "door_locks": self._create_door_locks(),
-            "hide_doors_on_minimap": self.configuration.dock_rando.is_enabled(),
+            "hide_doors_on_minimap": self.configuration.dock_weakness_distributor.is_enabled_for_any_type(),
             "palettes": self._create_palette(),
+            "rng": self._create_boss_rng(),
             "navigation_text": self._create_nav_text(),
             "nav_station_locks": self._create_nav_locks(),
             "title_text": self._create_title_text(),

@@ -380,7 +380,8 @@ Hint Features - Multiple Pickups, Pillar
   > Below E-Tank
       All of the following:
           # Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs
-          Level 0 Keycard and Morph Ball and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # This can safely not have Door Lock Rando check
+          Morph Ball and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
           # Deal with Sidehopper
           Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
   > Bottom Right
@@ -465,7 +466,8 @@ Hint Features - Multiple Pickups, Pillar
       All of the following:
           Morph Ball
           Any of the following:
-              Screw Attack or Can Use Power Bombs
+              Can Use Power Bombs
+              Screw Attack and Knowledge (Beginner)
               All of the following:
                   # Break Bomb Block with Bombs
                   Can Use Bombs
@@ -475,10 +477,10 @@ Hint Features - Multiple Pickups, Pillar
                           # Break via Mid-Air Morph
                           Mid-Air Morph (Intermediate)
                           Mid-Air Morph (Beginner) and Have Any Jump Upgrade
-                      # Use frozen dessgeega to reach and destroy bomb block
+                      # Use frozen Sidehopper to reach and destroy bomb block
                       Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
           Any of the following:
-              # Get through Sidehoppers
+              # Get through Sidehopper
               Can Kill Tough Beam-Resistant Enemy
               Damage Boosts (Intermediate) and Normal Damage ≥ 150
 
@@ -1000,6 +1002,8 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 1}, {'x': 4, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Sector Hub Lift 3/Elevator to Sector 3 (PYR)
+  * Extra - direction: up
+  * Extra - name: SECTOR_3_TO_MAIN_HUB
   * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
@@ -1742,6 +1746,7 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 5}]
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
   * Open Passage to Sector 5 (ARC) Eastbound Glass Tube/Area Transition to Sector 3 (PYR)
+  * Extra - direction: left
   * Extra - door_idx: [89]
   > Door to Fiery Storage
       Trivial
@@ -1761,6 +1766,7 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 0}]
 > Area Transition to Sector 1 (SRX); Heals? False
   * Layers: default
   * Open Passage to Sector 1 (SRX) Westbound Glass Tube/Area Transition to Sector 3 (PYR)
+  * Extra - direction: right
   * Extra - door_idx: [86]
   > Door to Deserted Runway
       Trivial

@@ -7,10 +7,8 @@ from typing import TYPE_CHECKING, override
 
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.zero_mission.exporter.hint_namer import MZMHintNamer
 from randovania.games.zero_mission.layout import MZMConfiguration, MZMCosmeticPatches
@@ -21,6 +19,8 @@ if TYPE_CHECKING:
 
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.exporter.patch_data_factory import PatcherDataMeta
+    from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
 class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]):
@@ -151,7 +151,7 @@ class MZMPatchDataFactory(PatchDataFactory[MZMConfiguration, MZMCosmeticPatches]
         # creates the credits elements for each pickup
         elements = defaultdict(list)
         majors = credits_spoiler.generic_credits(
-            self.configuration.standard_pickup_configuration, self.description.all_patches, self.players_config
+            self.configuration.standard_pickup_configuration, self.description.all_patches, self.worlds_config
         )
 
         for pickup, locations in majors:

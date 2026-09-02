@@ -1271,6 +1271,33 @@ def _migrate_v117(preset: dict, game: RandovaniaGame, *, from_layout_description
         preset["configuration"]["skip_opening"] = False
 
 
+def _migrate_v118(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    config = preset["configuration"].pop("dock_rando")
+    preset["configuration"]["dock_weakness_distributor"] = config
+
+    if game in {RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME_ECHOES_OPR}:
+        config["types_state"].pop("portal", None)
+
+    _mode_translation = {
+        "vanilla": "original",
+        "docks": "individual-dock",
+        "weaknesses": "weaknesses-to-weakness",
+    }
+    mode = _mode_translation[config.pop("mode")]
+
+    for type_name, state in config["types_state"].items():
+        state["mode"] = mode
+
+
+def _migrate_v119(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    if game == RandovaniaGame.METROID_PRIME:
+        preset["configuration"].pop("allow_underwater_movement_without_gravity")
+
+
+def _migrate_v120(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    preset["configuration"].pop("staggered_multi_pickup_placement")
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1389,6 +1416,9 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v115,  # echoes: remove portal rando
     _migrate_v116,  # echoes: update beam configuration to new format
     _migrate_v117,  # msr: skip the opening storyboard cutscene configuration
+    _migrate_v118,  # core: improved multi-dock support in dock weakness distributor
+    _migrate_v119,  # prime: remove `allow_underwater_movement_without_gravity`
+    _migrate_v120,  # remove staggered pickup placement
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

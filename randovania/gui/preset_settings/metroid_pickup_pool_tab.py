@@ -20,33 +20,31 @@ if TYPE_CHECKING:
 
 
 class MetroidPresetPickupPool(PresetPickupPool):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
         pickup_database = default_database.pickup_database_for_game(self.game)
 
-        size_policy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
-
         self._energy_tank_item = pickup_database.standard_pickups["Energy Tank"]
         self._create_energy_tank_box(game_description.resource_database.energy_tank)
-        self._create_pickup_style_box(size_policy)
+        self._create_pickup_style_box()
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         layout = preset.configuration
         major_configuration = layout.standard_pickup_configuration
 
-        self.pickup_style_widget.update(layout)
+        self.pickup_style_widget.update_from_layout(layout)
 
         # Energy Tank
         energy_tank_state = major_configuration.pickups_state[self._energy_tank_item]
         self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_pickups)
         self.energy_tank_shuffled_spinbox.setValue(energy_tank_state.num_shuffled_pickups)
 
-    def _create_pickup_style_box(self, size_policy):
+    def _create_pickup_style_box(self) -> None:
         self.pickup_style_widget = PickupStyleWidget(None, self._editor)
         self.item_pool_layout.insertWidget(1, self.pickup_style_widget)
 
-    def _create_energy_tank_box(self, energy_tank_resource: ItemResourceInfo):
+    def _create_energy_tank_box(self, energy_tank_resource: ItemResourceInfo) -> None:
         category_box, category_layout, _ = self._boxes_for_category["energy_tank"]
 
         starting_label = QtWidgets.QLabel(category_box)
@@ -67,7 +65,7 @@ class MetroidPresetPickupPool(PresetPickupPool):
         self.energy_tank_shuffled_spinbox.valueChanged.connect(self._on_update_shuffled_energy_tank)
         category_layout.addWidget(self.energy_tank_shuffled_spinbox, 1, 1)
 
-    def _on_update_starting_energy_tank(self, value: int):
+    def _on_update_starting_energy_tank(self, value: int) -> None:
         with self._editor as options:
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(
@@ -77,7 +75,7 @@ class MetroidPresetPickupPool(PresetPickupPool):
                 ),
             )
 
-    def _on_update_shuffled_energy_tank(self, value: int):
+    def _on_update_shuffled_energy_tank(self, value: int) -> None:
         with self._editor as options:
             major_configuration = options.standard_pickup_configuration
             options.standard_pickup_configuration = major_configuration.replace_state_for_pickup(

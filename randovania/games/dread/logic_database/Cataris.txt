@@ -617,7 +617,7 @@ Extra - asset_id: collision_camera_012
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
 
-> Door to Lava Button East Access; Heals? False
+> Door to Lava Button East Access (Lower); Heals? False
   * Layers: default
   * Charge Beam Door to Lava Button East Access/Door to Lava Button East (Charge)
   * Extra - actor_name: doorchargecharge_002
@@ -649,9 +649,9 @@ Extra - asset_id: collision_camera_012
                   Heat/Cold Runs (Beginner) and Lava Damage ≥ 80
                   Varia Suit or Heat Damage ≥ 100
 
-> Dock to Lava Button East Access; Heals? False
+> Door to Lava Button East Access (Upper); Heals? False
   * Layers: default
-  * Open Passage to Lava Button East Access/Door to Lava Button East (Cloak)
+  * No Door Frame to Lava Button East Access/Door to Lava Button East (Cloak)
   * Extra - actor_name: doorframepresence_001
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -670,13 +670,13 @@ Extra - asset_id: collision_camera_012
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_PistonRight
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Lava Button East Access
+  > Door to Lava Button East Access (Upper)
       Can Slide
 
 > Event - Activate Magnet Walls Button; Heals? False
   * Layers: default
   * Event Cataris - Move Magnet Walls Button
-  > Dock to Lava Button East Access
+  > Door to Lava Button East Access (Upper)
       Can Slide
 
 > Below Thermal Door; Heals? False
@@ -698,7 +698,7 @@ Extra - asset_id: collision_camera_012
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
-  > Door to Lava Button East Access
+  > Door to Lava Button East Access (Lower)
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
           Heat/Cold Runs (Beginner) and Heat Damage ≥ 100
@@ -774,7 +774,7 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Door to Lava Button East Access
       Trivial
-  > Door to Energy Recharge Station
+  > Door to Energy Recharge Station (Lower)
       Any of the following:
           Space Jump or Speed Booster or Simple IBJ
           All of the following:
@@ -811,7 +811,7 @@ Extra - asset_id: collision_camera_014
           Grapple Beam and Grapple Movement (Beginner)
           Morph Ball and Single-wall Wall Jump (Expert)
 
-> Door to Energy Recharge Station; Heals? False
+> Door to Energy Recharge Station (Lower); Heals? False
   * Layers: default
   * Charge Beam Door to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Charge)
   * Extra - actor_name: doorclosedcharge_002
@@ -822,19 +822,19 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Door to Tall Magnet Walls Access
       Trivial
-  > Dock to Energy Recharge Station
+  > Door to Energy Recharge Station (Upper)
       Trivial
 
-> Dock to Energy Recharge Station; Heals? False
+> Door to Energy Recharge Station (Upper); Heals? False
   * Layers: default
-  * Open Passage to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Cloak)
+  * No Door Frame to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Cloak)
   * Extra - actor_name: doorpresenceframe_000
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Energy Recharge Station
+  > Door to Energy Recharge Station (Lower)
       Trivial
 
 > Door to Teleport to Artaria (Blue); Heals? False
@@ -848,7 +848,7 @@ Extra - asset_id: collision_camera_014
   * Extra - right_shield_def: None
   > Door to Lava Button East Access
       Trivial
-  > Door to Energy Recharge Station
+  > Door to Energy Recharge Station (Lower)
       Flash Shift or Spider Magnet or Use Spin Boost
 
 > Event - Activate Magnet Walls; Heals? False
@@ -1209,7 +1209,7 @@ Extra - asset_id: collision_camera_018
 
 > Door to Moving Magnet Walls (Tall) (Charge); Heals? False
   * Layers: default
-  * Access Locked to Moving Magnet Walls (Tall)/Door to Energy Recharge Station
+  * Access Locked to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (Lower)
   * Extra - actor_name: doorclosedcharge_002
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1228,7 +1228,7 @@ Extra - asset_id: collision_camera_018
 
 > Door to Moving Magnet Walls (Tall) (Cloak); Heals? False
   * Layers: default
-  * Sensor Lock Door to Moving Magnet Walls (Tall)/Dock to Energy Recharge Station
+  * Sensor Lock Door to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (Upper)
   * Extra - actor_name: doorpresenceframe_000
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1439,7 +1439,7 @@ Extra - asset_id: collision_camera_020
 
 > Door to EMMI Zone West Exit Path; Heals? False
   * Layers: default
-  * Sensor Lock Door to EMMI Zone West Exit Path/Dock to Green EMMI Introduction
+  * Sensor Lock Door to EMMI Zone West Exit Path/Door to Green EMMI Introduction
   * Extra - actor_name: doorframepresence
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2728,7 +2728,7 @@ Extra - asset_id: collision_camera_036
   * Event Cataris - Central Unit Bottom Blob
   * Extra - actor_name: breakablemag008
   * Extra - actor_def: actordef:actors/props/breakablemag008/charclasses/breakablemag008.bmsad
-  > Door to Central Unit
+  > Dock to Central Unit
       Trivial
   > Room Center
       After Cataris - Central Unit and Combat (Beginner)
@@ -2750,14 +2750,14 @@ Extra - asset_id: collision_camera_036
   * Layers: default
   > Event - Top Blob
       Lay Small Bomb or Shoot Beam
-  > Door to Central Unit
+  > Dock to Central Unit
       Morph Ball or After Cataris - Central Unit Top Blob
   > Room Center
       Trivial
 
-> Door to Central Unit; Heals? False
+> Dock to Central Unit; Heals? False
   * Layers: default
-  * Access Open to Central Unit/Door to Central Unit Access
+  * EMMI Door to Central Unit/Dock to Central Unit Access
   > Event - Top Blob
       Shoot Diffusion or Wave
   > Event - Bottom Blob, adjacent
@@ -2789,7 +2789,7 @@ Extra - asset_id: collision_camera_036
   * Extra - string_key: GUI_ITEM_ACQUIRED_MORPH_BALL
   * Extra - callback_function: OnEmmyMagmaDead
   * Extra - boss_hint_name: E.M.M.I.-03MB
-  > Door to Central Unit
+  > Dock to Central Unit
       Trivial
 
 > Room Center; Heals? False
@@ -2800,7 +2800,7 @@ Extra - asset_id: collision_camera_036
       Trivial
   > Upper-right Corner
       Trivial
-  > Door to Central Unit
+  > Dock to Central Unit
       After Cataris - Central Unit Bottom Blob and Can Slide
   > Event - Bottom Blob through wall
       Any of the following:
@@ -2816,19 +2816,19 @@ Extra - asset_id: collision_camera_037
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyMagmaPhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Central Unit Access
+  > Dock to Central Unit Access
       Trivial
 
-> Door to Central Unit Access; Heals? False
+> Dock to Central Unit Access; Heals? False
   * Layers: default
-  * Access Open to Central Unit Access/Door to Central Unit
+  * EMMI Door to Central Unit Access/Dock to Central Unit
   > Event - Cataris Central Unit
       Destroy Cataris/Dairon Central Unit
 
 > Event - Cataris Central Unit; Heals? False
   * Layers: default
   * Event Cataris - Central Unit
-  > Door to Central Unit Access
+  > Dock to Central Unit Access
       Trivial
 
 ----------------
@@ -3372,7 +3372,7 @@ Extra - asset_id: collision_camera_045
 
 > Door to Lava Button East (Charge); Heals? False
   * Layers: default
-  * Charge Beam Door to Lava Button East/Door to Lava Button East Access
+  * Charge Beam Door to Lava Button East/Door to Lava Button East Access (Lower)
   * Extra - actor_name: doorchargecharge_002
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3384,7 +3384,7 @@ Extra - asset_id: collision_camera_045
 
 > Door to Lava Button East (Cloak); Heals? False
   * Layers: default
-  * Sensor Lock Door to Lava Button East/Dock to Lava Button East Access
+  * Sensor Lock Door to Lava Button East/Door to Lava Button East Access (Upper)
   * Extra - actor_name: doorframepresence_001
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4140,9 +4140,9 @@ EMMI Zone West Exit Path
 Extra - total_boundings: {'x1': -7650.0, 'x2': -4600.0, 'y1': -100.0, 'y2': 1042.0}
 Extra - polygon: [[-4600.0, 1042.0], [-7650.0, 1042.0], [-7650.0, -100.0], [-4600.0, -100.0]]
 Extra - asset_id: collision_camera_059
-> Dock to Green EMMI Introduction; Heals? False
+> Door to Green EMMI Introduction; Heals? False
   * Layers: default
-  * Open Passage to Green EMMI Introduction/Door to EMMI Zone West Exit Path
+  * No Door Frame to Green EMMI Introduction/Door to EMMI Zone West Exit Path
   * Extra - actor_name: doorframepresence
   * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4161,7 +4161,7 @@ Extra - asset_id: collision_camera_059
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Green EMMI Introduction
+  > Door to Green EMMI Introduction
       Trivial
   > Tunnel to EMMI Zone Exits West
       Trivial

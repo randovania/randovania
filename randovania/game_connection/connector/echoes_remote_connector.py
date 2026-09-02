@@ -25,6 +25,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceGain
+    from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -45,18 +46,24 @@ def format_received_item(item_name: str, player_name: str) -> str:
     return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
 
 
-def _echoes_powerup_offset(item_index: int) -> int:
-    powerups_offset = 0x58
-    vector_data_offset = 0x4
-    powerup_size = 0xC
-    return (powerups_offset + vector_data_offset) + (item_index * powerup_size)
-
-
 class EchoesRemoteConnector(PrimeRemoteConnector):
     _should_read_object_count: bool = False
 
     def __init__(self, version: EchoesDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
+
+    @property
+    def total_item_length(self) -> int:
+        return 109
+
+    @property
+    def powerup_size(self) -> int:
+        return 0xC
+
+    def powerup_offset(self, item_index: int) -> int:
+        powerups_offset = 0x58
+        vector_data_offset = 0x4
+        return (powerups_offset + vector_data_offset) + (item_index * self.powerup_size)
 
     def _asset_id_format(self) -> str:
         return ">I"
@@ -96,19 +103,10 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
         return has_pending_op, self._current_status_world(world_asset_id, cplayer_vtable)
 
-    async def _memory_op_for_items(
-        self,
-        items: list[ItemResourceInfo],
-    ) -> list[MemoryOperation]:
-        player_state_pointer = self.version.cstate_manager_global + 0x150C
-        return [
-            MemoryOperation(
-                address=player_state_pointer,
-                offset=_echoes_powerup_offset(item.extra["item_id"]),
-                read_byte_count=8,
-            )
-            for item in items
-        ]
+    async def _get_cplayer_state_pointer(self) -> int:
+        # CPlayerState is an array / normal pointer within CStateManager:
+        # https://github.com/PrimeDecomp/echoes/blob/main/include/MetroidPrime/CStateManager.hpp#L159
+        return self.version.cstate_manager_global + 0x150C
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory) -> PickupPatches:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
@@ -146,7 +144,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             return all(op is not None for op in ops)
 
         # multiple passes are required, as 128 bytes is too much at once for Nintendont
-        PASSES = math.ceil((4 * 32) // self.executor.max_output)
+        PASSES = math.ceil((4 * 32) / self.executor.max_output)
         arr_raws = [
             await self.executor.perform_single_memory_operation(
                 MemoryOperation(
@@ -181,8 +179,8 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         return inventory
 
     @override
-    def inform_connected_tracker(self, tracker_details: dict | None) -> None:
+    def inform_connected_tracker(self, tracker_details: TrackerStructure | None) -> None:
         if tracker_details is not None:
-            self._should_read_object_count = tracker_details.get("extra", {}).get("read_object_count", False)
+            self._should_read_object_count = bool(tracker_details.extra.get("read_object_count", False))
         else:
             self._should_read_object_count = False

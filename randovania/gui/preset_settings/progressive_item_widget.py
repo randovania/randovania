@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
@@ -9,7 +8,7 @@ from PySide6.QtCore import Qt
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Mapping
 
     from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.interface_common.preset_editor import PresetEditor
@@ -31,7 +30,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         editor: PresetEditor,
         progressive_item: StandardPickupDefinition,
         non_progressive_items: Iterable[StandardPickupDefinition],
-    ):
+    ) -> None:
         super().__init__(parent)
         self._editor = editor
         self.progressive_item = progressive_item

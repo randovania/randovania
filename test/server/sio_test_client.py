@@ -76,7 +76,7 @@ class SocketIOTestClient:
         socketio.async_handlers = False  # easier to test when
         socketio.eio.async_handlers = False  # events are sync
         if isinstance(socketio.manager, AsyncPubSubManager):
-            raise RuntimeError(
+            raise TypeError(
                 "Test client cannot be used with a message queue. Disable the queue on your test configuration."
             )
         socketio.manager.initialize()

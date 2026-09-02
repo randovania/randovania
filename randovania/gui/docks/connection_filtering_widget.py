@@ -8,6 +8,7 @@ from qasync import asyncSlot
 
 from randovania.gui.lib import async_dialog, file_prompts, signal_handling
 from randovania.gui.widgets.scroll_protected import ScrollProtectedComboBox
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
@@ -21,7 +22,7 @@ if TYPE_CHECKING:
 class ConnectionFilteringWidget(QtWidgets.QDockWidget):
     FiltersUpdated = Signal()
 
-    def __init__(self, parent: QtWidgets.QWidget, game: GameDescription):
+    def __init__(self, parent: QtWidgets.QWidget, game: GameDescription) -> None:
         super().__init__(parent)
         self.setWindowTitle("Connection Filtering")
 
@@ -88,7 +89,7 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
         )
         self.contents_layout.addItem(self.vertical_spacer)
 
-    def set_edit_mode(self, edit_mode: bool):
+    def set_edit_mode(self, edit_mode: bool) -> None:
         for layer_check in self.layer_checks:
             layer_check.setEnabled(not edit_mode and layer_check.text() != "default")
             if edit_mode:
@@ -99,21 +100,20 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
         self.load_preset_button.setVisible(not edit_mode)
 
     @asyncSlot()
-    async def _on_load_preset_slot(self):
+    async def _on_load_preset_slot(self) -> None:
         await self._on_load_preset()
 
-    async def _on_load_preset(self):
+    async def _on_load_preset(self) -> None:
         preset_file = await file_prompts.prompt_preset(self, False)
         if preset_file is None:
             return
 
         try:
-            preset = (await VersionedPreset.from_file(preset_file)).get_preset()
+            preset = (await VersionedPreset[BaseConfiguration].from_file(preset_file)).get_preset()
 
         except Exception as e:
-            return await async_dialog.warning(
-                self, "Invalid preset", f"Unable to load a preset from {preset_file}: {e}"
-            )
+            await async_dialog.warning(self, "Invalid preset", f"Unable to load a preset from {preset_file}: {e}")
+            return
 
         active_layers = preset.configuration.active_layers()
         for layer_check in self.layer_checks:
@@ -121,7 +121,7 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
 
         self.set_selected_tricks(preset.configuration.trick_level)
 
-    def set_selected_tricks(self, trick_level: TrickLevelConfiguration):
+    def set_selected_tricks(self, trick_level: TrickLevelConfiguration) -> None:
         for (trick, trick_check), combo in self.tricks.items():
             trick_check.setChecked(True)
             signal_handling.set_combo_with_value(combo, trick_level.level_for_trick(trick).as_number)
@@ -134,5 +134,5 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
     def selected_layers(self) -> set[str]:
         return {layer_check.text() for layer_check in self.layer_checks if layer_check.isChecked()}
 
-    def _notify_change(self):
+    def _notify_change(self) -> None:
         self.FiltersUpdated.emit()

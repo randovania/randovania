@@ -9,7 +9,7 @@ class EditableListModel[T](QtCore.QAbstractListModel):
 
     items: list[T]
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.items = []
 
@@ -29,10 +29,12 @@ class EditableListModel[T](QtCore.QAbstractListModel):
 
         raise NotImplementedError
 
-    def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
+    def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = QtCore.QModelIndex()) -> int:
         return len(self.items) + 1
 
-    def data(self, index: QtCore.QModelIndex, role: int = ...) -> str | None:
+    def data(
+        self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int = Qt.ItemDataRole.DisplayRole
+    ) -> str | None:
         if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
             return None
 
@@ -44,16 +46,23 @@ class EditableListModel[T](QtCore.QAbstractListModel):
 
         return ""
 
-    def removeRows(self, row: int, count: int, parent: QtCore.QModelIndex = ...) -> bool:
+    def removeRows(
+        self, row: int, count: int, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex = QtCore.QModelIndex()
+    ) -> bool:
         self.beginRemoveRows(QtCore.QModelIndex(), row, row + count - 1)
         del self.items[row : row + count]
         self.endRemoveRows()
         return True
 
-    def flags(self, index: QtCore.QModelIndex) -> Qt.ItemFlag:
+    def flags(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex) -> Qt.ItemFlag:
         return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEditable
 
-    def setData(self, index: QtCore.QModelIndex, value: str, role: int = ...) -> bool:
+    def setData(
+        self,
+        index: QtCore.QModelIndex | QtCore.QPersistentModelIndex,
+        value: str,
+        role: int = Qt.ItemDataRole.DisplayRole,
+    ) -> bool:
         if role == Qt.ItemDataRole.EditRole:
             new_item = self._new_item(value)
             if index.row() < len(self.items):
@@ -74,7 +83,7 @@ class EditableListView(QtWidgets.QGroupBox):
     in the GUI, such as dock weaknesses or hint features.
     """
 
-    def __init__(self, parent: QtWidgets.QWidget | None, model: EditableListModel | None = None):
+    def __init__(self, parent: QtWidgets.QWidget | None, model: EditableListModel | None = None) -> None:
         super().__init__(parent)
 
         self.model = model
@@ -107,4 +116,5 @@ class EditableListView(QtWidgets.QGroupBox):
         indices = [selection.row() for selection in self.list.selectedIndexes()]
         if indices:
             assert len(indices) == 1
+            assert self.model is not None
             self.model.removeRow(indices[0])

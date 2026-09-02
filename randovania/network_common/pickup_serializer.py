@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat, BitPackJson, BitPackValue
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.hint_features import HintFeature
+from randovania.game_description.hint_features import HintDetails, HintFeature
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupGeneratorParams,
@@ -47,20 +47,20 @@ class DatabaseBitPackHelper:
         return decoder.decode_element(self.database.item)
 
     # Resource Quantity
-    def encode_resource_quantity(self, item: ResourceQuantity):
+    def encode_resource_quantity(self, item: ResourceQuantity[ItemResourceInfo]) -> Iterator[tuple[int, int]]:
         yield from bitpacking.pack_array_element(item[0], self.database.item)
         amount = item[1]
         capacity = item[0].max_capacity
         assert abs(amount) <= capacity
         yield amount + capacity, capacity * 2 + 1
 
-    def decode_resource_quantity(self, decoder: BitPackDecoder) -> ResourceQuantity:
+    def decode_resource_quantity(self, decoder: BitPackDecoder) -> ResourceQuantity[ItemResourceInfo]:
         resource = self._decode_item(decoder)
         quantity = decoder.decode_single(resource.max_capacity * 2 + 1)
         return resource, quantity - resource.max_capacity
 
     # Resource Conversion
-    def encode_resource_conversion(self, item: ResourceConversion):
+    def encode_resource_conversion(self, item: ResourceConversion) -> Iterator[tuple[int, int]]:
         yield from bitpacking.pack_array_element(item.source, self.database.item)
         yield from bitpacking.pack_array_element(item.target, self.database.item)
 
@@ -71,7 +71,7 @@ class DatabaseBitPackHelper:
         )
 
     # Resource Lock
-    def encode_resource_lock(self, lock: ResourceLock):
+    def encode_resource_lock(self, lock: ResourceLock) -> Iterator[tuple[int, int]]:
         yield from bitpacking.pack_array_element(lock.locked_by, self.database.item)
         yield from bitpacking.pack_array_element(lock.item_to_lock, self.database.item)
         yield from bitpacking.pack_array_element(lock.temporary_item, self.database.item)
@@ -85,7 +85,7 @@ class DatabaseBitPackHelper:
 
 
 # Item categories encoding & decoding
-def _encode_hint_feature(feature: HintFeature):
+def _encode_hint_feature(feature: HintFeature) -> Iterator[tuple[int, int]]:
     yield from bitpacking.encode_string(feature.name)
     yield from bitpacking.encode_string(feature.long_name)
     yield from bitpacking.encode_string(feature.hint_details[0])
@@ -98,7 +98,7 @@ def _decode_hint_feature(decoder: BitPackDecoder) -> HintFeature:
     return HintFeature(
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
-        hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
+        hint_details=HintDetails(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
         hidden=bitpacking.decode_bool(decoder),
         description=bitpacking.decode_string(decoder),
     )
@@ -113,7 +113,7 @@ class BitPackPickupEntry(BitPackValue):
         self.database = database
 
     # Main Methods
-    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         helper = DatabaseBitPackHelper(self.database)
 
         yield from bitpacking.encode_string(self.value.name)
@@ -142,7 +142,8 @@ class BitPackPickupEntry(BitPackValue):
         yield from BitPackJson(self.value.extra).bit_pack_encode({})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata: dict) -> Self:
+        database: ResourceDatabase = metadata["database"]
         helper = DatabaseBitPackHelper(database)
 
         name = bitpacking.decode_string(decoder)
@@ -171,7 +172,7 @@ class BitPackPickupEntry(BitPackValue):
 
         extra = frozendict(BitPackJson.bit_pack_unpack(decoder, {}))
 
-        return PickupEntry(
+        pickup = PickupEntry(
             name=name,
             model=model,
             gui_category=pickup_category,
@@ -192,6 +193,7 @@ class BitPackPickupEntry(BitPackValue):
             is_expansion=is_expansion,
             extra=extra,
         )
+        return cls(pickup, database)
 
     @classmethod
     def bit_pack_skip_if_equals(cls) -> bool:

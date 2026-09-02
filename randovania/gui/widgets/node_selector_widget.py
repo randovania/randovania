@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class NodeSelectorWidget(QtWidgets.QWidget):
     SelectedNodeChanged = QtCore.Signal()
 
-    def __init__(self, region_list: RegionList, node_filter_criteria: Callable[[Node], bool]):
+    def __init__(self, region_list: RegionList, node_filter_criteria: Callable[[Node], bool]) -> None:
         super().__init__()
         self.region_list = region_list
         self.node_filter_criteria = node_filter_criteria

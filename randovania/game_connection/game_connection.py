@@ -21,6 +21,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.interface_common.options import Options
     from randovania.interface_common.world_database import WorldDatabase
+    from randovania.network_client.network_client import NetworkClient
 
 
 @dataclasses.dataclass()
@@ -43,7 +44,7 @@ class GameConnection:
     connected_states: dict[RemoteConnector, ConnectedGameState]
     _dt: float = 2.5
 
-    def __init__(self, options: Options, world_database: WorldDatabase):
+    def __init__(self, options: Options, world_database: WorldDatabase, network_client: NetworkClient | None = None):
         super().__init__()
         self.logger = logging.getLogger(type(self).__name__)
         self._options = options
@@ -51,6 +52,7 @@ class GameConnection:
         self.remote_connectors = {}
         self.connected_states = {}
         self.world_database = world_database
+        self.network_client = network_client
 
         for builder_param in options.connector_builders:
             self.add_connection_builder(builder_param.create_builder())
@@ -74,45 +76,59 @@ class GameConnection:
     async def _auto_update(self) -> None:
         for builder, connector in list(self.remote_connectors.items()):
             if builder not in self.connection_builders:
-                self.logger.info(f"Builder {builder.pretty_text} is not valid anymore. Finishing it out.")
+                self.logger.debug(f"Builder {builder.pretty_text} is not valid anymore. Finishing it out.")
+                await connector.force_finish()
+
+            elif not builder.enabled:
+                self.logger.debug(f"Builder {builder.pretty_text} is now disabled. Finishing it out.")
                 await connector.force_finish()
 
             if connector.is_disconnected():
-                self.logger.info(f"Connector from builder {builder.pretty_text} is disconnected. Finishing it out.")
+                self.logger.debug(f"Connector from builder {builder.pretty_text} is disconnected. Finishing it out.")
                 await connector.force_finish()
                 del self.remote_connectors[builder]
                 self._handle_connector_removed(connector)
 
         async def try_build_connector(build: ConnectorBuilder) -> None:
-            self.logger.info(f"Building {build.pretty_text} ...")
+            self.logger.debug(f"Building {build.pretty_text} ...")
             c = await build.build_connector()
             if c is not None:
                 self.logger.debug(f"Building {build.pretty_text} was successful")
                 self.remote_connectors[build] = c
                 self._handle_new_connector(c)
+            elif build.no_longer_usable:
+                self.logger.debug(f"Builder {build.pretty_text} can never build again. Removing it.")
+                self.remove_connection_builder(build)
 
         await asyncio.gather(
             *[
                 try_build_connector(builder)
                 for builder in list(self.connection_builders)
-                if builder not in self.remote_connectors
+                if builder not in self.remote_connectors and builder.enabled
             ]
         )
 
     def add_connection_builder(self, builder: ConnectorBuilder) -> None:
-        self.logger.info(f"Adding builder {builder.pretty_text} ...")
+        self.logger.debug(f"Adding builder {builder.pretty_text} ...")
+        builder.network_client = self.network_client
         self.connection_builders.append(builder)
         builder.StatusUpdate.connect(self._on_builder_status_update)
         self._on_builders_changed()
 
     def remove_connection_builder(self, builder: ConnectorBuilder) -> None:
         assert builder in self.connection_builders
-        self.logger.info(f"Removing builder {builder.pretty_text} ...")
+        self.logger.debug(f"Removing builder {builder.pretty_text} ...")
         builder.StatusUpdate.disconnect(self._on_builder_status_update)
         self.connection_builders.remove(builder)
         self._on_builders_changed()
 
-    def get_connector_for_builder(self, builder: ConnectorBuilder) -> RemoteConnector | None:
+    def toggle_builder_enabled(self, builder: ConnectorBuilder) -> None:
+        builder.enabled = not builder.enabled
+        self._on_builders_changed()
+
+    def get_connector_for_builder(self, builder: ConnectorBuilder | None) -> RemoteConnector | None:
+        if builder is None:
+            return None
         return self.remote_connectors.get(builder)
 
     def _on_builders_changed(self) -> None:
@@ -121,6 +137,7 @@ class GameConnection:
                 ConnectorBuilderOption(
                     builder.connector_builder_choice,
                     builder.configuration_params(),
+                    enabled=builder.enabled,
                 )
                 for builder in self.connection_builders
             ]

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import struct
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
@@ -11,6 +12,7 @@ from randovania.game_connection.executor.nintendont_executor import NintendontEx
 @pytest.fixture(name="executor")
 def nintendont_executor():
     executor = NintendontExecutor("localhost")
+    executor.SUPPORTED_API_VERSION = 1
     return executor
 
 
@@ -112,7 +114,7 @@ async def test_perform_single_giant_memory_operation(executor: NintendontExecuto
 async def test_connect(executor, mocker):
     reader, writer = MagicMock(), MagicMock()
     writer.drain = AsyncMock()
-    reader.read = AsyncMock(return_value=b"\x00\x00\x00\x02\x00\x00\x00x\x00\x00\x00\xfa\x00\x00\x00\x03")
+    reader.read = AsyncMock(return_value=b"\x00\x00\x00\x01\x00\x00\x00x\x00\x00\x00\xfa\x00\x00\x00\x03")
     mock_open = mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
 
     # Run
@@ -125,7 +127,7 @@ async def test_connect(executor, mocker):
     socket: SocketHolder = executor._socket
     assert socket.reader is reader
     assert socket.writer is writer
-    assert socket.api_version == 2
+    assert socket.api_version == 1
     assert socket.max_input == 120
     assert socket.max_output == 250
     assert socket.max_addresses == 3
@@ -148,6 +150,83 @@ async def test_connect_invalid_ip(executor: NintendontExecutor):
     # Assert
     assert executor._socket is None
     assert isinstance(executor._socket_error, OSError)
+
+
+@pytest.mark.parametrize("read_value", [b":)", b"These are some bogus bytes :)"])
+async def test_connect_invalid_api_response(executor: NintendontExecutor, mocker, read_value):
+    # Setup
+    reader, writer = MagicMock(), MagicMock()
+    writer.drain = AsyncMock()
+    reader.read = AsyncMock(return_value=b":)")
+    mock_open = mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
+
+    # Run
+    message = await executor.connect()
+
+    # Assert
+    mock_open.assert_awaited_once_with("localhost", executor._port)
+    writer.drain.assert_awaited_once_with()
+    assert executor._socket is None
+    assert message is not None
+    assert "Invalid response when requesting API details" in message
+    assert isinstance(executor._socket_error, struct.error)
+
+
+@pytest.mark.parametrize("api_version", [b"\x00", b"\xa1", b"\xc0", b"\x01", b"\x0f"])
+async def test_connect_invalid_api_version(executor, mocker, api_version):
+    executor.SUPPORTED_API_VERSION = 10
+    reader, writer = MagicMock(), MagicMock()
+    writer.drain = AsyncMock()
+    reader.read = AsyncMock(
+        return_value=b"\x00\x00\x00" + api_version + b"\x00\x00\x00x\x00\x00\x00\xfa\x00\x00\x00\x03"
+    )
+    mock_open = mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
+
+    # Run
+    message = await executor.connect()
+
+    # Assert
+    mock_open.assert_awaited_once_with("localhost", executor._port)
+    writer.drain.assert_awaited_once_with()
+    assert executor._socket is None
+    assert message is not None
+    assert f"Nintendont has API {int.from_bytes(api_version)} but expected 10" in message
+
+
+@pytest.mark.parametrize("invalid_max_input", [True, False])
+@pytest.mark.parametrize("invalid_max_output", [True, False])
+@pytest.mark.parametrize("invalid_max_addresses", [True, False])
+async def test_connect_invalid_api_details(
+    executor, mocker, invalid_max_input, invalid_max_output, invalid_max_addresses
+):
+    if not (invalid_max_input or invalid_max_output or invalid_max_addresses):
+        pytest.skip("Everything is valid")
+
+    max_input = b"\x00\x00\x00\x64"
+    max_output = b"\x00\x00\x00\x64"
+    max_addresses = b"\x00\x00\x00\x08"
+
+    if invalid_max_input:
+        max_input = b"\x00\x00\x01\x01"
+    if invalid_max_output:
+        max_output = b"\x00\x00\x01\x01"
+    if invalid_max_addresses:
+        max_addresses = b"\x00\x00\x00\x11"
+
+    reader, writer = MagicMock(), MagicMock()
+    writer.drain = AsyncMock()
+    reader.read = AsyncMock(return_value=b"\x00\x00\x00\x01" + max_input + max_output + max_addresses)
+    mock_open = mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
+
+    # Run
+    message = await executor.connect()
+
+    # Assert
+    mock_open.assert_awaited_once_with("localhost", executor._port)
+    writer.drain.assert_awaited_once_with()
+    assert executor._socket is None
+    assert message is not None
+    assert "Nintendont responding with invalid API details" in message
 
 
 def test_disconnect_not_connected(executor: NintendontExecutor):

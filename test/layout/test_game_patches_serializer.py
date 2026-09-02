@@ -241,7 +241,7 @@ def test_bit_pack_pickup_entry(
     # Run
     encoded = bitpacking.pack_value(BitPackPickupEntry(pickup, echoes_resource_database))
     decoder = BitPackDecoder(encoded)
-    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, echoes_resource_database)
+    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, {"database": echoes_resource_database}).value
 
     # Assert
     assert pickup == decoded
@@ -276,10 +276,10 @@ async def test_round_trip_generated_patches(default_preset):
 
     # Run
     encoded = game_patches_serializer.serialize(all_patches)
-    decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
-    decoded_with_original_game = {
-        i: dataclasses.replace(d, game=orig.game) for (i, d), orig in zip(decoded.items(), all_patches.values())
-    }
+    decoded = game_patches_serializer.decode(encoded, [preset.configuration])
+    decoded_with_original_game = [
+        dataclasses.replace(d, game=orig.game) for d, orig in zip(decoded, all_patches, strict=True)
+    ]
 
     # Assert
     assert all_patches == decoded_with_original_game

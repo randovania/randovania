@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 
 class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
-    def __init__(self, network_client: QtNetworkClient, authentication_methods: set[AuthenticationMethod]):
+    def __init__(self, network_client: QtNetworkClient, authentication_methods: set[AuthenticationMethod]) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

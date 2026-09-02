@@ -89,8 +89,8 @@ class EchoesOPRGameExporter(GameExporter[EchoesOPRGameExportParams]):
                 export_params.input_path,
                 export_params.output_path,
                 RandoConfiguration.model_validate(patch_data, extra="forbid"),
-                updaters[0],
-                updaters[1],
-                updaters[2],
-                updaters[3],
+                area_status_update=updaters[0],
+                build_files_status_update=updaters[1],
+                build_paks_status_update=updaters[2],
+                nod_status_update=updaters[3],
             )

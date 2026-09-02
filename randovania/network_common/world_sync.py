@@ -4,15 +4,17 @@ import uuid
 from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_description.resources.inventory import InventoryItem
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.signals.common import TypedBytes
 
 
 @dataclasses.dataclass(frozen=True)
 class ServerWorldSync:
     status: GameConnectionStatus
     collected_locations: tuple[int, ...]
-    inventory: bytes | None  # frozendict[str, InventoryItem], but pre-encoded
+    inventory: TypedBytes[frozendict[str, InventoryItem]] | None
     request_details: bool
     has_been_beaten: bool
 

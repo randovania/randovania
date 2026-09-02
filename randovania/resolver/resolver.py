@@ -40,7 +40,7 @@ def _simplify_additional_requirement_set(
     alternatives: Iterable[GraphRequirementList],
     state: State,
     node_resources: list[int],
-    progressive_chain_info: None | tuple[list[int], int],
+    progressive_chain_info: tuple[list[int], int] | None,
     skip_simplify: bool,
 ) -> GraphRequirementSet:
     r = GraphRequirementSet()
@@ -151,7 +151,7 @@ def _priority_for_resource_action(action: ResolverAction, state: State, logic: L
 
 def _progressive_chain_info_from_pickup_entry(
     pickup: PickupEntry, resources: ResourceCollection
-) -> None | tuple[list[int], int]:
+) -> tuple[list[int], int] | None:
     """
     :param pickup:
     :param resources:
@@ -172,7 +172,7 @@ def _progressive_chain_info_from_pickup_entry(
     return None
 
 
-def _progressive_chain_info(node: WorldGraphNode, resources: ResourceCollection) -> None | tuple[list[int], int]:
+def _progressive_chain_info(node: WorldGraphNode, resources: ResourceCollection) -> tuple[list[int], int] | None:
     """
     When the node has a PickupEntry, returns _progressive_chain_info_from_pickup_entry for it.
     """

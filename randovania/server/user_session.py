@@ -19,6 +19,7 @@ from starlette.responses import JSONResponse
 
 from randovania.network_common import error as network_error
 from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.server import fastapi_discord
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common
@@ -114,7 +115,12 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
     return user
 
 
-async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes, _old_session_id: None = None) -> dict:
+async def restore_user_session(
+    sa: ServerApp,
+    sid: str,
+    encrypted_session: bytes,
+    _old_session_id: None = None,
+) -> dict:
     # _old_session_id exists to keep compatibility with old dev build clients that try to connect
     try:
         decrypted_session: bytes = sa.fernet_encrypt.decrypt(encrypted_session)
@@ -182,7 +188,12 @@ def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_
 
 
 @router.get("/login")
-async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: str | None = None) -> Response:
+async def browser_login_with_discord(
+    sa: ServerAppDep,
+    request: Request,
+    sid: str | None = None,
+    next_url: typing.Annotated[str | None, Query(alias="next")] = None,
+) -> Response:
     request.state.sid = sid
 
     state = jwt.encode(
@@ -199,6 +210,12 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
         request.session["sid"] = sid
     else:
         request.session.pop("sid", None)
+
+    # Only accept paths relative to our own server, to avoid being used as an open redirect.
+    if next_url is not None and next_url.startswith("/") and not next_url.startswith("//"):
+        request.session["next_url"] = next_url
+    else:
+        request.session.pop("next_url", None)
 
     return RedirectResponse(sa.discord.get_oauth_login_url(request, state))
 
@@ -254,7 +271,8 @@ async def browser_discord_login_callback(
         user = await _create_session_with_discord_token(sa, sid, token)
 
         if sid is None:
-            return RedirectResponse(request.url_for("browser_me"))
+            next_url = request.session.pop("next_url", None)
+            return RedirectResponse(next_url or request.url_for("browser_me"))
         else:
             try:
                 session = await sa.sio.get_session(sid=sid)
@@ -262,7 +280,8 @@ async def browser_discord_login_callback(
                 return unable_to_login(sa, request, "Unable to find your Randovania client.", 401)
 
             result = await _create_client_side_session(sa, sid, user, session)
-            await sa.sio.emit("user_session_update", result, to=sid, namespace="/")
+
+            await client_signals.UserSessionUpdate.emit(sa, to=sid, namespace="/")(result)
 
             return sa.templates.TemplateResponse(
                 request,
@@ -399,7 +418,7 @@ async def authentication_methods(sa: ServerAppDep, request: Request) -> list[Aut
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on("restore_user_session", restore_user_session)
-    sa.on("logout", logout)
+    server_signals.RestoreUserSession.register(sa, restore_user_session)
+    server_signals.Logout.register(sa, logout)
 
     sa.app.include_router(router)

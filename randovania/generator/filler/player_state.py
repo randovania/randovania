@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_pickup import EventPickupNode
-from randovania.game_description.db.node import Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.resources.resource_type import ResourceType
@@ -29,6 +28,7 @@ from randovania.resolver import debug
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
+    from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
@@ -247,14 +247,10 @@ class PlayerState:
                 )
 
         teleporters = []
-        teleporter_dock_types = self.game_enum.game_description.dock_weakness_database.all_teleporter_dock_types
+        teleporter_dock_types = self.game_enum.game_description.dock_type_database.all_teleporter_dock_types
 
         for node in self.reach.iterate_nodes:
-            db_node: Node | None
-            if isinstance(node, Node):
-                db_node = node
-            else:
-                db_node = node.database_node
+            db_node = node.database_node
 
             if not isinstance(db_node, DockNode):
                 continue

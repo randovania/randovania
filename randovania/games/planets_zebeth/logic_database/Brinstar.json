@@ -6,7 +6,7 @@
             "default_node": "Starting Point",
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x47_y202"
+                "map_name": "x47_y202"
             },
             "nodes": {
                 "Starting Point": {
@@ -160,7 +160,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x88_y233"
+                "map_name": "x88_y233"
             },
             "nodes": {
                 "Door to Maru Mari Hall": {
@@ -191,16 +191,8 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Kraid Prelude": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Break Floor Blocks"
                         },
                         "Door to The Overhang": {
                             "type": "and",
@@ -289,7 +281,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x128_y202"
+                "map_name": "x128_y202"
             },
             "nodes": {
                 "Door to Early Construction": {
@@ -523,7 +515,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x168_y112"
+                "map_name": "x168_y112"
             },
             "nodes": {
                 "Door to The Overhang": {
@@ -690,7 +682,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x136_y67"
+                "map_name": "x136_y67"
             },
             "nodes": {
                 "Door to Item Room (Long Beam)": {
@@ -771,7 +763,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x104_y65"
+                "map_name": "x104_y65"
             },
             "nodes": {
                 "Door to Item Corridor (Long Beam)": {
@@ -846,7 +838,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x112_y22"
+                "map_name": "x112_y22"
             },
             "nodes": {
                 "Door to Blue Tower": {
@@ -927,7 +919,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x56_y22"
+                "map_name": "x56_y22"
             },
             "nodes": {
                 "Door to Final Highway": {
@@ -1046,7 +1038,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x184_y96"
+                "map_name": "x184_y96"
             },
             "nodes": {
                 "Door to Blue Tower": {
@@ -1127,7 +1119,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x200_y90"
+                "map_name": "x200_y90"
             },
             "nodes": {
                 "Door to Tower Bridge": {
@@ -1294,7 +1286,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x272_y157"
+                "map_name": "x272_y157"
             },
             "nodes": {
                 "Pickup (Missile Launcher)": {
@@ -1443,7 +1435,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x344_y155"
+                "map_name": "x344_y155"
             },
             "nodes": {
                 "Door to Orange Corridor": {
@@ -1528,7 +1520,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x256_y37"
+                "map_name": "x256_y37"
             },
             "nodes": {
                 "Door to Orange Tower": {
@@ -1559,8 +1551,37 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Green Hall": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks with Screw Attack"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1592,8 +1613,37 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Orange Tower": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks with Screw Attack"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -1603,7 +1653,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x312_y30"
+                "map_name": "x312_y30"
             },
             "nodes": {
                 "Door to Green Sanctuary W": {
@@ -1756,7 +1806,7 @@
                     "connections": {
                         "Door to Green Sanctuary W": {
                             "type": "template",
-                            "data": "Can Use Bombs"
+                            "data": "Can Break Floor Blocks"
                         }
                     }
                 },
@@ -1802,7 +1852,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x272_y22"
+                "map_name": "x272_y22"
             },
             "nodes": {
                 "Door to Green Hall": {
@@ -1883,7 +1933,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x232_y20"
+                "map_name": "x232_y20"
             },
             "nodes": {
                 "Pickup (Varia Suit)": {
@@ -1958,7 +2008,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x472_y67"
+                "map_name": "x472_y67"
             },
             "nodes": {
                 "Door to Green Sanctuary E": {
@@ -2130,7 +2180,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x432_y67"
+                "map_name": "x432_y67"
             },
             "nodes": {
                 "Door to Item Room (Bombs)": {
@@ -2211,7 +2261,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x392_y67"
+                "map_name": "x392_y67"
             },
             "nodes": {
                 "Pickup (Bombs)": {
@@ -2286,7 +2336,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x104_y260"
+                "map_name": "x104_y260"
             },
             "nodes": {
                 "Door to Early Construction": {
@@ -2371,7 +2421,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x240_y97"
+                "map_name": "x240_y97"
             },
             "nodes": {
                 "Door to Orange Tower": {
@@ -2452,7 +2502,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x320_y127"
+                "map_name": "x320_y127"
             },
             "nodes": {
                 "Door to Blue Rock Connector East": {
@@ -2533,7 +2583,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x296_y127"
+                "map_name": "x296_y127"
             },
             "nodes": {
                 "Door to Item Corridor (Ice Beam)": {
@@ -2608,7 +2658,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x40_y22"
+                "map_name": "x40_y22"
             },
             "nodes": {
                 "Door to Statue Chamber": {
@@ -2693,7 +2743,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x464_y97"
+                "map_name": "x464_y97"
             },
             "nodes": {
                 "Door to Orange Tower 2": {
@@ -2842,7 +2892,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x392_y37"
+                "map_name": "x392_y37"
             },
             "nodes": {
                 "Door to Green Hall": {
@@ -3087,7 +3137,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x280_y113"
+                "map_name": "x280_y113"
             },
             "nodes": {
                 "Door to Blue Rocks West": {
@@ -3168,7 +3218,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x312_y97"
+                "map_name": "x312_y97"
             },
             "nodes": {
                 "Door to Blue Rock Connector West": {
@@ -3249,7 +3299,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x344_y113"
+                "map_name": "x344_y113"
             },
             "nodes": {
                 "Door to Blue Rocks East": {
@@ -3323,16 +3373,8 @@
                             }
                         },
                         "Door to Item Corridor (Ice Beam)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Break Floor Blocks"
                         }
                     }
                 },

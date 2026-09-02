@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import base64
 import datetime
 import json
@@ -7,18 +9,19 @@ from collections.abc import Sequence
 
 import fastapi
 import peewee
+import pydantic
+from fastapi.params import Body
 from peewee import Case
-from retro_data_structures.json_util import JsonArray
 from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.json_lib import JsonObject, JsonObject_RO
-from randovania.network_common import error, signals
+from randovania.network_common import error
 from randovania.network_common.async_race_room import (
     AsyncRaceEntryData,
     AsyncRaceRoomAdminData,
+    AsyncRaceRoomEntry,
     AsyncRaceRoomListEntry,
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
@@ -26,10 +29,13 @@ from randovania.network_common.async_race_room import (
     RaceRoomLeaderboard,
     RaceRoomLeaderboardEntry,
 )
+from randovania.network_common.async_race_room_endpoints import async_race_room_endpoints as endpoints
+from randovania.network_common.audit import AuditEntry
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
 )
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.server import database, lib
 from randovania.server.database import (
     AsyncRaceEntryPause,
@@ -37,27 +43,28 @@ from randovania.server.database import (
     BaseModel,
     User,
 )
-from randovania.server.server_app import RdvFastAPI, ServerApp
+from randovania.server.server_app import RdvFastAPI, ServerApp, ServerAppDep, UserDep
 
 MAX_AUTH_TOKEN_LENGTH = 3600 * 24
 
-router = fastapi.APIRouter()
+router = fastapi.APIRouter(prefix=endpoints.prefix, tags=["async-race-room"])
 
 
 def _get_async_race_socketio_room(room: AsyncRaceRoom, user: User) -> str:
     return f"async-race-{room.id}-{user.id}"
 
 
-async def _verify_authorization(sa: ServerApp, sid: str, room: AsyncRaceRoom, auth_token: str) -> None:
+async def _verify_authorization(sa: ServerApp, user: User, room: AsyncRaceRoom, auth_token: str) -> None:
     """
     Checks for room password, current user membership and if the given auth token is valid.
     :param sa:
+    :param user:
     :param room:
     :param auth_token:
     :return:
     """
     if room.password is not None:
-        if database.AsyncRaceEntry.entry_for(room, await sa.get_current_user(sid)) is not None:
+        if database.AsyncRaceEntry.entry_for(room, user) is not None:
             return
 
         try:
@@ -84,7 +91,8 @@ def _fast_get_games_list_from_raw_layout(layout_description_json: bytes) -> list
     return [g for g in RandovaniaGame.sorted_all_games() if g.value in present_games]
 
 
-async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[JsonObject_RO]:
+@router.get(endpoints.list_rooms_template)
+async def list_rooms(sa: ServerAppDep, limit: int | None = None) -> Sequence[AsyncRaceRoomListEntry]:
     now = lib.datetime_now()
 
     def construct_helper(**args: typing.Any) -> AsyncRaceRoomListEntry:
@@ -103,7 +111,7 @@ async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[Jso
         args["race_status"] = AsyncRaceRoomRaceStatus.from_dates(args["start_date"], args["end_date"], now)
         return AsyncRaceRoomListEntry(**args)
 
-    sessions: list[AsyncRaceRoomListEntry] = (
+    sessions = (
         AsyncRaceRoom.select(
             AsyncRaceRoom.id,
             AsyncRaceRoom.name,
@@ -122,14 +130,21 @@ async def list_rooms(sa: ServerApp, sid: str, limit: int | None) -> Sequence[Jso
         .objects(construct_helper)
     )
 
-    return [session.as_json for session in sessions]
+    return list(sessions)
 
 
-async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json: JsonObject) -> JsonObject:
-    current_user = await sa.get_current_user(sid)
-
-    layout = LayoutDescription.from_bytes(layout_bin)
-    settings = AsyncRaceSettings.from_json(settings_json)
+@router.post(endpoints.create_room_template)
+async def create_room(
+    sa: ServerAppDep,
+    user: UserDep,
+    layout_bin: typing.Annotated[pydantic.Base64Bytes, Body()],
+    settings: AsyncRaceSettings,
+) -> AsyncRaceRoomEntry:
+    layout_decoded = bytes(layout_bin)
+    try:
+        layout = LayoutDescription.from_bytes(layout_decoded)
+    except Exception as e:
+        raise error.InvalidActionError(f"Unable to decode layout: {e}")
 
     if not (0 < len(settings.name) <= MAX_SESSION_NAME_LENGTH):
         raise error.InvalidActionError("Invalid session name length")
@@ -142,32 +157,37 @@ async def create_room(sa: ServerApp, sid: str, layout_bin: bytes, settings_json:
             name=settings.name,
             password=settings.password,
             visibility=settings.visibility,
-            layout_description_json=layout_bin,
+            # FIXME: That is a horrible name for something which takes the `bytes`
+            layout_description_json=layout_decoded,
             game_details_json=json.dumps(GameDetails.from_layout(layout).as_json),
-            creator=current_user,
+            creator=user,
             creation_date=lib.datetime_now(),
-            start_date=settings.start_date,
-            end_date=settings.end_date,
+            start_date=settings.start_date.isoformat(),
+            end_date=settings.end_date.isoformat(),
             allow_pause=settings.allow_pause,
         ).id
 
-    return (await AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa, sid)).as_json
+    return await AsyncRaceRoom.get_by_id(new_room_id).create_session_entry(sa, user)
 
 
-async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_json: JsonObject) -> JsonObject:
+@router.patch(endpoints.change_room_template)
+async def change_room_settings(
+    sa: ServerAppDep,
+    user: UserDep,
+    room_id: int,
+    settings: AsyncRaceSettings,
+) -> AsyncRaceRoomEntry:
     """
     Updates the settings for the given room
     :param sa:
+    :param user:
     :param room_id:
     :param settings_json:
     :return: A AsyncRaceRoomEntry, json encoded
     """
-    current_user = await sa.get_current_user(sid)
-    settings = AsyncRaceSettings.from_json(settings_json)
-
     room = AsyncRaceRoom.get_by_id(room_id)
 
-    if room.creator != current_user:
+    if room.creator != user:
         raise error.NotAuthorizedForActionError
 
     if not (0 < len(settings.name) <= MAX_SESSION_NAME_LENGTH):
@@ -189,7 +209,7 @@ async def change_room_settings(sa: ServerApp, sid: str, room_id: int, settings_j
     room.save()
 
     # TODO: Reusing the `room` after we set start_datetime/end_datetime breaks create_session_entry
-    return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
+    return await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, user)
 
 
 async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) -> None:
@@ -203,10 +223,12 @@ async def listen_to_room(sa: ServerApp, sid: str, room_id: int, listen: bool) ->
         await sa.sio.leave_room(sid, socketio_room)
 
 
-async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) -> JsonObject_RO:
+@router.get(endpoints.get_room_template)
+async def get_room(sa: ServerAppDep, user: UserDep, room_id: int, password: str | None = None) -> AsyncRaceRoomEntry:
     """
     Gets details about the given room id
     :param sa:
+    :param user:
     :param room_id: The room to get details for
     :param password:
     :return: A AsyncRaceRoomEntry, json encoded
@@ -214,32 +236,41 @@ async def get_room(sa: ServerApp, sid: str, room_id: int, password: str | None) 
     room = AsyncRaceRoom.get_by_id(room_id)
     if room.password != password:
         raise error.WrongPasswordError
-    return (await room.create_session_entry(sa, sid)).as_json
+    return await room.create_session_entry(sa, user)
 
 
-async def refresh_room(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
+@router.get(endpoints.refresh_room_template)
+async def refresh_room(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str) -> AsyncRaceRoomEntry:
     """
     Gets details about the given room id
     :param sa:
+    :param user:
     :param room_id: The room to get details for
     :param auth_token:
     :return: A AsyncRaceRoomEntry, json encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    await _verify_authorization(sa, sid, room, auth_token)
-    return (await room.create_session_entry(sa, sid)).as_json
+    await _verify_authorization(sa, user, room, auth_token)
+    return await room.create_session_entry(sa, user)
 
 
-async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonObject_RO:
+@router.get(endpoints.room_leaderboard_template)
+async def get_leaderboard(
+    sa: ServerAppDep,
+    user: UserDep,
+    room_id: int,
+    auth_token: str,
+) -> RaceRoomLeaderboard:
     """
     Gets the race results. Only accessible after the end time is reached.
     :param sa:
+    :param user:
     :param room_id: The room to get details for
     :param auth_token:
     :return: A RaceRoomLeaderboard, json encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    await _verify_authorization(sa, sid, room, auth_token)
+    await _verify_authorization(sa, user, room, auth_token)
 
     if room.end_datetime > lib.datetime_now():
         raise error.NotAuthorizedForActionError
@@ -271,71 +302,83 @@ async def get_leaderboard(sa: ServerApp, sid: str, room_id: int, auth_token: str
 
     entries.sort(key=lambda key: key.time.total_seconds() if key.time is not None else math.inf)
 
-    return RaceRoomLeaderboard(entries).as_json
+    return RaceRoomLeaderboard(entries=entries)
 
 
-async def get_layout(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> bytes:
+@router.get(endpoints.room_layout_template, response_class=fastapi.Response)
+async def get_layout(sa: ServerAppDep, user: UserDep, room_id: int, auth_token: str) -> fastapi.Response:
     """
     Gets the layout description for the room, if it has finished
     :param sa:
+    :param user:
     :param room_id: The room to get details for
     :param auth_token:
     :return: A LayoutDescription, byte-encoded
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    await _verify_authorization(sa, sid, room, auth_token)
+    await _verify_authorization(sa, user, room, auth_token)
 
     if room.end_datetime > lib.datetime_now():
         raise error.NotAuthorizedForActionError
 
-    return room.layout_description_json
+    return fastapi.Response(content=room.layout_description_json, media_type="application/octet-stream")
 
 
-async def get_audit_log(sa: ServerApp, sid: str, room_id: int, auth_token: str) -> JsonArray:
+@router.get(endpoints.room_audit_log_template)
+async def get_audit_log(
+    sa: ServerAppDep,
+    user: UserDep,
+    room_id: int,
+    auth_token: str,
+) -> Sequence[AuditEntry]:
     """
     Gets the audit log for the given room.
     :param sa:
+    :param user:
     :param room_id: The room to get audit log for
     :param auth_token:
     :return: A list of json-encoded AuditEntry
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    await _verify_authorization(sa, sid, room, auth_token)
+    await _verify_authorization(sa, user, room, auth_token)
 
-    return [log.as_entry().as_json for log in room.audit_log]
+    return [log.as_entry() for log in room.audit_log]
 
 
-async def admin_get_admin_data(sa: ServerApp, sid: str, room_id: int) -> JsonObject_RO:
+@router.get(endpoints.room_admin_data_template)
+async def admin_get_admin_data(user: UserDep, room_id: int) -> AsyncRaceRoomAdminData:
     """
     Gets the all details of every user who has joined the room. Only accessible by admins.
     :param sa:
+    :param user:
     :param room_id: The room to get details for
     :return: A AsyncRaceRoomAdminData, json encoded
     """
-    user = await sa.get_current_user(sid)
     room = AsyncRaceRoom.get_by_id(room_id)
     if room.creator != user:
         raise error.NotAuthorizedForActionError
 
     return AsyncRaceRoomAdminData(
         users=[entry.create_admin_entry() for entry in room.entries],
-    ).as_json
+    )
 
 
-async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_entries: list[JsonObject]) -> JsonObject:
+@router.post(endpoints.room_admin_entries_template)
+async def admin_update_entries(
+    sa: ServerAppDep, user: UserDep, room_id: int, new_entries: list[AsyncRaceEntryData]
+) -> AsyncRaceRoomEntry:
     """
     Updates multiple entries for the given room, all at once.
     :param sa:
+    :param user:
     :param room_id:
     :param raw_new_entries: The list of entries to modify.
     :return: A AsyncRaceRoomEntry, json encoded
     """
-    user = await sa.get_current_user(sid)
     room = AsyncRaceRoom.get_by_id(room_id)
     if room.creator != user:
         raise error.NotAuthorizedForActionError
 
-    new_entries = [AsyncRaceEntryData.from_json(e) for e in raw_new_entries]
     max_date_start = datetime.datetime(datetime.MAXYEAR, 1, 1, tzinfo=datetime.UTC)
     max_date_finish = datetime.datetime(datetime.MAXYEAR, 1, 2, tzinfo=datetime.UTC)
 
@@ -349,7 +392,8 @@ async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_en
                 raise error.InvalidActionError(f"Invalid dates for {modification.user.name}")
 
             entry = database.AsyncRaceEntry.entry_for(room, modification.user.id)
-            assert entry is not None
+            if entry is None:
+                raise error.InvalidActionError(f"{modification.user.name} is not a member of this room")
             entry.start_datetime = modification.start_date
             entry.finish_datetime = modification.finish_date
             entry.forfeit = modification.forfeit
@@ -363,44 +407,54 @@ async def admin_update_entries(sa: ServerApp, sid: str, room_id: int, raw_new_en
             message=f"Modified entries for {[', '.join(mod.user.name for mod in new_entries)]}.",
         )
 
-    return (await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, sid)).as_json
+    return await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, user)
 
 
+@router.post(endpoints.room_join_and_export_template)
 async def join_and_export(
-    sa: ServerApp, sid: str, room_id: int, auth_token: str, cosmetic_json: JsonObject
-) -> JsonObject:
+    sa: ServerAppDep,
+    user: UserDep,
+    room_id: int,
+    auth_token: str,
+    cosmetic_json: typing.Annotated[dict, Body()],
+) -> dict:
     """
 
     :param sa:
+    :param user:
     :param room_id: The room to join
     :param auth_token:
-    :param cosmetic_json:
+    :param cosmetic_json: The json for a BaseCosmeticPatches subclass. Which subclass depends on the room's game,
+    so it can only be decoded after the room is known.
     :return:
     """
-    user = await sa.get_current_user(sid)
     room = AsyncRaceRoom.get_by_id(room_id)
-    await _verify_authorization(sa, sid, room, auth_token)
+    await _verify_authorization(sa, user, room, auth_token)
 
     if room.get_race_status(lib.datetime_now()) != AsyncRaceRoomRaceStatus.ACTIVE:
         raise error.NotAuthorizedForActionError("Room is not active")
+
+    layout_description = room.layout_description
+    worlds_config = WorldsConfiguration(
+        world_index=0,
+        world_names={0: "World"},
+        uuids={},
+        session_name=None,
+        is_coop=False,
+    )
+    preset = layout_description.get_preset(worlds_config.world_index)
+
+    try:
+        cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
+    except Exception as e:
+        raise error.InvalidActionError(f"Invalid cosmetic patches for {preset.game.long_name}: {e}")
 
     database.AsyncRaceEntry.get_or_create(
         room=room,
         user=user,
     )
 
-    layout_description = room.layout_description
-    players_config = PlayersConfiguration(
-        player_index=0,
-        player_names={0: "World"},
-        uuids={},
-        session_name=None,
-        is_coop=False,
-    )
-    preset = layout_description.get_preset(players_config.player_index)
-    cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
-
-    data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
+    data_factory = preset.game.patch_data_factory(layout_description, worlds_config, cosmetic_patches)
     rdv_meta = data_factory.create_default_patcher_data_meta()
     rdv_meta["in_race_setting"] = True
     try:
@@ -481,29 +535,31 @@ async def perform_state_change(
             it.save()
 
 
-async def change_state(sa: ServerApp, sid: str, room_id: int, new_state: str) -> JsonObject_RO:
+@router.post(endpoints.room_state_template)
+async def change_state(
+    sa: ServerAppDep, user: UserDep, room_id: int, new_state: AsyncRaceRoomUserStatus
+) -> AsyncRaceRoomEntry:
     """
     Adjusts the start date, finish date or forfeit flag of the user's entry based on the requested state.
     :param sa:
+    :param user:
     :param room_id:
-    :param sid:
     :param new_state:
     :return:
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    user = await sa.get_current_user(sid)
 
-    await perform_state_change(room, user, AsyncRaceRoomUserStatus(new_state))
+    await perform_state_change(room, user, new_state)
 
-    return (await room.create_session_entry(sa, sid)).as_json
+    return await room.create_session_entry(sa, user)
 
 
-async def get_own_proof(sa: ServerApp, sid: str, room_id: int) -> tuple[str, str]:
+@router.get(endpoints.room_own_proof_template)
+async def get_own_proof(user: UserDep, room_id: int) -> tuple[str, str]:
     """
     This endpoint allows a user to request their own submission notes and proof url.
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    user = await sa.get_current_user(sid)
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
         raise error.NotAuthorizedForActionError
@@ -516,12 +572,12 @@ async def get_own_proof(sa: ServerApp, sid: str, room_id: int) -> tuple[str, str
     return entry.submission_notes, entry.proof_url
 
 
-async def submit_proof(sa: ServerApp, sid: str, room_id: int, submission_notes: str, proof_url: str) -> None:
+@router.post(endpoints.room_submit_proof_template)
+async def submit_proof(user: UserDep, room_id: int, submission_notes: str, proof_url: str) -> None:
     """
     This endpoint allows a user to record submission notes and a link to proof for their run.
     """
     room = AsyncRaceRoom.get_by_id(room_id)
-    user = await sa.get_current_user(sid)
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
         raise error.NotAuthorizedForActionError
@@ -536,9 +592,9 @@ async def submit_proof(sa: ServerApp, sid: str, room_id: int, submission_notes: 
     entry.save()
 
 
-async def get_livesplit_url(sa: ServerApp, sid: str, room_id: int) -> str:
+@router.get(endpoints.room_livesplit_url_template)
+async def get_livesplit_url(sa: ServerAppDep, user: UserDep, room_id: int) -> str:
     room = AsyncRaceRoom.get_by_id(room_id)
-    user = await sa.get_current_user(sid)
     entry = database.AsyncRaceEntry.entry_for(room, user)
     if entry is None:
         raise error.NotAuthorizedForActionError
@@ -564,15 +620,14 @@ _livesplit_event_mapping = {
 async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user: str | User) -> None:
     user = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
-    await sa.sio.emit(
-        signals.ASYNC_RACE_ROOM_UPDATE,
-        (await room.create_session_entry(sa, user)).as_json,
-        namespace="/",
+    await client_signals.AsyncRaceRoomUpdate.emit(
+        sa,
         to=_get_async_race_socketio_room(room, user),
-    )
+        namespace="/",
+    )((await room.create_session_entry(sa, user)).as_json)
 
 
-@router.websocket("/async-race-room/{room_id}/livesplit/{token}")
+@router.websocket(endpoints.room_livesplit_integration_template)
 async def livesplit_integration(
     websocket: WebSocket,
     room_id: int,
@@ -638,19 +693,4 @@ async def livesplit_integration(
 
 def setup_app(sa: ServerApp) -> None:
     sa.app.include_router(router)
-    sa.on("async_race_list_rooms", list_rooms, with_header_check=True)
-    sa.on("async_race_create_room", create_room, with_header_check=True)
-    sa.on("async_race_change_room_settings", change_room_settings, with_header_check=True)
-    sa.on("async_race_listen_to_room", listen_to_room, with_header_check=True)
-    sa.on("async_race_get_room", get_room, with_header_check=True)
-    sa.on("async_race_refresh_room", refresh_room, with_header_check=True)
-    sa.on("async_race_get_leaderboard", get_leaderboard, with_header_check=True)
-    sa.on("async_race_get_layout", get_layout, with_header_check=True)
-    sa.on("async_race_get_audit_log", get_audit_log, with_header_check=True)
-    sa.on("async_race_admin_get_admin_data", admin_get_admin_data, with_header_check=True)
-    sa.on("async_race_admin_update_entries", admin_update_entries, with_header_check=True)
-    sa.on("async_race_join_and_export", join_and_export, with_header_check=True)
-    sa.on("async_race_change_state", change_state, with_header_check=True)
-    sa.on("async_race_get_own_proof", get_own_proof, with_header_check=True)
-    sa.on("async_race_submit_proof", submit_proof, with_header_check=True)
-    sa.on("async_race_get_livesplit_url", get_livesplit_url, with_header_check=True)
+    server_signals.AsyncRace.ListenToRoom.register(sa, listen_to_room, with_header_check=True)

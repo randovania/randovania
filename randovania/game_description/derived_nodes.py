@@ -39,7 +39,7 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
         game=game.game,
         resource_database=game.resource_database,
         layers=game.layers,
-        dock_weakness_database=game.dock_weakness_database,
+        dock_type_database=game.dock_type_database,
         hint_feature_database=game.hint_feature_database,
         region_list=RegionList(regions, game.region_list.flatten_to_set_on_patch),
         victory_condition=game.victory_condition,

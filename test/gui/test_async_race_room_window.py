@@ -28,7 +28,7 @@ if TYPE_CHECKING:
     import pytest_mock
     from pytestqt.qtbot import QtBot
 
-    from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
+    from randovania.gui.dialog.async_race.async_race_admin_dialog import AsyncRaceAdminDialog
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
     from randovania.interface_common.options import Options
     from randovania.layout.preset import Preset
@@ -229,7 +229,7 @@ async def test_on_view_user_entries(skip_qtbot, options, default_blank_preset, m
     )
     window._network_client.async_race_admin_update_entries = AsyncMock(return_value=window.room)
     window._network_client.async_race_admin_get_admin_data.return_value = AsyncRaceRoomAdminData(
-        [
+        users=[
             AsyncRaceEntryData(
                 user=RandovaniaUser(id=1235, name="user"),
                 join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),

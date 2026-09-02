@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "fusion",
     "resource_database": {
         "items": {
@@ -696,6 +696,18 @@
             "Animals": {
                 "long_name": "Main Deck Animal Controls",
                 "extra": {}
+            },
+            "S1ChargeSave": {
+                "long_name": "Sector 1 Central Save Room Visited",
+                "extra": {}
+            },
+            "OpDeckSave": {
+                "long_name": "Main Deck Operations Deck Save Visited",
+                "extra": {}
+            },
+            "S6ForbiddenEntrance": {
+                "long_name": "Sector 6 Forbidden Entrance Visited",
+                "extra": {}
             }
         },
         "tricks": {
@@ -719,7 +731,7 @@
             },
             "Knowledge": {
                 "long_name": "Knowledge",
-                "description": "The player may be expected to know alternate enemy/block weaknesses or be able to identify potential softlocks risks.",
+                "description": "The player may be expected to know alternate enemy/block weaknesses or be able to identify potential softlock risks.",
                 "require_documentation_above": 1,
                 "extra": {}
             },
@@ -2316,7 +2328,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": "Dev Note: Most instances can also be shinesparked. Also, Central Stabilizer contains extra rules.",
+                        "comment": "Dev Note: Most instances can also be shinesparked. Also, Central and Southeast Stabilizer contains extra rules.",
                         "items": [
                             {
                                 "type": "or",
@@ -2722,7 +2734,7 @@
             "negate": false
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "Door": {
                 "name": "Door",
@@ -2739,7 +2751,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Open Hatch (Forced)": {
                         "extra": {
@@ -2752,7 +2765,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Locked Hatch": {
                         "extra": {
@@ -2765,7 +2779,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": true
                     },
                     "L0 Hatch": {
                         "extra": {
@@ -2780,7 +2795,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "L1 Hatch": {
                         "extra": {
@@ -2795,7 +2811,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "L2 Hatch": {
                         "extra": {
@@ -2810,7 +2827,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "L3 Hatch": {
                         "extra": {
@@ -2825,7 +2843,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "L4 Hatch": {
                         "extra": {
@@ -2840,10 +2859,11 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": {
+                "weakness_distributor": {
                     "unlocked": "Open Hatch",
                     "locked": "Locked Hatch",
                     "change_from": [
@@ -2862,7 +2882,12 @@
                         "L4 Hatch",
                         "Locked Hatch",
                         "Open Hatch"
-                    ]
+                    ],
+                    "indirect_change_from": [],
+                    "force_change_two_way": true,
+                    "resolver_attempts": 100,
+                    "to_shuffle_proportion": 1.0,
+                    "ui_label": "Door Locks"
                 }
             },
             "Elevator": {
@@ -2880,10 +2905,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "area_transition": {
                 "name": "Area Transition",
@@ -2900,10 +2926,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "Other": {
                 "name": "Other",
@@ -2920,7 +2947,8 @@
                                 "negate": false
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Open Passage": {
                         "extra": {},
@@ -2931,7 +2959,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Blocked Passage": {
                         "extra": {},
@@ -2942,7 +2971,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Destroyed Door": {
                         "extra": {},
@@ -2953,20 +2983,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "Other",
             "name": "Tunnel"
-        },
-        "dock_rando": {
-            "force_change_two_way": true,
-            "resolver_attempts": 100,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {
@@ -3124,7 +3150,8 @@
             1,
             2,
             3,
-            4
+            4,
+            5
         ],
         "UnderwaterWallJump": [
             1,

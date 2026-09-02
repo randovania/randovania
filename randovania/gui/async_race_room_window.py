@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime
 import logging
+import typing
 from typing import TYPE_CHECKING, override
 
 import humanize
@@ -9,10 +10,10 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
-from randovania.gui.dialog.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
-from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
-from randovania.gui.dialog.async_race_settings_dialog import AsyncRaceSettingsDialog
+from randovania.gui.dialog.async_race.async_race_admin_dialog import AsyncRaceAdminDialog
+from randovania.gui.dialog.async_race.async_race_leaderboard_dialog import AsyncRaceLeaderboardDialog
+from randovania.gui.dialog.async_race.async_race_proof_popup import AsyncRaceProofPopup
+from randovania.gui.dialog.async_race.async_race_settings_dialog import AsyncRaceSettingsDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.async_race_room_window_ui import Ui_AsyncRaceRoomWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
@@ -23,6 +24,7 @@ from randovania.network_common.async_race_room import (
     AsyncRaceRoomRaceStatus,
     AsyncRaceRoomUserStatus,
 )
+from randovania.network_common.signals import server_signals
 
 if TYPE_CHECKING:
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -46,7 +48,7 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         network_client: QtNetworkClient,
         options: Options,
         window_manager: WindowManager,
-    ):
+    ) -> None:
         super().__init__()
         self._network_client = network_client
         self._options = options
@@ -295,8 +297,11 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
         if result != QtWidgets.QDialog.DialogCode.Accepted:
             return
 
-        patch_data = await self._network_client.async_race_join_and_export(
-            self.room, self._options.generic_per_game_options(game).cosmetic_patches
+        patch_data = typing.cast(
+            "dict",
+            await self._network_client.async_race_join_and_export(
+                self.room, self._options.generic_per_game_options(game).cosmetic_patches
+            ),
         )
 
         dialog.save_options()
@@ -471,9 +476,9 @@ class AsyncRaceRoomWindow(QtWidgets.QMainWindow):
 
     @asyncSlot()
     async def _stop_listening_room_update_events(self) -> None:
-        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, False))
+        await server_signals.AsyncRace.ListenToRoom.call_server(self._network_client)(self.room.id, False)
 
     async def request_room_update_events(self) -> None:
         # TODO: this does not restart the listener if we disconnect from the server
-        await self._network_client.server_call("async_race_listen_to_room", (self.room.id, True))
+        await server_signals.AsyncRace.ListenToRoom.call_server(self._network_client)(self.room.id, True)
         self.CloseEvent.connect(self._stop_listening_room_update_events)

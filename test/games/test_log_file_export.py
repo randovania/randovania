@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 import randovania
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import json_lib
 from test.conftest import COOP_RDVGAMES, SOLO_RDVGAMES
@@ -15,8 +15,7 @@ if typing.TYPE_CHECKING:
     import _pytest.python
     import pytest_mock
 
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-    from test.conftest import TestFilesDir
+    from test.conftest import AcceptanceCheck, TestFilesDir
 
 
 def _get_world_count(file_path: Path) -> int:
@@ -25,27 +24,13 @@ def _get_world_count(file_path: Path) -> int:
     return len(data["info"]["presets"])
 
 
-def _update_committed(data_path: Path, cosmetic_path: Path, data: dict, cosmetic_patches: BaseCosmeticPatches) -> None:
-    """
-    Updates the files that are used as reference value for later runs. Make sure to always keep this call commented out.
-    """
-    json_lib.write_path(data_path, data)
-
-    if cosmetic_patches != type(cosmetic_patches)():
-        # If not the default
-        json_lib.write_path(cosmetic_path, cosmetic_patches.as_json)
-    else:
-        cosmetic_path.unlink(missing_ok=True)
-
-    raise NotImplementedError("This function should not be called in normal execution.")
-
-
 @pytest.mark.benchmark
 @pytest.mark.usefixtures("_mock_seed_hash")
 def test_layout_patch_data_export(
     monkeypatch: pytest.MonkeyPatch,
     mocker: pytest_mock.MockerFixture,
     test_files_dir: TestFilesDir,
+    acceptance_check: AcceptanceCheck,
     layout_name: str,
     world_index: int,
     is_coop: bool,
@@ -70,9 +55,9 @@ def test_layout_patch_data_export(
 
     factory = game_enum.patch_data_factory(
         description=layout,
-        players_config=PlayersConfiguration(
-            player_index=world_index,
-            player_names={i: f"World {i + 1}" for i in range(layout.world_count)},
+        worlds_config=WorldsConfiguration(
+            world_index=world_index,
+            world_names={i: f"World {i + 1}" for i in range(layout.world_count)},
             is_coop=is_coop,
         ),
         cosmetic_patches=cosmetic_patches,
@@ -81,9 +66,9 @@ def test_layout_patch_data_export(
     data = factory.create_data()
     mock_attach.assert_called_once_with()
 
-    # _update_committed(data_path, cosmetic_path, data, cosmetic_patches)
-
-    assert data == json_lib.read_path(data_path)
+    acceptance_check(data_path, data)
+    if cosmetic_path.exists():
+        acceptance_check(cosmetic_path, cosmetic_patches.as_json)
 
 
 def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:

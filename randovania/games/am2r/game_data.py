@@ -91,7 +91,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="N7MNABZW",
+        expected_seed_hash="SXFX22NP",
         # Some items require shinesparking to reach in vanilla,
         # which due to varying difficulty has been made into a trick
         database_collectable_include_tricks=(("Shinesparking", LayoutTrickLevel.ADVANCED),),
@@ -197,6 +197,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     multiple_start_nodes_per_area=False,
     defaults_available_in_game_sessions=True,
     racetime_url="https://racetime.gg/am2r-rdv/data",
