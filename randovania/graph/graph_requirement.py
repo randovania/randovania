@@ -253,7 +253,7 @@ class GraphRequirementList:
             return "Trivial"
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_other_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._other_resources for an entry with the given resource_index.
@@ -266,7 +266,7 @@ class GraphRequirementList:
         return -1
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_damage_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._damage_resources for an entry with the given resource_index.
@@ -970,7 +970,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def trivial(cls) -> typing.Self:
+    def trivial(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is always satisfied.
         """
@@ -984,7 +984,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def impossible(cls) -> typing.Self:
+    def impossible(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is never satisfied.
         """

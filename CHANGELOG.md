@@ -5,8 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.11.0] - 2026-09-01
+## [11.1.0] - 2026-10-01
 
+### Metroid Prime Hunters
+
+- Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
+- Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
+
+## [11.0.0] - 2026-09-01
+
+- **Major** - Added: Metroid Prime Hunters has been added. Shuffle the items including Artifacts and Refills, portal destinations, Force Field weaknesses, and even Shield Keys.
 - Added: The Map Tracker can now be opened directly from the Open menu, by selecting which preset to use.
 - Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
@@ -91,7 +99,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Hive Totem: Removed door lock present on NTSC 0-02+.
 - Changed: Research Lab Aether: Unlock door when the Metroid dies in addition to the breakable wall.
 - Changed: Sunchamber: Doors no longer instantly lock upon entering.
-- Changed: Fiery Shores, Monitor Station, Sunchamber Access, Sun Tower Access: Restored crate destruction debris.
 
 #### Logic Database
 
@@ -109,6 +116,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Mines Security Station: The event to unlock the doors can now be logically visited multiple times, making it possible for it to be considered a safe action.
 
 ### Metroid Prime 2: Echoes
+
+- Fixed: Viewing the Debug Info tracker layout doesn't cause disconnects anymore.
 
 #### Logic Database
 

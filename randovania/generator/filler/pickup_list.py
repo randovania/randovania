@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import itertools
+import math
 from typing import TYPE_CHECKING
 
 from randovania.game_description import game_description
@@ -46,7 +47,7 @@ def _unsatisfied_item_requirements_for_damage(
 
     if state.health_for_damage_requirements <= sum_damage:
         # Delegates to the game for how to handle the damage requirement
-        return state.damage_state.resource_requirements_for_satisfying_damage(sum_damage, state.resources)
+        return state.damage_state.resource_requirements_for_satisfying_damage(math.ceil(sum_damage), state.resources)
     return None
 
 
