@@ -52,7 +52,7 @@ else:
 
 @cython.ccall
 def _is_later_progression_item(
-    resource_index: cython.size_t, progressive_chain_info: None | tuple[Sequence[cython.size_t], int]
+    resource_index: cython.size_t, progressive_chain_info: tuple[Sequence[cython.size_t], int] | None
 ) -> bool:
     if not progressive_chain_info:
         return False
@@ -253,7 +253,7 @@ class GraphRequirementList:
             return "Trivial"
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_other_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._other_resources for an entry with the given resource_index.
@@ -266,7 +266,7 @@ class GraphRequirementList:
         return -1
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_damage_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._damage_resources for an entry with the given resource_index.
@@ -632,7 +632,7 @@ class GraphRequirementList:
         resource_index: cython.size_t,
         amount: cython.int,
         negate: cython.bint,
-        progressive_item_info: "None | tuple[Sequence[cython.size_t], int]",
+        progressive_item_info: "tuple[Sequence[cython.size_t], int] | None",
     ) -> cython.void:
         if _is_later_progression_item(resource_index, progressive_item_info):
             assert progressive_item_info is not None
@@ -650,7 +650,7 @@ class GraphRequirementList:
         resources: ResourceCollection,
         health_for_damage_requirements: cython.float,
         node_resources: Sequence[cython.size_t],
-        progressive_item_info: "None | tuple[Sequence[cython.size_t], int]",
+        progressive_item_info: "tuple[Sequence[cython.size_t], int] | None",
     ) -> GraphRequirementList | None:
         """Used by resolver.py for `_simplify_additional_requirement_set`"""
 
@@ -839,8 +839,7 @@ class GraphRequirementSet:
             new_dmg: cython.float = cython.cast(GraphRequirementList, alt.raw()).satisfied_damage(resources)
             if new_dmg <= 0.0:
                 return new_dmg
-            if new_dmg < damage:
-                damage = new_dmg
+            damage = min(damage, new_dmg)
 
         return damage
 
@@ -971,7 +970,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def trivial(cls) -> typing.Self:
+    def trivial(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is always satisfied.
         """
@@ -985,7 +984,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def impossible(cls) -> typing.Self:
+    def impossible(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is never satisfied.
         """

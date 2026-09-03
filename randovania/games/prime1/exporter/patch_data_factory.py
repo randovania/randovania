@@ -38,6 +38,8 @@ if TYPE_CHECKING:
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
+_SAVE_NAME_MAX_LENGTH = 24
+
 _STARTING_ITEM_NAME_TO_INDEX = {
     "powerBeam": "Power",
     "ice": "Ice",
@@ -212,6 +214,47 @@ def _name_for_start_location(region_list: RegionList, location: NodeIdentifier) 
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
     return f"{randovania.VERSION} | Seed Hash - {description.shareable_word_hash} ({description.shareable_hash})"
+
+
+def _abbreviate_word(word: str, length: int) -> str:
+    if length < len(word):
+        return word[:length] + "."
+    return word
+
+
+def _join_abbreviated_words(words: list[str], lengths: list[int]) -> str:
+    return " ".join(_abbreviate_word(word, length) for word, length in zip(words, lengths, strict=True))
+
+
+def _balanced_word_lengths(words: list[str], max_length: int) -> list[int]:
+    lengths = [1] * len(words)
+    longest_word = max(len(word) for word in words)
+
+    for target_length in range(2, longest_word + 1):
+        for i, word in enumerate(words):
+            if len(word) < target_length:
+                continue
+
+            candidate_lengths = list(lengths)
+            candidate_lengths[i] = target_length
+
+            if len(_join_abbreviated_words(words, candidate_lengths)) > max_length:
+                continue
+
+            lengths = candidate_lengths
+
+    return lengths
+
+
+def _shorten_word_hash(word_hash: str, max_length: int = _SAVE_NAME_MAX_LENGTH) -> str:
+    """Fits a word hash into max_length by abbreviating every word by a similar amount, marking each cut with a dot."""
+    words = word_hash.split()
+    if not words:
+        return word_hash[:max_length]
+
+    lengths = _balanced_word_lengths(words, max_length)
+    abbreviated = _join_abbreviated_words(words, lengths)
+    return abbreviated[:max_length].rstrip()
 
 
 def _random_factor(rng: Random, min: float, max: float, target: float) -> float:
@@ -578,11 +621,9 @@ def _serialize_dock_modifications(
                         assert len(strongly_connected_components) > 1
 
                         def component_number(name: str) -> int:
-                            i = 0
-                            for component in strongly_connected_components:
+                            for i, component in enumerate(strongly_connected_components):
                                 if name in list(component):
                                     return i
-                                i += 1
                             raise KeyError("Name not found")
 
                         # randomly pick two room pairs which are not members of the same strongly connected
@@ -881,6 +922,25 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             except ValueError:
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
+        if self.configuration.blue_save_doors:
+            room = level_data["Phazon Mines"]["rooms"]["Save Station Mines A"]
+            room.setdefault("timers", []).append(
+                {
+                    "id": 0x00EE_0000,
+                    "time": 0.5,
+                    "startImmediately": True,
+                }
+            )
+
+            room.setdefault("addConnections", []).append(
+                {
+                    "senderId": 0x00EE_0000,  # Randovania timer
+                    "state": "ZERO",
+                    "targetId": 0x0004001A,  # Relay - Unlock Gate
+                    "message": "SET_TO_ZERO",
+                }
+            )
+
         # strip extraneous info
         level_data = _remove_empty(level_data)
         for region_item in level_data.values():
@@ -940,9 +1000,13 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
         suit_colors = {}
-        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.suit_color_rotations):
+        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.active_suit_color_rotations):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
+
+        gunship_rotation = self.cosmetic_patches.active_gunship_color_rotation
+        if gunship_rotation is not None:
+            suit_colors["gunshipDeg"] = gunship_rotation
 
         starting_room = _name_for_start_location(db.region_list, self.patches.starting_location)
 
@@ -951,6 +1015,17 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             name: _starting_items_value_for(self.resource_db, starting_resources, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
+        starting_items.update(
+            {
+                "missileLauncher": True,
+                "powerBombLauncher": True,
+                "powerSuit": 0,
+                "springBall": False,
+                "unknownItem1": 0,
+                "unlimitedMissiles": False,
+                "unlimitedPowerBombs": False,
+            }
+        )
 
         if not self.configuration.legacy_mode:
             idrone_config = {
@@ -1041,6 +1116,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "quiet": False,
                 "suitColors": suit_colors,
                 "forceFusion": self.cosmetic_patches.force_fusion,
+                "rainbowPhazonBall": self.cosmetic_patches.rainbow_phazon_ball,
             },
             "gameConfig": {
                 "resultsString": _create_results_screen_text(self.description),
@@ -1081,6 +1157,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     "description": f"Seed Hash: {self.description.shareable_word_hash}",
                 },
                 "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
+                "saveName": _shorten_word_hash(self.description.shareable_word_hash),
                 "creditsString": credits_string,
                 "artifactHints": {artifact.long_name: text for artifact, text in resulting_hints.items()},
                 "artifactTempleLayerOverrides": {

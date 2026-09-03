@@ -28,7 +28,8 @@
         "quickplay": false,
         "quiet": false,
         "suitColors": {},
-        "forceFusion": false
+        "forceFusion": false,
+        "rainbowPhazonBall": false
     },
     "gameConfig": {
         "resultsString": "1.2.3 | Seed Hash - Some Words (XXXXXXXX)",
@@ -85,7 +86,14 @@
             "variaSuit": false,
             "phazonSuit": false,
             "energyTanks": 0,
-            "wavebuster": false
+            "wavebuster": false,
+            "missileLauncher": true,
+            "powerBombLauncher": true,
+            "powerSuit": 0,
+            "springBall": false,
+            "unknownItem1": 0,
+            "unlimitedMissiles": false,
+            "unlimitedPowerBombs": false
         },
         "etankCapacity": 100,
         "itemMaxCapacity": {
@@ -106,6 +114,7 @@
             "description": "Seed Hash: Some Words"
         },
         "mainMenuMessage": "Randovania v1.2.3\nSome Words",
+        "saveName": "Some Words",
         "creditsString": "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Charge Beam&pop;\nChozo Ruins - Burn Dome\nChozo Ruins - Vault\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Wave Beam&pop;\nPhendrana Drifts - Phendrana Shorelines\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Ice Beam&pop;\nChozo Ruins - Training Chamber Access\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Plasma Beam&pop;\nMagmoor Caverns - Magmoor Workstation\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Missile Launcher&pop;\nTallon Overworld - Alcove\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Grapple Beam&pop;\nTallon Overworld - Transport Tunnel B\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Thermal Visor&pop;\nTallon Overworld - Life Grove Tunnel\n\n&push;&font=C29C51F1;&main-color=#33ffd6;X-Ray Visor&pop;\nChozo Ruins - Ruined Fountain\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Space Jump Boots&pop;\nChozo Ruins - Hive Totem\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Morph Ball&pop;\nChozo Ruins - Ruined Shrine\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Morph Ball Bomb&pop;\nChozo Ruins - Main Plaza\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Boost Ball&pop;\nChozo Ruins - Main Plaza\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Spider Ball&pop;\nChozo Ruins - Main Plaza\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Power Bomb&pop;\nTallon Overworld - Landing Site\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Varia Suit&pop;\nChozo Ruins - Ruined Shrine\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Gravity Suit&pop;\nPhendrana Drifts - Ruined Courtyard\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Phazon Suit&pop;\nMagmoor Caverns - Lava Lake\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Super Missile&pop;\nChozo Ruins - Transport Access North\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Wavebuster&pop;\nMagmoor Caverns - Storage Cavern\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Ice Spreader&pop;\nPhendrana Drifts - Phendrana Canyon\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Flamethrower&pop;\nPhendrana Drifts - Gravity Chamber\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Strength&pop;\nTallon Overworld - Root Cave\n\n&push;&font=C29C51F1;&main-color=#33ffd6;Artifact of Truth&pop;\nPhazon Mines - Processing Center Access",
         "artifactHints": {
             "Artifact of Elder": "&push;&main-color=#c300ff;Artifact of Elder&pop; has no need to be located.",
@@ -1022,7 +1031,22 @@
                             "shieldType": "Blue",
                             "blastShieldType": "None"
                         }
-                    }
+                    },
+                    "timers": [
+                        {
+                            "id": 15597568,
+                            "time": 0.5,
+                            "startImmediately": true
+                        }
+                    ],
+                    "addConnections": [
+                        {
+                            "senderId": 15597568,
+                            "state": "ZERO",
+                            "targetId": 262170,
+                            "message": "SET_TO_ZERO"
+                        }
+                    ]
                 },
                 "Security Access A": {
                     "pickups": [

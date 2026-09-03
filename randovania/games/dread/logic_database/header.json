@@ -7092,6 +7092,18 @@
                         "lock": null,
                         "unsafe_target_in_distributor_wtw": false
                     },
+                    "No Door Frame": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
+                    },
                     "Access Closed": {
                         "extra": {},
                         "requirement": {
@@ -7585,6 +7597,11 @@
                         "Super Missile Door",
                         "Wave Beam Door",
                         "Wide Beam Door"
+                    ],
+                    "indirect_change_from": [
+                        "Access Closed",
+                        "Access Locked",
+                        "No Door Frame"
                     ],
                     "force_change_two_way": true,
                     "resolver_attempts": 500,

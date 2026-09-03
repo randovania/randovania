@@ -5,12 +5,126 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.11.0] - 2026-09-01
+## [11.1.0] - 2026-10-01
 
+### Metroid Prime Hunters
+
+- Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
+- Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
+
+## [11.0.0] - 2026-09-01
+
+- **Major** - Added: Metroid Prime Hunters has been added. Shuffle the items including Artifacts and Refills, portal destinations, Force Field weaknesses, and even Shield Keys.
+- Added: The Map Tracker can now be opened directly from the Open menu, by selecting which preset to use.
 - Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
 - Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
 - Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
+- Fixed: Certain interactions with the server will no longer permanently fails in certain cases.
+
+### Metroid Dread
+
+- Changed: The following pickups will now be placed in bulk at the same step during generation when multiple pickups are necessary to progress:
+  - Missile Tank
+  - Missile+ Tank
+  - Energy Part
+  - Energy Tank
+  - Power Bomb Tank
+  - Flash Shift Uprade
+  - Speed Booster Upgrade
+- Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
+
+### Metroid Fusion
+
+- Added: Playing on the same seed will now always have consistent patterns for Gadoras, Zazabi and Yakuza, instead of it being RNG dependant.
+- Changed: When enabling Door Lock Rando for the default presets, Open Hatches are now also shuffled by default.
+- Changed: Rephrased the text that appears when the Operations Deck Navigation Terminal or Restricted Navigation Terminal hints 0 Metroids.
+
+#### Logic Database
+
+##### Main Deck
+- Changed: Operations Deck: Shinesparking up to reach the Operations Room Door is now possible in Door Lock Rando.
+- Added: Operations Ventilation: It is now possible to destroy the Missile Geron by running into it from Operations Deck.
+- Changed: Operations Ventilation: Shinesparking the Missile Geron is now possible in Door Lock Rando.
+- Changed: Quarantine Junction: The Speedboost through the blocks from Main Elevator Access is now possible in Door Lock Rando.
+- Central Reactor: Adjusted the Shinespark from Silo Checkpoint to Silo Tunnel:
+  - Doing it without Hi-Jump is now a ludicrous Shinespark instead of intermediate Movement.
+  - The Beam requirements have been adjusted. Having Wave Beam does not change the difficulty of the shinespark, not having Wave Beam bumps it to a ludicrous Shinespark.
+- Central Reactor: Shinesparking up from the Save Station is now always possible in Door Lock Rando.
+- Quarantine Bay: Added a node to refill infinitely, as it's very quick to do with the Hornoad.
+
+##### Sector 1 (SRX)
+- Changed: Watering Hole: Getting the item is now possible in Door Lock Rando.
+- Changed: Charge Core Arena: Getting the upper item locked by a Shinespark is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Central: Sparking the Stabilizer from Stabilizer Checkpoint is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Southeast: Sparking the Stabilizer from Tourian Trapdoor or Zebesian Zag is now possible in Door Lock Rando.
+- Changed: Zebesian Zag: Sparking the room up from Atmospheric Stabilizer Southeast is now possible in Door Lock Rando.
+
+##### Sector 4 (AQA)
+- Added: Evir Enclosure: A video to go up by freezing the Evir and performing Underwater Walljumps.
+
+##### Sector 6 (NOC)
+- Changed: Spaceboost Alley: It is now possible to escape with an intermediate Walljump, instead of being able to Single-Wall Walljump.
+- Changed: X-B.O.X Arena Access: Shinesparking out of Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of Forbidden Entrance to Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of X-B.O.X. Arena is now possible in Door Lock Rando.
+- Changed: Nocturnal Shaft: Shinesparking out of Forbidden Entrance to Pillar Highway is now possible in Door Lock Rando.
+
+### Metroid: Samus Returns
+
+- Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
+
+### Metroid Prime
+
+- Fixed: Less vulnerable to "Alloc Failed" and frame-perfect cutscene skip crashes.
+- Fixed: In some minimal inventory starts, players could use Power Beam and Scan Visor out of logic and experience other unintuitive behavior.
+- Fixed: Gravity Suit HD model looking more blue/purple than the low-poly counterpart when color customized.
+- Fixed: Power Suit and Varia Suit color customization both affecting shared chest-piece texture.
+- Fixed: Warp-to-start tutorial text not visible on non-English languages.
+- Fixed: Transport to Magmoor Caverns North: Longer load time when approached from Sun Tower Access.
+- Fixed: Research Lab Hydra: Battle music behaving differently than vanilla.
+- Fixed: Ruined Shrine: Large beetle does not aggro player until cutscene duration elapses regardless the cutscene was skipped.
+- Fixed: Life Grove: Boostless spinner manipulation trick not working if the pillar rise cutscene is skipped.
+- Fixed: Sunchamber: In specific circumstances, tentacles retracted while Flaahgra was not fainted.
+- Elite Research: Softlock prevention was inconsistent across game versions. Prevention no longer locks the player in the room until they collect the item.
+- Added: Players can temporarily unequip Gravity Suit using in-game options.
+- Added: Replaced vanilla's inventory-based completion percent calculation with an algorithm based on location count. Completion percent now always reflects the progress towards collection of all non-nothing pickups in the player's world.
+- Added: The color of Samus' Gunship can now be customized.
+- Added: Rainbow Ball cosmetic option.
+- Changed: Organized cosmetic options into collapsible sections, suit customization now features preview images and Fusion Suit color preferences are now saved independently from non-Fusion.
+- Changed: Morph Ball now always renders the "inner glow" color appropriate for the current highest suit instead of the vanilla behavior which renders the "wrong" color when Spider, Gravity or Phazon are collected out of the vanilla-intended order.
+- Changed: It is now impossible for players to load save slots which belong to another rdvgame or multiworld slot.
+- Changed: In-game hint option is now hidden.
+- Changed: Save Station Mines A: Automatically unlock gate if "Unlock Save Station Doors" option is enabled or any time the player spawns into the room (starting room, one-way anywhere elevator).
+- Changed: Hive Totem: Removed door lock present on NTSC 0-02+.
+- Changed: Research Lab Aether: Unlock door when the Metroid dies in addition to the breakable wall.
+- Changed: Sunchamber: Doors no longer instantly lock upon entering.
+
+#### Logic Database
+
+- Changed: Games which start without Combat, Thermal and X-Ray Visor now require one of the three to target enemies or combat dash. All fight logic adjusted to require one Combat trick level higher when enemies are not able to be targeted.
+- Changed: The use of the arm cannon is no longer dependent on acquiring Combat, Thermal or X-Ray Visor.
+- Removed: All "No Gravity Suit" and "Enabled Allow Dangerous Gravity Suit Logic" requirements. These are no longer necessary due to the player's ability to unequip Gravity Suit. A FAQ entry has been added to assist with player education.
+
+##### Magmoor Caverns
+
+- Fixed: Monitor Station: Heat run logic assumed Charge Beam and Missiles could be fired without the Arm Cannon.
+
+##### Phazon Mines
+
+- Changed: Save Station Mines A: Now a valid target for Starting Room and Shuffled Elevator destination. No longer requires Scan Visor when "Unlock Save Station Doors" option is enabled.
+- Fixed: Mines Security Station: The event to unlock the doors can now be logically visited multiple times, making it possible for it to be considered a safe action.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Viewing the Debug Info tracker layout doesn't cause disconnects anymore.
+
+#### Logic Database
+
+##### Dark Torvus Bog
+
+- Added: NSJ variant of the BSJ to go up through Sacrificial Chamber before Grapple Guardian, set as advanced.
+- Added: The various tricks that require power bombs to go up through Sacrificial Chamber now have videos.
 
 ## [10.10.0] - 2026-08-02
 

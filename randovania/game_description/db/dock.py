@@ -112,6 +112,13 @@ class WeaknessDistributorSettings:
     change_from: set[DockWeakness]
     change_to: set[DockWeakness]
 
+    indirect_change_from: set[DockWeakness]
+    """
+    Extra weaknesses that aren't directly randomizable, but due to mechanisms such as force_change_two_way, may end up
+     randomized anyway. Documenting this information is useful because we have logic for the graph generation that uses
+      whether the dock can have a lock on it.
+    """
+
     force_change_two_way: bool
     """Whether a two-way door should change both sides, even if one side has an excluded weakness."""
 
@@ -189,4 +196,7 @@ class DockTypeDatabase:
         dock_type = self.find_type_for_weakness(weakness)
         if dock_type.weakness_distributor is None:
             return False
-        return weakness in dock_type.weakness_distributor.change_from
+        return (
+            weakness in dock_type.weakness_distributor.change_from
+            or weakness in dock_type.weakness_distributor.indirect_change_from
+        )

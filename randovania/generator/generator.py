@@ -191,7 +191,6 @@ async def _create_pools_and_fill(
         except InvalidConfiguration as config:
             if len(presets) > 1:
                 config.world_name = world_names[player_index]
-                raise config
             raise
 
     results = await run_filler(rng, player_pools, world_names, status_update)

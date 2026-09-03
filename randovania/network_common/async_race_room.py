@@ -1,22 +1,23 @@
-import dataclasses
+import base64
 import datetime
 import enum
-import typing
+from typing import Self
 
-from randovania.bitpacking.json_dataclass import JsonDataclass
+from pydantic import AwareDatetime, field_serializer
+
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.json_base_model import JsonBaseModel
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser
 
 
-@dataclasses.dataclass
-class AsyncRaceSettings(JsonDataclass):
+class AsyncRaceSettings(JsonBaseModel):
     name: str
     password: str | None
-    start_date: datetime.datetime
-    end_date: datetime.datetime
+    start_date: AwareDatetime
+    end_date: AwareDatetime
     visibility: MultiplayerSessionVisibility
     allow_pause: bool
 
@@ -31,7 +32,7 @@ class AsyncRaceRoomRaceStatus(enum.Enum):
     FINISHED = "finished"
 
     @classmethod
-    def from_dates(cls, start: datetime.datetime, end: datetime.datetime, now: datetime.datetime) -> typing.Self:
+    def from_dates(cls, start: datetime.datetime, end: datetime.datetime, now: datetime.datetime) -> Self:
         """Calculates the status based on the given start and end dates, compared to a given now."""
         if now < start:
             return cls.SCHEDULED
@@ -41,8 +42,7 @@ class AsyncRaceRoomRaceStatus(enum.Enum):
         return cls.ACTIVE
 
 
-@dataclasses.dataclass
-class AsyncRaceRoomListEntry(JsonDataclass):
+class AsyncRaceRoomListEntry(JsonBaseModel):
     """
     Contains necessary data to describe AsyncRaceRoom for a room browser.
     """
@@ -55,18 +55,17 @@ class AsyncRaceRoomListEntry(JsonDataclass):
     creation_date: datetime.datetime
     start_date: datetime.datetime
     end_date: datetime.datetime
-    visibility: "MultiplayerSessionVisibility"
+    visibility: MultiplayerSessionVisibility
     race_status: AsyncRaceRoomRaceStatus
 
     def game_summary(self) -> str:
-        """Gets an human-presentable description of what games are involved in this room."""
+        """Gets a human-presentable description of what games are involved in this room."""
         if self.games is None:
             return "Unknown"
         return self.games[0].long_name if len(self.games) == 1 else "Multiworld"
 
 
-@dataclasses.dataclass
-class RaceRoomLeaderboardEntry(JsonDataclass):
+class RaceRoomLeaderboardEntry(JsonBaseModel):
     """
     None for time indicates the user forfeited.
     """
@@ -75,13 +74,11 @@ class RaceRoomLeaderboardEntry(JsonDataclass):
     time: datetime.timedelta | None
 
 
-@dataclasses.dataclass
-class RaceRoomLeaderboard(JsonDataclass):
+class RaceRoomLeaderboard(JsonBaseModel):
     entries: list[RaceRoomLeaderboardEntry]
 
 
-@dataclasses.dataclass
-class AsyncRacePauseEntry(JsonDataclass):
+class AsyncRacePauseEntry(JsonBaseModel):
     """
     A pause attempt. End being None indicates the pause is still active.
     """
@@ -90,8 +87,7 @@ class AsyncRacePauseEntry(JsonDataclass):
     end: datetime.datetime | None
 
 
-@dataclasses.dataclass
-class AsyncRaceEntryData(JsonDataclass):
+class AsyncRaceEntryData(JsonBaseModel):
     """
     All data about a user's entry to a race. Should only be available to admins.
     """
@@ -116,8 +112,8 @@ class AsyncRaceEntryData(JsonDataclass):
                 return self.join_date < self.start_date
 
 
-@dataclasses.dataclass
-class AsyncRaceRoomAdminData(JsonDataclass):
+class AsyncRaceRoomAdminData(JsonBaseModel):
+    # FIXME: The field name is weird
     users: list[AsyncRaceEntryData]
 
 
@@ -130,10 +126,9 @@ class AsyncRaceRoomUserStatus(enum.Enum):
     FORFEITED = "forfeited"
 
 
-@dataclasses.dataclass
-class AsyncRaceRoomEntry(JsonDataclass):
+class AsyncRaceRoomEntry(JsonBaseModel):
     """
-    Contains all data a client can receive about a AsyncRaceRoom.
+    Contains all data a client can receive about an AsyncRaceRoom.
     """
 
     id: int
@@ -142,7 +137,7 @@ class AsyncRaceRoomEntry(JsonDataclass):
     creation_date: datetime.datetime
     start_date: datetime.datetime
     end_date: datetime.datetime
-    visibility: "MultiplayerSessionVisibility"
+    visibility: MultiplayerSessionVisibility
     race_status: AsyncRaceRoomRaceStatus
     auth_token: str
     game_details: GameDetails
@@ -154,3 +149,7 @@ class AsyncRaceRoomEntry(JsonDataclass):
     @property
     def presets(self) -> list[VersionedPreset]:
         return [VersionedPreset.from_bytes(s) for s in self.presets_raw]
+
+    @field_serializer("presets_raw")
+    def serialize_presets(self, value: list[bytes]) -> list[str]:
+        return [base64.b64encode(v).decode("ascii") for v in value]

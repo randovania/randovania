@@ -4,6 +4,7 @@ import copy
 import math
 import pprint
 import typing
+from itertools import groupby
 from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
@@ -17,7 +18,8 @@ from randovania.lib import random_lib
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Mapping, Set
+    from collections.abc import Callable, Mapping
+    from collections.abc import Set as AbstractSet
     from random import Random
 
     from randovania.game_description.game_patches import GamePatches
@@ -34,8 +36,8 @@ def _index_age_weight(age: float) -> float:
 
 
 def _calculate_uncollected_index_weights(
-    uncollected_indices: Set[PickupIndex],
-    assigned_indices: Set[PickupIndex],
+    uncollected_indices: AbstractSet[PickupIndex],
+    assigned_indices: AbstractSet[PickupIndex],
     index_age: Mapping[PickupIndex, float],
     indices_groups: list[set[PickupIndex]],
 ) -> dict[PickupIndex, float]:
@@ -359,7 +361,6 @@ def retcon_playthrough_filler(
 
         new_resources, new_pickups = action.split_pickups()
         new_pickups.sort()
-        rng.shuffle(new_pickups)
 
         for new_resource in new_resources:
             debug_print_collect_event(new_resource)
@@ -367,8 +368,18 @@ def retcon_playthrough_filler(
             current_player.reach.act_on(new_resource)
 
         if new_pickups:
-            if current_player.configuration.staggered_multi_pickup_placement:
-                new_pickups = [new_pickups[0]]
+            # Group all the like pickups based on if they can be placed in bulk
+            nested = [
+                list(group)
+                for _, group in groupby(new_pickups, key=lambda pickup: pickup.generator_params.bulk_placement)
+            ]
+            # Shuffle them so we dont always pick the same progression first
+            rng.shuffle(nested)
+            # Check if we can place in bulk, else only use one element
+            if nested[0][0].generator_params.bulk_placement:
+                new_pickups = nested[0]
+            else:
+                new_pickups = [nested[0][0]]
 
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):

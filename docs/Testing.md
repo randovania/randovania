@@ -41,8 +41,7 @@ When the same test should run several times with different values, use `parametr
 
 ```py
 @pytest.mark.parametrize("has_output_dir", [False, True])
-def test_export(has_output_dir):
-    ...
+def test_export(has_output_dir): ...
 ```
 
 This counts as two separate tests, so one can fail while the other passes.

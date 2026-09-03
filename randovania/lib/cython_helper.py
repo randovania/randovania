@@ -210,7 +210,7 @@ class PyImmutableRef[T: object]:
 
 def popcount(value: int) -> int:
     """Count the number of set bits in an integer."""
-    return bin(value).count("1")
+    return (value).bit_count()
 
 
 class Pair[T, U]:

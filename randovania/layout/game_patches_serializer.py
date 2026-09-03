@@ -233,11 +233,7 @@ def decode_single(
     if game_modifications["game"] != game.game.value:
         raise ValueError(f"Expected '{game.game.value}', got '{game_modifications['game']}'")
 
-    if "custom_patcher_data" in game_modifications:
-        custom_patcher_data = game_modifications["custom_patcher_data"]
-    else:
-        custom_patcher_data = []
-
+    custom_patcher_data = game_modifications.get("custom_patcher_data", [])
     game_specific = game_modifications["game_specific"]
 
     # Starting Location
