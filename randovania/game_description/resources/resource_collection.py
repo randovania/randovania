@@ -22,8 +22,8 @@ else:
 if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.libcpp.unordered_map import unordered_map
-        from cython.cimports.libcpp.vector import vector
         from cython.cimports.randovania.lib.bitmask import Bitmask
+        from cython.cimports.randovania.lib.cython_helper import pvector as vector
 else:
     from randovania.lib.bitmask import Bitmask
     from randovania.lib.cython_helper import UnorderedMap as unordered_map
@@ -35,14 +35,18 @@ else:
 class ResourceCollection:
     # Attributes defined in resource_collection.pxd
     # cdef public Bitmask resource_bitmask
-    # cdef vector[int] _resource_array
+    # cdef pvector[int] _resource_array
     # cdef dict[int, object] _existing_resources
     # cdef unordered_map[size_t, float] _damage_reduction_cache
     # cdef object _resource_database
 
-    def __init__(self, resource_database: ResourceDatabaseView, resource_array: vector[cython.int]) -> None:
+    if typing.TYPE_CHECKING:
+        # Declared in resource_collection.pxd; repeated here just so mypy knows it exists.
+        _resource_array: vector[cython.int]
+
+    def __init__(self, resource_database: ResourceDatabaseView) -> None:
+        # `_resource_array` default-constructs empty; always built via with_resource_count()/duplicate()
         self.resource_bitmask = Bitmask.create_native()
-        self._resource_array = resource_array
         self._existing_resources: dict[int, ResourceInfo] = {}
         self._damage_reduction_cache = unordered_map[cython.size_t, cython.float]()
         self._resource_database = resource_database

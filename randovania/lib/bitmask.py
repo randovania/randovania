@@ -20,17 +20,45 @@ if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.libcpp.bit import popcount
         from cython.cimports.libcpp.vector import vector
+        from cython.cimports.randovania.lib.cython_helper import pool, pvector
 else:
     from randovania.lib.cython_helper import Vector as vector
     from randovania.lib.cython_helper import popcount
+
+    # Pure mode has no pool; both spellings are the same list-backed shim.
+    pvector = vector
+
+    def pool() -> typing.NoReturn:
+        raise NotImplementedError  # unused; exists only for mypy
+
+
+def pool_diagnostics() -> tuple[int, int, int, int, int, int] | None:
+    """(allocations, deallocations, freelist_hits, slabs_allocated, bytes_from_slabs,
+    large_allocations), or None in pure-Python mode."""
+    if not cython.compiled:
+        return None
+    stats: typing.Any = pool().stats()
+    return (
+        stats.allocations,
+        stats.deallocations,
+        stats.freelist_hits,
+        stats.slabs_allocated,
+        stats.bytes_from_slabs,
+        stats.large_allocations,
+    )
+
 
 if cython.compiled:
 
     @cython.final
     @cython.cclass
     class Bitmask:
-        def __init__(self, masks: vector[cython.ulonglong]):
-            self._masks = masks
+        if typing.TYPE_CHECKING:
+            # Declared in bitmask.pxd; repeated here just so mypy knows it exists.
+            _masks: pvector[cython.ulonglong]
+
+        def __init__(self) -> None:
+            pass  # `_masks` default-constructs empty; always built via create()/create_native()
 
         @classmethod
         def create(cls) -> Bitmask:
