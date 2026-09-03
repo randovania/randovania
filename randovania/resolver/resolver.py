@@ -246,7 +246,7 @@ async def _calculate_actions_by_priority_and_try_safe(
                         logic=logic,
                         states=potential_states,
                         reaches=potential_reaches,
-                        last_action=wi,
+                        last_action_world=wi,
                         status_update=status_update,
                         max_attempts=max_attempts,
                     )
@@ -285,7 +285,7 @@ async def _inner_advance_depth(
     logic: Logic,
     states: list[State],
     reaches: list[ResolverReach],
-    last_action: int,
+    last_action_world: int,
     status_update: Callable[[str], None],
     *,
     max_attempts: int | None = None,
@@ -295,15 +295,15 @@ async def _inner_advance_depth(
     :param logic:
     :param states:
     :param reaches:
-    :param last_action:
+    :param last_action_world: The index of the world that last performed an action.
     :param status_update:
     :return:
     """
 
-    logic.start_new_attempt(states[last_action], max_attempts)
+    logic.start_new_attempt(states[last_action_world], max_attempts)
 
-    if (hint_state := states[last_action].hint_state) is not None:
-        hint_state.advance_hint_seen_count(states[last_action])
+    if (hint_state := states[last_action_world].hint_state) is not None:
+        hint_state.advance_hint_seen_count(states[last_action_world])
 
     if logic.victory_conditions_satisfied(states):
         return states
@@ -357,7 +357,7 @@ async def _inner_advance_depth(
             logic=logic,
             states=new_states,
             reaches=new_reaches,
-            last_action=world_index,
+            last_action_world=world_index,
             status_update=status_update,
             max_attempts=max_attempts,
         )
@@ -369,8 +369,10 @@ async def _inner_advance_depth(
             has_action[world_index] = True
 
     # TODO: the entire additional_requirements logic needs improvements for multiworld
-    additional_requirements: set[GraphRequirementList] = reaches[last_action].satisfiable_requirements_for_additionals
-    old_additional_requirements = logic.get_additional_requirements(last_action, states[last_action].node)
+    additional_requirements: set[GraphRequirementList] = reaches[
+        last_action_world
+    ].satisfiable_requirements_for_additionals
+    old_additional_requirements = logic.get_additional_requirements(last_action_world, states[last_action_world].node)
 
     if (
         not old_additional_requirements.is_trivial()
@@ -385,22 +387,24 @@ async def _inner_advance_depth(
 
     if has_action:
         additional_alts: set[GraphRequirementList] = set()
-        for resource_node in reaches[last_action].collectable_resource_nodes(states[last_action].resources):
-            additional_alts |= set(logic.get_additional_requirements(last_action, resource_node).alternatives)
+        for resource_node in reaches[last_action_world].collectable_resource_nodes(states[last_action_world].resources):
+            additional_alts |= set(logic.get_additional_requirements(last_action_world, resource_node).alternatives)
 
         additional_requirements = additional_requirements.union(additional_alts)
 
-    resources = _resource_gain_for_state(states[last_action])
-    progressive_chain_info = _progressive_chain_info(states[last_action].node, states[last_action].resources)
+    resources = _resource_gain_for_state(states[last_action_world])
+    progressive_chain_info = _progressive_chain_info(
+        states[last_action_world].node, states[last_action_world].resources
+    )
 
     logic.set_additional_requirements(
-        last_action,
-        states[last_action].node,
+        last_action_world,
+        states[last_action_world].node,
         _simplify_additional_requirement_set(
-            additional_requirements, states[last_action], resources, progressive_chain_info, False
+            additional_requirements, states[last_action_world], resources, progressive_chain_info, False
         ),
     )
-    logic.logger.log_rollback(states[last_action], has_action[last_action], False, logic)
+    logic.logger.log_rollback(states[last_action_world], has_action[last_action_world], False, logic)
 
     return None
 

@@ -367,6 +367,8 @@ async def generate_and_validate_description(
         ) from e
 
     if resolve_after_generation and generator_params.world_count == 1:
+        # FIXME: instead of hardcoding that multiworld doesn't run the resolver, disable it elsewhere?
+        # Only to be done after the multiworld resolvers is trustworthy
         final_state_async = resolver.resolve(
             [
                 (preset.configuration, patches)
