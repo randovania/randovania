@@ -111,7 +111,8 @@ def prime1_pickup_details_to_patcher(
     original_model = detail.original_model.as_json
 
     name = detail.name
-    collection_text = detail.collection_text[0]
+    collection_text = detail.collection_text[-1]
+    conditional_hudmemo = None
     pickup_type = "Nothing"
     count = 0
     max_count = 0
@@ -121,19 +122,59 @@ def prime1_pickup_details_to_patcher(
         count = detail.index.index + 1
         max_count = count
     else:
-        for resource, quantity in detail.conditional_resources[0].resources:
-            # Refill items
-            if resource.extra.get("is_refill"):
-                pickup_type = resource.extra.get("pickup_type", resource.long_name)
-                count = quantity
-                max_count = 0
-                break
-            # Regular items
-            elif resource.extra["item_id"] < 1000:
-                pickup_type = resource.long_name
-                count = quantity
-                max_count = count
-                break
+        pickup = detail.original_pickup
+        is_required_expansion = (
+            pickup is not None and pickup.is_expansion and pickup.respects_lock and pickup.resource_lock is not None
+        )
+        is_required_main = (
+            pickup is not None and pickup.unlocks_resource and pickup.respects_lock and pickup.resource_lock is not None
+        )
+
+        # The solver uses LockedMissile/LockedPB when the main item is missing,
+        # but RandomPrime still stores that ammo in the normal physical slot.
+        if is_required_expansion:
+            unlocked_resources = detail.conditional_resources[-1]
+            resources = unlocked_resources.resources
+
+            required_item = unlocked_resources.item
+            if required_item is not None:
+                conditional_hudmemo = {
+                    "requiredItem": required_item.long_name,
+                    "missingText": detail.collection_text[0],
+                }
+        else:
+            resources = detail.conditional_resources[0].resources
+
+        if is_required_main:
+            main_resource = next(
+                resource for resource, _ in resources if resource.extra.get("unk2_bitmask_value") is not None
+            )
+            ammo_quantity = next(
+                (
+                    quantity
+                    for resource, quantity in resources
+                    if resource.extra["item_id"] < 1000 and not resource.extra.get("is_refill")
+                ),
+                0,
+            )
+
+            pickup_type = main_resource.long_name
+            count = 0
+            max_count = ammo_quantity
+        else:
+            for resource, quantity in resources:
+                # Refill items
+                if resource.extra.get("is_refill"):
+                    pickup_type = resource.extra.get("pickup_type", resource.long_name)
+                    count = quantity
+                    max_count = 0
+                    break
+                # Regular items
+                elif resource.extra["item_id"] < 1000:
+                    pickup_type = resource.long_name
+                    count = quantity
+                    max_count = count
+                    break
 
     if (
         model["name"] == "Missile"
@@ -143,6 +184,10 @@ def prime1_pickup_details_to_patcher(
     ):
         model["name"] = "Shiny Missile"
         collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
+        if conditional_hudmemo is not None:
+            conditional_hudmemo["missingText"] = conditional_hudmemo["missingText"].replace(
+                "Missile Expansion", "Shiny Missile Expansion"
+            )
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
         original_model = model
 
@@ -157,6 +202,9 @@ def prime1_pickup_details_to_patcher(
         "respawn": False,
         "showIcon": pickup_markers,
     }
+
+    if conditional_hudmemo is not None:
+        result["conditionalHudmemo"] = conditional_hudmemo
 
     if detail.original_model.name == "UnlimitedMissiles":
         result["scale"] = [1.8, 1.8, 1.8]
@@ -196,6 +244,44 @@ def _starting_items_value_for(
         return value
     else:
         return value > 0
+
+
+def _starting_items_for(
+    resource_database: ResourceDatabaseView,
+    starting_resources: ResourceCollection,
+    missile_requires_main: bool,
+    power_bomb_requires_main: bool,
+) -> dict[str, bool | int]:
+    starting_items = {
+        name: _starting_items_value_for(resource_database, starting_resources, index)
+        for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
+    }
+
+    # Locked starting ammo is still stored in the normal physical ammo slots.
+    starting_items["missiles"] += starting_resources[resource_database.get_item("LockedMissile")]
+    starting_items["powerBombs"] += starting_resources[resource_database.get_item("LockedPB")]
+
+    starting_items.update(
+        {
+            "missileLauncher": (
+                _starting_items_value_for(resource_database, starting_resources, "MissileLauncher")
+                if missile_requires_main
+                else True
+            ),
+            "powerBombLauncher": (
+                _starting_items_value_for(resource_database, starting_resources, "MainPB")
+                if power_bomb_requires_main
+                else True
+            ),
+            "powerSuit": 0,
+            "springBall": False,
+            "unknownItem1": 0,
+            "unlimitedMissiles": False,
+            "unlimitedPowerBombs": False,
+        }
+    )
+
+    return starting_items
 
 
 def _name_for_location(region_list: RegionList, location: AreaIdentifier) -> str:
@@ -675,6 +761,17 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         return RandovaniaGame.METROID_PRIME
 
     @override
+    def create_memo_data(self) -> dict[str, str]:
+        result = pickup_exporter.GenericAcquiredMemo()
+        result["Locked Missile Expansion"] = (
+            "Missile Expansion acquired, but the Missile Launcher is required to use it."
+        )
+        result["Locked Power Bomb Expansion"] = (
+            "Power Bomb Expansion acquired, but the main Power Bomb is required to use it."
+        )
+        return result
+
+    @override
     @classmethod
     def hint_namer_type(cls) -> type[PrimeHintNamer]:
         return PrimeHintNamer
@@ -705,18 +802,6 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         # Setup
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.worlds_config)
-
-        ammo_with_mains = [
-            ammo.name
-            for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
-            if state.requires_main_item
-        ]
-        if ammo_with_mains:
-            raise ValueError(
-                "Preset has {} with required mains enabled. This is currently not supported.".format(
-                    " and ".join(ammo_with_mains)
-                )
-            )
 
         scan_visor = self.resource_db.get_item_by_display_name("Scan Visor")
         pickup_list = self.export_pickup_list()
@@ -1011,20 +1096,15 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         starting_room = _name_for_start_location(db.region_list, self.patches.starting_location)
 
         starting_resources = self.patches.starting_resources()
-        starting_items = {
-            name: _starting_items_value_for(self.resource_db, starting_resources, index)
-            for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
+        ammo_states = {
+            ammo.name: state for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
         }
-        starting_items.update(
-            {
-                "missileLauncher": True,
-                "powerBombLauncher": True,
-                "powerSuit": 0,
-                "springBall": False,
-                "unknownItem1": 0,
-                "unlimitedMissiles": False,
-                "unlimitedPowerBombs": False,
-            }
+
+        starting_items = _starting_items_for(
+            self.resource_db,
+            starting_resources,
+            ammo_states["Missile Expansion"].requires_main_item,
+            ammo_states["Power Bomb Expansion"].requires_main_item,
         )
 
         if not self.configuration.legacy_mode:
