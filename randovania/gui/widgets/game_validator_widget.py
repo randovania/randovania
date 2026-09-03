@@ -281,7 +281,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 )
             yield text
             for i in range(item.childCount()):
-                yield from inner_print(item.child(i), indent + 1)
+                child = item.child(i)
+                if child is not None:
+                    yield from inner_print(child, indent + 1)
 
         for i in range(self.log_widget.topLevelItemCount()):
             yield from inner_print(self.log_widget.topLevelItem(i))
