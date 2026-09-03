@@ -32,6 +32,8 @@ from pathlib import Path
 
 logger = logging.getLogger("pyspy-tools")
 
+_PYTHON_DLL_RE = re.compile(r"\(python3\d+\.dll\)")
+
 
 def parse_raw_profile(file: typing.TextIO) -> list[list[str]]:
     """Parse a py-spy raw format file into a list of stack traces."""
@@ -330,7 +332,7 @@ def filter_traces(
                 continue
             if exclude_asyncio and ("(asyncio/" in frame or "_asyncio.pyd" in frame):
                 continue
-            if exclude_python_api and "(python312.dll)" in frame:
+            if exclude_python_api and _PYTHON_DLL_RE.search(frame):
                 continue
             if exclude_python_exe and "(python.exe)" in frame:
                 continue
