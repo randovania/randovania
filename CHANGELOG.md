@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The Map Tracker can now be opened directly from the Open menu, by selecting which preset to use.
 - Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
 - Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
 - Fixed: Certain interactions with the server will no longer permanently fails in certain cases.
 
