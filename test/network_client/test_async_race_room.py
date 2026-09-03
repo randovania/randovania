@@ -190,8 +190,14 @@ async def test_async_race_refresh_room(client: NetworkClient, room):
 async def test_async_race_get_leaderboard(client: NetworkClient, room):
     leaderboard = RaceRoomLeaderboard(
         entries=[
-            RaceRoomLeaderboardEntry(user=RandovaniaUser(id=1234, name="The Player"), time=datetime.timedelta(hours=2)),
-            RaceRoomLeaderboardEntry(user=RandovaniaUser(id=1235, name="Other Player"), time=None),
+            RaceRoomLeaderboardEntry(
+                display_name="The Player",
+                time=datetime.timedelta(hours=2),
+                members=[RandovaniaUser(id=1234, name="The Player")],
+            ),
+            RaceRoomLeaderboardEntry(
+                display_name="Other Player", time=None, members=[RandovaniaUser(id=1235, name="Other Player")]
+            ),
         ]
     )
     mocked = mock_response(client, "server_get", json=_wire(leaderboard))
@@ -418,3 +424,64 @@ async def test_rest_headers_include_patch(client: NetworkClient):
             "X-Randovania-Session": "the-session",
         },
     )
+
+
+# --- Teams ---
+
+
+@pytest.fixture
+def team_room(room) -> AsyncRaceRoomEntry:
+    """The same room, but as a two world multiworld, which is therefore played in teams."""
+    return room.model_copy(update={"world_count": 2})
+
+
+async def test_async_race_create_team(client: NetworkClient, team_room):
+    updated = team_room.model_copy(update={"self_team_id": 7, "self_is_captain": True})
+    mocked = mock_response(client, "server_post", json=_wire(updated))
+
+    # Run
+    result = await client.async_race_create_team(team_room, "The Team")
+
+    # Assert
+    assert result == updated
+    mocked.request.assert_called_once_with(
+        race_endpoints.room_teams(1000),
+        params={"auth_token": "Token", "team_name": "The Team"},
+    )
+
+
+async def test_async_race_join_team(client: NetworkClient, team_room):
+    updated = team_room.model_copy(update={"self_team_id": 7})
+    mocked = mock_response(client, "server_post", json=_wire(updated))
+
+    # Run
+    result = await client.async_race_join_team(1000, "TheCode")
+
+    # Assert
+    assert result == updated
+    mocked.request.assert_called_once_with(
+        race_endpoints.room_join_team(1000),
+        params={"join_code": "TheCode"},
+    )
+
+
+async def test_async_race_leave_team(client: NetworkClient, team_room):
+    mocked = mock_response(client, "server_post", json=_wire(team_room))
+
+    # Run
+    result = await client.async_race_leave_team(1000)
+
+    # Assert
+    assert result == team_room
+    mocked.request.assert_called_once_with(race_endpoints.room_leave_team(1000))
+
+
+async def test_async_race_get_team_join_code(client: NetworkClient):
+    mocked = mock_response(client, "server_get", json="TheCode")
+
+    # Run
+    result = await client.async_race_get_team_join_code(1000)
+
+    # Assert
+    assert result == "TheCode"
+    mocked.request.assert_called_once_with(race_endpoints.room_team_join_code(1000))
