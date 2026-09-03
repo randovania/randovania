@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [11.1.0] - 2026-10-01
 
+### Metroid Fusion
+
+#### Main Deck
+
+- Changed: Station Entrance: The Shinespark through the Speedbooster blocks is now always possible in Door Lock Rando.
+- Changed: Central Reactor Core: The Shinespark from Silo Checkpoint to Silo Tunnel is now always possible in Door Lock Rando.
+- Changed: Central Reactor Core: Doing the Shinespark from Silo Checkpoint to Silo Tunnel without Hijump has been changed to a Ludicrous Shinespark.
+
 ### Metroid Prime Hunters
 
 - Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
