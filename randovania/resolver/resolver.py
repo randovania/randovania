@@ -4,6 +4,8 @@ import asyncio
 import enum
 from typing import TYPE_CHECKING, Any
 
+from typing_extensions import sentinel
+
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
@@ -35,6 +37,8 @@ type ResolverAction = WorldGraphNode
 type PotentialAction = tuple[int, ResolverAction, DamageState]
 AnyPickupNode = PickupNode | EventPickupNode
 AnyEventNode = EventNode | EventPickupNode
+
+CONTINUE_RESOLVER = sentinel("CONTINUE_RESOLVER")
 
 
 def _simplify_additional_requirement_set(
@@ -218,7 +222,7 @@ async def _calculate_actions_by_priority_and_try_safe(
     status_update: Callable[[str], None],
     max_attempts: int | None,
     actions_by_priority: dict[ActionPriority, list[PotentialAction]],
-) -> list[State] | None:
+) -> CONTINUE_RESOLVER | list[State] | None:
     """
     Fills `actions_by_priority` with the possible actions of the given reach
     with the given state, grouped by calculated priorities.
@@ -278,7 +282,7 @@ async def _calculate_actions_by_priority_and_try_safe(
                 (world_logic.world_index, action, damage_state)
             )
 
-    return None
+    return CONTINUE_RESOLVER
 
 
 async def _inner_advance_depth(
@@ -323,7 +327,7 @@ async def _inner_advance_depth(
         max_attempts,
         actions_by_priority,
     )
-    if new_result is not None:
+    if new_result is not CONTINUE_RESOLVER:
         return new_result
 
     actions: list[tuple[ActionPriority, *PotentialAction]] = [
