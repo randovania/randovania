@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [11.1.0] - 2026-10-01
 
+- Changed: The Map Tracker components are now docks that can be moved around.
+
 ### Metroid Fusion
 
 #### Main Deck
