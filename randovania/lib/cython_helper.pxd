@@ -10,6 +10,21 @@ cdef extern from "randovania/lib/native/pool.hpp" namespace "rdv" nogil:
     cdef cppclass pvector[T](vector[T]):
         pvector() except +
 
+        # pvector<T> is `std::vector<T, PoolAllocator<T>>`, not `std::vector<T>`, so its
+        # iterator is a distinct type from the one it would otherwise inherit from vector[T].
+        # Redeclare begin/end/erase against our own iterator so generated code stays consistent
+        # (mixing the two breaks the build under libstdc++, which encodes the allocator in the
+        # iterator type).
+        cppclass iterator:
+            T& operator*()
+            iterator operator++()
+            iterator operator+(size_t)
+            bint operator==(iterator)
+            bint operator!=(iterator)
+        iterator begin()
+        iterator end()
+        iterator erase(iterator) except +
+
     # Pool-backed FIFO, replaces std::deque.
     cdef cppclass IndexQueue[T]:
         IndexQueue() except +
