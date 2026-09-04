@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import contextlib
 import dataclasses
+import datetime
 import itertools
 import json
 import re
@@ -62,6 +63,7 @@ async def test_admin_player_kick_last(
             "allow_coop": False,
             "allow_everyone_claim_world": False,
             "allow_abandon_worlds": True,
+            "is_race_session": False,
         },
         room="multiplayer-session-1",
         namespace="/",
@@ -129,6 +131,7 @@ async def test_admin_player_kick_member(two_player_session, mock_sa, mocker, moc
             "allow_coop": False,
             "allow_everyone_claim_world": False,
             "allow_abandon_worlds": True,
+            "is_race_session": False,
         },
         room="multiplayer-session-1",
         namespace="/",
@@ -1249,3 +1252,132 @@ async def test_admin_error_on_disabling_abandoned_worlds_when_abandoned_worlds_e
             SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS.value,
             False,
         )
+
+
+@pytest.mark.parametrize(
+    "action",
+    [action for action in SessionAdminGlobalAction if action != SessionAdminGlobalAction.CREATE_PATCHER_FILE],
+)
+async def test_admin_session_blocked_for_race_session(mock_sa, race_team_session, action):
+    # room decides a race session's settings and layout. only export is allowed for its members
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_session(mock_sa, "TheSid", 1, action.value)
+
+
+@pytest.mark.parametrize(
+    "action",
+    [
+        SessionAdminUserAction.KICK,
+        SessionAdminUserAction.CREATE_WORLD_FOR,
+        SessionAdminUserAction.SWITCH_ADMIN,
+    ],
+)
+async def test_admin_player_blocked_for_race_session(mock_sa, race_team_session, action):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, action.value)
+
+
+async def test_admin_player_claim_allowed_before_start(
+    mock_sa, race_team_session, mock_audit, mock_emit_session_update
+):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    w3 = database.World.create(
+        session=race_team_session,
+        name="World 3",
+        preset="{}",
+        order=2,
+        uuid=uuid.UUID("6b5ac1a1-d250-4f05-0000-ae37e8a92165"),
+    )
+
+    # Run
+    await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.CLAIM.value, str(w3.uuid))
+
+    # Assert
+    assert database.WorldUserAssociation.get_by_ids(user_id=1234, world_uid=w3.uuid)
+
+
+@pytest.mark.parametrize("action", [SessionAdminUserAction.CLAIM, SessionAdminUserAction.UNCLAIM])
+async def test_admin_player_claim_after_team_started(mock_sa, race_team_session, action):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    team = race_team_session.get_race_team()
+    team.start_datetime = datetime.datetime(2020, 5, 11, tzinfo=datetime.UTC)
+    team.save()
+
+    with pytest.raises(error.InvalidActionError, match="Can't change world claims after the team has started"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 1234, action.value, "1179c986-758a-4170-9b07-fe4541d78db0"
+        )
+
+
+async def test_admin_player_unclaim_after_exporting(mock_sa, race_team_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    entry = database.AsyncRaceEntry.entry_for(race_team_session.get_race_team().room, 1234)
+    assert entry is not None
+    entry.has_exported = True
+    entry.save()
+
+    with pytest.raises(error.InvalidActionError, match="Can't unclaim a world after exporting it"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.UNCLAIM.value, "1179c986-758a-4170-9b07-fe4541d78db0"
+        )
+
+
+async def test_admin_session_patcher_file_in_race_session(
+    mock_sa, mock_audit, mocker: MockerFixture, race_team_session
+):
+    mocker.patch(
+        "randovania.server.lib.datetime_now",
+        return_value=datetime.datetime(2020, 5, 12, tzinfo=datetime.UTC),
+    )
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1235)
+    w2 = database.World.get_by_id(2)
+
+    mock_layout_description: PropertyMock = mocker.patch(
+        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
+    )
+    game = mock_layout_description.return_value.get_preset.return_value.game
+
+    # Run
+    result = await session_admin.admin_session(
+        mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
+    )
+
+    # Assert
+    data_factory = game.patch_data_factory.return_value
+    rdv_meta = data_factory.create_default_patcher_data_meta.return_value
+    rdv_meta.__setitem__.assert_called_once_with("in_race_setting", True)
+    data_factory.create_data.assert_called_once_with(rdv_meta)
+    assert result is data_factory.create_data.return_value
+
+    room = race_team_session.get_race_team().room
+    exporter = database.AsyncRaceEntry.entry_for(room, 1235)
+    assert exporter is not None
+    assert exporter.has_exported
+    assert [entry.as_entry().message for entry in room.audit_log] == ["Exported World 2 of team The Team."]
+
+
+@pytest.mark.parametrize("when", ["before", "after"])
+async def test_admin_session_patcher_file_outside_race_window(mock_sa, mocker: MockerFixture, race_team_session, when):
+    mocker.patch(
+        "randovania.server.lib.datetime_now",
+        return_value=datetime.datetime(2020 if when == "before" else 2021, 5, 1, tzinfo=datetime.UTC),
+    )
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1235)
+    w2 = database.World.get_by_id(2)
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_session(
+            mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
+        )
+
+    room = race_team_session.get_race_team().room
+    exporter = database.AsyncRaceEntry.entry_for(room, 1235)
+    assert exporter is not None
+    assert not exporter.has_exported

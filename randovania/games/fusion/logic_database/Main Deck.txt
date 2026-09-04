@@ -139,8 +139,8 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 10}, {'x': 14, 'y': 11}, {'x': 15, 
       Any of the following:
           # Skip collecting the item. Break PB blocks first, then reload the room: https://www.youtube.com/watch?v=2WbnkPhd7tk
           Disabled Entrance Rando and Can Bounce in Ball and Can Use Power Bombs
-          # Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE
-          Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
+          # Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE . Can safely not have DLR check, as you can always enter from one door, which is enough to spark.
+          Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando
 
 > Door to Central Nexus; Heals? False
   * Layers: default
@@ -1572,8 +1572,8 @@ Extra - minimap_coordinates:
   * Extra - door_idx: [124, 137]
   > Other to Silo Tunnel
       All of the following:
-          # Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw
-          Morph Ball and Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
+          # Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw . Can safely not have DLR check, as if you can reach Aux and be here, you can go through doors.
+          Morph Ball and Speed Booster and After Main Deck Auxiliary Power Station Visited and Shinespark Tricks (Advanced) and Disabled Entrance Rando
           # Get high enough to the third platform to spark
           Hi-Jump or Shinespark Tricks (Ludicrous)
           Any of the following:
@@ -1585,7 +1585,7 @@ Extra - minimap_coordinates:
               # Beam requirements.
               Wave Beam
               # Without Wave, there's only one attempt and its hard.
-              After Access Right of Silo Checkpoint Shutter and Shinespark Tricks (Ludicrous)
+              Shinespark Tricks (Ludicrous)
   > Door to Silo Save Room
       Trivial
 
@@ -1769,8 +1769,6 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 19}]
   * Extra - door_idx: [118]
   > Door to Central Reactor Core
       Trivial
-  > Event - Access Right of Silo Checkpoint Shutter
-      Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
@@ -1778,12 +1776,6 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 19}]
   * Extra - door_idx: [119]
   > Door to Auxiliary Navigation Room
       Wave Beam
-
-> Event - Access Right of Silo Checkpoint Shutter; Heals? False
-  * Layers: default
-  * Event Access Right of Silo Checkpoint Shutter
-  > Door to Auxiliary Navigation Room
-      Trivial
 
 ----------------
 Auxiliary Power Station
@@ -1806,6 +1798,8 @@ Hint Features - B.S.L. Systems Console
       Trivial
   > Pickup (Reactor Control)
       Trivial
+  > Event - Aux Power Station Visited
+      Trivial
 
 > Pickup (Reactor Control); Heals? False
   * Layers: default
@@ -1814,6 +1808,12 @@ Hint Features - B.S.L. Systems Console
   * Extra - room: 54
   * Extra - source: AUXILIARY_POWER
   * Extra - infant_weight: 0.4
+  > Door to Auxiliary Navigation Room
+      Trivial
+
+> Event - Aux Power Station Visited; Heals? False
+  * Layers: default
+  * Event Main Deck Auxiliary Power Station Visited
   > Door to Auxiliary Navigation Room
       Trivial
 

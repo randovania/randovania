@@ -709,6 +709,58 @@ class NetworkClient:
         ) as response:
             return await self._rest_json_or_raise(response)
 
+    async def async_race_create_team(self, room: AsyncRaceRoomEntry, team_name: str) -> AsyncRaceRoomEntry:
+        """
+        POST /async-race-room/{room_id}/teams
+
+        Creates a new team in a room played in teams, with yourself as its first member.
+        :param room: The room's data from get_async_race_room
+        :param team_name: Name for the new team
+        :return: Updated room details
+        """
+        async with self.server_post(
+            race_endpoints.room_teams(room.id),
+            params={"auth_token": room.auth_token, "team_name": team_name},
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
+
+    async def async_race_join_team(self, room_id: int, join_code: str) -> AsyncRaceRoomEntry:
+        """
+        POST /async-race-room/{room_id}/team/join
+
+        Joins an existing team, using a code obtained from one of its members.
+        :param room_id:
+        :param join_code:
+        :return: Updated room details
+        """
+        async with self.server_post(
+            race_endpoints.room_join_team(room_id),
+            params={"join_code": join_code},
+        ) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
+
+    async def async_race_leave_team(self, room_id: int) -> AsyncRaceRoomEntry:
+        """
+        POST /async-race-room/{room_id}/team/leave
+
+        Leaves your current team. Refused after you have exported a game.
+        :param room_id:
+        :return: Updated room details
+        """
+        async with self.server_post(race_endpoints.room_leave_team(room_id)) as response:
+            return AsyncRaceRoomEntry.from_json(await self._rest_json_or_raise(response))
+
+    async def async_race_get_team_join_code(self, room_id: int) -> str:
+        """
+        GET /async-race-room/{room_id}/team/join-code
+
+        Gets the code that lets someone else join your team.
+        :param room_id:
+        :return: The join code
+        """
+        async with self.server_get(race_endpoints.room_team_join_code(room_id)) as response:
+            return typing.cast("str", await self._rest_json_or_raise(response))
+
     async def async_race_change_state(self, room_id: int, status: AsyncRaceRoomUserStatus) -> AsyncRaceRoomEntry:
         """
         POST /async-race-room/{room_id}/state

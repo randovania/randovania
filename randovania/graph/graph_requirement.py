@@ -205,7 +205,7 @@ class GraphRequirementList:
             raise RuntimeError("Cannot modify a frozen GraphRequirementList")
 
     @cython.cfunc
-    def _complexity_key_for_simplify(self) -> tuple[int, int, int]:
+    def _complexity_key_for_simplify(self) -> tuple[cython.int, cython.int, cython.int]:
         """
         A value that indicates how "complex" this requirement is. Used for sorting the alternatives in
         GraphRequirementSet.optimize_alternatives

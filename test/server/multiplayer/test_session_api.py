@@ -142,6 +142,7 @@ async def test_create_session(clean_database, test_client, preset_manager, defau
         "allow_coop": False,
         "allow_everyone_claim_world": False,
         "allow_abandon_worlds": True,
+        "is_race_session": False,
     }
 
 
@@ -206,6 +207,7 @@ async def test_join_session(
         "allow_coop": False,
         "allow_everyone_claim_world": False,
         "allow_abandon_worlds": True,
+        "is_race_session": False,
     }
     mock_join_multiplayer_session.assert_awaited_once_with(mock_sa, "TheSid", session)
 
@@ -265,3 +267,52 @@ async def test_session_request_update(session_update, mocker: MockerFixture, moc
     mock_meta_update.assert_awaited_once_with(mock_sa, session_update)
     mock_actions_update.assert_awaited_once_with(mock_sa, session_update)
     mock_audit_update.assert_awaited_once_with(mock_sa, session_update)
+
+
+async def test_list_sessions_excludes_race_sessions(mock_sa, race_team_session):
+    """A team's session is reached through its race room, never through the session browser."""
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    assert await session_api.list_sessions(mock_sa, "TheSid", None) == []
+
+
+@pytest.mark.parametrize("user_id", [1234, 1235])
+async def test_join_race_session_as_member(
+    mock_emit_session_update, mock_sa, race_team_session, mocker: MockerFixture, user_id
+):
+    mocker.patch("randovania.server.multiplayer.session_common.join_room")
+    mock_sa.get_current_user.return_value = database.User.get_by_id(user_id)
+
+    # Run
+    result = await session_api.join_session(mock_sa, "TheSid", 1, None)
+
+    # Assert
+    assert result["is_race_session"]
+    assert list(race_team_session.get_race_team().room.audit_log) == []
+
+
+async def test_join_race_session_as_room_creator(
+    mock_emit_session_update, mock_sa, race_team_session, mocker: MockerFixture
+):
+    # Setup
+    mocker.patch("randovania.server.multiplayer.session_common.join_room")
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1238)
+
+    # Run
+    await session_api.join_session(mock_sa, "TheSid", 1, None)
+
+    # Assert
+    # checking a team's session is allowed for the room creator
+    room = race_team_session.get_race_team().room
+    assert [entry.as_entry().message for entry in room.audit_log] == ["Opened the session of team The Team."]
+
+
+async def test_join_race_session_as_stranger(mock_sa, race_team_session):
+    """The session shows the item history of a seed the other teams are still racing."""
+    stranger = database.User.create(id=9999, name="Stranger")
+    mock_sa.get_current_user.return_value = stranger
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_api.join_session(mock_sa, "TheSid", 1, None)
+
+    assert not database.MultiplayerSession.get_by_id(1).is_user_in_session(stranger)
