@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any, ClassVar, override
+from typing import TYPE_CHECKING, ClassVar, Protocol, override
 
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 
@@ -9,7 +9,11 @@ if TYPE_CHECKING:
     from randovania.game_connection.connector.remote_connector import RemoteConnector
 
 
-class SocketConnectorBuilder(ConnectorBuilder):
+class ExecutorProtocol(Protocol):
+    async def connect(self) -> str | None: ...
+
+
+class SocketConnectorBuilder[ExecutorT: ExecutorProtocol](ConnectorBuilder):
     """Builds a connector for a game we reach over a TCP socket at a user-provided address."""
 
     ip: str
@@ -28,11 +32,11 @@ class SocketConnectorBuilder(ConnectorBuilder):
     def pretty_text(self) -> str:
         return f"{super().pretty_text}: {self.ip}"
 
-    def create_executor(self) -> Any:
+    def create_executor(self) -> ExecutorT:
         """Builds the executor for this game. Imports are delayed to avoid too many early imports in startup."""
         raise NotImplementedError
 
-    def create_connector(self, executor: Any) -> RemoteConnector:
+    def create_connector(self, executor: ExecutorT) -> RemoteConnector:
         """Builds the connector wrapping a connected executor."""
         raise NotImplementedError
 
