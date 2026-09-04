@@ -21,12 +21,10 @@ else:
 
 if cython.compiled:
     if not typing.TYPE_CHECKING:
-        from cython.cimports.libcpp.unordered_map import unordered_map
         from cython.cimports.randovania.lib.bitmask import Bitmask
         from cython.cimports.randovania.lib.cython_helper import pvector as vector
 else:
     from randovania.lib.bitmask import Bitmask
-    from randovania.lib.cython_helper import UnorderedMap as unordered_map
     from randovania.lib.cython_helper import Vector as vector
 
 
@@ -37,7 +35,9 @@ class ResourceCollection:
     # cdef public Bitmask resource_bitmask
     # cdef pvector[int] _resource_array
     # cdef dict[int, object] _existing_resources
-    # cdef unordered_map[size_t, float] _damage_reduction_cache
+    # cdef pvector[float] _damage_reduction_cache
+    # cdef pvector[size_t] _damage_reduction_cache_gen
+    # cdef size_t _damage_reduction_generation
     # cdef object _resource_database
 
     if typing.TYPE_CHECKING:
@@ -48,7 +48,9 @@ class ResourceCollection:
         # `_resource_array` default-constructs empty; always built via with_resource_count()/duplicate()
         self.resource_bitmask = Bitmask.create_native()
         self._existing_resources: dict[int, ResourceInfo] = {}
-        self._damage_reduction_cache = unordered_map[cython.size_t, cython.float]()
+        self._damage_reduction_cache = vector[cython.float]()
+        self._damage_reduction_cache_gen = vector[cython.size_t]()
+        self._damage_reduction_generation = 1
         self._resource_database = resource_database
 
     @classmethod
@@ -57,12 +59,14 @@ class ResourceCollection:
         result.resource_bitmask = Bitmask.create_native()
         result._existing_resources = {}
         result._resource_database = resource_database
+        result._damage_reduction_cache = vector[cython.float]()
+        result._damage_reduction_cache_gen = vector[cython.size_t]()
+        result._damage_reduction_generation = 1
 
         if cython.compiled:
             result._resize_array_to_fit(count)
         else:
             result._resource_array = vector([0]) * count
-            result._damage_reduction_cache = unordered_map[cython.size_t, cython.float]()
         return result
 
     @cython.ccall
@@ -71,13 +75,18 @@ class ResourceCollection:
         result.resource_bitmask = self.resource_bitmask.copy()
         result._existing_resources = self._existing_resources.copy()
         result._resource_database = self._resource_database
+        # Copied forward, not reset: entries are keyed by generation, so a later mutation on
+        # either copy only invalidates that copy's own cache (see get_damage_reduction below).
+        result._damage_reduction_generation = self._damage_reduction_generation
 
         if cython.compiled:
             result._resource_array = self._resource_array
-            # ignoring _damage_reduction_cache
+            result._damage_reduction_cache = self._damage_reduction_cache
+            result._damage_reduction_cache_gen = self._damage_reduction_cache_gen
         else:
             result._resource_array = self._resource_array.copy()
-            result._damage_reduction_cache = unordered_map[cython.size_t, cython.float]()
+            result._damage_reduction_cache = self._damage_reduction_cache.copy()
+            result._damage_reduction_cache_gen = self._damage_reduction_cache_gen.copy()
 
         return result
 
@@ -151,7 +160,7 @@ class ResourceCollection:
         """
         quantity = max(quantity, 0)
         resource_index: cython.size_t = resource.resource_index
-        self._damage_reduction_cache.clear()
+        self._damage_reduction_generation += 1
         if self._resource_array.size() <= resource_index:
             self._resize_array_to_fit(resource_index + 1)
         self._resource_array[resource_index] = quantity
@@ -177,7 +186,7 @@ class ResourceCollection:
     @cython.locals(resource=object, quantity=cython.int)
     @cython.ccall
     def add_resource(self, resource: ResourceInfo, quantity: cython.int) -> cython.void:
-        self._damage_reduction_cache.clear()
+        self._damage_reduction_generation += 1
 
         resource_index: cython.size_t = resource.resource_index
         if self._resource_array.size() <= resource_index:
@@ -220,15 +229,21 @@ class ResourceCollection:
     @cython.ccall
     # @cython.exceptval(check=False)
     def get_damage_reduction(self, resource_index: cython.size_t) -> cython.float:
-        if cython.compiled:
-            it = self._damage_reduction_cache.find(resource_index)  # type: ignore[attr-defined]
-            if it != self._damage_reduction_cache.end():  # type: ignore[attr-defined]
-                return cython.operator.dereference(it).second  # type: ignore[attr-defined]
-        else:
-            if resource_index in self._damage_reduction_cache:
-                return self._damage_reduction_cache[resource_index]
+        # Dense, generation-tagged cache: cheap to copy in duplicate(), and a resource change
+        # invalidates everything in O(1) by bumping the generation instead of clearing the array.
+        if resource_index < self._damage_reduction_cache.size() and (
+            self._damage_reduction_cache_gen[resource_index] == self._damage_reduction_generation
+        ):
+            return self._damage_reduction_cache[resource_index]
 
         resource: ResourceInfo = self._resource_database.get_resource_mapping()[resource_index]
         reduction: cython.float = self._resource_database.get_damage_reduction(resource, self)
+
+        if resource_index >= self._damage_reduction_cache.size():
+            new_size: cython.size_t = resource_index + 1
+            self._damage_reduction_cache.resize(new_size, 0.0)
+            self._damage_reduction_cache_gen.resize(new_size, 0)
+
         self._damage_reduction_cache[resource_index] = reduction
+        self._damage_reduction_cache_gen[resource_index] = self._damage_reduction_generation
         return reduction
