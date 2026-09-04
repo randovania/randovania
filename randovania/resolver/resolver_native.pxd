@@ -7,26 +7,17 @@ from cython.cimports.randovania.graph.graph_requirement import (
     GraphRequirementSetRef
 )
 
-cdef extern from *:
-    """
-    #include "randovania/lib/native/pool.hpp"
+# Per-Logic scratch state for resolver_reach_process_nodes, reused across calls instead of
+# rebuilt every time; see ResolverScratch.begin()/reset() in resolver_native.py.
+cdef class ResolverScratch:
+    cdef pvector[int] checked_nodes
+    cdef IndexQueue[int] nodes_to_check
+    cdef pvector[int] game_states_to_check
+    cdef pvector[pair[GraphRequirementSetRef, bool]] satisfied_requirement_on_node
+    cdef pvector[size_t] found_node_order
+    cdef public bint in_use
+    cdef size_t capacity
 
-    class ProcessNodesState {
-    public:
-        rdv::pvector<int> checked_nodes;
-        rdv::IndexQueue<int> nodes_to_check;
-        rdv::pvector<int> game_states_to_check;
-        rdv::pvector<std::pair<GraphRequirementSetRef, bool>> satisfied_requirement_on_node;
-
-        ProcessNodesState() {}
-    };
-    """
-
-    cdef cppclass ProcessNodesState:
-        pvector[int] checked_nodes
-        IndexQueue[int] nodes_to_check
-        pvector[int] game_states_to_check
-        pvector[pair[GraphRequirementSetRef, bool]] satisfied_requirement_on_node
-
-        ProcessNodesState()
+    cdef void begin(self, size_t num_nodes) except *
+    cdef void reset(self) except *
 
