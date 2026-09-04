@@ -142,7 +142,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self.preset.configuration, game, patches
         )
         self.graph = graph
-        self.logic = Logic(graph, self.preset.configuration, record_paths=True)
+        self.logic = Logic([graph], record_paths=True)
 
         self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
