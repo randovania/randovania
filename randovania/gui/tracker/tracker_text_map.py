@@ -123,7 +123,7 @@ class TrackerTextMap(TrackerComponent):
             self.ActionRequested.emit(node)
 
     def _on_show_path_to_here(self) -> None:
-        target: QtWidgets.QTreeWidgetItem = self.possible_locations_tree.currentItem()
+        target: QtWidgets.QTreeWidgetItem | None = self.possible_locations_tree.currentItem()
         if target is None or self._last_state is None:
             return
 
