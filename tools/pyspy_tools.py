@@ -32,6 +32,14 @@ from pathlib import Path
 
 logger = logging.getLogger("pyspy-tools")
 
+_PYTHON_DLL_RE = re.compile(r"\(python3\d+\.dll\)")
+
+
+# A native sample costs ~5ms (deep Cython stacks, read out of another process) vs ~1ms without.
+# At 100Hz that turned an 18s generation into an erratic 37-55s; 25Hz costs ~9% and is stable.
+NATIVE_SAMPLE_RATE = 25
+SAMPLE_RATE = 100
+
 
 def parse_raw_profile(file: typing.TextIO) -> list[list[str]]:
     """Parse a py-spy raw format file into a list of stack traces."""
@@ -105,6 +113,15 @@ def stream_output(
 
 def cmd_collect(args):
     """Profile Randovania with py-spy."""
+    # py-spy wants sudo instead of --native on macOS
+    use_native = args.native and platform.system() != "Darwin"
+
+    if use_native and args.nonblocking:
+        print("!! py-spy can't collect native stacks with --nonblocking; add --no-native to use it")
+        sys.exit(1)
+
+    rate = args.rate if args.rate is not None else (NATIVE_SAMPLE_RATE if use_native else SAMPLE_RATE)
+
     # Set environment variables
     env = os.environ.copy()
     env["WAIT_FOR_PROFILER"] = "1"
@@ -119,6 +136,9 @@ def cmd_collect(args):
             print(f"[PY-SPY] {s}", end="", flush=True)
 
     print("[ HOST ] Starting Randovania process...", flush=True)
+
+    # A leftover file from an aborted run makes the target skip waiting, attaching py-spy late.
+    Path(".profiler_ready").unlink(missing_ok=True)
 
     # Start the Python process
     process = subprocess.Popen(
@@ -160,19 +180,19 @@ def cmd_collect(args):
         "--pid",
         str(target_pid),
         "--rate",
-        str(args.rate),
+        str(rate),
         "--format",
         args.format,
         "-o",
         args.output,
     ]
 
-    # Add --native flag on non-macOS platforms
-    if platform.system() != "Darwin":
+    if use_native:
         pyspy_cmd.insert(2, "--native")
-    else:
-        # On macOS, py-spy requires sudo
+    if platform.system() == "Darwin":
         pyspy_cmd.insert(0, "sudo")
+    if args.nonblocking:
+        pyspy_cmd.append("--nonblocking")
 
     # Start py-spy
     pyspy_process = subprocess.Popen(
@@ -199,6 +219,12 @@ def cmd_collect(args):
             sys.exit(1)
 
     if not pyspy_started:
+        # py-spy gave up before sampling; stop instead of running the whole workload unprofiled.
+        pyspy_exit_code = pyspy_process.poll()
+        if pyspy_exit_code is not None:
+            print(f"[ HOST ] Error: py-spy exited before sampling started (exit code: {pyspy_exit_code})")
+            process.terminate()
+            sys.exit(1)
         print("[ HOST ] Warning: Could not confirm py-spy started, proceeding anyway...")
 
     print(f"[ HOST ] py-spy attached to process {target_pid}")
@@ -330,7 +356,7 @@ def filter_traces(
                 continue
             if exclude_asyncio and ("(asyncio/" in frame or "_asyncio.pyd" in frame):
                 continue
-            if exclude_python_api and "(python312.dll)" in frame:
+            if exclude_python_api and _PYTHON_DLL_RE.search(frame):
                 continue
             if exclude_python_exe and "(python.exe)" in frame:
                 continue
@@ -710,7 +736,25 @@ def main():
         "collect", help="Profile a Python process with py-spy", formatter_class=argparse.RawDescriptionHelpFormatter
     )
     collect_parser.add_argument("-o", "--output", default="profile.raw", help="Output file (default: profile.raw)")
-    collect_parser.add_argument("-r", "--rate", type=int, default=100, help="Sampling rate in Hz (default: 100)")
+    collect_parser.add_argument(
+        "-r",
+        "--rate",
+        type=int,
+        default=None,
+        help=f"Sampling rate in Hz (default: {NATIVE_SAMPLE_RATE} with native stacks, {SAMPLE_RATE} without)",
+    )
+    collect_parser.add_argument(
+        "--no-native",
+        action="store_false",
+        dest="native",
+        default=True,
+        help="Skip native (C/C++) stacks. Far cheaper, but loses everything below the Python frames.",
+    )
+    collect_parser.add_argument(
+        "--nonblocking",
+        action="store_true",
+        help="Don't pause the process for each sample. Cheaper, at the cost of some accuracy.",
+    )
     collect_parser.add_argument(
         "-f",
         "--format",
