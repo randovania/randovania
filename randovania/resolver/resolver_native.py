@@ -48,10 +48,58 @@ else:
         from randovania.graph.world_graph import WorldGraphNodeConnection
 
 
-class ProcessNodesResponse(typing.NamedTuple):
-    reach_nodes: dict[int, int]
-    path_to_node: dict[int, list[int]]
-    satisfiable_requirements_for_additionals: set[GraphRequirementList]
+@cython.cclass
+class ReachResult:
+    """Which nodes are in reach after a resolver step, and their health.
+
+    Built once per `resolver_reach_process_nodes` call, from `ResolverScratch`'s buffers, before
+    they're reset for the next call.
+    """
+
+    if typing.TYPE_CHECKING:
+        # Declared in resolver_native.pxd; repeated here just so mypy knows it exists.
+        checked_nodes: vector[cython.int]
+        found_node_order: vector[cython.size_t]
+        path_to_node: dict[int, list[int]]
+        satisfiable_requirements_for_additionals: set[GraphRequirementList]
+
+    def __init__(self, num_nodes: cython.size_t) -> None:
+        if not cython.compiled:
+            self.checked_nodes = vector[cython.int]()
+            self.found_node_order = vector[cython.size_t]()
+        self.checked_nodes.assign(num_nodes, -1)
+        self.path_to_node = {}
+        self.satisfiable_requirements_for_additionals = set()
+
+    @cython.ccall
+    def is_node_in_reach(self, node_index: cython.size_t) -> cython.bint:
+        return self.checked_nodes[node_index] != -1
+
+    @cython.ccall
+    def health_at(self, node_index: cython.size_t) -> cython.int:
+        return self.checked_nodes[node_index]
+
+    def nodes(self, all_nodes: typing.Any) -> typing.Iterator[typing.Any]:
+        """Yields the elements of `all_nodes` that are in reach, in discovery order."""
+        index: cython.size_t
+        for index in self.found_node_order:
+            yield all_nodes[index]
+
+    @staticmethod
+    def for_testing(
+        reach_nodes: dict[int, int],
+        path_to_node: dict[int, list[int]],
+        satisfiable_requirements_for_additionals: set[GraphRequirementList],
+    ) -> ReachResult:
+        """Test-only constructor: builds a result from a small {node_index: health} mapping."""
+        num_nodes: int = (max(reach_nodes) + 1) if reach_nodes else 0
+        result = ReachResult(num_nodes)
+        for node_index, health in reach_nodes.items():
+            result.checked_nodes[node_index] = health
+            result.found_node_order.push_back(node_index)
+        result.path_to_node = path_to_node
+        result.satisfiable_requirements_for_additionals = satisfiable_requirements_for_additionals
+        return result
 
 
 if cython.compiled:
@@ -239,11 +287,19 @@ def _add_to_requirements_excluding_leaving_by_node(
 INF = cython.declare(cython.float, float("inf"))
 
 
+@cython.cfunc
+def _mark_node_checked(scratch: ResolverScratch, node_index: cython.int, damage_health_int: cython.int) -> cython.void:
+    # Only record first visits: a node can be re-popped later with strictly better health, and
+    # found_node_order must stay deduped (it drives both the final result and reset()).
+    if scratch.checked_nodes[node_index] == -1:
+        scratch.found_node_order.push_back(node_index)
+    scratch.checked_nodes[node_index] = damage_health_int
+
+
 def resolver_reach_process_nodes(
     logic: Logic,
     initial_state: State,
-    output: ProcessNodesResponse,
-) -> None:
+) -> ReachResult:
     resources: ResourceCollection = initial_state.resources
     initial_game_state: EnergyTankDamageState = initial_state.damage_state  # type: ignore[assignment]
     resource_bitmask: Bitmask = resources.resource_bitmask
@@ -256,13 +312,14 @@ def resolver_reach_process_nodes(
     initial_node_index: cython.int = initial_state.node.node_index
 
     scratch: ResolverScratch = _get_resolver_scratch(logic, len(all_nodes))
+    result: ReachResult = ReachResult(len(all_nodes))
     try:
         scratch.nodes_to_check.push_back(initial_node_index)
         scratch.game_states_to_check[initial_node_index] = initial_game_state.health_for_damage_requirements()
         scratch.satisfied_requirement_on_node[initial_node_index].first.set(GraphRequirementSet.trivial())
 
         requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]] = {}
-        path_to_node = output.path_to_node
+        path_to_node = result.path_to_node
         path_to_node[initial_node_index] = []
 
         # Fast path detection for EnergyTankDamageState
@@ -293,8 +350,7 @@ def resolver_reach_process_nodes(
                 else:
                     current_game_state = initial_game_state.with_health(damage_health_int)
 
-            scratch.found_node_order.push_back(node_index)
-            scratch.checked_nodes[node_index] = damage_health_int
+            _mark_node_checked(scratch, node_index, damage_health_int)
 
             can_leave_node: cython.bint = True
             if node.require_collected_to_leave:
@@ -397,24 +453,28 @@ def resolver_reach_process_nodes(
 
         for node_index in scratch.found_node_order:
             if node_index != initial_node_index:
-                output.reach_nodes[node_index] = scratch.checked_nodes[node_index]
+                result.checked_nodes[node_index] = scratch.checked_nodes[node_index]
+                result.found_node_order.push_back(node_index)
 
-        _fill_satisfiable_requirements_for_additionals(world_specific, requirements_excluding_leaving_by_node, output)
+        _fill_satisfiable_requirements_for_additionals(world_specific, requirements_excluding_leaving_by_node, result)
     finally:
         scratch.reset()
+
+    return result
 
 
 def _fill_satisfiable_requirements_for_additionals(
     world_specific_logic: WorldSpecificLogic,
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
-    output: ProcessNodesResponse,
+    result: ReachResult,
 ) -> None:
     # Discard satisfiable requirements of nodes reachable by other means
-    for node_index in set(output.reach_nodes.keys()).intersection(requirements_excluding_leaving_by_node.keys()):
-        requirements_excluding_leaving_by_node.pop(node_index)
+    for node_index in list(requirements_excluding_leaving_by_node.keys()):
+        if result.is_node_in_reach(node_index):
+            requirements_excluding_leaving_by_node.pop(node_index)
 
     if requirements_excluding_leaving_by_node:
-        output.satisfiable_requirements_for_additionals.update(
+        result.satisfiable_requirements_for_additionals.update(
             build_satisfiable_requirements(
                 world_specific_logic,
                 requirements_excluding_leaving_by_node,
