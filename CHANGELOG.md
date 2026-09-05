@@ -25,6 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
 - Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
+- Fixed: Sic Transit: The scan door will now unlock in the post-boss layers if the shuffled Shield Key is collected.
+
+#### Logic Database
+
+##### Alinos
+
+- Fixed: Piston Hall: The pickup in the Artifact Shield now properly requires the correct Shield Key.
 
 ## [11.0.0] - 2026-09-01
 
