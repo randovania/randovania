@@ -222,7 +222,8 @@ async def _calculate_actions_by_priority_and_try_safe(
     status_update: Callable[[str], None],
     max_attempts: int | None,
     actions_by_priority: dict[ActionPriority, list[PotentialAction]],
-) -> CONTINUE_RESOLVER | list[State] | None:
+    # mypy doesn't support sentinel right now
+) -> CONTINUE_RESOLVER | list[State] | None:  # type: ignore[valid-type]
     """
     Fills `actions_by_priority` with the possible actions of the given reach
     with the given state, grouped by calculated priorities.
