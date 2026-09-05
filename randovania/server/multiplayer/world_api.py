@@ -230,7 +230,6 @@ async def get_abandoned_world_data(user: UserDep, world_uuid: str) -> dict:
     ]
 
     return {
-        "order": world.order,
         "preset_raw": world.preset,
         "game_modifications": game_patches_serializer.serialize_single_world_only(
             world.order, len(description.all_patches), description.all_patches[world.order]
