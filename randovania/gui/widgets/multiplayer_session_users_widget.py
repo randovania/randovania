@@ -532,11 +532,12 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
 
         if owner == self.your_id or self.is_admin():
-            world_menu.addSeparator()
-            connect_to(world_menu.addAction("Rename"), self._world_rename, world_id)
-            delete_action = world_menu.addAction("Delete")
-            delete_action.setEnabled(can_change_preset)
-            connect_to(delete_action, self._world_delete, world_id)
+            if not self._session.is_race_session:
+                world_menu.addSeparator()
+                connect_to(world_menu.addAction("Rename"), self._world_rename, world_id)
+                delete_action = world_menu.addAction("Delete")
+                delete_action.setEnabled(can_change_preset)
+                connect_to(delete_action, self._world_delete, world_id)
 
             if not world_is_abandoned:
                 # if `is_valid_owner` is false, use your admin id to abandon an unclaimed world

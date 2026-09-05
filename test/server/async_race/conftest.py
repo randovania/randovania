@@ -46,3 +46,39 @@ def simple_room(clean_database, test_files_dir) -> database.AsyncRaceRoom:
     )
 
     return room
+
+
+@pytest.fixture
+def team_room(clean_database, test_files_dir) -> database.AsyncRaceRoom:
+    """
+    A room raced by teams on a two world multiworld, with nobody in a team yet.
+    User 1234 is the creator; 1235, 1236 and 1237 are potential racers.
+    """
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
+
+    user1 = database.User.create(id=1234, name="The Name")
+    database.User.create(id=1235, name="The Player")
+    database.User.create(id=1236, name="Other Player")
+    database.User.create(id=1237, name="Third Player")
+
+    room = database.AsyncRaceRoom.create(
+        id=1,
+        name="Debug",
+        visibility=MultiplayerSessionVisibility.VISIBLE,
+        layout_description_json=description.as_binary(),
+        game_details_json=json.dumps(
+            GameDetails(
+                seed_hash="seed_hash",
+                word_hash="word_hash",
+                spoiler=True,
+            ).as_json
+        ),
+        creator=user1,
+        creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
+        start_date=datetime.datetime(2020, 5, 10, 0, 0, tzinfo=datetime.UTC),
+        end_date=datetime.datetime(2020, 6, 10, 0, 0, tzinfo=datetime.UTC),
+        allow_pause=True,
+    )
+
+    assert room.uses_teams
+    return room

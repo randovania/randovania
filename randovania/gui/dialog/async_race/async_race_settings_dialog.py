@@ -46,6 +46,20 @@ class AsyncRaceSettingsDialog(QtWidgets.QDialog):
             QtCore.QDateTime.fromSecsSinceEpoch(int(self.room.end_date.timestamp()))
         )
         self.settings_widget.ui.allow_pause_check.setChecked(self.room.allow_pause)
+        self.settings_widget.ui.allow_abandon_worlds_check.setChecked(self.room.allow_abandon_worlds)
+
+        self.settings_widget.set_world_count(self.room.world_count)
+        self.settings_widget.ui.allow_coop_check.setChecked(self.room.allow_coop)
+        signal_handling.set_combo_with_value(self.settings_widget.ui.team_timer_combo_box, self.room.shared_team_timer)
+
+        if self.room.teams:
+            for widget, tooltip in [
+                (self.settings_widget.ui.allow_coop_check, "Players have already joined"),
+                (self.settings_widget.ui.team_timer_combo_box, "Players have already joined"),
+                (self.settings_widget.ui.team_timer_label, ""),
+            ]:
+                widget.setEnabled(False)
+                widget.setToolTip(tooltip)
 
         if self.room.race_status != AsyncRaceRoomRaceStatus.SCHEDULED:
             self.settings_widget.ui.start_time_edit.setEnabled(False)
