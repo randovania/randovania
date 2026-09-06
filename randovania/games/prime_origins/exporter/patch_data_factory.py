@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override
+import typing
+from typing import TYPE_CHECKING, Any, override
 
 import randovania
 from randovania.exporter.patch_data_factory import PatchDataFactory
@@ -55,10 +56,12 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
             "y": node.extra["y"],
         }
 
-    def _create_pickup_config(self, pickup_list: list[ExportedPickupDetails], model_data: dict) -> dict:
+    def _create_pickup_config(
+        self, pickup_list: list[ExportedPickupDetails], model_data: dict[str, dict[str, Any]]
+    ) -> dict:
         items = []
         for pickup in pickup_list:
-            data: dict = model_data[pickup.name]
+            data = model_data[pickup.name]
             if pickup.conditional_resources[0].resources:
                 quantity = pickup.conditional_resources[0].resources[0][1]
             else:
@@ -100,9 +103,11 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
         }
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
-        model_data: dict = json_lib.read_path(
-            RandovaniaGame.PRIME_ORIGINS.data_path.joinpath("pickup_database", "model-data.json")
+        model_data = typing.cast(
+            "dict[str, dict[str, Any]]",
+            json_lib.read_path(RandovaniaGame.PRIME_ORIGINS.data_path.joinpath("pickup_database", "model-data.json")),
         )
+
         pickup_list = self.export_pickup_list()
 
         return {

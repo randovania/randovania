@@ -12,19 +12,19 @@ exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for 
 exclude-newer-span = "P7D"
 
 [options.exclude-newer-package]
-am2r-yams = false
-cave-story-randomizer = false
-factorio-randovania-mod = false
-mars-patcher = false
-mp2hudcolor = false
-mpo-yampfs = false
-open-dread-rando = false
-open-prime-hunters-rando = false
-open-samus-returns-rando = false
 planets-yapr = false
-py-randomprime = false
+factorio-randovania-mod = false
+open-samus-returns-rando = false
 random-enemy-attributes = false
+cave-story-randomizer = false
+mpo-yampfs = false
 retro-data-structures = false
+mars-patcher = false
+am2r-yams = false
+mp2hudcolor = false
+open-prime-hunters-rando = false
+py-randomprime = false
+open-dread-rando = false
 
 [[package]]
 name = "aiocache"
@@ -1796,24 +1796,27 @@ wheels = [
 
 [[package]]
 name = "mpo-yampfs"
-version = "0.2.1"
+version = "0.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pythonnet" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/43/ba/c18c1ac61a8d948d5177ca594a9b10ca22e8a4ea762cbadc429bdf950960/mpo_yampfs-0.2.1-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:e1014500b05eb6ae4f9ebf94dacf3aa8049b8ee24b9ebb7904a7fb3cbd30c081", size = 52163781, upload-time = "2026-09-05T05:19:16.463Z" },
-    { url = "https://files.pythonhosted.org/packages/87/cf/1e2bdb34cc391c72a9826f6f46da950be0dde2dcb79cd7ac9e1384038290/mpo_yampfs-0.2.1-cp312-cp312-manylinux_2_34_x86_64.whl", hash = "sha256:5f81c6c012e6da1643d461b14581f9b28d4e06c6e757003fde7a3c1c0acd7206", size = 59124115, upload-time = "2026-09-05T05:19:29.88Z" },
-    { url = "https://files.pythonhosted.org/packages/bc/08/508847f50bd76145b7675a77de9430fdc4f19682f108eaf8c1c02721b3a7/mpo_yampfs-0.2.1-cp312-cp312-win32.whl", hash = "sha256:422169372d0b1678da814c5767d4f2e21dae0a117cf6190cc9c844e1bd2b586f", size = 53852942, upload-time = "2026-09-05T05:19:33.79Z" },
-    { url = "https://files.pythonhosted.org/packages/30/b2/d63dc70606503b7f6753a6989992c7adc0cb4afca7e9151055130dceff45/mpo_yampfs-0.2.1-cp312-cp312-win_amd64.whl", hash = "sha256:a469d6bc1298378b5ce40deaed99fc24c171982b6e62cae3bade3e541767e714", size = 53852948, upload-time = "2026-09-05T05:19:38.228Z" },
-    { url = "https://files.pythonhosted.org/packages/44/54/94e92d8ad9a2210da70775c85bad58ca6b5b7d6b829f1be32f349c09f47a/mpo_yampfs-0.2.1-cp313-cp313-macosx_14_0_arm64.whl", hash = "sha256:aa9eba42ae4ce2d5fa9c5b14a095dfc445621dd47a8a3fc198b1827d96e8177d", size = 52163781, upload-time = "2026-09-05T05:19:42.825Z" },
-    { url = "https://files.pythonhosted.org/packages/91/c7/89c14c8ac618290693a75a52fb00c302a0938c4c5b0cc26ced52f12a250b/mpo_yampfs-0.2.1-cp313-cp313-manylinux_2_34_x86_64.whl", hash = "sha256:9b1a2b13b27ecc3ccfcc122604f4b122623a9266beb028ecf855a8d823d71a33", size = 59124114, upload-time = "2026-09-05T05:19:48.142Z" },
-    { url = "https://files.pythonhosted.org/packages/52/dd/77678600223bf7a0e966c7c05c1c767935e612ccc385ab49cea1cdb7a0f3/mpo_yampfs-0.2.1-cp313-cp313-win32.whl", hash = "sha256:081dd3b79645e24c7e027ef02954a72bbbbd9fac5f60f47c169472ba612c4f2c", size = 53852943, upload-time = "2026-09-05T05:19:52.891Z" },
-    { url = "https://files.pythonhosted.org/packages/c4/dc/e082a1df1772281958f08cbe9c6c41d5b24d5d88e92220e31a06597cb48e/mpo_yampfs-0.2.1-cp313-cp313-win_amd64.whl", hash = "sha256:e70078dbf5e0b8130e26517ef79c94bc81e2a3d7fc1e7518b4fd72ab9fd7dead", size = 53852948, upload-time = "2026-09-05T05:19:58.045Z" },
-    { url = "https://files.pythonhosted.org/packages/b9/44/919615e2d4e9a386a33e6ef431492a3eb15d2687ec321ab1a2d6d24598f4/mpo_yampfs-0.2.1-cp314-cp314-macosx_14_0_arm64.whl", hash = "sha256:ebc876402e9da7ebafd1dfee46431f5d2e66eaae5baf12f63ade9bb88c993e3a", size = 52163782, upload-time = "2026-09-05T05:20:02.796Z" },
-    { url = "https://files.pythonhosted.org/packages/44/65/740521dfc26f518512ecfade6c4a27b11ebc3f916edf2d1714b919c32623/mpo_yampfs-0.2.1-cp314-cp314-manylinux_2_34_x86_64.whl", hash = "sha256:341a8f351c99ad6e7f619be723ae34ef0645f65c6385a22f77c28232bbe53b0c", size = 59124114, upload-time = "2026-09-05T05:20:08.055Z" },
-    { url = "https://files.pythonhosted.org/packages/42/cb/48b8999b74cf5e2c0b91e7b686b45a0c43f50317249bb67e031340c0e1c1/mpo_yampfs-0.2.1-cp314-cp314-win32.whl", hash = "sha256:bd0c5ea98a6c4ba176833fa153fc8662e4fb3204d992b69e2d5f0b9be0e48e8d", size = 55582777, upload-time = "2026-09-05T05:20:13.1Z" },
-    { url = "https://files.pythonhosted.org/packages/f8/6f/db44320140c3e5eb04f77a20daf6e5f9847677eddd4e476218b4a6cc5ca5/mpo_yampfs-0.2.1-cp314-cp314-win_amd64.whl", hash = "sha256:ff4fa69a77e7db64ca4478085292073ae4f4ffd43ca19995f306792739616424", size = 55582785, upload-time = "2026-09-05T05:20:17.967Z" },
+    { url = "https://files.pythonhosted.org/packages/b9/20/7f808e1e5f55d21e656cdc386e5eabdcba68184c66b7e3d2f797f1796120/mpo_yampfs-0.2.2-cp312-cp312-macosx_15_0_arm64.whl", hash = "sha256:098905a56cf06059b593b9d830da94da1d9452688d6f05da338fbb6329a93e3f", size = 52163843, upload-time = "2026-09-06T20:21:10.869Z" },
+    { url = "https://files.pythonhosted.org/packages/24/09/97d7edfc33b1e14b6a95a6a7b9f95be6899ab211eac1ff9974d75b2917e9/mpo_yampfs-0.2.2-cp312-cp312-macosx_15_0_x86_64.whl", hash = "sha256:93dd5f1fdfcfe30ddc2782e9d4b8ff715b81002c78ea2c36a1bc7c3a12f4b46e", size = 56586902, upload-time = "2026-09-06T20:21:13.887Z" },
+    { url = "https://files.pythonhosted.org/packages/0c/c9/df4fb668fcb4bdfae0534d6fdc1438e15e84c268ab06c5f7333b050a8735/mpo_yampfs-0.2.2-cp312-cp312-manylinux_2_34_x86_64.whl", hash = "sha256:1182b0e4be05240120a7433590098ac67f7339788f7274f0c7e5ffb600f31084", size = 59124163, upload-time = "2026-09-06T20:21:17.492Z" },
+    { url = "https://files.pythonhosted.org/packages/ee/69/e92e33c711af0f9f0a7dbf7c6fc7b7b035040ad589e0fd0b5900103506e1/mpo_yampfs-0.2.2-cp312-cp312-win32.whl", hash = "sha256:d60e9968ac6025be46fa46a8f9baa1d260a950c40e7a1b270d8fbc96132266d5", size = 53852992, upload-time = "2026-09-06T20:21:20.498Z" },
+    { url = "https://files.pythonhosted.org/packages/a3/b3/1274b2527e77fc8ed23545fb0ff7d9e6227b8c8c0d4c7844a0a611a6b982/mpo_yampfs-0.2.2-cp312-cp312-win_amd64.whl", hash = "sha256:67a633a5af1e11a5e7a33126aaf9cc9ab9f81562cc5b393e6a8f88b3d2eb6850", size = 53852998, upload-time = "2026-09-06T20:21:23.593Z" },
+    { url = "https://files.pythonhosted.org/packages/c8/2f/3609b718501fe2c115d59f1eac9d0b60c24ce3e99e330a0526400398bd88/mpo_yampfs-0.2.2-cp313-cp313-macosx_15_0_arm64.whl", hash = "sha256:9f640775475035e9072cc56d986efc317f9a68bd48f28ce8d3e409857ef41a71", size = 52163841, upload-time = "2026-09-06T20:21:26.821Z" },
+    { url = "https://files.pythonhosted.org/packages/67/7a/58d90da552f846e283201fe9b9d16dadb31dbfbcb2c6b8985202da29072a/mpo_yampfs-0.2.2-cp313-cp313-macosx_15_0_x86_64.whl", hash = "sha256:59aa79a77a3b5f2d908aa30f7078e73a0a456da489d395319853fae7b32ce866", size = 56586902, upload-time = "2026-09-06T20:21:29.61Z" },
+    { url = "https://files.pythonhosted.org/packages/79/95/815afd93700745bf66b1637d036edd6e270da50a288458361206bf48334a/mpo_yampfs-0.2.2-cp313-cp313-manylinux_2_34_x86_64.whl", hash = "sha256:fb7a012def16e43ac0b8589fa2d58a07d48987eb52da8c8701af29ba55bd0323", size = 59124163, upload-time = "2026-09-06T20:21:32.636Z" },
+    { url = "https://files.pythonhosted.org/packages/3f/50/9ff762f700dbbb286853efbaeac79fece45d163799468c73e1f758aa5263/mpo_yampfs-0.2.2-cp313-cp313-win32.whl", hash = "sha256:8428dd84b8f2e0503cd64a6d8fef33d99081015e988eaaf041b33ccde19bc61c", size = 53852992, upload-time = "2026-09-06T20:21:36.084Z" },
+    { url = "https://files.pythonhosted.org/packages/bd/68/6ba9c42a32f6bfa054a7c71309d329966e9f015bbcab9519728b55a8348d/mpo_yampfs-0.2.2-cp313-cp313-win_amd64.whl", hash = "sha256:5ed43e52a6ee0cc61d48a2e84733adad502e85ea33c5b5d5f45f7ee324991bc3", size = 53852997, upload-time = "2026-09-06T20:21:39.186Z" },
+    { url = "https://files.pythonhosted.org/packages/5c/1c/7850fdc197627e89689fc65e1553d30583a0fc109dd5e24beb4cd3c9a09f/mpo_yampfs-0.2.2-cp314-cp314-macosx_15_0_arm64.whl", hash = "sha256:43790bf56dc65dfa7980d496b30d605446dee9663fb87921b936f9a0ce7adb8c", size = 52163842, upload-time = "2026-09-06T20:21:42.283Z" },
+    { url = "https://files.pythonhosted.org/packages/d2/c2/e640cb6039c0bca786556ad3d6ef18d432ae40c7bba0a7c589386121f56a/mpo_yampfs-0.2.2-cp314-cp314-macosx_15_0_x86_64.whl", hash = "sha256:d5b14642abcc10a5d38cd7a36e6157d610aee45cc8442bf9cc83469b95de5769", size = 56586901, upload-time = "2026-09-06T20:21:45.21Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/69/426400f834042c6cce6448dd8cd0592d1c08635c84ad073f39c7a320e736/mpo_yampfs-0.2.2-cp314-cp314-manylinux_2_34_x86_64.whl", hash = "sha256:862138e59e77da067370ffa11ea040d0e89d3cafe4d3e9657adccc0989c83dc3", size = 59124163, upload-time = "2026-09-06T20:21:48.098Z" },
+    { url = "https://files.pythonhosted.org/packages/00/a7/921af4fc16c3d7489192a7ab674cd856912134ba2ef2efa641794e2326f5/mpo_yampfs-0.2.2-cp314-cp314-win32.whl", hash = "sha256:d154bffc3698592f5438a1aa28630d704e15e9103d57c2ea61fa14bc40baa693", size = 55582825, upload-time = "2026-09-06T20:21:50.997Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/d2/2939c5909148add38051bd9e407a12fe1979ffd4203ea50141adb32ba034/mpo_yampfs-0.2.2-cp314-cp314-win_amd64.whl", hash = "sha256:42a210a868cdeef468e3e8fd35509ede9bdc8b4d2b1091c2898082a4e0bda0f3", size = 55582833, upload-time = "2026-09-06T20:21:53.907Z" },
 ]
 
 [[package]]
@@ -3324,7 +3327,7 @@ requires-dist = [
     { name = "mars-patcher", marker = "extra == 'exporters'", specifier = "==0.16.0" },
     { name = "matplotlib", marker = "extra == 'gui'", specifier = ">=3.6.2" },
     { name = "mp2hudcolor", marker = "extra == 'exporters'", specifier = "==1.0.14" },
-    { name = "mpo-yampfs", marker = "extra == 'exporters'", specifier = "==0.2.1" },
+    { name = "mpo-yampfs", marker = "extra == 'exporters'", specifier = "==0.2.2" },
     { name = "natsort", marker = "extra == 'gui'" },
     { name = "networkx" },
     { name = "nod", marker = "extra == 'gui'", specifier = ">=1.9" },
