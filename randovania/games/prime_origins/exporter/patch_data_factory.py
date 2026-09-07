@@ -84,9 +84,9 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
             if "artifact_idx" in data:
                 pickup_entry["artifact_idx"] = data["artifact_idx"]
 
-            if pickup.name == "Missile Expansion":
+            if pickup.name in ["Missile Expansion", "Missile Launcher"]:
                 pickup_entry["additional_items"] = {"Missiles": f'ds_zero("Missiles") + {quantity}'}
-            if pickup.name == "Power Bomb Expansion":
+            if pickup.name in ["Power Bomb Expansion", "Power Bomb Detonator"]:
                 pickup_entry["additional_items"] = {"Power Bombs": f'ds_zero("Power Bombs") + {quantity}'}
             if pickup.name == "Energy Tank":
                 pickup_entry["additional_items"] = {
