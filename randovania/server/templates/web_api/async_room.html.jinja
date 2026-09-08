@@ -1,0 +1,94 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	Async Room: {{ async_room.name }}
+{% endblock %}
+
+{% block header %}
+	Async Room View
+{% endblock header %}
+
+{% block content_class %}
+<div class="extrawide-content">
+{% endblock content_class %}
+
+{% block content %}
+	<div class="left main-content__body" data-lead-id="main-content-body">
+		<h2>Async Room: {{ async_room.name }}</h2>
+        <p>
+            Created by {{ async_room.creator.name }} at
+            {{ async_room.creation_datetime.strftime("%H:%M:%S.%f %Z, %d %B %Y") }}
+        </p>
+        <p>
+            Race Start: {{ async_room.start_datetime.strftime("%H:%M:%S.%f %Z, %d %B %Y") }} <br>
+            Race End: {{ async_room.end_datetime.strftime("%H:%M:%S.%f %Z, %d %B %Y") }}
+        </p>
+        {% if async_room.password != None %}
+            <p>
+                Async Room is password protected.
+                Password hash is <code>{{ async_room.password }}</code>.
+            </p>
+        {% else %}
+            <p>Async Room is not password protected.</p>
+        {% endif %}
+
+        <p>Does Async Room allow pausing? {{ async_room.allow_pause }}</p>
+
+        <h2>Actions</h2>
+        <form class="form_inline" action="{{ url_for('download_async_room_spoiler', async_room_id=async_room.id) }}">
+            <button type="submit">Download .rdvgame</button>
+        </form>
+
+        <h2>Entries</h2>
+        There are {{ entries|length }} entries.
+        <table>
+            <thead>
+                <td>User</td>
+                <td>Join Date</td>
+                <td>Start Date</td>
+                <td>Finish Date</td>
+                <td>Time it took to finish</td>
+                <td>Has Forfeited?</td>
+                <td>Number of Pauses</td>
+                <td>Submission Notes</td>
+                <td>Proof URL</td>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.user.name }}</td>
+                        <td>{{ entry.join_datetime.strftime("%H:%M:%S.%f %Z, %d %B %Y") }}</td>
+                        <td>
+                            {% if entry.start_datetime != None %}
+                                {{ entry.start_datetime.strftime("%H:%M:%S.%f %Z, %d %B %Y") }}
+                            {% else %}
+                                Has not started yet
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if entry.finish_datetime != None %}
+                                {{ entry.finish_datetime.strftime("%H:%M:%S.%f %Z, %d %B %Y") }}
+                            {% else %}
+                                Has not finished yet
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if entry.start_datetime != None and entry.finish_datetime != None %}
+                                {{ (entry.finish_datetime - entry.start_datetime)}}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>{{ entry.forfeit }}</td>
+                        <td>{{ entry.pauses|length }}</td>
+                        <td>{{ entry.submission_notes }}</td>
+                        <td>{{ entry.proof_url }}</td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><a href="{{ url_for('admin_async_rooms') }}">Return to Async Room list</a></p>
+	</div>
+{% endblock content %}
