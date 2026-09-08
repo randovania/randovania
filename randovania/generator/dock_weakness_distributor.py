@@ -427,8 +427,6 @@ async def distribute_post_fill_weaknesses(
     docks_to_place = len(unassigned_docks)
 
     filtered_games: list[GameDescription] = []
-    base_graphs: list[WorldGraph] = []
-
     start_time = time.perf_counter()
 
     max_resolver_attempts = []
@@ -439,18 +437,6 @@ async def distribute_post_fill_weaknesses(
 
         status_update(f"Preparing door lock randomizer for player {world_index + 1}.")
         filtered_games.append(filtered_database.game_description_for_layout(configuration).get_mutable())
-        base_graphs.append(
-            randovania.graph.world_graph_factory.create_patchless_graph(
-                world_index=world_index,
-                database_view=filtered_games[world_index],
-                static_resources=configuration.game.generator.bootstrap.starting_resources_for_patches(
-                    configuration, filtered_games[world_index].get_resource_database_view(), patches
-                ),
-                damage_multiplier=configuration.damage_strictness.value,
-                victory_condition=filtered_games[world_index].victory_condition,
-                flatten_to_set_on_patch=filtered_games[world_index].region_list.flatten_to_set_on_patch,
-            )
-        )
 
         dock_type_db = filler_results.player_results[world_index].game.get_dock_type_database()
         compatible_dock_types = [
@@ -467,6 +453,23 @@ async def distribute_post_fill_weaknesses(
     initial_states, logic = resolver.setup_resolver(
         [(game, patches.configuration, patches) for game, patches in zip(filtered_games, new_patches, strict=True)]
     )
+
+    # This must run after `resolver.setup_resolver`, as it indirectly calls apply_configurable_node_patches
+    # that mutates the gamedescription itself. Ugh.
+    base_graphs: list[WorldGraph] = [
+        randovania.graph.world_graph_factory.create_patchless_graph(
+            world_index=patches.player_index,
+            database_view=filtered_games[patches.player_index],
+            static_resources=patches.configuration.game.generator.bootstrap.starting_resources_for_patches(
+                patches.configuration, filtered_games[patches.player_index].get_resource_database_view(), patches
+            ),
+            damage_multiplier=patches.configuration.damage_strictness.value,
+            victory_condition=filtered_games[patches.player_index].victory_condition,
+            flatten_to_set_on_patch=filtered_games[patches.player_index].region_list.flatten_to_set_on_patch,
+        )
+        for patches in new_patches
+    ]
+
     try:
         new_states = await _run_resolver(
             logic,
