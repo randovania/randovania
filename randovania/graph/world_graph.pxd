@@ -24,5 +24,6 @@ cdef class BaseWorldGraphNode:
     cdef public Bitmask resource_gain_bitmask
     cdef public Bitmask dangerous_resources
     cdef public bint require_collected_to_leave
+    cdef public GraphRequirementSet requirement_to_collect
 
     cpdef bint has_all_resources(self, ResourceCollection resources)

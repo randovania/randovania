@@ -709,9 +709,9 @@ class GraphRequirementList:
             return 2
 
 
-TRIVIAL_LIST: GraphRequirementList = GraphRequirementList(None)
+TRIVIAL_LIST = cython.declare(GraphRequirementList, GraphRequirementList(None))
 TRIVIAL_LIST.freeze()
-INF: cython.float = float("inf")
+INF = cython.declare(cython.float, float("inf"))
 
 
 @cython.final
@@ -1052,12 +1052,12 @@ class GraphRequirementSet:
         return set_resources, resources_with_negate
 
 
-TRIVIAL_SET = GraphRequirementSet()
+TRIVIAL_SET = cython.declare(GraphRequirementSet, GraphRequirementSet())
 TRIVIAL_SET.add_alternative(TRIVIAL_LIST)
 TRIVIAL_SET.freeze()
 
 # No alternatives makes satisfied always return False
-IMPOSSIBLE_SET = GraphRequirementSet()
+IMPOSSIBLE_SET = cython.declare(GraphRequirementSet, GraphRequirementSet())
 IMPOSSIBLE_SET.freeze()
 
 
