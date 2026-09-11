@@ -4567,38 +4567,28 @@
                             }
                         },
                         "Door to Sic Transit (Inner Room Door Inside)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shoot a Charged Missile or Magmaul in the corner facing the door to clip out: https://youtu.be/3olw3CH3GQw?t=5",
                                 "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Charged Missile Jump"
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "ArcterraSicTransitShieldKey",
-                                            "amount": 1,
+                                            "type": "tricks",
+                                            "name": "WallClip",
+                                            "amount": 3,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Shoot a Charged Missile or Magmaul in the corner facing the door to clip out: https://youtu.be/3olw3CH3GQw?t=5",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Charged Missile Jump"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallClip",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
