@@ -1,4 +1,3 @@
-from cython.cimports.libcpp.unordered_map import unordered_map
 from cython.cimports.randovania.lib.bitmask import Bitmask
 from cython.cimports.randovania.lib.cython_helper import pvector
 
@@ -7,7 +6,9 @@ cdef class ResourceCollection:
     cdef public Bitmask resource_bitmask
     cdef pvector[int] _resource_array
     cdef dict[int, object] _existing_resources
-    cdef unordered_map[size_t, float] _damage_reduction_cache
+    cdef pvector[float] _damage_reduction_cache
+    cdef pvector[size_t] _damage_reduction_cache_gen
+    cdef size_t _damage_reduction_generation
     cdef object _resource_database
 
     cpdef void _resize_array_to_fit(self, size_t size)
