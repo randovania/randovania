@@ -1,4 +1,37 @@
-from randovania.lib.bitmask import Bitmask
+import pytest
+
+from randovania.lib.bitmask import Bitmask, pool_diagnostics
+
+
+def test_pool_is_exercised_by_bitmask_growth():
+    """The module's Pool instance should actually be used, not silently fall back to raw new/delete."""
+    before = pool_diagnostics()
+    if before is None:
+        pytest.skip("no Pool in pure-Python mode")
+
+    # Grow and shrink a bunch of bitmasks so `_masks` allocates and frees across several sizes.
+    for i in range(200):
+        bm = Bitmask.create()
+        for bit in range(0, i * 64 + 1, 64):
+            bm.set_bit(bit)
+        for bit in range(0, i * 64 + 1, 64):
+            bm.unset_bit(bit)
+
+    after = pool_diagnostics()
+    assert after is not None
+    allocations, deallocations, freelist_hits, slabs_allocated, bytes_from_slabs, large_allocations = after
+
+    assert allocations > before[0]
+    assert deallocations > before[1]
+    # Once the free lists have warmed up, later allocations should be served from them
+    # instead of the slab bump-allocator.
+    assert freelist_hits > before[2]
+    assert slabs_allocated >= before[3]
+    assert bytes_from_slabs >= before[4]
+    # `_masks` grows past the pool's 1024-byte small-object ceiling for the largest bitmasks here
+    # (i up to 199 -> ~200 mask elements -> ~1600 bytes), so some growth reallocations correctly
+    # fall through to the OS heap instead of the pool.
+    assert large_allocations >= before[5]
 
 
 def test_create_empty():

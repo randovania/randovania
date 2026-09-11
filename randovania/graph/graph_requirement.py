@@ -29,11 +29,11 @@ else:
 if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.libcpp.utility import pair
-        from cython.cimports.libcpp.vector import vector
         from cython.cimports.randovania.game_description.resources.resource_collection import (
             ResourceCollection,
         )
         from cython.cimports.randovania.lib.bitmask import Bitmask
+        from cython.cimports.randovania.lib.cython_helper import pvector as vector
 else:
     from randovania.lib.bitmask import Bitmask
     from randovania.lib.cython_helper import Pair as pair
