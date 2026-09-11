@@ -909,15 +909,22 @@
                                 }
                             },
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MissileAmmo",
-                                    "amount": 3,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Shoot Charged Missile"
                             }
                         ]
+                    }
+                }
+            },
+            "Shoot Charged Missile": {
+                "display_name": "Shoot Charged Missile",
+                "requirement": {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "MissileAmmo",
+                        "amount": 3,
+                        "negate": false
                     }
                 }
             }
@@ -1247,6 +1254,11 @@
             3,
             4
         ],
+        "WallClip": [
+            2,
+            3,
+            4
+        ],
         "MissileJump": [
             1,
             2,
@@ -1254,10 +1266,6 @@
         ],
         "Movement": [
             1,
-            3
-        ],
-        "WallClip": [
-            2,
             3
         ],
         "BombJump": [

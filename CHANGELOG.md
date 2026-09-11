@@ -35,7 +35,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Alinos
 
+- Added: Crash Site:
+  - Collecting the pickup in the Artifact Shield with a Wall Clip and either Missiles (Expert) or Magmaul (Advanced).
+  - Bypassing the force field with a Wall Clip (Expert) and either Missiles or Magmaul.
 - Fixed: Piston Hall: The pickup in the Artifact Shield now properly requires the correct Shield Key.
+
+##### Arcterra
+
+- Added: Sic Transit: Escaping the inner room with a Wall Clip (Expert) and either Missiles or Magmaul.
+
+##### Vesper Defense Outpost
+
+- Added: Weapons Complex: Collecting the pickup in the lower Artifact Shield with a Wall Clip (Advanced) and either Missiles or Magmaul.
 
 ## [11.0.0] - 2026-09-01
 
