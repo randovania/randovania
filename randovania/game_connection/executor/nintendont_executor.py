@@ -45,7 +45,12 @@ class RequestBatch:
 
     @property
     def input_bytes(self) -> int:
-        return len(self.data) + 4 * len(self.addresses)
+        return (
+            1  # operations_count
+            + 1  # address_count
+            + 4 * len(self.addresses)
+            + len(self.data)
+        )
 
     @property
     def num_validator_bytes(self) -> int:
@@ -179,42 +184,63 @@ class NintendontExecutor(BaseSocketExecutor[SocketHolder], MemoryOperationExecut
             requests.append(current_batch)
             current_batch = RequestBatch()
 
-        processes_ops = []
-        max_write_size = self._socket.max_input - 20
+        # rounded up safety buffer since splitting a write request requires a few more spare bytes
+        write_safety_buffer = 10
+        max_write_size = self._socket.max_input - write_safety_buffer
+        max_read_size = self._socket.max_output
         for i, op in enumerate(ops):
             if op.byte_count == 0:
                 continue
             op.validate_byte_sizes()
 
-            if op.read_byte_count is None and (op.write_bytes is not None and len(op.write_bytes) > max_write_size):
+            experimental = current_batch.copy()
+            experimental.add_op(op)
+
+            # If it's a write only operation and becoming too big, split the write op up into a new request
+            if op.read_byte_count is None and (
+                op.write_bytes is not None and experimental.input_bytes > max_write_size
+            ):
                 self.logger.debug(
-                    f"Operation {i} had {len(op.write_bytes)} bytes, above the limit of {max_write_size}. Splitting."
+                    f"With Operation {i} it had an input size of {experimental.input_bytes} bytes, "
+                    f"above the limit of {max_write_size}. Splitting."
                 )
-                for offset in range(0, len(op.write_bytes), max_write_size):
+
+                split_step = max_write_size - write_safety_buffer
+                for offset in range(0, len(op.write_bytes), split_step):
                     if op.offset is None:
                         address = op.address + offset
                         op_offset = None
                     else:
                         address = op.address
                         op_offset = op.offset + offset
-                    processes_ops.append(
-                        MemoryOperation(
-                            address=address,
-                            offset=op_offset,
-                            write_bytes=op.write_bytes[offset : min(offset + max_write_size, len(op.write_bytes))],
-                        )
+                    new_op = MemoryOperation(
+                        address=address,
+                        offset=op_offset,
+                        write_bytes=op.write_bytes[offset : min(offset + split_step, len(op.write_bytes))],
                     )
-            else:
-                processes_ops.append(op)
 
-        for op in processes_ops:
-            experimental = current_batch.copy()
-            experimental.add_op(op)
+                    experimental = current_batch.copy()
+                    experimental.add_op(new_op)
+                    if experimental.input_bytes > max_write_size:
+                        _new_request()
 
-            if not experimental.is_compatible_with(self._socket):
+                    current_batch.add_op(new_op)
+
+            # If its read only operation and becoming too big, put the read op into a new request
+            elif (
+                op.write_bytes is None and op.read_byte_count is not None and experimental.output_bytes > max_read_size
+            ):
+                self.logger.debug(
+                    f"With Operation {i} it had an output size of {experimental.output_bytes}, "
+                    f"above the limit of {max_read_size}. Splitting."
+                )
+
                 _new_request()
 
-            current_batch.add_op(op)
+                current_batch.add_op(op)
+            else:
+                current_batch.add_op(op)
+
             if not current_batch.is_compatible_with(self._socket):
                 raise ValueError(f"Request {op} is not compatible with current server.")
 
@@ -265,7 +291,7 @@ class NintendontExecutor(BaseSocketExecutor[SocketHolder], MemoryOperationExecut
         if self.logger.isEnabledFor(logging.DEBUG):
             log_message = "Sending requests out:\n"
             for req_index, request in enumerate(requests):
-                log_message += f"Request {req_index}\n"
+                log_message += f"Request {req_index} (Input bytes: {request.input_bytes})\n"
                 for op_index, op in enumerate(request.ops):
                     log_message += f"  Operation {op_index}: {op}\n"
             self.logger.debug(log_message)
