@@ -48,6 +48,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Weapons Complex: Collecting the pickup in the lower Artifact Shield with a Wall Clip (Advanced) and either Missiles or Magmaul.
 
+### Metroid: Samus Returns
+
+- Fixed: Items were not received in Multiworld until after a location had been collected in the game.
+
 ## [11.0.0] - 2026-09-01
 
 - **Major** - Added: Metroid Prime Hunters has been added. Shuffle the items including Artifacts and Refills, portal destinations, Force Field weaknesses, and even Shield Keys.
