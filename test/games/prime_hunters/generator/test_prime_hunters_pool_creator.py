@@ -13,7 +13,7 @@ def test_add_octoliths(prime_hunters_game_description, placed_octoliths):
     db = prime_hunters_game_description.resource_database
     pdb = prime_hunters_game_description.get_pickup_database()
     # Run
-    results = add_octoliths(prime_hunters_game_description, HuntersOctolithConfig(True, placed_octoliths))
+    results = add_octoliths(prime_hunters_game_description, HuntersOctolithConfig(True, True, placed_octoliths))
 
     # Assert
     assert results == PoolResults(
