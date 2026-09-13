@@ -1,0 +1,2915 @@
+{
+    "name": "Intro",
+    "extra": {},
+    "areas": {
+        "Landing": {
+            "default_node": "Beach",
+            "hint_features": [],
+            "extra": {
+                "level": "intro_landing",
+                "level_number": 322,
+                "environment": "jungle",
+                "total_boundings": {
+                    "x1": -22280.0,
+                    "x2": -11688.0,
+                    "y1": -26440.0,
+                    "y2": -24192.0
+                },
+                "polygon": [
+                    [
+                        -22280.0,
+                        -24192.0
+                    ],
+                    [
+                        -11688.0,
+                        -24192.0
+                    ],
+                    [
+                        -11688.0,
+                        -26440.0
+                    ],
+                    [
+                        -22280.0,
+                        -26440.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Beach": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20363.208129831175,
+                        "y": -25856.97465264486,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Or Fosfor Skip",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PostalBadge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "JuicyCoveMushroom",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PoisonToadstool",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Travel to Landing Left": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Travel to Landing Upper (1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Travel to Beach Dive Secret": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Mailbox 01: Hairy)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MailBag",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (NPC: Posterodactyl)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Wl. 03: Hairy)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Noisemaker",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Wl. 06: Fosfor Tunnel)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Creepy Cavern": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11688.0,
+                        "y": -25316.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Creepy Cavern",
+                        "node": "Travel to Landing"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Travel to Muddled Morass": {
+                            "type": "template",
+                            "data": "Can Dive"
+                        }
+                    }
+                },
+                "Travel to Landing Left": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22280.0,
+                        "y": -25834.927277431507,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Left",
+                        "node": "Travel to Landing"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Upper (1)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18537.42,
+                        "y": -24192.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Upper",
+                        "node": "Travel to Landing (1)"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Muddled Morass": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12220.402116402116,
+                        "y": -26420.16729654825,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Muddled Morass",
+                        "node": "Travel to Landing"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Beach Dive Secret": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21678.701517561356,
+                        "y": -26422.85728312097,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Beach Dive Secret",
+                        "node": "Travel to Landing"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Mailbox 01: Hairy)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16288.0,
+                        "y": -25864.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing:6175",
+                        "level": "intro_landing",
+                        "level_number": 322,
+                        "object_id": 6175,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 52,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [
+                        {
+                            "resource_type": "items",
+                            "resource_name": "MailsDelivered",
+                            "amount": 1
+                        }
+                    ],
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Fruit 31: Banana Chest)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13344.0,
+                        "y": -24552.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing:6179",
+                        "level": "intro_landing",
+                        "level_number": 322,
+                        "object_id": 6179,
+                        "vanilla_item": "reward_fruit_big",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 82,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (NPC: Posterodactyl)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18376.0,
+                        "y": -25968.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing:5622",
+                        "level": "intro_landing",
+                        "level_number": 322,
+                        "object_id": 5622,
+                        "vanilla_item": "postal_badge",
+                        "revealed_at_start": false,
+                        "tracker": "-4336,1288"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 156,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 03: Hairy)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17032.0,
+                        "y": -25904.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing:6118",
+                        "level": "intro_landing",
+                        "level_number": 322,
+                        "object_id": 6118,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "-2992,1224"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 166,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 06: Fosfor Tunnel)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13264.0,
+                        "y": -25664.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing:6029",
+                        "level": "intro_landing",
+                        "level_number": 322,
+                        "object_id": 6029,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "776,984"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 169,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Beach": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Upper (2)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12927.602922650542,
+                        "y": -24198.489292013102,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Upper",
+                        "node": "Travel to Landing (2)"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Fruit 31: Banana Chest)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Landing Creepy Cavern": {
+            "default_node": "Travel to Landing",
+            "hint_features": [],
+            "extra": {
+                "level": "intro_landing_creepy_cavern",
+                "level_number": 561,
+                "environment": "jungle",
+                "total_boundings": {
+                    "x1": -11688.0,
+                    "x2": -8832.0,
+                    "y1": -26440.0,
+                    "y2": -24192.0
+                },
+                "polygon": [
+                    [
+                        -11688.0,
+                        -24192.0
+                    ],
+                    [
+                        -8832.0,
+                        -24192.0
+                    ],
+                    [
+                        -8832.0,
+                        -26440.0
+                    ],
+                    [
+                        -11688.0,
+                        -26440.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Travel to Landing": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11688.0,
+                        "y": -25316.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing",
+                        "node": "Travel to Landing Creepy Cavern"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing Right": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Wl. 08: Fosfor Door)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Right": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8832.0,
+                        "y": -25316.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Right",
+                        "node": "Travel to Landing Creepy Cavern"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Muddled Morass": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10644.141789138508,
+                        "y": -26435.64269861643,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Muddled Morass",
+                        "node": "Travel to Landing Creepy Cavern"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Wl. 07: Fosfor Cave)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 07: Fosfor Cave)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10664.0,
+                        "y": -26104.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_creepy_cavern:707",
+                        "level": "intro_landing_creepy_cavern",
+                        "level_number": 561,
+                        "object_id": 707,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "560,1168"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 170,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Muddled Morass": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 08: Fosfor Door)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10616.0,
+                        "y": -24984.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_creepy_cavern:691",
+                        "level": "intro_landing_creepy_cavern",
+                        "level_number": 561,
+                        "object_id": 691,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "608,48"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 171,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Upper": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10956.22,
+                        "y": -24192.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Upper",
+                        "node": "Travel to Landing Creepy Cavern"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Beeline Gorilla Woods 13": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10464.0,
+                        "y": -24624.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "level": "intro_landing_creepy_cavern",
+                        "object_id": 630,
+                        "sequence": 13
+                    },
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "BeelineGorillaWoods",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Beeline Gorilla Woods",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {}
+                }
+            }
+        },
+        "Landing Left": {
+            "default_node": "Travel to Landing",
+            "hint_features": [],
+            "extra": {
+                "level": "intro_landing_left",
+                "level_number": 673,
+                "environment": "jungle",
+                "total_boundings": {
+                    "x1": -27656.0,
+                    "x2": -22280.0,
+                    "y1": -26440.0,
+                    "y2": -24192.0
+                },
+                "polygon": [
+                    [
+                        -27656.0,
+                        -24192.0
+                    ],
+                    [
+                        -22280.0,
+                        -24192.0
+                    ],
+                    [
+                        -22280.0,
+                        -26440.0
+                    ],
+                    [
+                        -27656.0,
+                        -26440.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Travel to Landing": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -22280.0,
+                        "y": -25316.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing",
+                        "node": "Travel to Landing Left"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Wl. 01: Beach Dive 1)": {
+                            "type": "template",
+                            "data": "Can Dive"
+                        }
+                    }
+                },
+                "Pickup (Wl. 01: Beach Dive 1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -23408.0,
+                        "y": -26096.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_left:91",
+                        "level": "intro_landing_left",
+                        "level_number": 673,
+                        "object_id": 91,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "-8,240"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 164,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Landing Right": {
+            "default_node": "Travel to Cave",
+            "hint_features": [],
+            "extra": {
+                "level": "intro_landing_right",
+                "level_number": 323,
+                "environment": "jungle",
+                "total_boundings": {
+                    "x1": -8832.0,
+                    "x2": -3064.0,
+                    "y1": -27184.0,
+                    "y2": -22160.0
+                },
+                "polygon": [
+                    [
+                        -8832.0,
+                        -22160.0
+                    ],
+                    [
+                        -3064.0,
+                        -22160.0
+                    ],
+                    [
+                        -3064.0,
+                        -27184.0
+                    ],
+                    [
+                        -8832.0,
+                        -27184.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Travel to Jungle (Canyon Caper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3075.9347417377503,
+                        "y": -25314.392244592484,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Jungle",
+                        "area": "Canyon Caper",
+                        "node": "Travel to Intro"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Jungle (Roots)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5935.9633977107915,
+                        "y": -22165.3775732724,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Jungle",
+                        "area": "Roots",
+                        "node": "Travel to Intro"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Creepy Cavern": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8832.0,
+                        "y": -25316.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Creepy Cavern",
+                        "node": "Travel to Landing Right"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Jungle (Canyon Caper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Chest: Tweepers)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Mailbox 04: Tweepers)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MailBag",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Scarab 37: Sootling House Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Scarab 38: Sootling House Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (NPC: Tweepers)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Wl. 10: Gorila Woods Beeline)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Beeline Gorilla Woods": {
+                            "type": "template",
+                            "data": "Can Dive"
+                        }
+                    }
+                },
+                "Pickup (Chest: Tweepers)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6552.0,
+                        "y": -25432.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_right:5065",
+                        "level": "intro_landing_right",
+                        "level_number": 323,
+                        "object_id": 5065,
+                        "vanilla_item": "wallet",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 37,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Mailbox 04: Tweepers)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6032.0,
+                        "y": -25416.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_right:4793",
+                        "level": "intro_landing_right",
+                        "level_number": 323,
+                        "object_id": 4793,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 55,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [
+                        {
+                            "resource_type": "items",
+                            "resource_name": "MailsDelivered",
+                            "amount": 1
+                        }
+                    ],
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Mailbox 06: Screech)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3920.0,
+                        "y": -26960.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_right:4798",
+                        "level": "intro_landing_right",
+                        "level_number": 323,
+                        "object_id": 4798,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 57,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [
+                        {
+                            "resource_type": "items",
+                            "resource_name": "MailsDelivered",
+                            "amount": 1
+                        }
+                    ],
+                    "connections": {
+                        "Travel to Cave": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Scarab 37: Sootling House Upper)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5296.0,
+                        "y": -26328.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_right:4607",
+                        "level": "intro_landing_right",
+                        "level_number": 323,
+                        "object_id": 4607,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 88,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Scarab 38: Sootling House Lower)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5272.0,
+                        "y": -26464.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_right:5098",
+                        "level": "intro_landing_right",
+                        "level_number": 323,
+                        "object_id": 5098,
+                        "vanilla_item": "reward_fruit_big",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 89,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (NPC: Tweepers)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5776.0,
+                        "y": -25456.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_right:4380",
+                        "level": "intro_landing_right",
+                        "level_number": 323,
+                        "object_id": 4380,
+                        "vanilla_item": "reward_fruit_big",
+                        "revealed_at_start": false,
+                        "tracker": "5744,776"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 146,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 10: Gorila Woods Beeline)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7192.0,
+                        "y": -24888.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_right:4993",
+                        "level": "intro_landing_right",
+                        "level_number": 323,
+                        "object_id": 4993,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "4328,208"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 173,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Cave": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3081.43,
+                        "y": -27077.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Cave",
+                        "area": "Abyssal Access",
+                        "node": "Travel to Intro"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Screetchs Lair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Beeline Gorilla Woods 14": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8272.0,
+                        "y": -24328.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "level": "intro_landing_right",
+                        "object_id": 4361,
+                        "sequence": 14
+                    },
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "BeelineGorillaWoods",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Beeline Gorilla Woods",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Event - Beeline Gorilla Woods": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Beeline Gorilla Woods": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8378.31,
+                        "y": -24808.18,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "BeelineGorillaWoods",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Beeline Gorilla Woods 14": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Screetchs Lair": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4693.84,
+                        "y": -27008.92,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Cave",
+                        "area": "Screetchs Lair",
+                        "node": "Travel to Landing Right"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Jungle (Canyon Caper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Mailbox 06: Screech)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MailBag",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Travel to Cave": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Sal Quest Finished": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "BossCave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Sal Quest Finished": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4462.74,
+                        "y": -26916.76,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "SalQuestFinished",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Screetchs Lair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Landing Upper": {
+            "default_node": "Travel to Cliffside Creek",
+            "hint_features": [],
+            "extra": {
+                "level": "intro_landing_upper",
+                "level_number": 321,
+                "environment": "jungle",
+                "total_boundings": {
+                    "x1": -19040.0,
+                    "x2": -8832.0,
+                    "y1": -24192.0,
+                    "y2": -21744.0
+                },
+                "polygon": [
+                    [
+                        -19040.0,
+                        -21744.0
+                    ],
+                    [
+                        -8832.0,
+                        -21744.0
+                    ],
+                    [
+                        -8832.0,
+                        -24192.0
+                    ],
+                    [
+                        -19040.0,
+                        -24192.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Travel to Cliffside Creek": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8832.0,
+                        "y": -21952.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Hub",
+                        "area": "Cliffside Creek",
+                        "node": "Travel to Landing Upper"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Wl. 34: Fleek)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing (1)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18258.57,
+                        "y": -24181.09,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing",
+                        "node": "Travel to Landing Upper (1)"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Chest: Noisemaker)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Mailbox 03: Baldino)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MailBag",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Wl. 04: Intro 1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Behind Crystal Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Noisemaker",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Beeline Gorilla Woods 10": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Juicy Cove Mushroom)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9564.0,
+                        "y": -22248.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5394",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5394,
+                        "vanilla_item": "mushroom_2",
+                        "revealed_at_start": true,
+                        "tracker": "3044,-2424"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 0,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Poison Toadstool)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8972.0,
+                        "y": -22336.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5605",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5605,
+                        "vanilla_item": "mushroom_3",
+                        "revealed_at_start": true,
+                        "tracker": "3648,-2356"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 1,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Chest: Noisemaker)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17448.0,
+                        "y": -22392.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5733",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5733,
+                        "vanilla_item": "abilities/partyhorn",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 36,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing (1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Mailbox 03: Baldino)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17488.0,
+                        "y": -23096.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5673",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5673,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 54,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [
+                        {
+                            "resource_type": "items",
+                            "resource_name": "MailsDelivered",
+                            "amount": 1
+                        }
+                    ],
+                    "connections": {
+                        "Travel to Landing (1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Scarab 35: Mushrooms Left)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9760.0,
+                        "y": -22936.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5079",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5079,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 86,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Scarab 36: Mushrooms Right)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9792.0,
+                        "y": -21904.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:4351",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 4351,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 87,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 04: Intro 1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16832.0,
+                        "y": -23896.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5623",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5623,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "-4224,-776"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 167,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing (1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 05: Intro 2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14288.0,
+                        "y": -23936.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:3929",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 3929,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "-1680,-736"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 168,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing (2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 09: Above Fosfor)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11928.0,
+                        "y": -24016.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5745",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5745,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "680,-656"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 172,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Wl. 34: Fleek)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8928.0,
+                        "y": -22088.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_landing_upper:5382",
+                        "level": "intro_landing_upper",
+                        "level_number": 321,
+                        "object_id": 5382,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "3680,-2584"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 197,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Cliffside Creek": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Behind Crystal Block": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13116.73,
+                        "y": -22665.87,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Travel to Cliffside Creek": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Hook",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Travel to Landing (1)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Noisemaker",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Pickup (Juicy Cove Mushroom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Poison Toadstool)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Scarab 35: Mushrooms Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Scarab 36: Mushrooms Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Wl. 34: Fleek)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Hook",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Travel to Landing (2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing (2)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13042.25,
+                        "y": -24167.16,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing",
+                        "node": "Travel to Landing Upper (2)"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Wl. 05: Intro 2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Soaring Stone (Right)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12803.53,
+                        "y": -21744.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Hub",
+                        "area": "Soaring Stone",
+                        "node": "Travel to Landing Upper (Right)"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Beeline Gorilla Woods 12": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11696.0,
+                        "y": -22912.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "level": "intro_landing_upper",
+                        "object_id": 5588,
+                        "sequence": 12
+                    },
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "BeelineGorillaWoods",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Beeline Gorilla Woods",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Pickup (Wl. 09: Above Fosfor)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Creepy Cavern": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11199.5,
+                        "y": -24189.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Creepy Cavern",
+                        "node": "Travel to Landing Upper"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
+                },
+                "Travel to Soaring Stone (Left)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16479.86,
+                        "y": -21763.91,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Hub",
+                        "area": "Soaring Stone",
+                        "node": "Travel to Landing Upper (Left)"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing (1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Beeline Gorilla Woods 10": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16616.0,
+                        "y": -22232.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "level": "intro_landing_upper",
+                        "object_id": 5307,
+                        "sequence": 10
+                    },
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "BeelineGorillaWoods",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Beeline Gorilla Woods",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Travel to Landing (1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Beeline Gorilla Woods 11": {
+                    "node_type": "teleporter_network",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12320.0,
+                        "y": -21856.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "level": "intro_landing_upper",
+                        "object_id": 5301,
+                        "sequence": 11
+                    },
+                    "valid_starting_location": false,
+                    "is_unlocked": {
+                        "type": "resource",
+                        "data": {
+                            "type": "events",
+                            "name": "BeelineGorillaWoods",
+                            "amount": 1,
+                            "negate": false
+                        }
+                    },
+                    "network": "Beeline Gorilla Woods",
+                    "requirement_to_activate": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": []
+                        }
+                    },
+                    "connections": {
+                        "Behind Crystal Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Muddled Morass": {
+            "default_node": "Travel to Secret Sarcophagus",
+            "hint_features": [],
+            "extra": {
+                "level": "intro_muddled_morass",
+                "level_number": 856,
+                "environment": "jungle",
+                "total_boundings": {
+                    "x1": -18288.0,
+                    "x2": -8832.0,
+                    "y1": -28232.0,
+                    "y2": -26440.0
+                },
+                "polygon": [
+                    [
+                        -18288.0,
+                        -26440.0
+                    ],
+                    [
+                        -8832.0,
+                        -26440.0
+                    ],
+                    [
+                        -8832.0,
+                        -28232.0
+                    ],
+                    [
+                        -18288.0,
+                        -28232.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Travel to Landing": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12202.104139991465,
+                        "y": -26440.545454545456,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing",
+                        "node": "Travel to Muddled Morass"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing Creepy Cavern": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Dive"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Vacuum"
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Chest: Fosfor Cave Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hook",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Dive"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Fosfor Skip would require none of the Mushrooms but it is also inaccurate because you only need one of them but the other is already consumed by entering this region from the vanilla path.",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PoisonToadstool",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "JuicyCoveMushroom",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Mailbox 02: Fosfor)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hook",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Dive"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MailBag",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Travel to Secret Sarcophagus": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Travel to Landing Creepy Cavern": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10629.119595224889,
+                        "y": -26440.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing Creepy Cavern",
+                        "node": "Travel to Muddled Morass"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "template",
+                            "data": "Can Dive"
+                        }
+                    }
+                },
+                "Pickup (Chest: Fosfor Cave Left)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -17352.0,
+                        "y": -26824.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_muddled_morass:768",
+                        "level": "intro_muddled_morass",
+                        "level_number": 856,
+                        "object_id": 768,
+                        "vanilla_item": "wallet",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 48,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "template",
+                            "data": "Can Dive"
+                        }
+                    }
+                },
+                "Pickup (Mailbox 02: Fosfor)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14448.0,
+                        "y": -27128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_muddled_morass:99",
+                        "level": "intro_muddled_morass",
+                        "level_number": 856,
+                        "object_id": 99,
+                        "vanilla_item": "reward_fruit_medium",
+                        "revealed_at_start": false
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 53,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [
+                        {
+                            "resource_type": "items",
+                            "resource_name": "MailsDelivered",
+                            "amount": 1
+                        }
+                    ],
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "template",
+                            "data": "Can Dive"
+                        }
+                    }
+                },
+                "Travel to Secret Sarcophagus": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12470.84,
+                        "y": -28228.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Jungle",
+                        "area": "Secret Sarcophagus",
+                        "node": "Travel to Muddled Morass"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Beach Dive Secret": {
+            "default_node": "Travel to Landing",
+            "hint_features": [],
+            "extra": {
+                "level": "intro_secret",
+                "level_number": 349,
+                "environment": "jungle",
+                "total_boundings": {
+                    "x1": -27656.0,
+                    "x2": -18288.0,
+                    "y1": -30408.0,
+                    "y2": -26440.0
+                },
+                "polygon": [
+                    [
+                        -27656.0,
+                        -26440.0
+                    ],
+                    [
+                        -18288.0,
+                        -26440.0
+                    ],
+                    [
+                        -18288.0,
+                        -30408.0
+                    ],
+                    [
+                        -27656.0,
+                        -30408.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Travel to Landing": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21619.239557642955,
+                        "y": -26440.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "Travel",
+                    "default_connection": {
+                        "region": "Intro",
+                        "area": "Landing",
+                        "node": "Travel to Beach Dive Secret"
+                    },
+                    "default_dock_weakness": "Open",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Wl. 02: Beach Dive 2)": {
+                            "type": "template",
+                            "data": "Can Dive"
+                        }
+                    }
+                },
+                "Pickup (Wl. 02: Beach Dive 2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20720.0,
+                        "y": -26768.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "intro_secret:41",
+                        "level": "intro_secret",
+                        "level_number": 349,
+                        "object_id": 41,
+                        "vanilla_item": "wickerling",
+                        "revealed_at_start": false,
+                        "tracker": "-1392,96"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 165,
+                    "location_category": "minor",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Travel to Landing": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
