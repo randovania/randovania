@@ -92,15 +92,35 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid: Zero Mission",
     development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=["starter_preset.rdvpreset"],
-    faq=[],
+    faq=[
+        (
+            "Which versions of Zero Mission are supported?",
+            "Only the USA version of Zero Mission is supported with no current plans to support additional versions.",
+        ),
+        (
+            "I saved in a place I can't get out of, am I softlocked?",
+            'You can use the "Warp to Start" function in the pause menu by pressing L and confirming. '
+            "This will place you back at your start location with everything collected since your last save. "
+            "Please note that this is never logical.",
+        ),
+        (
+            "How do the Suit upgrades interact?",
+            "Each suit collected provides additional reduction to enemy damage "
+            "and provides unique resistances to environmental damage as described below.\n"
+            "- Varia - provides immunity to Heat and Weak Acid, increased resistance to Lava and Strong Acid.\n"
+            "- Gravity - provides increased resistance to all environmental types.\n"
+            "- Both - provides immunity to Lava and additional resistance to Strong Acid.\n\n"
+            "Gravity also provides free movement in all liquids.",
+        ),
+    ],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
-            "Everything",
-            "Nothing",
+            "All items",
+            "Starting Locations",
         ),
         need_to_play=(
-            "A Nintendo Virtual Boy",
-            "Your original Virtual Boy Game Cartridge",
+            "A ROM of Metroid Zero Mission (USA)",
+            "A Gameboy Advance Emulator (recommended mGBA or Bizhawk)",
         ),
     ),
     hash_words=_hash_words(),
