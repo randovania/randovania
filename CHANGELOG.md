@@ -26,10 +26,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime Hunters
 
+- **MAJOR** - Added: It is now possible to shuffle Octoliths anywhere in the game instead of being forced to only be in the Biodefense Chambers.
 - Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
 - Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
 - Fixed: Sic Transit: The scan door will now unlock in the post-boss layers if the shuffled Shield Key is collected.
 - Fixed: Alinos Perch: The force field no longer despawns after defeating Cretaphid v3.
+- Fixed: It is no longer possible to accidentally skip certain triggers when collecting certain items.
 
 #### Logic Database
 
