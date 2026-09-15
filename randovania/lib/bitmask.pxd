@@ -1,9 +1,10 @@
 from cython.cimports.libcpp.vector import vector
+from cython.cimports.randovania.lib.cython_helper import pvector
 cimport cython
 
 @cython.final
 cdef class Bitmask:
-    cdef public vector[ulonglong] _masks
+    cdef pvector[ulonglong] _masks
 
     @staticmethod
     cdef Bitmask create_native()
