@@ -15,9 +15,12 @@ from randovania.interface_common.preset_manager import PresetManager
 @pytest.mark.parametrize(
     ("octoliths"),
     [
-        HuntersOctolithConfig(True, False, 8),
-        HuntersOctolithConfig(True, False, 4),
-        HuntersOctolithConfig(True, False, 0),
+        HuntersOctolithConfig(True, 8),
+        HuntersOctolithConfig(True, 4),
+        HuntersOctolithConfig(True, 0),
+        HuntersOctolithConfig(False, 8),
+        HuntersOctolithConfig(False, 4),
+        HuntersOctolithConfig(False, 0),
     ],
 )
 def test_hunters_format_params(octoliths) -> None:
@@ -32,10 +35,10 @@ def test_hunters_format_params(octoliths) -> None:
     # Run
     result = RandovaniaGame.METROID_PRIME_HUNTERS.data.layout.preset_describer.format_params(configuration)
 
-    if octoliths.prefer_anywhere:
-        octoliths_where = "Place at any item location"
-    else:
+    if octoliths.prefer_bosses:
         octoliths_where = "Prefers Bosses"
+    else:
+        octoliths_where = "Place at any item location"
 
     # Assert
     assert dict(result) == {

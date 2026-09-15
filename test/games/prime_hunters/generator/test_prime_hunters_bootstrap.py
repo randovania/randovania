@@ -16,9 +16,9 @@ from randovania.generator.pickup_pool import pool_creator
 @pytest.mark.parametrize(
     ("octoliths", "expected"),
     [
-        (HuntersOctolithConfig(True, False, 8), [0, 1, 16, 17, 33, 34, 45, 46]),
-        (HuntersOctolithConfig(True, False, 4), [1, 16, 33, 34]),
-        (HuntersOctolithConfig(False, False, 0), []),
+        (HuntersOctolithConfig(True, 8), [0, 1, 16, 17, 33, 34, 45, 46]),
+        (HuntersOctolithConfig(True, 4), [1, 16, 33, 34]),
+        (HuntersOctolithConfig(False, 0), []),
     ],
 )
 def test_assign_pool_results_predetermined(
@@ -45,9 +45,9 @@ def test_assign_pool_results_predetermined(
 @pytest.mark.parametrize(
     "octoliths",
     [
-        (HuntersOctolithConfig(False, True, 8)),
-        (HuntersOctolithConfig(True, True, 4)),
-        (HuntersOctolithConfig(True, True, 2)),
+        (HuntersOctolithConfig(True, 8)),
+        (HuntersOctolithConfig(True, 4)),
+        (HuntersOctolithConfig(True, 2)),
     ],
 )
 def test_assign_pool_results_prefer_anywhere(prime_hunters_game_description, prime_hunters_configuration, octoliths):

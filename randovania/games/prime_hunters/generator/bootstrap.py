@@ -45,7 +45,7 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
     def assign_pool_results(
         self, rng: Random, configuration: HuntersConfiguration, patches: GamePatches, pool_results: PoolResults
     ) -> GamePatches:
-        if not configuration.octoliths.prefer_anywhere:
+        if configuration.octoliths.prefer_bosses:
             pickups_to_preplace = [
                 pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "octolith"
             ]

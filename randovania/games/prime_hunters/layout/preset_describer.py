@@ -18,22 +18,14 @@ if TYPE_CHECKING:
 
 def describe_objective(octoliths: HuntersOctolithConfig) -> list[dict[str, bool]]:
     has_octoliths = octoliths.placed_octoliths > 0
-    if has_octoliths and octoliths.prefer_anywhere:
+    placement = "Prefers Bosses" if octoliths.prefer_bosses else "Place at any item location"
+    if has_octoliths:
         return [
             {
                 f"{octoliths.placed_octoliths} Octoliths": True,
             },
             {
-                "Place at any item location": octoliths.prefer_anywhere,
-            },
-        ]
-    elif has_octoliths:
-        return [
-            {
-                f"{octoliths.placed_octoliths} Octoliths": True,
-            },
-            {
-                "Prefers Bosses": octoliths.prefer_bosses,
+                placement: octoliths.prefer_bosses or True,
             },
         ]
     else:

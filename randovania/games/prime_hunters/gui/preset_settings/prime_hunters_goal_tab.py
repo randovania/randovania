@@ -51,7 +51,7 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
             return
 
         def edit(config: HuntersOctolithConfig) -> HuntersOctolithConfig:
-            return dataclasses.replace(config, prefer_anywhere=False)
+            return dataclasses.replace(config, prefer_bosses=True)
 
         self._edit_config(edit)
 
@@ -60,13 +60,7 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
             return
 
         def edit(config: HuntersOctolithConfig) -> HuntersOctolithConfig:
-            return dataclasses.replace(config, prefer_anywhere=True)
-
-        self._edit_config(edit)
-
-    def _on_prefer_bosses(self, value: bool) -> None:
-        def edit(config: HuntersOctolithConfig) -> HuntersOctolithConfig:
-            return dataclasses.replace(config, prefer_bosses=value)
+            return dataclasses.replace(config, prefer_bosses=False)
 
         self._edit_config(edit)
 
@@ -81,6 +75,6 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
     def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, HuntersConfiguration)
         octoliths = preset.configuration.octoliths
-        self.free_placement_radiobutton.setChecked(octoliths.prefer_anywhere)
-        self.restrict_placement_radiobutton.setChecked(not octoliths.prefer_anywhere)
+        self.free_placement_radiobutton.setChecked(not octoliths.prefer_bosses)
+        self.restrict_placement_radiobutton.setChecked(octoliths.prefer_bosses)
         self.placed_slider.setValue(octoliths.placed_octoliths)

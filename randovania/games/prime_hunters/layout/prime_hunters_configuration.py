@@ -13,7 +13,6 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 @dataclasses.dataclass(frozen=True)
 class HuntersOctolithConfig(BitPackDataclass, JsonDataclass):
     prefer_bosses: bool
-    prefer_anywhere: bool
     placed_octoliths: int = dataclasses.field(metadata={"min": 0, "max": 8, "precision": 1})
 
 
