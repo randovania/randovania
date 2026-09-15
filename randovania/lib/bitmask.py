@@ -18,15 +18,12 @@ else:
 
 if cython.compiled:
     if not typing.TYPE_CHECKING:
-        from cython.cimports.libcpp.bit import popcount
         from cython.cimports.libcpp.vector import vector
-        from cython.cimports.randovania.lib.cython_helper import pool, pvector
+        from cython.cimports.randovania.lib.bitmask import BitmaskData
+        from cython.cimports.randovania.lib.cython_helper import pool
 else:
-    from randovania.lib.cython_helper import Vector as vector
-    from randovania.lib.cython_helper import popcount
-
-    # Pure mode has no pool; both spellings are the same list-backed shim.
-    pvector = vector
+    if typing.TYPE_CHECKING:
+        from randovania.lib.cython_helper import Vector as vector
 
     def pool() -> typing.NoReturn:
         raise NotImplementedError  # unused; exists only for mypy
@@ -53,12 +50,18 @@ if cython.compiled:
     @cython.final
     @cython.cclass
     class Bitmask:
+        """Python-visible wrapper around `BitmaskData`, a plain C++ value.
+
+        Used for long-lived, rarely-copied bitmasks (`ResourceCollection.resource_bitmask`).
+        `GraphRequirementList` embeds `BitmaskData` directly instead, to stay GC-free; reach its
+        raw value through `.data` when comparing against one of those (see graph_requirement.py).
+        """
+
         if typing.TYPE_CHECKING:
             # Declared in bitmask.pxd; repeated here just so mypy knows it exists.
-            _masks: pvector[cython.ulonglong]
+            data: BitmaskData
 
-        def __init__(self) -> None:
-            pass  # `_masks` default-constructs empty; always built via create()/create_native()
+        # `data` default-constructs empty; always built via create()/create_native()
 
         @classmethod
         def create(cls) -> Bitmask:
@@ -74,140 +77,60 @@ if cython.compiled:
 
         @cython.ccall
         def equals_to(self, other: Bitmask) -> cython.bint:
-            if self._masks.size() != other._masks.size():
-                return False
-
-            for idx in range(self._masks.size()):
-                if self._masks[idx] != other._masks[idx]:
-                    return False
-
-            return True
+            return self.data.equals_to(other.data)
 
         def __hash__(self) -> cython.int:
-            result: cython.ulonglong = 0
-            for idx in range(self._masks.size()):
-                result ^= self._masks[idx]
-            return hash(result)
+            return hash(self.data.hash_value())
+
+        @cython.ccall
+        def hash_value(self) -> cython.ulonglong:
+            return self.data.hash_value()
 
         @cython.ccall
         def set_bit(self, index: cython.longlong) -> cython.void:
-            one: cython.ulonglong = 1
-
-            arr_idx: cython.size_t = index >> 6
-            bit_idx: cython.ulonglong = index & 63
-            if arr_idx >= self._masks.size():
-                for _ in range(arr_idx - self._masks.size() + 1):
-                    self._masks.push_back(0)
-
-            self._masks[arr_idx] |= one << bit_idx
+            self.data.set_bit(index)
 
         @cython.ccall
         def unset_bit(self, index: cython.longlong) -> cython.void:
-            one: cython.ulonglong = 1
-
-            arr_idx: cython.size_t = index >> 6
-            if arr_idx < self._masks.size():
-                bit_idx: cython.ulonglong = index & 63
-                mask: cython.ulonglong = one << bit_idx
-                if self._masks[arr_idx] & mask:
-                    self._masks[arr_idx] -= mask
-
-                    while not self._masks.empty() and self._masks.back() == 0:
-                        self._masks.pop_back()
+            self.data.unset_bit(index)
 
         @cython.ccall
         @cython.inline
         def is_set(self, index: cython.longlong) -> cython.bint:
-            one: cython.ulonglong = 1
-
-            arr_idx: cython.size_t = index >> 6
-            if arr_idx < self._masks.size():
-                bit_idx: cython.ulonglong = index & 63
-                mask: cython.ulonglong = one << bit_idx
-                return self._masks[arr_idx] & mask != 0
-            else:
-                return False
+            return self.data.is_set(index)
 
         @cython.ccall
         def union(self, other: Bitmask) -> cython.void:
             """For every bit set in other, also set in self"""
-            idx: cython.size_t
-            last_shared: cython.size_t = min(self._masks.size(), other._masks.size())
+            self.data.union(other.data)
 
-            if other._masks.size() > self._masks.size():
-                for idx in range(self._masks.size(), other._masks.size()):
-                    self._masks.push_back(other._masks[idx])
-
-            for idx in range(last_shared):
-                self._masks[idx] |= other._masks[idx]
-
-        @cython.locals(idx=cython.size_t)
         @cython.ccall
         def share_at_least_one_bit(self, other: Bitmask) -> cython.bint:
-            last_shared: cython.size_t = min(self._masks.size(), other._masks.size())
-            for idx in range(last_shared):
-                if self._masks[idx] & other._masks[idx]:
-                    return True
+            return self.data.share_at_least_one_bit(other.data)
 
-            return False
-
-        @cython.locals(idx=cython.size_t, self_mask=cython.ulonglong, other_mask=cython.ulonglong)
         @cython.ccall
         # @cython.exceptval(check=False)
         def is_subset_of(self, other: Bitmask) -> cython.bint:
-            if self._masks.size() > other._masks.size():
-                return False
-
-            for idx in range(self._masks.size()):
-                self_mask = self._masks[idx]
-                other_mask = other._masks[idx]
-                if self_mask & other_mask != self_mask:
-                    return False
-
-            return True
+            return self.data.is_subset_of(other.data)
 
         @cython.ccall
         def get_set_bits(self) -> vector[cython.size_t]:
             """Gets a list of all set bit indices."""
-            result: vector[cython.size_t] = vector[cython.size_t]()
-            # For non-Cython callers, this results in a regular list
-
-            idx: cython.size_t
-            for idx in range(self._masks.size()):
-                mask: cython.ulonglong = self._masks[idx]
-                if mask != 0:
-                    # For each 64-bit chunk, find all set bits
-                    base_bit_index: cython.longlong = idx * 64
-                    bit_pos: cython.int = 0
-                    temp_mask: cython.ulonglong = mask
-
-                    while temp_mask != 0:
-                        if temp_mask & 1:
-                            result.push_back(base_bit_index + bit_pos)
-                        temp_mask >>= 1
-                        bit_pos += 1
-
-            return result
+            # mypy's BitmaskData stand-in returns list[int], not a std::vector.
+            return self.data.get_set_bits()  # type: ignore[return-value]
 
         @cython.ccall
         def num_set_bits(self) -> cython.int:
-            result: cython.int = 0
-
-            # Use compiler built-in for popcount
-            for idx in range(self._masks.size()):
-                mask: cython.ulonglong = self._masks[idx]
-                result += popcount(mask)
-
-            return result
+            return self.data.num_set_bits()
 
         @cython.ccall
         def is_empty(self) -> cython.bint:
-            return self._masks.empty()
+            return self.data.is_empty()
 
         @cython.ccall
         def copy(self) -> Bitmask:
             result: Bitmask = Bitmask.__new__(Bitmask)
-            result._masks = self._masks
+            result.data = self.data.copy()
             return result
 else:
 
@@ -234,6 +157,15 @@ else:
 
         def __hash__(self) -> cython.int:
             return hash(self._mask)
+
+        def hash_value(self) -> int:
+            return self._mask
+
+        @property
+        def data(self) -> typing.Self:
+            # Compiled mode stores masks in a separate BitmaskData value, reached via `.data`;
+            # pure mode's BitmaskInt already is that value, so `.data` is just itself.
+            return self
 
         def set_bit(self, index: int) -> None:
             self._mask |= 1 << index
@@ -280,4 +212,5 @@ else:
             return self.__class__(self._mask)
 
     Bitmask = BitmaskInt  # type: ignore[assignment, misc]
+    BitmaskData = BitmaskInt
     PyObject = object
