@@ -25,7 +25,7 @@ def describe_objective(octoliths: HuntersOctolithConfig) -> list[dict[str, bool]
                 f"{octoliths.placed_octoliths} Octoliths": True,
             },
             {
-                placement: octoliths.prefer_bosses or True,
+                placement: True,
             },
         ]
     else:
