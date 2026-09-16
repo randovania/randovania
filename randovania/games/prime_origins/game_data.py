@@ -58,12 +58,7 @@ def _hints() -> randovania.game.hints.GameHints:
 
     return randovania.game.hints.GameHints(
         hint_distributor=generator.MPOHintDistributor(),
-        specific_pickup_hints={
-            "victory_key": randovania.game.hints.SpecificHintDetails(
-                long_name="Victory Key",
-                description="This controls how precise the hint for the Victory Key is.",
-            )
-        },
+        specific_pickup_hints={},
     )
 
 
@@ -96,7 +91,19 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     long_name="Metroid Prime Origins",
     development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=["starter_preset.rdvpreset"],
-    faq=[],
+    faq=[
+        (
+            "What version of the game can I randomize?",
+            "We currently only support the 1.0.4 Windows VM build. We plan to eventually support the latest VM build "
+            "on Windows, Mac and Linux.",
+        ),
+        (
+            "What modes can I play?",
+            "You can only use the in-game Remix mode. In the preset's Goals tab, you can set the number of required "
+            "artifacts (zero to twelve) and add requirements to defeat all bosses and minibosses. In this way, you "
+            "can set your clear conditions to be classic mode, remix mode, a combination of both or neither!",
+        ),
+    ],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
             "Everything",
