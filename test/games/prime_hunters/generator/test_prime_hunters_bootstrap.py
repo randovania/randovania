@@ -45,13 +45,15 @@ def test_assign_pool_results_predetermined(
 @pytest.mark.parametrize(
     "octoliths",
     [
-        (HuntersOctolithConfig(True, 8)),
-        (HuntersOctolithConfig(True, 4)),
-        (HuntersOctolithConfig(True, 2)),
+        (HuntersOctolithConfig(False, 8)),
+        (HuntersOctolithConfig(False, 4)),
+        (HuntersOctolithConfig(False, 2)),
     ],
 )
 def test_assign_pool_results_prefer_anywhere(prime_hunters_game_description, prime_hunters_configuration, octoliths):
-    prime_hunters_configuration = dataclasses.replace(prime_hunters_configuration, octoliths=octoliths)
+    prime_hunters_configuration = dataclasses.replace(
+        prime_hunters_configuration, octoliths=octoliths, shuffle_shield_keys=True
+    )
     patches = GamePatches.create_from_game(prime_hunters_game_description, 0, prime_hunters_configuration)
     pool_results = pool_creator.calculate_pool_results(prime_hunters_configuration, patches.game)
     initial_starting_place = copy(pool_results.to_place)

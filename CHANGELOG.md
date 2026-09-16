@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
 - Fixed: Sic Transit: The scan door will now unlock in the post-boss layers if the shuffled Shield Key is collected.
 - Fixed: Alinos Perch: The force field no longer despawns after defeating Cretaphid v3.
-- Fixed: It is no longer possible to accidentally skip certain triggers when collecting certain items.
+- Fixed: It is no longer possible to skip activating triggers when collecting certain pickups.
 
 #### Logic Database
 
