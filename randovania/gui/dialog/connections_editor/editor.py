@@ -214,8 +214,14 @@ class CountedResourceEditor(ResourceEditor):
 
 
 class TrickResourceEditor(ResourceEditor):
-    def __init__(self, db: ResourceDatabase, parent: QWidget) -> None:
-        super().__init__(db, parent, "Trick", ResourceType.TRICK)
+    def __init__(
+        self,
+        db: ResourceDatabase,
+        parent: QWidget,
+        display_name: str = "Trick",
+        resource_type: ResourceType = ResourceType.TRICK,
+    ) -> None:
+        super().__init__(db, parent, display_name, resource_type)
 
         difficulties = list(iterate_enum(LayoutTrickLevel))[1:]  # Discard LayoutTrickLevel.DISABLED
         self._combo_difficulty = self._create_combo_with_data(difficulties, lambda level: level.long_name)

@@ -68,26 +68,26 @@ class ConnectionsEditorController(QObject):
         self._combo_type.currentIndexChanged.connect(self._on_type_combo_changed)
 
     def _build_editors(self) -> None:
-        def has_resource(resource_type: ResourceType) -> bool:
-            return len(self._db.get_by_type(resource_type)) > 0
-
         editors: list[Editor] = [ArrayEditor(self._db, self._stacked_widget)]
+        resource_type_to_editor = {
+            ResourceType.ITEM: CountedResourceEditor,
+            ResourceType.EVENT: SimpleResourceEditor,
+            ResourceType.TRICK: TrickResourceEditor,
+            ResourceType.DAMAGE: CountedResourceEditor,
+            ResourceType.VERSION: SimpleResourceEditor,
+            ResourceType.MISC: SimpleResourceEditor,
+        }
 
-        if has_resource(ResourceType.ITEM):
-            editors.append(CountedResourceEditor(self._db, self._stacked_widget, "Item", ResourceType.ITEM))
-        if has_resource(ResourceType.EVENT):
-            editors.append(SimpleResourceEditor(self._db, self._stacked_widget, "Event", ResourceType.EVENT))
-        if has_resource(ResourceType.TRICK):
-            editors.append(TrickResourceEditor(self._db, self._stacked_widget))
-        if has_resource(ResourceType.DAMAGE):
-            editors.append(CountedResourceEditor(self._db, self._stacked_widget, "Damage", ResourceType.DAMAGE))
-        if has_resource(ResourceType.VERSION):
-            editors.append(SimpleResourceEditor(self._db, self._stacked_widget, "Version", ResourceType.VERSION))
-        if has_resource(ResourceType.MISC):
-            editors.append(SimpleResourceEditor(self._db, self._stacked_widget, "Misc", ResourceType.MISC))
-        if len(self._db.requirement_template) > 0:
+        # Resource Editors
+        for res_type, editor_cls in resource_type_to_editor.items():
+            if self._db.get_by_type(res_type):
+                editors.append(editor_cls(self._db, self._stacked_widget, res_type.name.title(), res_type))
+
+        # Template Editor
+        if self._db.requirement_template:
             editors.append(TemplateEditor(self._db, self._stacked_widget))
-        # Database will always have at least one node
+
+        # Node Editor - Database will always have at least one
         editors.append(NodeEditor(self._db, self._stacked_widget, self._region_list))
 
         for editor in editors:
@@ -101,7 +101,7 @@ class ConnectionsEditorController(QObject):
     def _show_editor(self, editor: Editor) -> None:
         self._stacked_widget.setCurrentWidget(editor.widget())
 
-    def _get_editor_for(self, requirement: Requirement) -> Editor | None:
+    def _get_editor_for(self, requirement: Requirement | None) -> Editor | None:
         if requirement is None:
             return None
 
@@ -118,7 +118,7 @@ class ConnectionsEditorController(QObject):
         """
         self._active_item_index = index
         requirement: Requirement = index.data(ROLE)
-        editor: Editor | None = self._get_editor_for(requirement)
+        editor = self._get_editor_for(requirement)
         type_idx: int = -1
 
         if editor is not None:
