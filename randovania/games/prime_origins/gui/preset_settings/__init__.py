@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
+    from randovania.games.prime_origins.gui.preset_settings.prime_origins_goal_tab import PresetPrimeOriginsGoal
     from randovania.games.prime_origins.gui.preset_settings.prime_origins_patches_tab import PresetMPOPatches
     from randovania.gui.preset_settings.dock_weakness_distributor_tab import PresetDockWeaknessDistributor
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
@@ -25,6 +26,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetHints,
         PresetLocationPool,
         PresetPickupPool,
+        PresetPrimeOriginsGoal,
         PresetMPOPatches,
         *PresetDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetStartingArea,

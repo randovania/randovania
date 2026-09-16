@@ -20,3 +20,10 @@ class MPOBootstrap(Bootstrap[MPOConfiguration]):
             db.get_item("EnergyTank"),
             [db.get_item(suit) for suit in ["VariaSuit", "GravitySuit", "PhazonSuit"]],
         )
+
+    def _get_enabled_misc_resources(self, configuration, resource_database):
+        enabled_resources = set()
+
+        if configuration.main_bosses_required:
+            enabled_resources.add("GameModeRemix")
+        return enabled_resources

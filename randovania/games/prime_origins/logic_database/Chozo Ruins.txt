@@ -71,7 +71,7 @@ Extra - room_height: 1344
   > Door to Arboretum Access
       Trivial
   > Door to Sunchamber Lobby
-      Can Break Bomb Blocks
+      No Varia Suit and Can Break Bomb Blocks
 
 > Door to Sunchamber Lobby; Heals? False
   * Layers: default
@@ -1240,7 +1240,7 @@ Extra - room_height: 224
   * Extra - facing: 0
   * Extra - dest_room: cho_Main_Plaza
   > Door to Vault
-      Trivial
+      Wave Beam
 
 ----------------
 Reflecting Pool Access
@@ -1870,10 +1870,15 @@ Extra - room_height: 448
   * Extra - object_name: obj_upgrade_varia_suit
   * Extra - item_type: Varia Suit
   * Extra - is_major: major
-  > Door to Sunchamber Access
-      Trivial
   > Door to Sun Tower Access
       Trivial
+  > Event - Flaagrah Defeated
+      All of the following:
+          # Health Requirements
+          Normal Damage ≥ 200
+          Any of the following:
+              # Damage Requirements
+              Missile ≥ 20 and Can Shoot Missile and Can Use Any Beam
 
 > Door to Sunchamber Access; Heals? False
   * Layers: default
@@ -1881,8 +1886,8 @@ Extra - room_height: 448
   * Extra - instance_id: 102284
   * Extra - facing: 0
   * Extra - dest_room: cho_Sunchamber_Access
-  > Pickup (Varia Suit)
-      Trivial
+  > Event - Flaagrah Defeated
+      Missile ≥ 20 and Normal Damage ≥ 200 and Can Shoot Missile and Can Use Any Beam
 
 > Door to Sun Tower Access; Heals? False
   * Layers: default
@@ -1899,6 +1904,12 @@ Extra - room_height: 448
   * Layers: default
   * Pickup 85; Category? Major
   > Door to Sun Tower Access
+      Trivial
+
+> Event - Flaagrah Defeated; Heals? False
+  * Layers: default
+  * Event Flaagrah Defeated
+  > Pickup (Varia Suit)
       Trivial
 
 ----------------
