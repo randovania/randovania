@@ -42,7 +42,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
             game.get_resource_database_view(),
             game.get_pickup_database(),
             configuration.artifact_target,
-            configuration.artifact_minimum_progression.value,
+            configuration.artifact_minimum_progression,
         )
     )
 
@@ -62,9 +62,7 @@ def add_artifacts(
     """
     item_pool: list[PickupEntry] = []
 
-    artifacts_to_place = total.value
-
-    for i in range(artifacts_to_place):
+    for i in range(total):
         item_pool.append(
             create_generated_pickup(
                 "Chozo Artifact",
@@ -75,8 +73,6 @@ def add_artifacts(
             )
         )
 
-    first_automatic_artifact = artifacts_to_place
-
     starting = [
         create_generated_pickup(
             "Chozo Artifact",
@@ -85,7 +81,7 @@ def add_artifacts(
             name=ARTIFACTS[automatic_artifact],
             minimum_progression=artifact_minimum_progression,
         )
-        for automatic_artifact in range(first_automatic_artifact, 12)
+        for automatic_artifact in range(total, 12)
     ]
 
     return PoolResults(item_pool, {}, starting)

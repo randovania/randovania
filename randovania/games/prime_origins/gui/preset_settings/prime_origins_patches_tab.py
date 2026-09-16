@@ -21,6 +21,9 @@ class PresetMPOPatches(PresetTab[MPOConfiguration]):
         self.root_widget = QtWidgets.QWidget(self)
         self.root_layout = QtWidgets.QVBoxLayout(self.root_widget)
 
+        # self.game_mode_dropdown = QtWidgets.QDropDown(self.root_widget)
+        # self.game_mode_dropdown.setEnabled(True)
+        # self.game_mode_dropdown.setText("Game Mode")
         self.include_extra_pickups_check = QtWidgets.QCheckBox(self.root_widget)
         self.include_extra_pickups_check.setEnabled(True)
         self.include_extra_pickups_check.setText("Include Extra Pickups")

@@ -33,6 +33,31 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
             "randovania_version": f"Randovania {randovania.VERSION}",
         }
 
+    def _create_goals(self) -> dict:
+        goals = {
+            "required_artifacts": self.configuration.artifact_required,
+            "required_bosses": [],  # TODO add bosses in goal tab
+            "goal_description": f"Collect {self.configuration.artifact_required} Chozo Artifacts",
+        }
+
+        goal_reqs: list[str] = []
+
+        if self.configuration.artifact_required > 0:
+            goal_reqs.append(f"Collect {self.configuration.artifact_required} Chozo Artifacts")
+
+        if self.configuration.main_bosses_required:
+            goals["required_bosses"].extend(["Flaahgra Defeated", "Thardus Defeated", "Omega Pirate Defeated"])
+            goal_reqs.append("Defeat all main bosses")
+
+        if self.configuration.mini_bosses_required:
+            pass  # TODO add mini bosses
+
+        if len(goal_reqs) == 0:
+            goals["goal_description"] = "Reach the Artifact Temple"
+        else:
+            goals["goal_description"] = ", ".join(goal_reqs)
+        return goals
+
     def _create_starting_items(self) -> dict:
         starting_resources = self.patches.starting_resources()
         starting_dict = {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
@@ -59,6 +84,21 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
     def _create_pickup_config(
         self, pickup_list: list[ExportedPickupDetails], model_data: dict[str, dict[str, Any]]
     ) -> dict:
+        game_patches = {}
+
+        LAUNCHER_DICT = {
+            "Missile Expansion": "require_main_missiles",
+            "Power Bomb Expansion": "require_pb_detonator",
+        }
+
+        for item, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
+            key = LAUNCHER_DICT.get(item.name)
+
+            if key is None:
+                continue
+
+            game_patches[key] = state.requires_main_item
+
         items = []
         for pickup in pickup_list:
             data = model_data[pickup.name]
@@ -79,15 +119,25 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
                 "aeons": data.get("default_aeons", []),
                 "sprite": data["sprite"],
                 "fanfare": data["fanfare"],
+                "additional_items": {},
             }
 
             if "artifact_idx" in data:
                 pickup_entry["artifact_idx"] = data["artifact_idx"]
 
+            # additional item for missile pickups
             if pickup.name in ["Missile Expansion", "Missile Launcher"]:
-                pickup_entry["additional_items"] = {"Missiles": f'ds_zero("Missiles") + {quantity}'}
-            if pickup.name in ["Power Bomb Expansion", "Power Bomb Detonator"]:
-                pickup_entry["additional_items"] = {"Power Bombs": f'ds_zero("Power Bombs") + {quantity}'}
+                pickup_entry["additional_items"]["Missiles"] = f'ds_zero("Missiles") + {quantity}'
+                if pickup.name == "Missile Launcher" or not game_patches["require_main_missiles"]:
+                    pickup_entry["additional_items"]["Missile Launcher"] = "1"
+
+            # additional items for power bombs
+            if pickup.name in ["Power Bomb Expansion", "Power Bomb"]:
+                pickup_entry["additional_items"]["Power Bombs"] = f'ds_zero("Power Bombs") + {quantity}'
+                if pickup.name == "Power Bomb" or not game_patches["require_pb_detonator"]:
+                    pickup_entry["additional_items"]["Power Bomb Detonator"] = "1"
+
+            # fill current energy
             if pickup.name == "Energy Tank":
                 pickup_entry["additional_items"] = {
                     "Energy Tanks": 'ds_zero("Energy Tanks Max")',
@@ -95,12 +145,9 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
                 }
             items.append(pickup_entry)
 
-        return {
-            "items": items,
-            "require_main_missiles": False,
-            "require_pb_detonator": False,
-            "require_power_beam": False,
-        }
+        game_patches["items"] = items
+
+        return game_patches
 
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         model_data = typing.cast(
@@ -112,6 +159,7 @@ class MPOPatchDataFactory(PatchDataFactory[MPOConfiguration, MPOCosmeticPatches]
 
         return {
             "identifier": self._create_identifier(),
+            "goals": self._create_goals(),
             "starting_items": self._create_starting_items(),
             "starting_location": self._create_starting_location(),
             "pickups": self._create_pickup_config(pickup_list, model_data),

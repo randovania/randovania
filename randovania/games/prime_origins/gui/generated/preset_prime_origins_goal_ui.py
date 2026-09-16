@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
-    QSizePolicy, QSlider, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QLabel,
+    QMainWindow, QSizePolicy, QSlider, QVBoxLayout,
+    QWidget)
 
 from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
@@ -24,7 +25,7 @@ class Ui_PresetPrimeOriginsGoal(object):
     def setupUi(self, PresetPrimeOriginsGoal):
         if not PresetPrimeOriginsGoal.objectName():
             PresetPrimeOriginsGoal.setObjectName(u"PresetPrimeOriginsGoal")
-        PresetPrimeOriginsGoal.resize(383, 329)
+        PresetPrimeOriginsGoal.resize(383, 343)
         self.centralWidget = QWidget(PresetPrimeOriginsGoal)
         self.centralWidget.setObjectName(u"centralWidget")
         self.centralWidget.setMaximumSize(QSize(16777215, 16777215))
@@ -91,6 +92,22 @@ class Ui_PresetPrimeOriginsGoal(object):
 
         self.goal_layout.addLayout(self.horizontalLayout)
 
+        self.label = QLabel(self.centralWidget)
+        self.label.setObjectName(u"label")
+        self.label.setWordWrap(True)
+
+        self.goal_layout.addWidget(self.label)
+
+        self.main_bosses_checkbox = QCheckBox(self.centralWidget)
+        self.main_bosses_checkbox.setObjectName(u"main_bosses_checkbox")
+
+        self.goal_layout.addWidget(self.main_bosses_checkbox)
+
+        self.mini_bosses_checkbox = QCheckBox(self.centralWidget)
+        self.mini_bosses_checkbox.setObjectName(u"mini_bosses_checkbox")
+
+        self.goal_layout.addWidget(self.mini_bosses_checkbox)
+
         PresetPrimeOriginsGoal.setCentralWidget(self.centralWidget)
 
         self.retranslateUi(PresetPrimeOriginsGoal)
@@ -107,5 +124,8 @@ class Ui_PresetPrimeOriginsGoal(object):
 "\n"
 "This controls how many Artifacts are needed in order to unlock Impact Crater. This can be different from the amount of placed Artifacts.", None))
         self.required_slider_label.setText(QCoreApplication.translate("PresetPrimeOriginsGoal", u"0", None))
+        self.label.setText(QCoreApplication.translate("PresetPrimeOriginsGoal", u"Boss requirements.", None))
+        self.main_bosses_checkbox.setText(QCoreApplication.translate("PresetPrimeOriginsGoal", u"Require all main bosses (Flaagrah, Thardus and Omega Pirate)", None))
+        self.mini_bosses_checkbox.setText(QCoreApplication.translate("PresetPrimeOriginsGoal", u"Require all minibosses (Anything with a boss icon)", None))
     # retranslateUi
 
