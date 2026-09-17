@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Map Tracker components are now docks that can be moved around.
 - Fixed: The audit log of an async race room can now only be read by the room's creator.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Cataris
+
+- Fixed: Green EMMI Introduction: The Sensor Lock on Door to EMMI Zone West Exit Path had an unintended open requirement override.
+
 ### Metroid Fusion
 
 #### Main Deck
