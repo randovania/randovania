@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Map Tracker components are now docks that can be moved around.
 - Fixed: The audit log of an async race room can now only be read by the room's creator.
 
+### Metroid Dread
+
+- Fixed: Solo games no longer show a message about being disconnected from Randovania.
+
 ### Metroid Fusion
 
 #### Main Deck
@@ -53,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Fixed: Items were not received in Multiworld until after a location had been collected in the game.
+- Fixed: Solo games no longer show a message about being disconnected from Randovania.
 
 ## [11.0.0] - 2026-09-01
 

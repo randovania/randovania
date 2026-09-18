@@ -16,6 +16,7 @@ from randovania.games.samus_returns.exporter.joke_hints import MSR_JOKE_HINTS
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration, MSRConfiguration
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import random_lib
@@ -748,7 +749,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "lava": self.configuration.constant_lava_damage,
             },
             "objective": self._objective(self.configuration),
-            "layout_uuid": str(self.world_uuid),
+            "layout_uuid": str(self.world_uuid) if self.worlds_config.is_multiworld else str(INVALID_UUID),
             "enable_remote_lua": True,
             "reveal_map_on_start": self.cosmetic_patches.reveal_map,
         }
