@@ -87,26 +87,6 @@
                 "long_name": "Mother Brain Boss Killed",
                 "extra": {}
             },
-            "MBGate1Destroyed": {
-                "long_name": "MB Gate 1 Destroyed",
-                "extra": {}
-            },
-            "MBGate2Destroyed": {
-                "long_name": "MB Gate 2 Destroyed",
-                "extra": {}
-            },
-            "MBGate3Destroyed": {
-                "long_name": "MB Gate 3 Destroyed",
-                "extra": {}
-            },
-            "MBGate4Destroyed": {
-                "long_name": "MB Gate 4 Destroyed",
-                "extra": {}
-            },
-            "MBGate5Destroyed": {
-                "long_name": "MB Gate 5 Destroyed",
-                "extra": {}
-            },
             "Credits": {
                 "long_name": "Credits",
                 "extra": {}
@@ -282,22 +262,39 @@
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": "TODO: change this to movement - freeze and go on",
+                                    "comment": "Freeze or screw and evade",
                                     "items": [
                                         {
-                                            "type": "resource",
+                                            "type": "or",
                                             "data": {
-                                                "type": "items",
-                                                "name": "Ice Beam",
-                                                "amount": 1,
-                                                "negate": false
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Ice Beam",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Screw Attack",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": "tricks",
-                                                "name": "Combat",
+                                                "name": "Movement",
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -308,13 +305,13 @@
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": "TODO: change this to movement",
+                                    "comment": null,
                                     "items": [
                                         {
                                             "type": "resource",
                                             "data": {
                                                 "type": "tricks",
-                                                "name": "Combat",
+                                                "name": "Movement",
                                                 "amount": 3,
                                                 "negate": false
                                             }
@@ -823,6 +820,10 @@
             2
         ],
         "Combat": [
+            2,
+            3
+        ],
+        "Movement": [
             1,
             3
         ]
