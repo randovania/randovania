@@ -137,7 +137,7 @@ async def _collect_location(
             except peewee.IntegrityError:
                 pass
             log("It's nothing.")
-            return None
+        return None
 
     target_world = World.get_by_order(session.id, pickup_target.world)
 
