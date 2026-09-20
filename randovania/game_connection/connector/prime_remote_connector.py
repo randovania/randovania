@@ -548,7 +548,7 @@ class PrimeRemoteConnector(RemoteConnector):
     async def display_important_message(self, message: ImportantStatusMessage) -> None:
         final_message = message.long_name
         if message == ImportantStatusMessage.INVALID_PICKUP_INDEX:
-            final_message = "An invalid location was collected. Did you play while disconnected?"
+            final_message = "Invalid pickup location. Reset game & check Randovania for details."
 
         await self.display_arbitrary_message(final_message)
 
