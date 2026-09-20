@@ -23,14 +23,13 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
@@ -186,7 +185,7 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
     with pytest.raises(InvalidConfiguration, match=r"Invalid elevator count. Expected 22, got 0."):
         patch_data_factory._create_elevators_field(
-            empty_patches, echoes_game_description, echoes_game_description.dock_weakness_database.find_type("elevator")
+            empty_patches, echoes_game_description, echoes_game_description.dock_type_database.find_type("elevator")
         )
 
 
@@ -237,7 +236,7 @@ def test_create_elevators_field_elevators_for_a_seed(
 
     # Run
     result = patch_data_factory._create_elevators_field(
-        patches, echoes_game_description, echoes_game_description.dock_weakness_database.find_type("elevator")
+        patches, echoes_game_description, echoes_game_description.dock_type_database.find_type("elevator")
     )
 
     # Assert
@@ -614,7 +613,7 @@ def test_create_string_patches(
     # Setup
     game: GameDescription = MagicMock()
     all_patches = MagicMock()
-    player_config = PlayersConfiguration(0, {0: "you"})
+    player_config = WorldsConfiguration(0, {0: "you"})
 
     mock_item_create_hints: MagicMock = mocker.patch(
         "randovania.games.prime2.exporter.hints.create_patches_hints",
@@ -701,6 +700,7 @@ def test_generate_patcher_data(
     expected_results_filename: str,
     use_new_patcher: EchoesNewPatcher,
     monkeypatch: pytest.MonkeyPatch,
+    acceptance_check,
 ) -> None:
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
@@ -713,16 +713,9 @@ def test_generate_patcher_data(
 
     # Run
     factory = patch_data_factory.EchoesPatchDataFactory(
-        description, PlayersConfiguration(player_index, {0: "you"}), cosmetic_patches
+        description, WorldsConfiguration(player_index, {0: "you"}), cosmetic_patches
     )
     result = factory.create_data()
 
     # Assert
-    expected_results_path = test_files_dir.joinpath("patcher_data", "prime2", expected_results_filename)
-
-    # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, result)
-
-    expected_result = json_lib.read_path(expected_results_path)
-
-    assert result == expected_result
+    acceptance_check(test_files_dir.joinpath("patcher_data", "prime2", expected_results_filename), result)

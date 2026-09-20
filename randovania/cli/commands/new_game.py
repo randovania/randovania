@@ -15,7 +15,7 @@ from frozendict import frozendict
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_writer, default_database, pretty_print
 from randovania.game_description.db.area import Area
-from randovania.game_description.db.dock import DockRandoConfig, DockType, DockWeakness, DockWeaknessDatabase
+from randovania.game_description.db.dock import DockType, DockTypeDatabase, DockWeakness
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -33,7 +33,9 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase, default_base_damage_reduction
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration, StartingLocationList
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode, DockTypeState
+from randovania.layout.base.dock_weakness_distributor_configuration import (
+    DockWeaknessDistributorConfiguration,
+)
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.versioned_preset import VersionedPreset
@@ -162,12 +164,12 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
     )
 
     dock_types = [
-        DockType("Door", "Door", frozendict()),
-        DockType("Other", "Other", frozendict()),
+        DockType("Door", "Door", frozendict(), None),
+        DockType("Other", "Other", frozendict(), None),
     ]
     impossible_weak = DockWeakness(0, "Not Determined", frozendict(), Requirement.impossible(), None)
 
-    dock_weakness_database = DockWeaknessDatabase(
+    dock_type_database = DockTypeDatabase(
         dock_types,
         weaknesses={
             dock_types[0]: {"Normal": DockWeakness(0, "Normal", frozendict(), Requirement.trivial(), None)},
@@ -175,13 +177,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
                 "Not Determined": impossible_weak,
             },
         },
-        dock_rando_params={},
         default_weakness=(dock_types[1], impossible_weak),
-        dock_rando_config=DockRandoConfig(
-            force_change_two_way=False,
-            resolver_attempts=100,
-            to_shuffle_proportion=1.0,
-        ),
     )
 
     node_index = 0
@@ -220,7 +216,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
 
     game_db = GameDescription(
         game=game_enum,
-        dock_weakness_database=dock_weakness_database,
+        dock_type_database=dock_type_database,
         resource_database=resource_database,
         hint_feature_database={},
         layers=("default",),
@@ -348,13 +344,8 @@ def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, p
                 ammo_pickup_configuration=AmmoPickupConfiguration(
                     pickups_state={},
                 ),
-                dock_rando=DockRandoConfiguration(
-                    game=new_game,
-                    mode=DockRandoMode.VANILLA,
-                    types_state={
-                        dock_type: DockTypeState(new_game, dock_type.short_name, set(), set())
-                        for dock_type in gd.dock_weakness_database.dock_types
-                    },
+                dock_weakness_distributor=DockWeaknessDistributorConfiguration(
+                    types_state={},
                 ),
             ),
         )

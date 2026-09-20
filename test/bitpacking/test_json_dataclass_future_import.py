@@ -7,11 +7,14 @@ from __future__ import annotations
 
 import dataclasses
 from enum import Enum
+from typing import TYPE_CHECKING
 
 import pytest
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.lib.json_lib import JsonObject
+
+if TYPE_CHECKING:
+    from randovania.lib.json_lib import JsonObject
 
 
 class A(Enum):

@@ -27,7 +27,7 @@ def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
             (node.extra["pickup_type"] == "emmi" and artifact_config.prefer_emmi)
             or
             # or not an emmi but with major boss option
-            (not node.extra["pickup_type"] == "emmi" and artifact_config.prefer_major_bosses)
+            (node.extra["pickup_type"] != "emmi" and artifact_config.prefer_major_bosses)
         )
     )
 
@@ -55,7 +55,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled():
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("DoorLocks")
 
         if not configuration.teleporters.is_vanilla:

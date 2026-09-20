@@ -38,9 +38,10 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
     )
 
     game = filtered_database.game_description_for_layout(game_patches.configuration).get_mutable()
-    starting_state, logic = setup_resolver(game, game_patches.configuration, game_patches)
+    starting_states, logic = setup_resolver([(game, game_patches.configuration, game_patches)])
+    starting_state = starting_states[0]
 
-    nodes_by_id = {node.identifier: node for node in logic.all_nodes if node is not None}
+    nodes_by_id = {node.identifier: node for node in logic.world_specific[0].all_nodes if node is not None}
 
     def mock_state(
         node_id: NodeIdentifier,
@@ -54,9 +55,9 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
 
         return state
 
-    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, WorldGraphNode, Any]:
+    def satisfiable(node: NodeIdentifier) -> tuple[ActionPriority, int, WorldGraphNode, Any]:
         n = nodes_by_id[node]
-        return ActionPriority.EVERYTHING_ELSE, n, MagicMock()
+        return ActionPriority.EVERYTHING_ELSE, 0, n, MagicMock()
 
     logger.logger_start()
 
@@ -108,7 +109,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
     )
 
     # Complete: success
-    logger.log_complete(mock_state(keyswitch_id))
+    logger.log_complete([mock_state(keyswitch_id)])
     # Complete: failure
     logger.log_complete(None)
 
@@ -153,7 +154,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
                 " > Intro/Starting Area/Pickup (Weapon) [100/100 Energy] for [action Major "
                 "- World 0's Blue Key] [I: Blue Key, N: Intro/Starting Area/Pickup (Weapon)]",
                 "  # Satisfiable Actions",
-                "   = [EVERYTHING_ELSE] Intro/Starting Area/Lock - Door to Boss Arena",
+                "   = [World 1] [EVERYTHING_ELSE] Intro/Starting Area/Lock - Door to Boss Arena",
                 "  > Intro/Starting Area/Spawn Point [100/100 Energy] for []",
                 "   # No Satisfiable Actions",
                 "   * Rollback Intro/Starting Area/Spawn Point ",
@@ -174,7 +175,7 @@ def perform_logging(blank_game_patches: GamePatches, logger: ResolverLogger) -> 
                 " > Intro/Starting Area/Pickup (Weapon) [100/100 Energy] for [action Major "
                 "- World 0's Blue Key] [I: Blue Key, N: Intro/Starting Area/Pickup (Weapon)]",
                 "  # Satisfiable Actions",
-                "   = [EVERYTHING_ELSE] Intro/Starting Area/Lock - Door to Boss Arena",
+                "   = [World 1] [EVERYTHING_ELSE] Intro/Starting Area/Lock - Door to Boss Arena",
                 "  : Intro/Back-Only Lock Room/Door to Starting Area",
                 "  > Intro/Starting Area/Spawn Point [100/100 Energy] for []",
                 "   # No Satisfiable Actions",

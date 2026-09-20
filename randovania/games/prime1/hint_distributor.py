@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class PrimeHintDistributor(HintDistributor):
     # Makes Artifacts less likely to be hinted since gaurunteed hints already exist in Artifact Temple
     @override
-    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+    def is_pickup_interesting(self, target: PickupTarget, world_id: int, hint_node: HintNode) -> bool:
         return not target.pickup.has_hint_feature("artifact")
 
     @override

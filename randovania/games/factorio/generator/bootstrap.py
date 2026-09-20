@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import collections
-from collections.abc import Sequence
 from typing import TYPE_CHECKING, cast
 
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -15,6 +14,8 @@ from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.no_op_damage_state import NoOpDamageState
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from randovania.game_description.game_database_view import (
         GameDatabaseView,
     )

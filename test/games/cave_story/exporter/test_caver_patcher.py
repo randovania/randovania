@@ -13,9 +13,8 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import (
     MusicRandoType,
     MyChar,
 )
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib import json_lib
 
 
 @pytest.mark.parametrize(
@@ -26,8 +25,8 @@ from randovania.lib import json_lib
         "camp",
     ],
 )
-def test_create_patch_data_layout(test_files_dir, mocker, rdvgame):
-    _create_patch_data(test_files_dir, mocker, rdvgame, rdvgame, CSCosmeticPatches())
+def test_create_patch_data_layout(test_files_dir, mocker, acceptance_check, rdvgame):
+    _create_patch_data(test_files_dir, mocker, acceptance_check, rdvgame, rdvgame, CSCosmeticPatches())
 
 
 @pytest.mark.parametrize(
@@ -56,20 +55,20 @@ def test_create_patch_data_layout(test_files_dir, mocker, rdvgame):
         ),
     ],
 )
-def test_create_patch_data_cosmetic(test_files_dir, mocker, patches):
+def test_create_patch_data_cosmetic(test_files_dir, mocker, acceptance_check, patches):
     test_file, cosmetic_patches = patches
-    _create_patch_data(test_files_dir, mocker, "arthur", test_file, cosmetic_patches)
+    _create_patch_data(test_files_dir, mocker, acceptance_check, "arthur", test_file, cosmetic_patches)
 
 
-def test_create_patch_data_starting_items(test_files_dir, mocker):
-    _create_patch_data(test_files_dir, mocker, "starting", "starting", CSCosmeticPatches())
+def test_create_patch_data_starting_items(test_files_dir, mocker, acceptance_check):
+    _create_patch_data(test_files_dir, mocker, acceptance_check, "starting", "starting", CSCosmeticPatches())
 
 
-def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
+def _create_patch_data(test_files_dir, mocker, acceptance_check, in_file, out_file, cosmetic):
     # Setup
     f = test_files_dir.joinpath("log_files", "cave_story", f"{in_file}.rdvgame")
     description = LayoutDescription.from_file(f)
-    players_config = PlayersConfiguration(0, {0: "Cave Story"})
+    worlds_config = WorldsConfiguration(0, {0: "Cave Story"})
 
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
@@ -78,7 +77,7 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     )
 
     # Run
-    data = CSPatchDataFactory(description, players_config, cosmetic).create_data()
+    data = CSPatchDataFactory(description, worlds_config, cosmetic).create_data()
 
     # Expected Result
 
@@ -87,10 +86,4 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
         mychar = Path(data["mychar"])
         data["mychar"] = mychar.name
 
-    path = test_files_dir.joinpath("caver_expected_data", f"{out_file}.json")
-    expected_data = json_lib.read_path(path)
-
-    # # Uncomment the following lines to update:
-    # json_lib.write_path(path, data); assert False
-
-    assert data == expected_data
+    acceptance_check(test_files_dir.joinpath("caver_expected_data", f"{out_file}.json"), data)

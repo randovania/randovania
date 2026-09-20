@@ -12,7 +12,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.game_description.db.dock import DockWeaknessDatabase
+from randovania.game_description.db.dock import DockTypeDatabase
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -197,7 +197,7 @@ def test_basic_search_with_translator_gate(
     )
     game = GameDescription(
         RandovaniaGame.METROID_PRIME_ECHOES,
-        DockWeaknessDatabase([], {}, {}, (MagicMock(), MagicMock()), MagicMock()),
+        DockTypeDatabase([], {}, (MagicMock(), MagicMock())),
         echoes_resource_database,
         {},
         ("default",),
@@ -220,6 +220,7 @@ def test_basic_search_with_translator_gate(
     )
 
     initial_state = State(
+        0,
         resources,
         {},
         (),
@@ -233,7 +234,6 @@ def test_basic_search_with_translator_gate(
         echoes_game_patches,
         None,
         game.resource_database,
-        game.region_list,
     )
 
     def to_index(*args: Node) -> set[int]:
@@ -282,11 +282,7 @@ def test_reach_size_from_start_echoes(
     patches = generator.base_patches_factory.create_base_patches(
         layout_configuration, Random(15000), game, False, player_index=0
     )
-    graph, state = generator.bootstrap.logic_bootstrap_graph(
-        layout_configuration,
-        game,
-        patches,
-    )
+    graph, state = generator.bootstrap.logic_bootstrap_graph(layout_configuration, game, patches)
     state.resources.add_resource_gain(
         [
             (item("Combat Visor"), 1),

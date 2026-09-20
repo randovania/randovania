@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
@@ -69,8 +69,8 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 
 
 def create_stk_hints(
-    all_patches: dict[int, GamePatches],
-    players_config: PlayersConfiguration,
+    all_patches: list[GamePatches],
+    worlds_config: WorldsConfiguration,
     resource_database: ResourceDatabaseView,
     namer: HintNamer,
     hide_area: bool,
@@ -79,7 +79,7 @@ def create_stk_hints(
     Creates the string patches entries that changes the Sky Temple Gateway hint scans with hints for where
     the STK actually are.
     :param all_patches:
-    :param players_config:
+    :param worlds_config:
     :param resource_database:
     :param namer:
     :param hide_area: Should the hint include only the db?
@@ -87,7 +87,7 @@ def create_stk_hints(
     """
     resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
         all_patches,
-        players_config,
+        worlds_config,
         namer,
         hide_area,
         [resource_database.get_item(index) for index in echoes_items.SKY_TEMPLE_KEY_ITEMS],

@@ -296,10 +296,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
         else:
             self.camera_data = None
 
-        image_path = (
-            self.game.data_path.joinpath("assets", "maps", f"{area.map_name}.png") if self.game is not None else None
-        )
-        if image_path is not None and image_path.exists():
+        image_path = None
+        if self.game is not None and self.region is not None:
+            base_path = self.game.data_path.joinpath("assets", "maps", self.region.name)
+            for ext in ("webp", "png"):
+                potential_path = base_path.joinpath(f"{area.map_name}.{ext}")
+                if potential_path.is_file():
+                    image_path = potential_path
+                    break
+
+        if image_path is not None:
             self._background_image = QtGui.QImage(os.fspath(image_path))
             min_x = area.extra.get("map_min_x", 0)
             min_y = area.extra.get("map_min_y", 0)

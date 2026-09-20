@@ -36,6 +36,7 @@ def test_requirement_lists_without_satisfied_resources(
         return search.find_resource_info_with_long_name(db.item, name)
 
     state = State(
+        0,
         db.create_resource_collection(),
         {},
         (),
@@ -46,7 +47,6 @@ def test_requirement_lists_without_satisfied_resources(
         echoes_game_patches,
         None,
         db,
-        echoes_game_description.region_list,
         hint_state=None,
     )
     state.resources.add_resource_gain(
@@ -213,6 +213,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
     resources.set_resource(db.get_item("Missile"), 5)
 
     state = State(
+        0,
         resources,
         {},
         (),
@@ -226,7 +227,6 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
         echoes_game_patches,
         None,
         db,
-        echoes_game_description.region_list,
     )
 
     # Run

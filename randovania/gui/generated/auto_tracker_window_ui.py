@@ -66,18 +66,21 @@ class Ui_AutoTrackerWindow(object):
         AutoTrackerWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(AutoTrackerWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 243, 17))
+        self.menubar.setGeometry(QRect(0, 0, 243, 33))
         self.menu_options = QMenu(self.menubar)
         self.menu_options.setObjectName(u"menu_options")
-        self.menu_tracker = QMenu(self.menu_options)
-        self.menu_tracker.setObjectName(u"menu_tracker")
         self.menu_default_game = QMenu(self.menu_options)
         self.menu_default_game.setObjectName(u"menu_default_game")
+        self.menu_theme = QMenu(self.menu_options)
+        self.menu_theme.setObjectName(u"menu_theme")
+        self.menu_layout = QMenu(self.menu_options)
+        self.menu_layout.setObjectName(u"menu_layout")
         AutoTrackerWindow.setMenuBar(self.menubar)
 
         self.menubar.addAction(self.menu_options.menuAction())
-        self.menu_options.addAction(self.menu_tracker.menuAction())
         self.menu_options.addAction(self.menu_default_game.menuAction())
+        self.menu_options.addAction(self.menu_theme.menuAction())
+        self.menu_options.addAction(self.menu_layout.menuAction())
 
         self.retranslateUi(AutoTrackerWindow)
 
@@ -90,7 +93,8 @@ class Ui_AutoTrackerWindow(object):
         self.connected_game_state_label.setText("")
         self.select_game_button.setText(QCoreApplication.translate("AutoTrackerWindow", u"Connections", None))
         self.menu_options.setTitle(QCoreApplication.translate("AutoTrackerWindow", u"Options", None))
-        self.menu_tracker.setTitle(QCoreApplication.translate("AutoTrackerWindow", u"Theme", None))
         self.menu_default_game.setTitle(QCoreApplication.translate("AutoTrackerWindow", u"Default Game", None))
+        self.menu_theme.setTitle(QCoreApplication.translate("AutoTrackerWindow", u"Theme", None))
+        self.menu_layout.setTitle(QCoreApplication.translate("AutoTrackerWindow", u"Layout", None))
     # retranslateUi
 

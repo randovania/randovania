@@ -1,30 +1,18 @@
 from __future__ import annotations
 
 import typing
-from collections.abc import Sequence
-from typing import TYPE_CHECKING, Annotated, Any, Never
+from typing import TYPE_CHECKING, Any, Never
 
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-from randovania.layout.layout_description import LayoutDescription
-from randovania.network_common.async_race_room import (
-    AsyncRaceEntryData,
-    AsyncRaceRoomAdminData,
-    AsyncRaceRoomEntry,
-    AsyncRaceRoomListEntry,
-    AsyncRaceSettings,
-    RaceRoomLeaderboard,
-)
-from randovania.network_common.audit import AuditEntry
-from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
 from randovania.network_common.signals.common import TypedBytes, TypedJsonObject, args_to_sio_data
-from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
     from typing import Concatenate
 
     from randovania.lib.type_lib import AsyncCallable
     from randovania.network_client.network_client import NetworkClient
+    from randovania.network_common.multiplayer_session import MultiplayerSessionEntry, MultiplayerSessionListEntry
+    from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
     from randovania.server.server_app import ServerApp
 
 type ServerEventCallback[**P, RetT] = AsyncCallable[Concatenate[ServerApp, str, P], RetT]
@@ -228,151 +216,7 @@ class Multiplayer:
 
 
 class AsyncRace:
-    @server_signal("async_race_list_rooms")
-    @staticmethod
-    async def ListRooms(
-        sa: ServerApp,
-        sid: str,
-        limit: int | None,
-    ) -> Sequence[TypedJsonObject[AsyncRaceRoomListEntry]]:
-        raise NotImplementedError
-
-    @server_signal("async_race_create_room")
-    @staticmethod
-    async def CreateRoom(
-        sa: ServerApp,
-        sid: str,
-        layout_bin: TypedBytes[LayoutDescription],
-        settings_json: TypedJsonObject[AsyncRaceSettings],
-    ) -> TypedJsonObject[AsyncRaceRoomEntry]:
-        raise NotImplementedError
-
-    @server_signal("async_race_change_room_settings")
-    @staticmethod
-    async def ChangeRoomSettings(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        settings_json: TypedJsonObject[AsyncRaceSettings],
-    ) -> TypedJsonObject[AsyncRaceRoomEntry]:
-        raise NotImplementedError
-
     @server_signal("async_race_listen_to_room")
     @staticmethod
-    async def ListenToRoom(sa: ServerApp, sid: str, room_id: int, listen: bool) -> None: ...
-
-    @server_signal("async_race_get_room")
-    @staticmethod
-    async def GetRoom(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        password: str | None,
-    ) -> TypedJsonObject[AsyncRaceRoomEntry]:
-        raise NotImplementedError
-
-    @server_signal("async_race_refresh_room")
-    @staticmethod
-    async def RefreshRoom(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        auth_token: str,
-    ) -> TypedJsonObject[AsyncRaceRoomEntry]:
-        raise NotImplementedError
-
-    @server_signal("async_race_get_leaderboard")
-    @staticmethod
-    async def GetLeaderboard(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        auth_token: str,
-    ) -> TypedJsonObject[RaceRoomLeaderboard]:
-        raise NotImplementedError
-
-    @server_signal("async_race_get_layout")
-    @staticmethod
-    async def GetLayout(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        auth_token: str,
-    ) -> TypedBytes[LayoutDescription]:
-        raise NotImplementedError
-
-    @server_signal("async_race_get_audit_log")
-    @staticmethod
-    async def GetAuditLog(
-        sa: ServerApp, sid: str, room_id: int, auth_token: str
-    ) -> Sequence[TypedJsonObject[AuditEntry]]:
-        raise NotImplementedError
-
-    @server_signal("async_race_admin_get_admin_data")
-    @staticmethod
-    async def AdminGetAdminData(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-    ) -> TypedJsonObject[AsyncRaceRoomAdminData]:
-        raise NotImplementedError
-
-    @server_signal("async_race_admin_update_entries")
-    @staticmethod
-    async def AdminUpdateEntries(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        raw_new_entries: Sequence[TypedJsonObject[AsyncRaceEntryData]],
-    ) -> TypedJsonObject[AsyncRaceRoomEntry]:
-        raise NotImplementedError
-
-    @server_signal("async_race_join_and_export")
-    @staticmethod
-    async def JoinAndExport(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        auth_token: str,
-        cosmetic_json: TypedJsonObject[BaseCosmeticPatches],
-    ) -> dict:
-        raise NotImplementedError
-
-    @server_signal("async_race_change_state")
-    @staticmethod
-    async def ChangeState(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        new_state: str,
-    ) -> TypedJsonObject[AsyncRaceRoomEntry]:
-        raise NotImplementedError
-
-    @server_signal("async_race_get_own_proof")
-    @staticmethod
-    async def GetOwnProof(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-    ) -> tuple[Annotated[str, "submission notes"], Annotated[str, "proof url"]]:
-        raise NotImplementedError
-
-    @server_signal("async_race_submit_proof")
-    @staticmethod
-    async def SubmitProof(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-        submission_notes: str,
-        proof_url: str,
-    ) -> None:
-        raise NotImplementedError
-
-    @server_signal("async_race_get_livesplit_url")
-    @staticmethod
-    async def GetLivesplitUrl(
-        sa: ServerApp,
-        sid: str,
-        room_id: int,
-    ) -> str:
+    async def ListenToRoom(sa: ServerApp, sid: str, room_id: int, listen: bool) -> None:
         raise NotImplementedError

@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.dock import DockType, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.dock import DockType, DockTypeDatabase, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
@@ -52,7 +52,7 @@ class MinimalLogicData:
 
 class GameDescription(GameDatabaseView):
     game: RandovaniaGame
-    dock_weakness_database: DockWeaknessDatabase
+    dock_type_database: DockTypeDatabase
     resource_database: ResourceDatabase
     hint_feature_database: dict[str, HintFeature]
 
@@ -70,7 +70,7 @@ class GameDescription(GameDatabaseView):
             game=self.game,
             resource_database=self.resource_database,
             layers=self.layers,
-            dock_weakness_database=self.dock_weakness_database,
+            dock_type_database=self.dock_type_database,
             hint_feature_database=self.hint_feature_database,
             region_list=copy.deepcopy(self.region_list, memodict),
             victory_condition=self.victory_condition,
@@ -83,7 +83,7 @@ class GameDescription(GameDatabaseView):
     def __init__(
         self,
         game: RandovaniaGame,
-        dock_weakness_database: DockWeaknessDatabase,
+        dock_type_database: DockTypeDatabase,
         resource_database: ResourceDatabase,
         hint_feature_database: dict[str, HintFeature],
         layers: tuple[str, ...],
@@ -94,7 +94,7 @@ class GameDescription(GameDatabaseView):
         used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None,
     ):
         self.game = game
-        self.dock_weakness_database = dock_weakness_database
+        self.dock_type_database = dock_type_database
         self.resource_database = resource_database
         self.hint_feature_database = hint_feature_database
 
@@ -113,7 +113,7 @@ class GameDescription(GameDatabaseView):
     def get_prefilled_docks(self) -> dict[NodeIdentifier, NodeIdentifier]:
         connections: dict[NodeIdentifier, NodeIdentifier] = {}
 
-        teleporter_dock_types = self.dock_weakness_database.all_teleporter_dock_types
+        teleporter_dock_types = self.dock_type_database.all_teleporter_dock_types
         for _, _, source in self.iterate_nodes_of_type(DockNode):
             if source.dock_type in teleporter_dock_types:
                 connections[source.identifier] = source.default_connection
@@ -133,7 +133,7 @@ class GameDescription(GameDatabaseView):
                     assert isinstance(resource, TrickResourceInfo)
                     result[resource].add(resource_requirement.amount)
 
-        for dock_weakness in self.dock_weakness_database.all_weaknesses:
+        for dock_weakness in self.dock_type_database.all_weaknesses:
             process(dock_weakness.requirement)
             if dock_weakness.lock is not None:
                 process(dock_weakness.lock.requirement)
@@ -160,7 +160,7 @@ class GameDescription(GameDatabaseView):
                 game=self.game,
                 resource_database=self.resource_database,
                 layers=self.layers,
-                dock_weakness_database=self.dock_weakness_database,
+                dock_type_database=self.dock_type_database,
                 hint_feature_database=self.hint_feature_database,
                 region_list=RegionList(
                     [region.duplicate() for region in self.region_list.regions],
@@ -210,12 +210,16 @@ class GameDescription(GameDatabaseView):
         return self.starting_location
 
     @override
+    def get_dock_type_database(self) -> DockTypeDatabase:
+        return self.dock_type_database
+
+    @override
     def get_dock_types(self) -> list[DockType]:
-        return self.dock_weakness_database.dock_types
+        return self.dock_type_database.dock_types
 
     @override
     def get_dock_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
-        return self.dock_weakness_database.get_by_weakness(dock_type_name, weakness_name)
+        return self.dock_type_database.get_by_weakness(dock_type_name, weakness_name)
 
     @override
     def get_resource_database_view(self) -> ResourceDatabaseView:

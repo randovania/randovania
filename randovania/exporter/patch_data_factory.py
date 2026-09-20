@@ -13,9 +13,12 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
+    import uuid
+
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
@@ -23,7 +26,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
@@ -43,7 +46,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     """
 
     description: LayoutDescription
-    players_config: PlayersConfiguration
+    worlds_config: WorldsConfiguration
     game: GameDescription
     resource_db: ResourceDatabaseView
     pickup_db: PickupDatabase
@@ -56,23 +59,33 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     def __init__(
         self,
         description: LayoutDescription,
-        players_config: PlayersConfiguration,
+        worlds_config: WorldsConfiguration,
         cosmetic_patches: CosmeticPatches,
     ):
         self.description = description
-        self.players_config = players_config
+        self.worlds_config = worlds_config
         self.cosmetic_patches = cosmetic_patches
 
         self.pickup_db = default_database.pickup_database_for_game(self.game_enum())
 
-        self.patches = description.all_patches[players_config.player_index]
+        self.patches = description.all_patches[worlds_config.world_index]
         self.configuration = typing.cast(
-            "Configuration", description.get_preset(players_config.player_index).configuration
+            "Configuration", description.get_preset(worlds_config.world_index).configuration
         )
-        self.rng = Random(description.get_seed_for_world(players_config.player_index))
+        self.rng = Random(description.get_seed_for_world(worlds_config.world_index))
         self.game = filtered_database.game_description_for_layout(self.configuration)
         self.resource_db = self.game.get_resource_database_view()
         self.memo_data = self.create_memo_data()
+
+    @property
+    def world_uuid(self) -> uuid.UUID:
+        """A stable identifier for this world: the session-assigned uuid, or one derived from the seed
+        so solo games get a unique value too. Multiworld games exported outside a session have no
+        per-world identity to derive, so they stay invalid."""
+        own_uuid = self.worlds_config.get_own_uuid()
+        if own_uuid == INVALID_UUID and not self.worlds_config.is_multiworld:
+            return self.description.seed_uuid
+        return own_uuid
 
     def game_enum(self) -> RandovaniaGame:
         """Returns the game for which this PatchDataFactory is for."""
@@ -134,12 +147,12 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         """
         return pickup_exporter.export_all_indices(
             self.patches,
-            PickupTarget(self.create_useless_pickup(), self.players_config.player_index),
+            PickupTarget(self.create_useless_pickup(), self.worlds_config.world_index),
             self.game,
             self.rng,
             self.configuration.pickup_model_style,
             self.configuration.pickup_model_data_source,
-            pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
+            pickup_exporter.create_pickup_exporter(self.memo_data, self.worlds_config, self.game_enum()),
             self.create_visual_nothing(),
         )
 
@@ -151,11 +164,11 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     @classmethod
     def get_hint_namer(
         cls,
-        all_patches: dict[int, GamePatches],
-        players_config: PlayersConfiguration,
+        all_patches: list[GamePatches],
+        worlds_config: WorldsConfiguration,
     ) -> HintNamer:
         """Return an instance of this game's HintNamer."""
-        return cls.hint_namer_type()(all_patches, players_config)
+        return cls.hint_namer_type()(all_patches, worlds_config)
 
     @classmethod
     def hint_exporter_type(cls) -> type[HintExporter]:
@@ -165,15 +178,15 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
     @classmethod
     def get_hint_exporter(
         cls,
-        all_patches: dict[int, GamePatches],
-        players_config: PlayersConfiguration,
+        all_patches: list[GamePatches],
+        worlds_config: WorldsConfiguration,
         rng: Random,
         base_joke_hints: list[str],
         game_view: GameDatabaseView,
     ) -> HintExporter:
         """Return an instance of this game's HintExporter."""
         return cls.hint_exporter_type()(
-            cls.get_hint_namer(all_patches, players_config),
+            cls.get_hint_namer(all_patches, worlds_config),
             rng,
             base_joke_hints,
             game_view,
@@ -183,7 +196,7 @@ class PatchDataFactory[Configuration: BaseConfiguration, CosmeticPatches: BaseCo
         """Return an instance of this game's HintExporter with this PDF's specific fields."""
         return self.get_hint_exporter(
             all_patches=self.description.all_patches,
-            players_config=self.players_config,
+            worlds_config=self.worlds_config,
             rng=self.rng,
             base_joke_hints=base_joke_hints,
             game_view=self.game,

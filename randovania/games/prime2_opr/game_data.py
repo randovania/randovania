@@ -102,7 +102,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="QGOUYTAB",
+        expected_seed_hash="ZUZ57FIX",
         database_collectable_ignore_events=("Event91", "Event92", "Event97"),
     )
 
@@ -165,4 +165,5 @@ Taking the transport hologram at the center of this room.
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
 )

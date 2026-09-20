@@ -145,7 +145,7 @@ def session_update(clean_database, mocker):
     )
 
     mock_layout.all_patches = MagicMock()
-    target = mock_layout.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
+    target = mock_layout.all_patches.__getitem__.return_value.pickup_assignment.get.return_value
     target.pickup.name = "The Pickup"
 
     mocker.patch("randovania.server.database.MultiplayerSession._get_layout_description", return_value=mock_layout)
@@ -174,3 +174,37 @@ def session_update(clean_database, mocker):
     database.WorldAction.create(provider=w1, location=0, session=session, receiver=w2, time=time)
 
     return session
+
+
+@pytest.fixture
+def race_team_session(two_player_session, solo_two_world_session_layout) -> database.MultiplayerSession:
+    """
+    `two_player_session` turned into the hidden session that hosts one async race team.
+    User 1234 is the team's captain, 1235 its other member and 1238 the room's creator.
+    """
+    creator = database.User.create(id=1238, name="Race Creator")
+
+    room = database.AsyncRaceRoom.create(
+        id=1,
+        name="The Race",
+        visibility=MultiplayerSessionVisibility.VISIBLE,
+        layout_description_json=solo_two_world_session_layout.as_binary(),
+        game_details_json=json.dumps(GameDetails.from_layout(solo_two_world_session_layout).as_json),
+        creator=creator,
+        creation_date=datetime.datetime(2020, 5, 2, 10, 20, tzinfo=datetime.UTC),
+        start_date=datetime.datetime(2020, 5, 10, 0, 0, tzinfo=datetime.UTC),
+        end_date=datetime.datetime(2020, 6, 10, 0, 0, tzinfo=datetime.UTC),
+        allow_pause=True,
+    )
+    team = database.AsyncRaceTeam.create(
+        room=room,
+        name="The Team",
+        captain=database.User.get_by_id(1234),
+        join_code=database.AsyncRaceTeam.new_join_code(room),
+    )
+    for user_id in (1234, 1235):
+        database.AsyncRaceEntry.create(room=room, user=database.User.get_by_id(user_id), team=team)
+
+    two_player_session.race_team = team
+    two_player_session.save()
+    return database.MultiplayerSession.get_by_id(two_player_session.id)

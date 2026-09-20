@@ -9,7 +9,9 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
-    from randovania.games.fusion.gui.preset_settings.fusion_dock_tab import PresetFusionDocks
+    from randovania.games.fusion.gui.preset_settings.fusion_dock_weakness_distributor_tab import (
+        PresetFusionDockWeaknessDistributor,
+    )
     from randovania.games.fusion.gui.preset_settings.fusion_goal_tab import PresetFusionGoal
     from randovania.games.fusion.gui.preset_settings.fusion_patches_tab import PresetFusionPatches
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
@@ -19,7 +21,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
-    tabs = [
+    tabs: list[type[PresetTab]] = [
         PresetTrickLevel,
         PresetGeneration,
         PresetHints,
@@ -28,7 +30,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         MetroidPresetPickupPool,
         PresetFusionPatches,
         PresetMetroidStartingArea,
-        PresetFusionDocks,
+        *PresetFusionDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
     ]
 
     return tabs

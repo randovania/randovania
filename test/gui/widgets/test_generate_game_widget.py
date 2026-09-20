@@ -37,7 +37,9 @@ async def test_generate_new_layout(
     tab: GenerateGameWidget, mocker: pytest_mock.MockerFixture, has_unsupported, abort_generate, is_dev_version
 ):
     # Setup
-    mock_randint = mocker.patch("random.randint", return_value=12341234)
+    mock_seed_number = mocker.patch(
+        "randovania.gui.widgets.generate_game_mixin.random_seed_number", return_value=12341234
+    )
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning")
 
     versioned_preset = MagicMock()
@@ -80,7 +82,7 @@ async def test_generate_new_layout(
 
     if abort_generate:
         tab.generate_layout_from_permalink.assert_not_awaited()
-        mock_randint.assert_not_called()
+        mock_seed_number.assert_not_called()
     else:
         tab.generate_layout_from_permalink.assert_awaited_once_with(
             permalink=Permalink.from_parameters(
@@ -92,4 +94,4 @@ async def test_generate_new_layout(
             ),
             retries=retries,
         )
-        mock_randint.assert_called_once_with(0, 2**31)
+        mock_seed_number.assert_called_once_with()

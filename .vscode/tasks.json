@@ -44,6 +44,16 @@
             "windows": {
                 "command": "& '${command:python.interpreterPath}' -m pytest -n auto '${workspaceFolder}/test'"
             }
+        },
+        {
+            "label": "Update all generated (git-tracked) files",
+            "type": "shell",
+            "linux": {
+                "command": "${command:python.interpreterPath} -m randovania development update-committed'"
+            },
+            "windows": {
+                "command": "& '${command:python.interpreterPath}' -m randovania development update-committed"
+            }
         }
     ]
 }

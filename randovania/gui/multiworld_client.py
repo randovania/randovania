@@ -13,8 +13,8 @@ from qasync import asyncSlot
 
 from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
-from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
+from randovania.interface_common.worlds_configuration import is_uuid_multiworld
 from randovania.network_client.network_client import ConnectionState, UnableToConnect
 from randovania.network_common import error, remote_inventory
 from randovania.network_common.game_connection_status import GameConnectionStatus
@@ -87,7 +87,7 @@ class MultiworldClient(QtCore.QObject):
         sync_requests = {}
 
         for state in self.game_connection.connected_states.values():
-            if state.id == INVALID_UUID:
+            if not is_uuid_multiworld(state.id):
                 continue
 
             inventory = None
@@ -214,6 +214,10 @@ class MultiworldClient(QtCore.QObject):
                 for uid, err in result.errors.items():
                     self.logger.info("When syncing %s, received %s", uid, err)
                     self._world_sync_errors[uid] = err
+                    for state in self.game_connection.connected_states.values():
+                        if state.id == uid:
+                            await state.source.on_world_sync_error(err)
+
                 self.SyncFailure.emit()
 
             if modified_data:
@@ -230,7 +234,7 @@ class MultiworldClient(QtCore.QObject):
 
     @asyncSlot(ConnectedGameState)
     async def on_game_state_updated(self, state: ConnectedGameState) -> None:
-        if state.id == INVALID_UUID:
+        if not is_uuid_multiworld(state.id):
             return
 
         our_indices: set[int] = {i.index for i in state.collected_indices}

@@ -10,6 +10,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.fusion.generator import FusionBootstrap
 from randovania.games.fusion.layout.fusion_configuration import FusionArtifactConfig
 from randovania.generator.pickup_pool import pool_creator
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 
 
 @pytest.mark.parametrize(
@@ -62,3 +63,57 @@ def test_patch_resource_database(
     # loop through all reductions and assert that the new multiplier is what we expect
     for i, reduction in enumerate(result.damage_reductions[result.get_damage(dmg_type)]):
         assert reduction.damage_multiplier == dmg_multiplier[i]
+
+
+@pytest.mark.parametrize("door_state", ["vanilla", "individual-all", "type-all", "individual-no-open", "type-no-open"])
+@pytest.mark.parametrize("geron_state", [False, True])
+def test_enabled_misc_resources(fusion_game_description, fusion_configuration, door_state, geron_state) -> None:
+    expected_resources = {"BomblessPBs", "GeneratorHack"}
+
+    door_db = fusion_game_description.dock_type_database
+    door_type = door_db.find_type("Door")
+    open_hatch_door = door_db.get_by_weakness("Door", "Open Hatch")
+
+    weakness_mode = DockWeaknessDistributorMode.ORIGINAL
+    if door_state in ["individual-all", "individual-no-open"]:
+        weakness_mode = DockWeaknessDistributorMode.INDIVIDUAL_DOCK
+    elif door_state in ["type-all", "type-no-open"]:
+        weakness_mode = DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS
+
+    all_door_weaknesses = set(door_db.weaknesses[door_type].values())
+    if door_state in ["individual-no-open", "type-no-open"]:
+        all_door_weaknesses.remove(open_hatch_door)
+
+    if door_state != "vanilla":
+        types_state = fusion_configuration.dock_weakness_distributor.types_state
+        types_state[door_type] = dataclasses.replace(types_state[door_type], mode=weakness_mode)
+        types_state[door_type] = dataclasses.replace(types_state[door_type], can_change_from=all_door_weaknesses)
+        types_state[door_type] = dataclasses.replace(types_state[door_type], can_change_to=all_door_weaknesses)
+        fusion_configuration = dataclasses.replace(
+            fusion_configuration,
+            dock_weakness_distributor=dataclasses.replace(
+                fusion_configuration.dock_weakness_distributor, types_state=types_state
+            ),
+        )
+        if door_state in ["individual-all", "type-all"]:
+            expected_resources.add("DoorLockRando")
+            expected_resources.add("OpenHatchLockRando")
+        elif door_state in ["individual-no-open", "type-no-open"]:
+            expected_resources.add("DoorLockRando")
+    elif door_state == "vanilla":
+        # keep as is
+        pass
+    else:
+        raise Exception("unhandled state for door_state")
+
+    if geron_state:
+        fusion_configuration = dataclasses.replace(fusion_configuration, adjusted_geron_weaknesses=True)
+        expected_resources.add("NerfGerons")
+    else:
+        fusion_configuration = dataclasses.replace(fusion_configuration, adjusted_geron_weaknesses=False)
+
+    enabled_resources = FusionBootstrap()._get_enabled_misc_resources(
+        fusion_configuration, fusion_game_description.get_resource_database_view()
+    )
+
+    assert enabled_resources == expected_resources

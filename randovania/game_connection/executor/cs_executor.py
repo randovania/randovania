@@ -1,12 +1,11 @@
 import asyncio
 import dataclasses
 import json
-import logging
 import struct
-from asyncio import StreamReader
+from asyncio import StreamReader, StreamWriter
 from collections.abc import Collection
 from enum import IntEnum
-from typing import Self
+from typing import Self, override
 from uuid import UUID
 
 from tsc_utils.flags import Address, flag_to_address
@@ -14,6 +13,7 @@ from tsc_utils.numbers import TscInput, tsc_value_to_num
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
+from randovania.game_connection.executor.socket_executor import BaseSocketExecutor
 from randovania.lib import enum_lib
 
 
@@ -134,74 +134,36 @@ def _message_for_tsc_value_list(values: Collection[int | TscInput]) -> bytes:
     return struct.pack(f"<{len(values)}i", *[_resolve_tsc_value(value) for value in values])
 
 
-class CSExecutor:
+class CSExecutor(BaseSocketExecutor[CSSocketHolder]):
     _port = 5451
-    _socket: CSSocketHolder | None = None
-    _socket_error: Exception | None = None
     server_info: CSServerInfo
 
-    def __init__(self, ip: str) -> None:
-        self.logger = logging.getLogger(type(self).__name__)
-        self._ip = ip
+    _connect_errors = (
+        TimeoutError,
+        OSError,
+        AttributeError,
+        struct.error,
+        UnicodeError,
+        RuntimeError,
+        ValueError,
+        TSCError,
+    )
 
-    @property
-    def ip(self) -> str:
-        return self._ip
+    @override
+    async def _perform_handshake(self, reader: StreamReader, writer: StreamWriter) -> str | None:
+        self._socket = CSSocketHolder(reader, writer, 0)
 
-    @property
-    def lock_identifier(self) -> str | None:
+        self.logger.debug("Connection open. Requesting API details...")
+        server_info = await self.get_server_info()
+        self.logger.debug(
+            "Server replied with API level %s, platform %s, uuid %s, and offsets %s. Connection successful.",
+            server_info.api_version,
+            server_info.platform,
+            server_info.uuid,
+            server_info.offsets,
+        )
+        self.server_info = server_info
         return None
-
-    async def connect(self) -> str | None:
-        if self.is_connected():
-            return None
-
-        try:
-            self._socket_error = None
-
-            self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
-            reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self._socket = CSSocketHolder(reader, writer, 0)
-
-            self.logger.debug("Connection open. Requesting API details...")
-            server_info = await self.get_server_info()
-            self.logger.debug(
-                "Server replied with API level %s, platform %s, uuid %s, and offsets %s. Connection successful.",
-                server_info.api_version,
-                server_info.platform,
-                server_info.uuid,
-                server_info.offsets,
-            )
-            self.server_info = server_info
-
-            self.logger.info("Connected")
-
-            return None
-
-        except (
-            TimeoutError,
-            OSError,
-            AttributeError,
-            struct.error,
-            UnicodeError,
-            RuntimeError,
-            ValueError,
-            TSCError,
-        ) as e:
-            # UnicodeError is for some invalid ip addresses
-            self._socket = None
-            message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
-            self._socket_error = e
-            return message
-
-    def disconnect(self) -> None:
-        socket = self._socket
-        self._socket = None
-        if socket is not None:
-            socket.writer.close()
-
-    def is_connected(self) -> bool:
-        return self._socket is not None
 
     async def _send_request(self, packet: Packet) -> Packet:
         try:

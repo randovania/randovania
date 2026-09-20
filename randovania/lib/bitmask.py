@@ -243,7 +243,7 @@ else:
             return result
 
         def num_set_bits(self) -> cython.int:
-            return bin(self._mask).count("1")
+            return self._mask.bit_count()
 
         def is_empty(self) -> cython.bint:
             return self._mask == 0

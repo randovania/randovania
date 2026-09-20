@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
-    from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.dock import DockType, DockTypeDatabase, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.pickup_node import PickupNode
@@ -318,6 +318,12 @@ class GameDatabaseView(ABC):
         """
 
     @abc.abstractmethod
+    def get_dock_type_database(self) -> DockTypeDatabase:
+        """
+        Get the DockTypeDatabase for this game.
+        """
+
+    @abc.abstractmethod
     def get_dock_types(self) -> list[DockType]:
         """
         List all available DockTypes
@@ -412,6 +418,10 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @override
     def default_starting_location(self) -> NodeIdentifier:
         return self._original.default_starting_location()
+
+    @override
+    def get_dock_type_database(self) -> DockTypeDatabase:
+        return self._original.get_dock_type_database()
 
     @override
     def get_dock_types(self) -> list[DockType]:

@@ -37,7 +37,10 @@ def _gui() -> randovania.game.gui.GameGui:
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(HintDetailsTab, gui.MSRTeleporterDetailsTab),
+        spoiler_visualizer=(
+            HintDetailsTab,
+            gui.MSRTeleporterDetailsTab,
+        ),
     )
 
 
@@ -103,7 +106,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="OH2NS2CL",
+        expected_seed_hash="YCD2SILT",
         # Some items require Spider Boosting to reach in vanilla, but since it is never explained there,
         # it has been made into a trick.
         database_collectable_include_tricks=(("Spider Boost", LayoutTrickLevel.BEGINNER),),
@@ -213,6 +216,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
     racetime_url="https://racetime.gg/msrr/data",

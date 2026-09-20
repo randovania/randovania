@@ -80,7 +80,7 @@ class CSRemoteConnector(RemoteConnector):
             if self.game_state.can_read_profile:
                 profile_uuid = await self.executor.get_profile_uuid()
                 if profile_uuid != self.layout_uuid:
-                    self.logger.warn("Loaded save with mismatched UUID")
+                    self.logger.warning("Loaded save with mismatched UUID")
                     return
 
             await self._update_location()

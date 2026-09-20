@@ -380,7 +380,8 @@ Hint Features - Multiple Pickups, Pillar
   > Below E-Tank
       All of the following:
           # Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs
-          Level 0 Keycard and Morph Ball and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
+          # This can safely not have Door Lock Rando check
+          Morph Ball and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
           # Deal with Sidehopper
           Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
   > Bottom Right
@@ -1001,6 +1002,8 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 1}, {'x': 4, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Sector Hub Lift 3/Elevator to Sector 3 (PYR)
+  * Extra - direction: up
+  * Extra - name: SECTOR_3_TO_MAIN_HUB
   * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
@@ -1743,6 +1746,7 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 5}]
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
   * Open Passage to Sector 5 (ARC) Eastbound Glass Tube/Area Transition to Sector 3 (PYR)
+  * Extra - direction: left
   * Extra - door_idx: [89]
   > Door to Fiery Storage
       Trivial
@@ -1762,6 +1766,7 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 0}]
 > Area Transition to Sector 1 (SRX); Heals? False
   * Layers: default
   * Open Passage to Sector 1 (SRX) Westbound Glass Tube/Area Transition to Sector 3 (PYR)
+  * Extra - direction: right
   * Extra - door_idx: [86]
   > Door to Deserted Runway
       Trivial

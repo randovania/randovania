@@ -4,6 +4,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game_connection.builder.abandoned_world_connector_builder import AbandonedWorldConnectorBuilder
 from randovania.game_connection.builder.am2r_connector_builder import AM2RConnectorBuilder
 from randovania.game_connection.builder.cs_connector_builder import CSConnectorBuilder
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
@@ -17,6 +18,7 @@ if TYPE_CHECKING:
     from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 
 _CHOICE_TO_BUILDER = {
+    ConnectorBuilderChoice.ABANDONED: AbandonedWorldConnectorBuilder,
     ConnectorBuilderChoice.DEBUG: DebugConnectorBuilder,
     ConnectorBuilderChoice.DOLPHIN: DolphinConnectorBuilder,
     ConnectorBuilderChoice.NINTENDONT: NintendontConnectorBuilder,
@@ -31,6 +33,9 @@ _CHOICE_TO_BUILDER = {
 class ConnectorBuilderOption(JsonDataclass):
     choice: ConnectorBuilderChoice
     params: dict
+    enabled: bool = True
 
     def create_builder(self) -> ConnectorBuilder:
-        return _CHOICE_TO_BUILDER[self.choice](**self.params)
+        result = _CHOICE_TO_BUILDER[self.choice](**self.params)
+        result.enabled = self.enabled
+        return result

@@ -83,8 +83,7 @@ class ResourceCollection:
     @cython.ccall
     def _resize_array_to_fit(self, size: cython.size_t) -> cython.void:
         target_size: cython.size_t = self._resource_array.size()
-        if target_size < 10:
-            target_size = 10
+        target_size = max(target_size, 10)
         while target_size < size:
             target_size *= 2
         self._resource_array.resize(target_size, 0)
@@ -181,8 +180,7 @@ class ResourceCollection:
             self._resize_array_to_fit(resource_index + 1)
 
         new_amount: cython.int = self._resource_array[resource_index] + quantity
-        if new_amount < 0:
-            new_amount = 0
+        new_amount = max(new_amount, 0)
         self._resource_array[resource_index] = new_amount
         self._existing_resources[resource_index] = resource
 

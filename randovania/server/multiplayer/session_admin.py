@@ -6,16 +6,18 @@ import peewee
 
 import randovania
 from randovania import monitoring
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
+from randovania.network_common.async_race_room import AsyncRaceRoomRaceStatus, AsyncRaceRoomUserStatus
 from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGTH, WORLD_NAME_RE
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.signals import server_signals
-from randovania.server import database
+from randovania.server import database, lib
 from randovania.server.database import (
+    AsyncRaceTeam,
     MultiplayerAuditEntry,
     MultiplayerMembership,
     MultiplayerSession,
@@ -250,8 +252,11 @@ async def _change_layout_description(
 
         description = None
         for world in session.worlds:
+            if world.abandoned:
+                WorldUserAssociation.delete().where(WorldUserAssociation.world == world.id).execute()
             world.uuid = uuid.uuid4()
             world.beaten = False
+            world.abandoned = False
             worlds_to_update.append(world)
 
     else:
@@ -364,6 +369,7 @@ async def _duplicate_session(sa: ServerApp, sid: str, session: MultiplayerSessio
             dev_features=session.dev_features,
             allow_coop=session.allow_coop,
             allow_everyone_claim_world=session.allow_everyone_claim_world,
+            allow_abandon_worlds=session.allow_abandon_worlds,
         )
         for world in session.worlds:
             assert isinstance(world, World)
@@ -396,6 +402,24 @@ async def _get_permalink(sa: ServerApp, sid: str, session: MultiplayerSession) -
     return session.layout_description.permalink.as_base64_str
 
 
+def _check_race_claim_allowed(session: MultiplayerSession, user_id: int, *, unclaim: bool) -> None:
+    """
+    Who plays which world is settled before the team starts, since that's what its time is
+    measured against. Releasing is also refused once that world's game has been exported.
+    """
+    team = session.get_race_team()
+    if team is None:
+        return
+
+    if team.timer_status() != AsyncRaceRoomUserStatus.JOINED:
+        raise error.InvalidActionError("Can't change world claims after the team has started")
+
+    if unclaim:
+        entry = database.AsyncRaceEntry.entry_for(team.room, user_id)
+        if entry is not None and entry.has_exported:
+            raise error.InvalidActionError("Can't unclaim a world after exporting it")
+
+
 async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
     # FIXME: break this out into separate functions for each action
 
@@ -403,6 +427,9 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
 
     action_ = SessionAdminGlobalAction(action)
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
+
+    if session.is_race_session and action_ not in [SessionAdminGlobalAction.CREATE_PATCHER_FILE]:
+        raise error.NotAuthorizedForActionError("This session belongs to an async race room")
 
     if action_ == SessionAdminGlobalAction.CREATE_WORLD:
         await _create_world(sa, sid, session, *args, for_user=None)
@@ -452,6 +479,9 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
 
     elif action_ == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         await _set_allow_everyone_claim(sa, sid, session, *args)
+
+    elif action_ == SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS:
+        await _set_allow_abandon_worlds(sa, sid, session, *args)
 
     await session_common.emit_session_meta_update(sa, session)
 
@@ -513,7 +543,7 @@ async def _claim_world(
 
     world = World.get_by_uuid(world_uid)
 
-    if not session.allow_coop:
+    if world.abandoned or not session.allow_coop:
         for _ in WorldUserAssociation.select().where(WorldUserAssociation.world == world.id):
             raise error.InvalidActionError("World is already claimed")
 
@@ -542,6 +572,39 @@ async def _unclaim_world(
 
     association.delete_instance()
     await session_common.add_audit_entry(sa, sid, session, f"Unassociated world {world.name} from {user.name}")
+
+
+async def _abandon_world(
+    sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: uuid.UUID, play_here: bool
+) -> None:
+    world = World.get_by_uuid(world_uid)
+    _verify_world_has_session(world, session)
+    await verify_has_admin_or_claimed(sa, sid, world)
+
+    if not session.allow_abandon_worlds:
+        raise error.InvalidActionError("Abandoning worlds is not allowed in this session")
+
+    if not session.has_layout_description():
+        raise error.InvalidActionError("Session has no generated game")
+
+    if world.abandoned:
+        raise error.InvalidActionError("World is already abandoned")
+
+    world.abandoned = True
+    world.save()
+
+    # remove the association for the abandoned world
+    WorldUserAssociation.delete().where(WorldUserAssociation.world == world.id).execute()
+    await session_common.add_audit_entry(sa, sid, session, f"World {world.name} was abandoned")
+
+    # the user who triggered the "abandon world" wants to run the AbandonedWorldConnector
+    # this might be the same user who was associated with the world but it could also be an admin
+    if play_here:
+        current_user = await sa.get_current_user(sid)
+        WorldUserAssociation.create(world=world, user=current_user)
+        await session_common.add_audit_entry(
+            sa, sid, session, f"Claimed world {world.name} to run its bot for {current_user.name}"
+        )
 
 
 async def _switch_admin(
@@ -590,6 +653,21 @@ async def _set_allow_everyone_claim(sa: ServerApp, sid: str, session: Multiplaye
         session.save()
 
 
+async def _set_allow_abandon_worlds(sa: ServerApp, sid: str, session: MultiplayerSession, new_state: bool) -> None:
+    await verify_has_admin(sa, sid, session.id, None)
+
+    if not new_state:
+        for world in session.worlds:
+            if world.abandoned:
+                raise error.InvalidActionError("Can only disable abandoned worlds, if a world isn't already abandoned.")
+
+    with database.db.atomic():
+        session.allow_abandon_worlds = new_state
+        new_operation = "Allowing" if session.allow_abandon_worlds else "Disallowing"
+        await session_common.add_audit_entry(sa, sid, session, f"{new_operation} abandoning worlds.")
+        session.save()
+
+
 async def _set_allow_coop(sa: ServerApp, sid: str, session: MultiplayerSession, new_state: bool) -> None:
     """Sets the Co-Op state of the given session to the desired state."""
     await verify_has_admin(sa, sid, session.id, None)
@@ -608,12 +686,39 @@ async def _set_allow_coop(sa: ServerApp, sid: str, session: MultiplayerSession, 
         session.save()
 
 
+def _check_race_export_allowed(team: AsyncRaceTeam) -> None:
+    """
+    A team may only export while its room is running. Before the start the seed isn't public to
+    anyone, and after the end there's nothing left to play.
+    """
+    if team.room.get_race_status(lib.datetime_now()) != AsyncRaceRoomRaceStatus.ACTIVE:
+        raise error.NotAuthorizedForActionError("Room is not active")
+
+
+async def _mark_race_world_exported(sa: ServerApp, sid: str, team: AsyncRaceTeam, world: World) -> None:
+    """
+    Records that this user has exported one of their team's worlds.
+    """
+    user = await sa.get_current_user(sid)
+    entry = database.AsyncRaceEntry.entry_for(team.room, user)
+    if entry is None or entry.has_exported:
+        return
+
+    with database.db.atomic():
+        entry.has_exported = True
+        entry.save()
+        database.AsyncRaceAuditEntry.create(
+            room=team.room, user=user, message=f"Exported {world.name} of team {team.name}."
+        )
+
+
 async def _create_patcher_file(
     sa: ServerApp, sid: str, session: MultiplayerSession, world_uid: str, cosmetic_json: dict
 ) -> dict:
     player_names = {}
     uuids = {}
     player_index = None
+    target_world = None
     world_uuid = uuid.UUID(world_uid)
 
     for world in session.get_ordered_worlds():
@@ -621,34 +726,50 @@ async def _create_patcher_file(
         player_names[world.order] = world.name
         uuids[world.order] = world.uuid
         if world.uuid == world_uuid:
+            if world.abandoned:
+                raise error.InvalidActionError("Cannot export an abandoned world")
             player_index = world.order
+            target_world = world
             await _check_user_associated_with(sa, sid, world)
 
-    if player_index is None:
+    if player_index is None or target_world is None:
         raise error.InvalidActionError("Unknown world uid for exporting")
+
+    race_team = session.get_race_team()
+    if race_team is not None:
+        _check_race_export_allowed(race_team)
 
     layout_description = session.layout_description
     assert layout_description is not None
-    players_config = PlayersConfiguration(
-        player_index=player_index,
-        player_names=player_names,
+    worlds_config = WorldsConfiguration(
+        world_index=player_index,
+        world_names=player_names,
         uuids=uuids,
         session_name=session.name,
         is_coop=session.allow_coop,
     )
-    preset = layout_description.get_preset(players_config.player_index)
+    preset = layout_description.get_preset(worlds_config.world_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
 
     await session_common.add_audit_entry(
-        sa, sid, session, f"Exporting game named {players_config.player_names[players_config.player_index]}"
+        sa, sid, session, f"Exporting game named {worlds_config.world_names[worlds_config.world_index]}"
     )
 
-    data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
+    data_factory = preset.game.patch_data_factory(layout_description, worlds_config, cosmetic_patches)
+    rdv_meta = data_factory.create_default_patcher_data_meta()
+    if race_team is not None:
+        rdv_meta["in_race_setting"] = True
+
     try:
-        return data_factory.create_data()
+        result = data_factory.create_data(rdv_meta)
     except Exception as e:
         sa.logger.exception("Error when creating patch data")
         raise error.InvalidActionError(f"Unable to export game: {e}")
+
+    if race_team is not None:
+        await _mark_race_world_exported(sa, sid, race_team, target_world)
+
+    return result
 
 
 async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, action: str, *args: typing.Any) -> None:
@@ -661,6 +782,18 @@ async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, a
 
     session: MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
     membership = await session_common.get_membership_for(user_id, session, sid)
+
+    if session.is_race_session:
+        if action_ not in [
+            SessionAdminUserAction.SWITCH_READY,
+            SessionAdminUserAction.CLAIM,
+            SessionAdminUserAction.UNCLAIM,
+            SessionAdminUserAction.ABANDON,
+        ]:
+            raise error.NotAuthorizedForActionError("This session belongs to an async race room")
+
+        if action_ in (SessionAdminUserAction.CLAIM, SessionAdminUserAction.UNCLAIM):
+            _check_race_claim_allowed(session, user_id, unclaim=action_ is SessionAdminUserAction.UNCLAIM)
 
     if action_ == SessionAdminUserAction.KICK:
         await _kick_user(sa, sid, session, membership, user_id)
@@ -681,8 +814,7 @@ async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, a
         await _switch_ready(sa, sid, session, membership)
 
     elif action_ == SessionAdminUserAction.ABANDON:
-        # FIXME
-        raise error.InvalidActionError("Abandon is NYI")
+        await _abandon_world(sa, sid, session, *args)
 
     await session_common.emit_session_meta_update(sa, session)
 

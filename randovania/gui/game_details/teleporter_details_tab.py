@@ -8,14 +8,14 @@ from randovania.gui.game_details.base_connection_details_tab import BaseConnecti
 if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 class TeleporterDetailsTab[ConfigurationT: BaseConfiguration](BaseConnectionDetailsTab[ConfigurationT]):
     @classmethod
     def should_appear_for(
-        cls, configuration: ConfigurationT, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> bool:
         raise NotImplementedError
 
@@ -27,7 +27,7 @@ class TeleporterDetailsTab[ConfigurationT: BaseConfiguration](BaseConnectionDeta
     ) -> None:
         for source, destination_loc in patches.all_dock_connections(game):
             # Fix for portal rando showing up in echoes tab
-            if source.dock_type not in patches.game.dock_weakness_database.all_teleporter_dock_types:
+            if source.dock_type not in patches.game.dock_type_database.all_teleporter_dock_types:
                 continue
             source_region = source.identifier.region
             source_name = elevators.get_elevator_or_area_name(source, True)

@@ -26,7 +26,6 @@ class FillerConfiguration:
     minimum_available_locations_for_hint_placement: int
     minimum_location_weight_for_hint_placement: float
     single_set_for_pickups_that_solve: bool
-    staggered_multi_pickup_placement: bool
 
     @classmethod
     def from_configuration(cls, config: BaseConfiguration) -> Self:
@@ -40,7 +39,6 @@ class FillerConfiguration:
             minimum_available_locations_for_hint_placement=config.hints.minimum_available_locations_for_hint_placement,
             minimum_location_weight_for_hint_placement=config.hints.minimum_location_weight_for_hint_placement,
             single_set_for_pickups_that_solve=config.single_set_for_pickups_that_solve,
-            staggered_multi_pickup_placement=config.staggered_multi_pickup_placement,
         )
 
 
@@ -65,9 +63,9 @@ class FillerPlayerResult:
 
 @dataclasses.dataclass(frozen=True)
 class FillerResults:
-    player_results: dict[int, FillerPlayerResult]
+    player_results: list[FillerPlayerResult]
     action_log: tuple[str, ...]
 
     @property
     def player_pools(self) -> tuple[PlayerPool, ...]:
-        return tuple(result.pool for result in self.player_results.values())
+        return tuple(result.pool for result in self.player_results)

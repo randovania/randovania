@@ -4,8 +4,9 @@ import asyncio
 import dataclasses
 import logging
 import struct
+from asyncio import StreamReader, StreamWriter
 from datetime import datetime
-from typing import TypeGuard
+from typing import override
 
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_connection.executor.memory_operation import (
@@ -13,6 +14,7 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException,
     MemoryOperationExecutor,
 )
+from randovania.game_connection.executor.socket_executor import BaseSocketExecutor
 
 
 @dataclasses.dataclass()
@@ -38,12 +40,17 @@ class RequestBatch:
         return new
 
     def build_request_data(self) -> bytes:
-        header = struct.pack(f">BBBB{len(self.addresses)}I", 0, len(self.ops), len(self.addresses), 1, *self.addresses)
+        header = struct.pack(f">BBBB{len(self.addresses)}I", 1, 1, len(self.ops), len(self.addresses), *self.addresses)
         return header + self.data
 
     @property
     def input_bytes(self) -> int:
-        return len(self.data) + 4 * len(self.addresses)
+        return (
+            1  # operations_count
+            + 1  # address_count
+            + 4 * len(self.addresses)
+            + len(self.data)
+        )
 
     @property
     def num_validator_bytes(self) -> int:
@@ -95,12 +102,12 @@ def _was_invalid_address(response: bytes, i: int) -> bool:
         raise MemoryOperationException("Server response too short for validator bytes")
 
 
-class NintendontExecutor(MemoryOperationExecutor):
+# NOTE: BaseSocketExecutor must come first. MemoryOperationExecutor declares connect/disconnect/is_connected
+# as NotImplementedError stubs, and reversing these bases would silently shadow the working implementations.
+class NintendontExecutor(BaseSocketExecutor[SocketHolder], MemoryOperationExecutor):
     _port = 43673
-    _socket: SocketHolder | None = None
-    _socket_error: Exception | None = None
 
-    SUPPORTED_API_VERSION = 1
+    SUPPORTED_API_VERSION = 2
 
     _timeout = 10
     # timeout in seconds on when we disconnect when we don't get a response.
@@ -108,103 +115,63 @@ class NintendontExecutor(MemoryOperationExecutor):
     # response the experience is going to be bad and things *will* break.
     # Once the prime games are reworked, or this is used for other games, a reconsideration can be done to rework this.
 
-    def __init__(self, ip: str):
-        super().__init__()
-        self._ip = ip
+    _connect_timeout = _timeout
+    _connect_errors = (TimeoutError, OSError, UnicodeError)
 
     @property
-    def ip(self) -> str:
-        return self._ip
-
-    @property
-    def lock_identifier(self) -> str | None:
-        return None
-
-    @property
+    @override
     def max_output(self) -> int:
         if self._is_socket_connected(self._socket):
             return self._socket.max_output - 1
         return -1
 
     @property
+    @override
     def max_input(self) -> int:
         if self._is_socket_connected(self._socket):
             return self._socket.max_input - 1
         return -1
 
-    async def connect(self) -> str | None:
-        if self._socket is not None:
-            return None
-
-        try:
-            self._socket_error = None
-            self.logger.debug(f"Connecting to {self._ip}:{self._port}.")
-            reader, writer = await asyncio.wait_for(
-                asyncio.open_connection(self._ip, self._port), timeout=self._timeout
-            )
-
-            # Send API details request
-            self.logger.debug("Connection open, requesting API details.")
-
-            writer.write(struct.pack(">BBBB", 1, 0, 0, 1))
-            await asyncio.wait_for(writer.drain(), timeout=self._timeout)
-
-            self.logger.debug("Waiting for API details response.")
-            response = await asyncio.wait_for(reader.read(1024), timeout=self._timeout)
-            invalid_message = f"Unable to connect to {self._ip}:{self._port} - Unsupported Nintendont version!"
-            try:
-                api_version = struct.unpack_from(">I", response)[0]
-
-                if api_version != self.SUPPORTED_API_VERSION:
-                    writer.close()
-                    return (
-                        f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
-                    )
-
-                max_input, max_output, max_addresses = struct.unpack(">4xIII", response)
-
-            except struct.error as e:
-                writer.close()
-                self._socket_error = e
-                return f"{invalid_message} Invalid response when requesting API details."
-
-            if max_input > 256 or max_output > 256 or max_addresses > 16:
-                # 256, 256 and 16 are the current theoretical maximum values for input/output/address per the protocol.
-                writer.close()
-                return f"{invalid_message} Nintendont responding with invalid API details."
-
-            self.logger.debug(f"Remote replied with API level {api_version}, connection successful.")
-            self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
-            return None
-
-        except ConnectionRefusedError as e:
+    @override
+    def _message_for_connect_error(self, error: Exception) -> str:
+        if isinstance(error, ConnectionRefusedError):
             # Ip exists, maybe it's listening to the HBC port instead?
-            try:
-                reader, writer = await asyncio.wait_for(asyncio.open_connection(self._ip, 4299), timeout=self._timeout)
-                writer.close()
-            except Exception:
-                raise e
+            return f"Unable to connect to {self.ip}. Either wrong IP, or not yet in-game."
+        return super()._message_for_connect_error(error)
 
-            return "Currently in the Homebrew Channel. Upload Nintendont or launch it manually."
-        except (TimeoutError, OSError, UnicodeError) as e:
-            # UnicodeError is for some invalid ip addresses
-            self._socket = None
-            message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
+    @override
+    async def _perform_handshake(self, reader: StreamReader, writer: StreamWriter) -> str | None:
+        # Send API details request
+        self.logger.debug("Connection open, requesting API details.")
+
+        writer.write(struct.pack(">BB", 0, 1))
+        await asyncio.wait_for(writer.drain(), timeout=self._timeout)
+
+        self.logger.debug("Waiting for API details response.")
+        response = await asyncio.wait_for(reader.read(1024), timeout=self._timeout)
+        invalid_message = f"Unable to connect to {self._ip}:{self._port} - Unsupported Nintendont version!"
+        try:
+            api_version = struct.unpack_from(">I", response)[0]
+
+            if api_version != self.SUPPORTED_API_VERSION:
+                return f"{invalid_message} Nintendont has API {api_version} but expected {self.SUPPORTED_API_VERSION}."
+
+            max_input, max_output, max_addresses, major_version, minor_version = struct.unpack(">4x5I", response)
+
+        except struct.error as e:
             self._socket_error = e
-            return message
+            return f"{invalid_message} Invalid response when requesting API details."
 
-    def disconnect(self) -> None:
-        socket = self._socket
-        self._socket = None
-        if socket is not None:
-            socket.writer.close()
+        if max_input > 256 or max_output > 256 or max_addresses > 16:
+            # 256, 256 and 16 are the current theoretical maximum values for input/output/address per the protocol.
+            return f"{invalid_message} Nintendont responding with invalid API details."
 
-    @staticmethod
-    def _is_socket_connected(socket: SocketHolder | None) -> TypeGuard[SocketHolder]:
-        return socket is not None
-
-    def is_connected(self) -> bool:
-        return self._is_socket_connected(self._socket)
+        self.logger.debug(
+            f"Remote replied with API level {api_version}, "
+            f"Nintendont version {major_version}.{minor_version} connection successful."
+        )
+        self._socket = SocketHolder(reader, writer, api_version, max_input, max_output, max_addresses)
+        return None
 
     def _prepare_requests_for(self, ops: list[MemoryOperation]) -> list[RequestBatch]:
         assert self._is_socket_connected(self._socket)
@@ -217,42 +184,63 @@ class NintendontExecutor(MemoryOperationExecutor):
             requests.append(current_batch)
             current_batch = RequestBatch()
 
-        processes_ops = []
-        max_write_size = self._socket.max_input - 20
+        # rounded up safety buffer since splitting a write request requires a few more spare bytes
+        write_safety_buffer = 10
+        max_write_size = self._socket.max_input - write_safety_buffer
+        max_read_size = self._socket.max_output
         for i, op in enumerate(ops):
             if op.byte_count == 0:
                 continue
             op.validate_byte_sizes()
 
-            if op.read_byte_count is None and (op.write_bytes is not None and len(op.write_bytes) > max_write_size):
+            experimental = current_batch.copy()
+            experimental.add_op(op)
+
+            # If it's a write only operation and becoming too big, split the write op up into a new request
+            if op.read_byte_count is None and (
+                op.write_bytes is not None and experimental.input_bytes > max_write_size
+            ):
                 self.logger.debug(
-                    f"Operation {i} had {len(op.write_bytes)} bytes, above the limit of {max_write_size}. Splitting."
+                    f"With Operation {i} it had an input size of {experimental.input_bytes} bytes, "
+                    f"above the limit of {max_write_size}. Splitting."
                 )
-                for offset in range(0, len(op.write_bytes), max_write_size):
+
+                split_step = max_write_size - write_safety_buffer
+                for offset in range(0, len(op.write_bytes), split_step):
                     if op.offset is None:
                         address = op.address + offset
                         op_offset = None
                     else:
                         address = op.address
                         op_offset = op.offset + offset
-                    processes_ops.append(
-                        MemoryOperation(
-                            address=address,
-                            offset=op_offset,
-                            write_bytes=op.write_bytes[offset : min(offset + max_write_size, len(op.write_bytes))],
-                        )
+                    new_op = MemoryOperation(
+                        address=address,
+                        offset=op_offset,
+                        write_bytes=op.write_bytes[offset : min(offset + split_step, len(op.write_bytes))],
                     )
-            else:
-                processes_ops.append(op)
 
-        for op in processes_ops:
-            experimental = current_batch.copy()
-            experimental.add_op(op)
+                    experimental = current_batch.copy()
+                    experimental.add_op(new_op)
+                    if experimental.input_bytes > max_write_size:
+                        _new_request()
 
-            if not experimental.is_compatible_with(self._socket):
+                    current_batch.add_op(new_op)
+
+            # If its read only operation and becoming too big, put the read op into a new request
+            elif (
+                op.write_bytes is None and op.read_byte_count is not None and experimental.output_bytes > max_read_size
+            ):
+                self.logger.debug(
+                    f"With Operation {i} it had an output size of {experimental.output_bytes}, "
+                    f"above the limit of {max_read_size}. Splitting."
+                )
+
                 _new_request()
 
-            current_batch.add_op(op)
+                current_batch.add_op(op)
+            else:
+                current_batch.add_op(op)
+
             if not current_batch.is_compatible_with(self._socket):
                 raise ValueError(f"Request {op} is not compatible with current server.")
 
@@ -292,6 +280,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         return all_responses
 
+    @override
     async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
         if self._socket is None:
             raise MemoryOperationException("Not connected")
@@ -302,7 +291,7 @@ class NintendontExecutor(MemoryOperationExecutor):
         if self.logger.isEnabledFor(logging.DEBUG):
             log_message = "Sending requests out:\n"
             for req_index, request in enumerate(requests):
-                log_message += f"Request {req_index}\n"
+                log_message += f"Request {req_index} (Input bytes: {request.input_bytes})\n"
                 for op_index, op in enumerate(request.ops):
                     log_message += f"  Operation {op_index}: {op}\n"
             self.logger.debug(log_message)

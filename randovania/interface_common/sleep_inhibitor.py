@@ -4,7 +4,10 @@ import logging
 import platform
 import sys
 from abc import abstractmethod
-from types import TracebackType
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from types import TracebackType
 
 # Reference for this module:
 # https://github.com/h3llrais3r/Deluge-PreventSuspendPlus/blob/master/preventsuspendplus/core.py

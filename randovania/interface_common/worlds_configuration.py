@@ -1,0 +1,39 @@
+from __future__ import annotations
+
+import dataclasses
+import uuid
+from dataclasses import dataclass
+
+INVALID_UUID = uuid.UUID("00000000-0000-1111-0000-000000000000")
+SOLO_UUID_VERSION = 8
+
+
+def is_uuid_multiworld(world_uuid: uuid.UUID) -> bool:
+    """Whether a uuid read back from an exported game belongs to a game played in a session.
+    Sessions assign uuid4s; solo exports get a seed-derived uuid8, or INVALID_UUID before those existed."""
+    return world_uuid != INVALID_UUID and world_uuid.version != SOLO_UUID_VERSION
+
+
+@dataclass(frozen=True)
+class WorldsConfiguration:
+    """Session-associated data for a LayoutDescription."""
+
+    world_index: int
+    world_names: dict[int, str]
+    uuids: dict[int, uuid.UUID] = dataclasses.field(default_factory=dict)
+    session_name: str | None = None
+    is_coop: bool = False
+
+    def get_own_name(self) -> str:
+        return self.world_names[self.world_index]
+
+    def get_own_uuid(self) -> uuid.UUID:
+        return self.uuids.get(self.world_index, INVALID_UUID)
+
+    @property
+    def is_multiworld(self) -> int:
+        return len(self.world_names) > 1 or self.is_coop
+
+    def should_target_local_world(self, target: int) -> bool:
+        """Returns whether a pickup should be for the player of this configuration."""
+        return target == self.world_index and not self.is_coop

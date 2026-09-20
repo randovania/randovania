@@ -170,7 +170,9 @@ class MercuryConnector(RemoteConnector):
         raise NotImplementedError
 
     async def display_arbitrary_message(self, message: str) -> None:
-        raise NotImplementedError
+        escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
+        execute_string = f"Game.AddSF(0, 'Scenario.QueueAsyncPopup', 'si', '{escaped_message}', 10.0)"
+        await self.executor.run_lua_code(execute_string)
 
     def format_received_item(self, item_name: str, player_name: str) -> str:
         generic = "Received {item_name} from {provider_name}."

@@ -4,11 +4,10 @@ import asyncio
 import collections
 import itertools
 import logging
-import random
-from typing import TYPE_CHECKING, Any, NamedTuple, Self
+from typing import TYPE_CHECKING, Any, NamedTuple, Self, override
 
 from PySide6 import QtCore, QtGui, QtWidgets
-from qasync import asyncClose, asyncSlot
+from qasync import asyncSlot
 
 from randovania import monitoring
 from randovania.game_description import default_database
@@ -20,7 +19,6 @@ from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessio
 from randovania.gui.item_tracker.auto_tracker_window import load_trackers_configuration
 from randovania.gui.item_tracker.item_tracker_popup_window import ItemTrackerPopupWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader
-from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -29,8 +27,7 @@ from randovania.gui.widgets.audit_log_model import AuditEntryListDatabaseModel
 from randovania.gui.widgets.multiplayer_session_users_widget import MultiplayerSessionUsersWidget, connect_to
 from randovania.interface_common import generator_frontend
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.generator_parameters import GeneratorParameters, random_seed_number
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import string_lib
@@ -55,6 +52,7 @@ if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
     from randovania.interface_common.options import Options
+    from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.preset import Preset
     from randovania.lib.status_update_lib import ProgressUpdateCallable
 
@@ -196,7 +194,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self._multiworld_client = window_manager.multiworld_client
 
         self._options = options
-        self._trackers = load_trackers_configuration(for_solo=False)
+        self._trackers = {
+            game: catalog.as_named_combos() for game, catalog in load_trackers_configuration(for_solo=False).items()
+        }
         self._update_status_lock = asyncio.Lock()
 
         self.users_widget = MultiplayerSessionUsersWidget(options, self._window_manager, self.game_session_api)
@@ -282,6 +282,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.view_game_details_button.clicked.connect(self.view_game_details)
         self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
         self.allow_coop_check.clicked.connect(self._on_allow_coop_check)
+        self.allow_abandon_worlds_check.clicked.connect(self._on_allow_abandon_worlds_check)
 
         # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -334,25 +335,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         return window
 
-    @asyncClose
-    async def closeEvent(self, event: QtGui.QCloseEvent) -> None:
-        if self.has_background_process:
-            event.ignore()
-            result = await async_dialog.warning(
-                self,
-                "Confirm close window",
-                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
-                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
-                default_button=async_dialog.StandardButton.No,
-            )
-            if result != StandardButton.Yes:
-                return
-            event.accept()
-        self.stop_background_process()
-        return await self._on_close_event(event)
+    @override
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        if self.background_task_on_close_event(self, event):
+            self._on_close_event(event)
 
-    async def _on_close_event(self, event: QtGui.QCloseEvent) -> None:
-        is_kicked = self.current_user_id not in self._session.users
+    def _on_close_event(self, event: QtGui.QCloseEvent) -> None:
+        is_kicked = hasattr(self, "_session") and self.current_user_id not in self._session.users
 
         try:
             self.network_client.MultiplayerSessionMetaUpdated.disconnect(self.on_meta_update)
@@ -365,7 +354,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         try:
             if not is_kicked and not self.network_client.connection_state.is_disconnected:
-                await self.network_client.listen_to_session(self._session.id, False)
+                self.network_client.remove_interest_in_session(self.game_session_api.current_session_id)
         finally:
             for d in list(self.tracker_windows.values()):
                 d.close()
@@ -398,6 +387,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_multiworld_client_status()
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
+        self.allow_abandon_worlds_check.setChecked(session.allow_abandon_worlds)
+        self.allow_abandon_worlds_check.setEnabled(self.users_widget.is_admin())
         self.allow_coop_check.setChecked(session.allow_coop)
         self.allow_coop_check.setEnabled(self.users_widget.is_admin() and not_genned_yet)
         self.allow_coop_check.setText(
@@ -468,7 +459,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         }
         self.session_visibility_button.setText(_state_to_label[session.visibility])
 
-        self.copy_permalink_button.setEnabled(session.game_details is not None)
+        is_race = session.is_race_session
+        race_tooltip = "Not available while this session is part of an async race" if is_race else ""
+        for button in (self.copy_permalink_button, self.view_game_details_button):
+            button.setToolTip(race_tooltip)
+
+        self.copy_permalink_button.setEnabled(session.game_details is not None and not is_race)
         if session.game_details is None:
             self.seed_hash_label.setText("Seed Hash: <Game not generated>")
             self.view_game_details_button.setEnabled(False)
@@ -476,7 +472,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         else:
             game_details = session.game_details
             self.seed_hash_label.setText(f"Seed Hash: {game_details.word_hash} ({game_details.seed_hash})")
-            self.view_game_details_button.setEnabled(game_details.spoiler)
+            self.view_game_details_button.setEnabled(game_details.spoiler and not is_race)
             if len(own_entry.worlds) > 1:
                 self.export_game_button.setEnabled(True)
                 self.export_game_menu.clear()
@@ -745,7 +741,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         permalink = Permalink.from_parameters(
             GeneratorParameters(
-                seed_number=random.randint(0, 2**31),
+                seed_number=random_seed_number(),
                 spoiler=spoiler,
                 presets=[VersionedPreset.from_str(world.preset_raw).get_preset() for world in self._session.worlds],
             )
@@ -937,6 +933,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     async def _on_everyone_can_claim_check(self) -> None:
         await self.game_session_api.set_everyone_can_claim(self.everyone_can_claim_check.isChecked())
+
+    @asyncSlot()
+    async def _on_allow_abandon_worlds_check(self) -> None:
+        await self.game_session_api.set_allow_abandon_worlds(self.allow_abandon_worlds_check.isChecked())
 
     @asyncSlot()
     async def _on_allow_coop_check(self) -> None:
@@ -1162,8 +1162,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         connected_worlds = {k: v for k, v in connected_worlds.items() if v}
 
+        world_uids = list(user_worlds.keys())
+
         world_status = []
-        for uid in user_worlds.keys():
+        for uid in world_uids:
             data = self._multiworld_client.database.get_data_for(uid)
 
             msg = (

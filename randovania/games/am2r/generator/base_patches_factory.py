@@ -34,7 +34,7 @@ class AM2RBasePatchesFactory(BasePatchesFactory[AM2RConfiguration]):
         blue_door = game.get_dock_weakness("door", "Normal Door (Forced)")
         open_transition_door = game.get_dock_weakness("door", "Open Transition")
         are_transitions_shuffled = (
-            open_transition_door in configuration.dock_rando.types_state[door_type].can_change_from
+            open_transition_door in configuration.dock_weakness_distributor.types_state[door_type].can_change_from
         )
 
         # TODO: separate these two into functions, so that they can be tested more easily?

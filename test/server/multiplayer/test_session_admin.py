@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import contextlib
 import dataclasses
+import datetime
 import itertools
 import json
 import re
@@ -15,7 +16,7 @@ import pytest
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription
 from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
@@ -61,6 +62,8 @@ async def test_admin_player_kick_last(
             "allowed_games": ANY,
             "allow_coop": False,
             "allow_everyone_claim_world": False,
+            "allow_abandon_worlds": True,
+            "is_race_session": False,
         },
         room="multiplayer-session-1",
         namespace="/",
@@ -112,12 +115,14 @@ async def test_admin_player_kick_member(two_player_session, mock_sa, mocker, moc
                     "name": "World 1",
                     "preset_raw": "{}",
                     "has_been_beaten": False,
+                    "is_abandoned": False,
                 },
                 {
                     "id": "6b5ac1a1-d250-4f05-a5fb-ae37e8a92165",
                     "name": "World 2",
                     "preset_raw": "{}",
                     "has_been_beaten": False,
+                    "is_abandoned": False,
                 },
             ],
             "game_details": None,
@@ -125,6 +130,8 @@ async def test_admin_player_kick_member(two_player_session, mock_sa, mocker, moc
             "allowed_games": ANY,
             "allow_coop": False,
             "allow_everyone_claim_world": False,
+            "allow_abandon_worlds": True,
+            "is_race_session": False,
         },
         room="multiplayer-session-1",
         namespace="/",
@@ -208,6 +215,177 @@ async def test_admin_player_unclaim(mock_sa, two_player_session, mock_audit, moc
     )
 
 
+async def test_admin_player_claim_abandoned(mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update):
+    # Claiming an abandoned world is what grants the right to run its bot. The usual claim permissions
+    # apply: user 1234 isn't a session admin, so they need the session to allow everyone to claim.
+    solo_two_world_session.allow_everyone_claim_world = True
+    solo_two_world_session.save()
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    world = database.World.get_by_uuid(uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0"))
+    world.abandoned = True
+    world.save()
+    database.WorldUserAssociation.delete().where(database.WorldUserAssociation.world == world.id).execute()
+
+    # Run
+    await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.CLAIM.value, str(world.uuid))
+
+    assert database.WorldUserAssociation.get_by_instances(world=world, user=1234)
+
+
+@pytest.mark.parametrize("allow_coop", [False, True])
+async def test_admin_player_claim_abandoned_already_claimed(
+    mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update, allow_coop
+):
+    # Only one instance may run a world's bot, so an abandoned world takes a single claim even in coop.
+    solo_two_world_session.allow_coop = allow_coop
+    solo_two_world_session.save()
+
+    other_user = database.User.create(id=9999, name="Other")
+    database.MultiplayerMembership.create(user=other_user, session=solo_two_world_session, admin=True)
+    mock_sa.get_current_user.return_value = other_user
+
+    world = database.World.get_by_uuid(uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0"))
+    world.abandoned = True
+    world.save()
+    # World 1 is already claimed by user 1234, who runs its bot.
+
+    with pytest.raises(error.InvalidActionError, match="World is already claimed"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 9999, SessionAdminUserAction.CLAIM.value, str(world.uuid)
+        )
+
+
+async def test_admin_player_unclaim_abandoned(mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update):
+    # Unclaiming is how an admin hands an abandoned world's bot over to someone else.
+    admin_user = database.User.create(id=5555, name="Session Admin")
+    database.MultiplayerMembership.create(user=admin_user, session=solo_two_world_session, admin=True)
+    mock_sa.get_current_user.return_value = admin_user
+
+    world = database.World.get_by_uuid(uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0"))
+    world.abandoned = True
+    world.save()
+
+    # Run
+    await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.UNCLAIM.value, str(world.uuid))
+
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldUserAssociation.get_by_instances(world=world, user=1234)
+
+
+async def test_admin_player_abandon(mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update):
+    # User 1234 is not a session admin, but claims World 1: a claiming non-admin may abandon it.
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    world_uid = "1179c986-758a-4170-9b07-fe4541d78db0"
+
+    # Run
+    await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.ABANDON.value, world_uid, False)
+
+    world = database.World.get_by_uuid(uuid.UUID(world_uid))
+    assert world.abandoned
+    # Abandoning drops the world's associations: it becomes ownerless, and nobody runs its bot.
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldUserAssociation.get_by_instances(world=world, user=1234)
+    mock_audit.assert_awaited_once_with(mock_sa, "TheSid", solo_two_world_session, "World World 1 was abandoned")
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, solo_two_world_session)
+
+
+async def test_admin_player_abandon_play_here(mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update):
+    # Abandoning to run the bot right here claims the world, which is what allows this instance to drive it.
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    world_uid = "1179c986-758a-4170-9b07-fe4541d78db0"
+
+    # Run
+    await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.ABANDON.value, world_uid, True)
+
+    world = database.World.get_by_uuid(uuid.UUID(world_uid))
+    assert world.abandoned
+    assert database.WorldUserAssociation.get_by_instances(world=world, user=1234)
+    mock_audit.assert_any_await(
+        mock_sa, "TheSid", solo_two_world_session, "Claimed world World 1 to run its bot for The Name"
+    )
+
+
+async def test_admin_player_abandon_no_layout(mock_sa, two_player_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    with pytest.raises(error.InvalidActionError, match="Session has no generated game"):
+        await session_admin.admin_player(
+            mock_sa,
+            "TheSid",
+            1,
+            1234,
+            SessionAdminUserAction.ABANDON.value,
+            "1179c986-758a-4170-9b07-fe4541d78db0",
+            False,
+        )
+
+
+async def test_admin_player_abandon_already_abandoned(mock_sa, solo_two_world_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    world = database.World.get_by_uuid(uuid.UUID("1179c986-758a-4170-9b07-fe4541d78db0"))
+    world.abandoned = True
+    world.save()
+
+    with pytest.raises(error.InvalidActionError, match="already abandoned"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.ABANDON.value, str(world.uuid), False
+        )
+
+
+async def test_admin_player_abandon_not_allowed(mock_sa, solo_two_world_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    solo_two_world_session.allow_abandon_worlds = False
+    solo_two_world_session.save()
+    world_uid = "1179c986-758a-4170-9b07-fe4541d78db0"
+
+    with pytest.raises(error.InvalidActionError, match="Abandoning worlds is not allowed in this session"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.ABANDON.value, world_uid, False
+        )
+
+    world = database.World.get_by_uuid(uuid.UUID(world_uid))
+    assert not world.abandoned
+
+
+async def test_admin_player_abandon_by_session_admin(
+    mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update
+):
+    # A session admin may abandon another player's world on their behalf (e.g. that player left).
+    admin_user = database.User.create(id=5555, name="Session Admin")
+    database.MultiplayerMembership.create(user=admin_user, session=solo_two_world_session, admin=True)
+    mock_sa.get_current_user.return_value = admin_user
+    # World 1 is claimed by user 1234, not by the admin.
+    world_uid = "1179c986-758a-4170-9b07-fe4541d78db0"
+
+    await session_admin.admin_player(mock_sa, "TheSid", 1, 5555, SessionAdminUserAction.ABANDON.value, world_uid, False)
+
+    world = database.World.get_by_uuid(uuid.UUID(world_uid))
+    assert world.abandoned
+    # Nobody runs the bot yet: the admin who abandoned it gets no claim either.
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldUserAssociation.get_by_instances(world=world, user=5555)
+    mock_audit.assert_awaited_once_with(mock_sa, "TheSid", solo_two_world_session, "World World 1 was abandoned")
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, solo_two_world_session)
+
+
+async def test_admin_player_abandon_not_owner(mock_sa, solo_two_world_session, mock_audit, mock_emit_session_update):
+    # A non-admin who does not claim the world may not abandon it, even if they pass their own id.
+    intruder = database.User.create(id=9999, name="Intruder")
+    database.MultiplayerMembership.create(user=intruder, session=solo_two_world_session, admin=False)
+    mock_sa.get_current_user.return_value = intruder
+    world_uid = "1179c986-758a-4170-9b07-fe4541d78db0"
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 9999, SessionAdminUserAction.ABANDON.value, world_uid, False
+        )
+
+    world = database.World.get_by_uuid(uuid.UUID(world_uid))
+    assert not world.abandoned
+    with pytest.raises(peewee.DoesNotExist):
+        database.WorldUserAssociation.get_by_instances(world=world, user=9999)
+
+
 async def test_admin_player_switch_admin(mock_sa, two_player_session, mock_audit, mock_emit_session_update):
     mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
 
@@ -242,7 +420,7 @@ async def test_admin_session_patcher_file(mock_sa, mock_audit, mocker, two_playe
     mock_layout_description.return_value.get_preset.assert_called_once_with(1)
     game.patch_data_factory.assert_called_once_with(
         mock_layout_description.return_value,
-        PlayersConfiguration(
+        WorldsConfiguration(
             1,
             {
                 0: "World 1",
@@ -266,6 +444,19 @@ async def test_admin_session_patcher_file_not_associated(mock_sa, two_player_ses
 
     # Run
     with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_session(
+            mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
+        )
+
+
+async def test_admin_session_patcher_file_abandoned(mock_sa, solo_two_world_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    w2 = database.World.get_by_id(2)
+    w2.abandoned = True
+    w2.save()
+
+    # Run
+    with pytest.raises(error.InvalidActionError, match="Cannot export an abandoned world"):
         await session_admin.admin_session(
             mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
         )
@@ -635,9 +826,16 @@ async def test_admin_session_change_layout_description(
     assert session_mod.game_details_json == '{"seed_hash": "ASDF", "word_hash": "Hash Words", "spoiler": true}'
 
 
+@pytest.mark.parametrize("abandoned", [False, True])
 @pytest.mark.parametrize("beaten", [True, False])
 async def test_admin_session_remove_layout_description(
-    mock_emit_session_update: MagicMock, clean_database, mock_sa, mock_audit, mocker: pytest_mock.MockerFixture, beaten
+    mock_emit_session_update: MagicMock,
+    clean_database,
+    mock_sa,
+    mock_audit,
+    mocker: pytest_mock.MockerFixture,
+    beaten,
+    abandoned,
 ):
     mock_emit_session_actions_update = mocker.patch(
         "randovania.server.multiplayer.session_common.emit_session_actions_update", autospec=True
@@ -654,7 +852,11 @@ async def test_admin_session_remove_layout_description(
         layout_description_json="layout_description_json",
     )
     database.MultiplayerMembership.create(user=user1, session=session, admin=True)
-    database.World.create(session=session, name="W1", preset="{}", uuid=original_uid, beaten=beaten)
+    world = database.World.create(
+        session=session, name="W1", preset="{}", uuid=original_uid, beaten=beaten, abandoned=abandoned
+    )
+    database.WorldUserAssociation.create(world=world, user=user1)
+    database.WorldAction.create(provider=world, location=0, receiver=world, session=session)
     mock_sa.get_current_user.return_value = user1
 
     # Run
@@ -668,8 +870,20 @@ async def test_admin_session_remove_layout_description(
     mock_audit.assert_awaited_once_with(mock_sa, "TheSid", session, "Removed generated game")
     assert database.MultiplayerSession.get_by_id(1).layout_description_json is None
     assert database.MultiplayerSession.get_by_id(1).generation_in_progress is None
-    assert database.World.get_by_id(1).uuid != original_uid
-    assert not database.World.get_by_id(1).beaten
+
+    # get new state of the world
+    world = database.World.get_by_id(world.id)
+    assert world.uuid != original_uid
+    assert not world.beaten
+    assert not world.abandoned
+    assert database.WorldAction.select().where(database.WorldAction.session == session).count() == 0
+    # An abandoned world's association is dropped when the layout is cleared, since it now needs a
+    # player to claim and play it
+    expected_associations = 0 if abandoned else 1
+    assert (
+        database.WorldUserAssociation.select().where(database.WorldUserAssociation.world == world.id).count()
+        == expected_associations
+    )
 
 
 @pytest.mark.parametrize("other_user", [False, True])
@@ -991,3 +1205,179 @@ async def test_admin_error_on_disabling_coop_when_coop_worlds_exist(mock_sa, one
             SessionAdminGlobalAction.SET_ALLOW_COOP.value,
             False,
         )
+
+
+@pytest.mark.parametrize("new_state", [False, True])
+@pytest.mark.parametrize("old_state", [False, True])
+async def test_admin_allow_abandon_worlds(
+    mock_sa, two_player_session, mock_audit, mock_emit_session_update, old_state, new_state
+):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    two_player_session.allow_abandon_worlds = old_state
+    two_player_session.save()
+
+    # Run
+    await session_admin.admin_session(
+        mock_sa, "TheSid", 1, SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS.value, new_state
+    )
+
+    assert database.MultiplayerSession.get_by_id(1).allow_abandon_worlds == new_state
+    mock_audit.assert_awaited_once_with(
+        mock_sa, "TheSid", two_player_session, f"{'Allowing' if new_state else 'Disallowing'} abandoning worlds."
+    )
+    mock_emit_session_update.assert_awaited_once_with(mock_sa, two_player_session)
+
+
+async def test_admin_error_on_disabling_abandoned_worlds_when_abandoned_worlds_exist(mock_sa, two_player_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    two_player_session.allow_abandon_worlds = True
+    two_player_session.save()
+
+    database.World.create(
+        session=two_player_session,
+        name="World 3",
+        preset="{}",
+        order=2,
+        uuid=uuid.UUID("6b5ac1a1-d250-4f05-0000-ae37e8a92165"),
+        abandoned=True,
+    )
+
+    # Run / Assert
+    with pytest.raises(error.InvalidActionError):
+        await session_admin.admin_session(
+            mock_sa,
+            "TheSid",
+            two_player_session.id,
+            SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS.value,
+            False,
+        )
+
+
+@pytest.mark.parametrize(
+    "action",
+    [action for action in SessionAdminGlobalAction if action != SessionAdminGlobalAction.CREATE_PATCHER_FILE],
+)
+async def test_admin_session_blocked_for_race_session(mock_sa, race_team_session, action):
+    # room decides a race session's settings and layout. only export is allowed for its members
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_session(mock_sa, "TheSid", 1, action.value)
+
+
+@pytest.mark.parametrize(
+    "action",
+    [
+        SessionAdminUserAction.KICK,
+        SessionAdminUserAction.CREATE_WORLD_FOR,
+        SessionAdminUserAction.SWITCH_ADMIN,
+    ],
+)
+async def test_admin_player_blocked_for_race_session(mock_sa, race_team_session, action):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, action.value)
+
+
+async def test_admin_player_claim_allowed_before_start(
+    mock_sa, race_team_session, mock_audit, mock_emit_session_update
+):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    w3 = database.World.create(
+        session=race_team_session,
+        name="World 3",
+        preset="{}",
+        order=2,
+        uuid=uuid.UUID("6b5ac1a1-d250-4f05-0000-ae37e8a92165"),
+    )
+
+    # Run
+    await session_admin.admin_player(mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.CLAIM.value, str(w3.uuid))
+
+    # Assert
+    assert database.WorldUserAssociation.get_by_ids(user_id=1234, world_uid=w3.uuid)
+
+
+@pytest.mark.parametrize("action", [SessionAdminUserAction.CLAIM, SessionAdminUserAction.UNCLAIM])
+async def test_admin_player_claim_after_team_started(mock_sa, race_team_session, action):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    team = race_team_session.get_race_team()
+    team.start_datetime = datetime.datetime(2020, 5, 11, tzinfo=datetime.UTC)
+    team.save()
+
+    with pytest.raises(error.InvalidActionError, match="Can't change world claims after the team has started"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 1234, action.value, "1179c986-758a-4170-9b07-fe4541d78db0"
+        )
+
+
+async def test_admin_player_unclaim_after_exporting(mock_sa, race_team_session):
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+
+    entry = database.AsyncRaceEntry.entry_for(race_team_session.get_race_team().room, 1234)
+    assert entry is not None
+    entry.has_exported = True
+    entry.save()
+
+    with pytest.raises(error.InvalidActionError, match="Can't unclaim a world after exporting it"):
+        await session_admin.admin_player(
+            mock_sa, "TheSid", 1, 1234, SessionAdminUserAction.UNCLAIM.value, "1179c986-758a-4170-9b07-fe4541d78db0"
+        )
+
+
+async def test_admin_session_patcher_file_in_race_session(
+    mock_sa, mock_audit, mocker: MockerFixture, race_team_session
+):
+    mocker.patch(
+        "randovania.server.lib.datetime_now",
+        return_value=datetime.datetime(2020, 5, 12, tzinfo=datetime.UTC),
+    )
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1235)
+    w2 = database.World.get_by_id(2)
+
+    mock_layout_description: PropertyMock = mocker.patch(
+        "randovania.server.database.MultiplayerSession.layout_description", new_callable=PropertyMock
+    )
+    game = mock_layout_description.return_value.get_preset.return_value.game
+
+    # Run
+    result = await session_admin.admin_session(
+        mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
+    )
+
+    # Assert
+    data_factory = game.patch_data_factory.return_value
+    rdv_meta = data_factory.create_default_patcher_data_meta.return_value
+    rdv_meta.__setitem__.assert_called_once_with("in_race_setting", True)
+    data_factory.create_data.assert_called_once_with(rdv_meta)
+    assert result is data_factory.create_data.return_value
+
+    room = race_team_session.get_race_team().room
+    exporter = database.AsyncRaceEntry.entry_for(room, 1235)
+    assert exporter is not None
+    assert exporter.has_exported
+    assert [entry.as_entry().message for entry in room.audit_log] == ["Exported World 2 of team The Team."]
+
+
+@pytest.mark.parametrize("when", ["before", "after"])
+async def test_admin_session_patcher_file_outside_race_window(mock_sa, mocker: MockerFixture, race_team_session, when):
+    mocker.patch(
+        "randovania.server.lib.datetime_now",
+        return_value=datetime.datetime(2020 if when == "before" else 2021, 5, 1, tzinfo=datetime.UTC),
+    )
+    mock_sa.get_current_user.return_value = database.User.get_by_id(1235)
+    w2 = database.World.get_by_id(2)
+
+    with pytest.raises(error.NotAuthorizedForActionError):
+        await session_admin.admin_session(
+            mock_sa, "TheSid", 1, SessionAdminGlobalAction.CREATE_PATCHER_FILE.value, str(w2.uuid), {}
+        )
+
+    room = race_team_session.get_race_team().room
+    exporter = database.AsyncRaceEntry.entry_for(room, 1235)
+    assert exporter is not None
+    assert not exporter.has_exported

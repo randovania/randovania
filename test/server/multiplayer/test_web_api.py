@@ -156,3 +156,15 @@ def test_delete_session_post_not_authorized(test_client) -> None:
     result = test_client.post("/session/1/delete", headers={"Accept": "application/json"})
     assert result.status_code == 401
     assert result.json() == {"status_message": "401 Unauthorized", "detail": "Unknown user"}
+
+
+def test_admin_sessions_excludes_race_sessions(test_client, race_team_session) -> None:
+    """The session list is for real sessions; a race team's is an implementation detail of a room."""
+    database.User.update(admin=True).where(database.User.id == 1238).execute()
+    test_client.set_logged_in_user(1238)
+
+    # Run
+    result = test_client.get("/sessions")
+
+    # Assert
+    assert "No sessions." in result.text

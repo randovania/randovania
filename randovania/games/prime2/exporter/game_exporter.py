@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import copy
 import shutil
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 import mp2hudcolor  # type: ignore[import-not-found]
@@ -23,6 +22,8 @@ from randovania.patching.patchers.exceptions import UnableToExportError
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from randovania.exporter.patch_data_factory import PatcherDataMeta
 
 

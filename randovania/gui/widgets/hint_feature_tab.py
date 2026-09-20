@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from collections.abc import Mapping
 from typing import TYPE_CHECKING
 
 from PySide6.QtWidgets import QLabel, QSizePolicy, QSpacerItem, QVBoxLayout, QWidget
@@ -16,7 +15,7 @@ from randovania.gui.lib.data_editor_links import (
 from randovania.gui.widgets.foldable import Foldable
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Mapping
 
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.game_description import GameDescription

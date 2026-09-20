@@ -49,11 +49,7 @@ async def run_filler(
         standard_pickups = list(pool.pickups)
         rng.shuffle(standard_pickups)
 
-        graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(
-            config,
-            pool.game,
-            pool.patches,
-        )
+        graph, state = pool.game_generator.bootstrap.logic_bootstrap_graph(config, pool.game, pool.patches)
         player_states.append(
             PlayerState(
                 index=index,
@@ -84,16 +80,16 @@ async def run_filler(
         if disable_gc_during:
             gc.enable()
 
-    results = {}
-    for player_state, patches in filler_result.items():
-        player_pool = player_pools[player_state.index]
-
-        results[player_state.index] = FillerPlayerResult(
-            game=player_state.original_game,
-            patches=patches,
-            unassigned_pickups=player_state.pickups_left,
-            pool=player_pool,
-            hint_state=player_state.hint_state,
+    results = []
+    for player_pool, player_state, patches in zip(player_pools, player_states, filler_result, strict=True):
+        results.append(
+            FillerPlayerResult(
+                game=player_state.original_game,
+                patches=patches,
+                unassigned_pickups=player_state.pickups_left,
+                pool=player_pool,
+                hint_state=player_state.hint_state,
+            )
         )
 
     if any(pool.configuration.should_hide_generation_log() for pool in player_pools):

@@ -81,7 +81,7 @@ async def test_create_patches(
 
     assert result == LayoutDescription.create_new(
         generator_parameters=generator_parameters,
-        all_patches={},
+        all_patches=[],
         item_order=filler_result.action_log,
     )
 
@@ -98,7 +98,7 @@ def test_distribute_remaining_items_no_locations_left(
         pool=MagicMock(),
         hint_state=MagicMock(),
     )
-    filler_results = FillerResults({0: player_result}, ())
+    filler_results = FillerResults([player_result], ())
 
     # Run
     with pytest.raises(

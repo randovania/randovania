@@ -114,7 +114,6 @@ def convert_prime1_pickups(
     randomizer_data: dict,
     status_update: ProgressUpdateCallable,
 ):
-    """"""
     updaters = status_update_lib.split_progress_update(status_update, 3)
 
     # Restoring from cache causes game crashes when loading a room with a Prime model. Skipping until resolved

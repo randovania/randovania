@@ -33,7 +33,10 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], _rng: Random) -> dict:
         pickup_map_dict = {}
         for pickup in pickup_list:
-            quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.is_for_remote_player else 0
+            if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
+                quantity = pickup.conditional_resources[0].resources[0][1]
+            else:
+                quantity = 0
             object_id = str(self.game.region_list.node_from_pickup_index(pickup.index).extra["object_id"])
             res_lock = pickup.original_pickup.resource_lock
             text_index = (
@@ -54,7 +57,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                     pickup_type = pickup.original_pickup.name
 
             acquired_msg = pickup.name
-            if not self.players_config.is_multiworld:
+            if not self.worlds_config.is_multiworld:
                 acquired_msg = f"{pickup.original_pickup.name} acquired"
 
             pickup_map_dict[object_id] = {
@@ -99,7 +102,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         return {
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
-            "session_uuid": str(self.players_config.get_own_uuid()),
+            "session_uuid": str(self.world_uuid),
         }
 
     def _create_game_config_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
@@ -171,8 +174,8 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         spoiler_dict = credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            PlanetsZebethHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            PlanetsZebethHintNamer(self.description.all_patches, self.worlds_config),
             "{}",
             False,
         )
@@ -207,7 +210,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         pickup_list = self.export_pickup_list()
 
         return {
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             "game_config": self._create_game_config_dict(pickup_list),
             "preferences": self._create_cosmetics(),
             "level_data": {"room": "rm_Zebeth", "pickups": self._create_pickups_dict(pickup_list, self.rng)},

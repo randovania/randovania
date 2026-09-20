@@ -91,7 +91,6 @@ class PrimeConfiguration(BaseConfiguration):
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     warp_to_start: bool
     damage_reduction: DamageReduction
-    allow_underwater_movement_without_gravity: bool
     small_samus: bool
     large_samus: bool
     shuffle_item_pos: bool
@@ -147,9 +146,6 @@ class PrimeConfiguration(BaseConfiguration):
 
         if self.submerged_probability > 0:
             result.append("Submerged Rooms")
-
-        if self.allow_underwater_movement_without_gravity:
-            result.append("Dangerous Gravity Suit Logic")
 
         if self.enemy_attributes is not None:
             result.append("Dangerous Random Enemy Attributes")

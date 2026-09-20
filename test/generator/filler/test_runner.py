@@ -41,21 +41,14 @@ async def test_run_filler(
 
     patches = blank_game_patches.assign_hint(hint_identifiers[0], LocationHint.unassigned(PickupIndex(0)))
     action_log = (MagicMock(), MagicMock())
-    player_state = MagicMock()
-    player_state.index = 0
-    player_state.game = player_pools[0].game
-    player_state.pickups_left = list(player_pools[0].pickups)
 
     filler_config = MagicMock()
     filler_config.minimum_available_locations_for_hint_placement = 0
-    player_state.hint_state = HintState(filler_config, blank_game_description)
-    empty_set: frozenset[PickupIndex] = frozenset()
-    player_state.hint_state.hint_initial_pickups = dict.fromkeys(hint_identifiers, empty_set)
 
     mocker.patch(
         "randovania.generator.filler.runner.retcon_playthrough_filler",
         autospec=True,
-        return_value=({player_state: patches}, action_log),
+        return_value=([patches], action_log),
     )
 
     # Run

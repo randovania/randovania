@@ -22,9 +22,7 @@ def state_for_blank(
     game = blank_game_description.get_mutable()
 
     graph, state = game.game_enum.generator.bootstrap.logic_bootstrap_graph(
-        default_blank_configuration,
-        game,
-        empty_patches,
+        default_blank_configuration, game, empty_patches
     )
     return player_state.PlayerState(
         index=0,

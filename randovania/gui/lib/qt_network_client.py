@@ -13,7 +13,6 @@ import randovania
 from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
-from randovania.lib.type_lib import AsyncCallable
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect
 from randovania.network_common import error
 from randovania.network_common.async_race_room import AsyncRaceRoomEntry
@@ -30,6 +29,8 @@ from randovania.network_common.user import CurrentUser
 
 if TYPE_CHECKING:
     from pathlib import Path
+
+    from randovania.lib.type_lib import AsyncCallable
 
 AnyNetworkError = (error.BaseNetworkError, UnableToConnect)
 

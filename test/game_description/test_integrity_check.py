@@ -5,7 +5,7 @@ import typing
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import data_reader, default_database, integrity_check
+from randovania.game_description import data_reader, data_writer, default_database, integrity_check
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
@@ -31,13 +31,12 @@ def test_find_database_errors(game_enum: RandovaniaGame):
     assert errors == []
 
 
-def test_invalid_db(test_files_dir):
+def test_invalid_db(test_files_dir, acceptance_check):
     data_path = test_files_dir.joinpath("integrity_check_invalid_db.json")
     sample_data = typing.cast("dict", json_lib.read_path(data_path))
     gd = data_reader.decode_data(sample_data)
 
-    # # uncomment this line to migrate the test database format
-    # json_lib.write_path(data_path, data_writer.write_game_description(gd)); assert False
+    acceptance_check(data_path, data_writer.write_game_description(gd))
 
     # Run
     errors = integrity_check.find_database_errors(gd)
@@ -55,6 +54,8 @@ def test_invalid_db(test_files_dir):
         "World/Area 1/Event - Foo has a connection to itself",
         "World/Area 1/Door to Area 2 (Generic) should be named 'Other to Area 2'",
         "World/Area 1/Door to Area 2 (Dock) should be named 'Other to Area 2'",
+        "World/Area 1/Door to Area 2 (Dock) has layers ['alternate'], but connected dock "
+        "'region World/area Area 2/node Door to Area 1' has layers ['default'].",
         "World/Area 1/Door to Area 2 (Dock) connects to 'region World/area Area 2/node Door to Area 1', "
         "but that dock connects to 'region World/area Area 1/node Door to Area 2 (Generic)' instead.",
         "World/Area 2/Door to Area 1 should be named 'Other to Area 1'",

@@ -1,5 +1,5 @@
 {
-    "schema_version": 33,
+    "schema_version": 34,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -84,7 +84,8 @@
         "energy_tank_item_index": "LightAmmo"
     },
     "layers": [
-        "default"
+        "default",
+        "alternate"
     ],
     "starting_location": {
         "region": "World",
@@ -99,7 +100,7 @@
             "items": []
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -114,10 +115,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "portal": {
                 "name": "Portal",
@@ -125,13 +127,13 @@
                     "ignore_for_hints": true
                 },
                 "items": {},
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "morph_ball": {
                 "name": "Morph Ball Door",
                 "extra": {},
                 "items": {},
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "other": {
                 "name": "Other",
@@ -146,7 +148,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -157,10 +160,11 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             },
             "teleporter": {
                 "name": "Teleporter",
@@ -178,20 +182,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {
@@ -277,7 +277,7 @@
                             "coordinates": null,
                             "description": "",
                             "layers": [
-                                "default"
+                                "alternate"
                             ],
                             "extra": {},
                             "valid_starting_location": false,
@@ -554,6 +554,20 @@
                                         "items": []
                                     }
                                 },
+                                "Bad Specific Location Hint": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
+                                "Bad Specific Pickup Hint": {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": "",
+                                        "items": []
+                                    }
+                                },
                                 "Pickup (Not A Pickup)": {
                                     "type": "and",
                                     "data": {
@@ -579,20 +593,6 @@
                                     "type": "and",
                                     "data": {
                                         "comment": "https://cdn.discordapp.com/attachments/this-is-a-bad-attachment",
-                                        "items": []
-                                    }
-                                },
-                                "Bad Specific Location Hint": {
-                                    "type": "and",
-                                    "data": {
-                                        "comment": "",
-                                        "items": []
-                                    }
-                                },
-                                "Bad Specific Pickup Hint": {
-                                    "type": "and",
-                                    "data": {
-                                        "comment": "",
                                         "items": []
                                     }
                                 }
@@ -690,7 +690,9 @@
                             "heal": false,
                             "coordinates": null,
                             "description": "",
-                            "layers": ["default"],
+                            "layers": [
+                                "default"
+                            ],
                             "extra": {},
                             "valid_starting_location": false,
                             "kind": "specific-location",
@@ -717,7 +719,9 @@
                             "heal": false,
                             "coordinates": null,
                             "description": "",
-                            "layers": ["default"],
+                            "layers": [
+                                "default"
+                            ],
                             "extra": {},
                             "valid_starting_location": false,
                             "kind": "specific-pickup",

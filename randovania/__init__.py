@@ -43,6 +43,7 @@ def get_icon_path() -> Path:
 
 def get_file_path() -> Path:
     if is_frozen():
+        # Using getattr to dodge typing issues
         file_dir = Path(getattr(sys, "_MEIPASS"))
     else:
         file_dir = Path(__file__).parent
@@ -77,9 +78,9 @@ def get_configuration() -> NetworkConfiguration:
     file_path = CONFIGURATION_FILE_PATH
 
     if file_path is None:
-        file_path = os.environ.get("RANDOVANIA_CONFIGURATION_PATH")
-        if file_path is not None:
-            file_path = Path(file_path).absolute()
+        file_path_str = os.environ.get("RANDOVANIA_CONFIGURATION_PATH")
+        if file_path_str is not None:
+            file_path = Path(file_path_str).absolute()
 
     if file_path is None:
         file_path = _get_default_configuration_path()

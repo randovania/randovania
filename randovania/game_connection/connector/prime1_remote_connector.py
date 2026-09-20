@@ -12,7 +12,6 @@ from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException,
     MemoryOperationExecutor,
 )
-from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.games.prime1.patcher import prime_items
 
@@ -22,6 +21,7 @@ if TYPE_CHECKING:
     from randovania.game_connection.connector.prime_remote_connector import PatchInstructions, PickupPatches
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.inventory import Inventory
 
 
 def format_received_item(item_name: str, player_name: str) -> str:

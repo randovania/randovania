@@ -76,6 +76,7 @@ class PickupGeneratorParams:
     probability_multiplier: float = 1.0
     required_progression: int = 0
     index_age_impact: float = 1.0  # By how much the PickupIndex's age is incremented when this pickup is placed
+    bulk_placement: bool = False
 
 
 @dataclass(frozen=True)
@@ -100,17 +101,17 @@ class PickupEntry:
 
     def __post_init__(self) -> None:
         if not isinstance(self.progression, tuple):
-            raise ValueError(f"resources should be a tuple, got {self.progression}")
+            raise TypeError(f"resources should be a tuple, got {self.progression}")
 
         for i, progression in enumerate(self.progression):
             if not isinstance(progression, tuple):
-                raise ValueError(f"{i}-th progression should be a tuple, got {progression}")
+                raise TypeError(f"{i}-th progression should be a tuple, got {progression}")
 
             if len(progression) != 2:
                 raise ValueError(f"{i}-th progression should have 2 elements, got {len(progression)}")
 
             if not isinstance(progression[1], int):
-                raise ValueError(f"{i}-th progression second field should be a int, got {progression[1]}")
+                raise TypeError(f"{i}-th progression second field should be a int, got {progression[1]}")
 
             if progression[1] > progression[0].max_capacity:
                 raise ValueError(

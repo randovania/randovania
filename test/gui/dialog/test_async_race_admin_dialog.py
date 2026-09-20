@@ -18,7 +18,7 @@ def test_admin_data(skip_qtbot: QtBot):
     skip_qtbot.add_widget(parent)
 
     admin_data = AsyncRaceRoomAdminData(
-        [
+        users=[
             AsyncRaceEntryData(
                 user=RandovaniaUser(id=1235, name="user"),
                 join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),

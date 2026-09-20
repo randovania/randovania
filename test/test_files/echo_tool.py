@@ -2,5 +2,6 @@ from __future__ import annotations
 
 import fileinput
 
-for line in fileinput.input():
-    print(line)
+with fileinput.input() as f:
+    for line in f:
+        print(line)

@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -15,6 +14,7 @@ from randovania.layout.lib import location_list
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
 
@@ -50,7 +50,7 @@ class TeleporterList(location_list.LocationList):
     @classmethod
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         game_description = default_database.game_description_for(game)
-        teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+        teleporter_dock_types = game_description.dock_type_database.all_teleporter_dock_types
         region_list = game_description.region_list
         nodes = [
             node.identifier
@@ -120,7 +120,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
         }:
             game_description = default_database.game_description_for(self.game)
-            teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+            teleporter_dock_types = game_description.dock_type_database.all_teleporter_dock_types
             region_list = game_description.region_list
 
             result = []

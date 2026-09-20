@@ -18,13 +18,11 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraphNode
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
-    from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logging import ActionDetails, ActionLogEntry, RollbackLogEntry, SkipLogEntry
-    from randovania.resolver.resolver import ActionPriority
+    from randovania.resolver.resolver import ActionPriority, PotentialAction
 
 
 class IndentedWidget(NamedTuple):
@@ -53,14 +51,13 @@ def get_brush_for_action(action_type: ActionType | str) -> QtGui.QBrush:
 
 
 async def _run_validator(logger: ResolverLogger, debug_level: debug.LogLevel, layout: LayoutDescription) -> str:
-    configuration: BaseConfiguration = layout.get_preset(0).configuration
-    patches = layout.all_patches[0]
-
     before = time.perf_counter()
     with debug.with_level(debug_level):
         final_state_by_resolve = await resolver.resolve(
-            configuration=configuration,
-            patches=patches,
+            [
+                (preset.configuration, patches)
+                for preset, patches in zip(layout.all_presets, layout.all_patches, strict=True)
+            ],
             logger=logger,
             record_paths=True,
         )
@@ -74,7 +71,7 @@ async def _run_validator(logger: ResolverLogger, debug_level: debug.LogLevel, la
 class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
     _current_task: asyncio.Task | None
 
-    def __init__(self, layout: LayoutDescription, players: PlayersConfiguration) -> None:
+    def __init__(self, layout: LayoutDescription, players: WorldsConfiguration) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -92,7 +89,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
             "Minor": False,
             "Event": True,
             "Hint": False,
-            "Lock": configs[players.player_index].dock_rando.is_enabled(),
+            "Lock": configs[players.world_index].dock_weakness_distributor.is_enabled_for_any_type(),
         }
         self._last_run_filters: dict[str, bool] | None = None
 
@@ -281,7 +278,9 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
                 )
             yield text
             for i in range(item.childCount()):
-                yield from inner_print(item.child(i), indent + 1)
+                child = item.child(i)
+                if child is not None:
+                    yield from inner_print(child, indent + 1)
 
         for i in range(self.log_widget.topLevelItemCount()):
             yield from inner_print(self.log_widget.topLevelItem(i))
@@ -303,7 +302,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             else:
                 action_text = details.target.pickup.name
                 if self.validator_widget.layout_description.world_count > 1:
-                    player_name = self.validator_widget.players.player_names[details.target.player]
+                    player_name = self.validator_widget.players.world_names[details.target.world]
                     action_text = f"{player_name}'s {action_text}"
 
         else:
@@ -344,7 +343,7 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         self.validator_widget.add_log_entry(widget, action_entry.location.identifier)
 
-    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
+    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, *PotentialAction]]) -> None:
         if not self.should_show("CheckSatisfiable", self.log_level):
             return
 
@@ -354,7 +353,8 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
 
         self.validator_widget.add_simple_log_entry("Satisfiable actions", 1)
 
-        for _, node, _ in actions:
+        for _, wi, node, _ in actions:
+            # TODO: world name?
             self.validator_widget.add_simple_log_entry(
                 f"• {node.identifier.as_string}",
                 indent=2,
@@ -425,11 +425,11 @@ class ValidatorWidgetResolverLogger(ResolverLogger):
             extra_text_font=font,
         )
 
-    def _log_victory(self, state: State | None) -> None:
+    def _log_victory(self, states: list[State] | None) -> None:
         if not self.should_show("Completion", self.log_level):
             return
 
-        if state is None:
+        if states is None:
             action_type = "Failure"
             details = "Game is impossible"
         else:

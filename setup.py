@@ -69,7 +69,7 @@ class DeleteUnknownNativeCommand(Command):
             relative = path.relative_to(parent)
             if len(relative.parts) < 2 or relative.parts[1] != "data":
                 for file in filenames:
-                    if file.endswith((".pyd", ".cpp", ".so")):
+                    if file.endswith((".pyd", ".cpp", ".so", ".pdb")):
                         cython_files.append(relative.joinpath(file))
 
         for file in cython_files:
@@ -111,7 +111,9 @@ if should_compile:
             # Cython boilerplate triggers warning "function call missing argument list", unrelated to our code
             "/wd4551",
         ]
-        extra_link_args = []
+        # /Zi is discarded without /DEBUG, leaving profilers with raw addresses.
+        # /DEBUG also turns off /OPT:REF and /OPT:ICF, so ask for them back.
+        extra_link_args = ["/DEBUG", "/OPT:REF", "/OPT:ICF"]
 
         if profiling_mode:
             # Add profiling flags for MSVC
@@ -121,12 +123,7 @@ if should_compile:
                     "/Oy-",  # Disable frame pointer omission
                 ]
             )
-            extra_link_args.extend(
-                [
-                    "/DEBUG",  # Generate PDB file
-                    "/PROFILE",  # Enable profiling
-                ]
-            )
+            extra_link_args.append("/PROFILE")
         elif debug_mode:
             extra_compile_args.extend(["/Od"])  # Disable optimizations
     else:
@@ -150,20 +147,29 @@ if should_compile:
             extra_compile_args.extend(["-O0", "-fno-omit-frame-pointer"])  # no optimization
 
     # Conditionally add coverage tracing macros
-    define_macros = [("CYTHON_TRACE", "1"), ("CYTHON_TRACE_NOGIL", "1")] if enable_coverage_tracing else []
+    define_macros = (
+        [("CYTHON_TRACE", "1"), ("CYTHON_TRACE_NOGIL", "1"), ("CYTHON_USE_SYS_MONITORING", "0")]
+        if enable_coverage_tracing
+        else []
+    )
+
+    def make_extension(file: str) -> Extension:
+        link_args = list(extra_link_args)
+        if sys.platform == "win32":
+            # Keep the PDB next to the imported .pyd; the default lands in a discarded build dir.
+            link_args.append("/PDB:{}".format(parent.joinpath(file).with_suffix(".pdb")))
+
+        return Extension(
+            file.replace("/", ".")[:-3],
+            sources=[file],
+            language="c++",
+            extra_compile_args=extra_compile_args,
+            extra_link_args=link_args,
+            define_macros=define_macros,
+        )
 
     ext_modules = cythonize(
-        [
-            Extension(
-                file.replace("/", ".")[:-3],
-                sources=[file],
-                language="c++",
-                extra_compile_args=extra_compile_args,
-                extra_link_args=extra_link_args,
-                define_macros=define_macros,
-            )
-            for file in cythonize_files
-        ],
+        [make_extension(file) for file in cythonize_files],
         annotate=True,
         compiler_directives={
             "linetrace": enable_coverage_tracing,  # Enable line tracing only when needed for coverage

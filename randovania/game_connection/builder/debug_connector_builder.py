@@ -7,7 +7,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 
 if TYPE_CHECKING:
     from randovania.game_connection.connector.remote_connector import RemoteConnector

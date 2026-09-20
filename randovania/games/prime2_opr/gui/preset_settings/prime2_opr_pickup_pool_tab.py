@@ -2,19 +2,22 @@ from __future__ import annotations
 
 import dataclasses
 from functools import partial
+from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
 from randovania.games.prime2.gui.preset_settings.echoes_pickup_pool_tab import EchoesPresetPickupPool
-from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
-from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.pickup_pool_tab import _create_separator, _format_expected_counts
-from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.gui.widgets.scroll_protected import ScrollProtectedDoubleSpinBox
-from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.preset import Preset
+
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
+    from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
+    from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.preset import Preset
 
 
 class EchoesOPRPresetPickupPool(EchoesPresetPickupPool):

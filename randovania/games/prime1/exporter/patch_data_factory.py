@@ -38,6 +38,8 @@ if TYPE_CHECKING:
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
+_SAVE_NAME_MAX_LENGTH = 24
+
 _STARTING_ITEM_NAME_TO_INDEX = {
     "powerBeam": "Power",
     "ice": "Ice",
@@ -212,6 +214,47 @@ def _name_for_start_location(region_list: RegionList, location: NodeIdentifier) 
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
     return f"{randovania.VERSION} | Seed Hash - {description.shareable_word_hash} ({description.shareable_hash})"
+
+
+def _abbreviate_word(word: str, length: int) -> str:
+    if length < len(word):
+        return word[:length] + "."
+    return word
+
+
+def _join_abbreviated_words(words: list[str], lengths: list[int]) -> str:
+    return " ".join(_abbreviate_word(word, length) for word, length in zip(words, lengths, strict=True))
+
+
+def _balanced_word_lengths(words: list[str], max_length: int) -> list[int]:
+    lengths = [1] * len(words)
+    longest_word = max(len(word) for word in words)
+
+    for target_length in range(2, longest_word + 1):
+        for i, word in enumerate(words):
+            if len(word) < target_length:
+                continue
+
+            candidate_lengths = list(lengths)
+            candidate_lengths[i] = target_length
+
+            if len(_join_abbreviated_words(words, candidate_lengths)) > max_length:
+                continue
+
+            lengths = candidate_lengths
+
+    return lengths
+
+
+def _shorten_word_hash(word_hash: str, max_length: int = _SAVE_NAME_MAX_LENGTH) -> str:
+    """Fits a word hash into max_length by abbreviating every word by a similar amount, marking each cut with a dot."""
+    words = word_hash.split()
+    if not words:
+        return word_hash[:max_length]
+
+    lengths = _balanced_word_lengths(words, max_length)
+    abbreviated = _join_abbreviated_words(words, lengths)
+    return abbreviated[:max_length].rstrip()
 
 
 def _random_factor(rng: Random, min: float, max: float, target: float) -> float:
@@ -578,11 +621,9 @@ def _serialize_dock_modifications(
                         assert len(strongly_connected_components) > 1
 
                         def component_number(name: str) -> int:
-                            i = 0
-                            for component in strongly_connected_components:
+                            for i, component in enumerate(strongly_connected_components):
                                 if name in list(component):
                                     return i
-                                i += 1
                             raise KeyError("Name not found")
 
                         # randomly pick two room pairs which are not members of the same strongly connected
@@ -663,7 +704,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         # Setup
         db = self.game
-        namer = PrimeHintNamer(self.description.all_patches, self.players_config)
+        namer = PrimeHintNamer(self.description.all_patches, self.worlds_config)
 
         ammo_with_mains = [
             ammo.name
@@ -681,7 +722,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
-        elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
+        elevator_dock_types = self.game.dock_type_database.all_teleporter_dock_types
 
         # Initialize serialized db data
         level_data: dict = {}
@@ -837,7 +878,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     level_data[region.name]["rooms"][area.name]["doors"][str(dock_index)] = dock_data
 
         # serialize dock destination modifications
-        dock_types_to_ignore = self.game.dock_weakness_database.all_teleporter_dock_types
+        dock_types_to_ignore = self.game.dock_type_database.all_teleporter_dock_types
         _serialize_dock_modifications(
             level_data, regions, self.configuration.room_rando, self.rng, dock_types_to_ignore
         )
@@ -849,7 +890,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
                 hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                     self.description.all_patches,
-                    self.players_config,
+                    self.worlds_config,
                     namer,
                     self.configuration.hints.specific_pickup_hints["phazon_suit"] == SpecificPickupHintMode.HIDE_AREA,
                     [phazon_suit_resource_info],
@@ -881,6 +922,25 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             except ValueError:
                 pass  # Skip making the hint if Phazon Suit is not in the seed
 
+        if self.configuration.blue_save_doors:
+            room = level_data["Phazon Mines"]["rooms"]["Save Station Mines A"]
+            room.setdefault("timers", []).append(
+                {
+                    "id": 0x00EE_0000,
+                    "time": 0.5,
+                    "startImmediately": True,
+                }
+            )
+
+            room.setdefault("addConnections", []).append(
+                {
+                    "senderId": 0x00EE_0000,  # Randovania timer
+                    "state": "ZERO",
+                    "targetId": 0x0004001A,  # Relay - Unlock Gate
+                    "message": "SET_TO_ZERO",
+                }
+            )
+
         # strip extraneous info
         level_data = _remove_empty(level_data)
         for region_item in level_data.values():
@@ -901,7 +961,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         credits_string = credits_spoiler.prime_trilogy_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
+            self.worlds_config,
             namer,
             "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
             "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;",
@@ -914,7 +974,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 namer,
                 hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 [self.resource_db.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
@@ -940,9 +1000,13 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
         suit_colors = {}
-        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.suit_color_rotations):
+        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, self.cosmetic_patches.active_suit_color_rotations):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
+
+        gunship_rotation = self.cosmetic_patches.active_gunship_color_rotation
+        if gunship_rotation is not None:
+            suit_colors["gunshipDeg"] = gunship_rotation
 
         starting_room = _name_for_start_location(db.region_list, self.patches.starting_location)
 
@@ -951,6 +1015,17 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             name: _starting_items_value_for(self.resource_db, starting_resources, index)
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
+        starting_items.update(
+            {
+                "missileLauncher": True,
+                "powerBombLauncher": True,
+                "powerSuit": 0,
+                "springBall": False,
+                "unknownItem1": 0,
+                "unlimitedMissiles": False,
+                "unlimitedPowerBombs": False,
+            }
+        )
 
         if not self.configuration.legacy_mode:
             idrone_config = {
@@ -1025,7 +1100,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
 
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             "preferences": {
                 "defaultGameOptions": self.get_default_game_options(),
                 "qolGameBreaking": not self.configuration.legacy_mode,
@@ -1041,6 +1116,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "quiet": False,
                 "suitColors": suit_colors,
                 "forceFusion": self.cosmetic_patches.force_fusion,
+                "rainbowPhazonBall": self.cosmetic_patches.rainbow_phazon_ball,
             },
             "gameConfig": {
                 "resultsString": _create_results_screen_text(self.description),
@@ -1081,6 +1157,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                     "description": f"Seed Hash: {self.description.shareable_word_hash}",
                 },
                 "mainMenuMessage": f"Randovania v{randovania.VERSION}\n{self.description.shareable_word_hash}",
+                "saveName": _shorten_word_hash(self.description.shareable_word_hash),
                 "creditsString": credits_string,
                 "artifactHints": {artifact.long_name: text for artifact, text in resulting_hints.items()},
                 "artifactTempleLayerOverrides": {
@@ -1096,9 +1173,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             "randEnemyAttributes": (
                 self.configuration.enemy_attributes.as_json if self.configuration.enemy_attributes is not None else None
             ),
-            "uuid": list(
-                self.players_config.get_own_uuid().bytes,
-            ),
+            "uuid": list(self.world_uuid.bytes),
         }
 
         if starting_memo:

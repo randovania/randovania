@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from randovania.game_description import default_database
-from randovania.game_description.db.area import Area
-from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node import Node
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode, TeleporterTargetList
+
+if TYPE_CHECKING:
+    from randovania.game_description.db.area import Area
+    from randovania.game_description.db.area_identifier import AreaIdentifier
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
 class PrimeTrilogyTeleporterTargetList(TeleporterTargetList):

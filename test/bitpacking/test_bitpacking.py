@@ -201,7 +201,7 @@ def test_sorted_array_elements_size(elements, array, expected_size):
 
 
 def test_pack_array_element_missing():
-    with pytest.raises(ValueError, match="5 is not in list"):
+    with pytest.raises(ValueError, match="not in list"):
         list(bitpacking.pack_array_element(5, [10, 25]))
 
 

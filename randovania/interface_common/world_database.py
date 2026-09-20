@@ -10,7 +10,7 @@ import uuid
 from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import is_uuid_multiworld
 from randovania.lib import json_lib, migration_lib
 from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.lib.signal import RdvSignal
@@ -121,13 +121,13 @@ class WorldDatabase:
                 self.logger.warning("File name is not a UUID: %s", f)
                 continue
 
-            if uid != INVALID_UUID and uid not in self._all_data:
+            if is_uuid_multiworld(uid) and uid not in self._all_data:
                 data = await self._read_data(f)
                 if data:
                     self._all_data[uid] = data
 
     def get_data_for(self, uid: uuid.UUID) -> WorldData:
-        if uid == INVALID_UUID:
+        if not is_uuid_multiworld(uid):
             raise ValueError("UID not allowed for Multiworld")
 
         if uid not in self._all_data:

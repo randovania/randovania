@@ -13,59 +13,76 @@ from randovania.resolver.logging import (
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
-    from randovania.layout.base.base_configuration import BaseConfiguration
+
+
+class WorldSpecificLogic:
+    graph: WorldGraph
+    dangerous_resources: frozenset[ResourceInfo]
+    all_nodes: Sequence[WorldGraphNode]
+    num_nodes: int
+    additional_requirements: list[GraphRequirementSet]
+    main_logic: Logic
+
+    def __init__(
+        self,
+        graph: WorldGraph,
+        main_logic: Logic,
+    ):
+        self.graph = graph
+        self.dangerous_resources = graph.dangerous_resources
+        self.all_nodes = graph.nodes
+        self.num_nodes = len(self.all_nodes)
+        self.additional_requirements = [GraphRequirementSet.trivial()] * self.num_nodes
+        self.main_logic = main_logic
+
+    @property
+    def world_index(self) -> int:
+        return self.graph.world_index
 
 
 class Logic:
     """Extra information that persists even after a backtrack, to prevent irrelevant backtracking."""
 
-    dangerous_resources: frozenset[ResourceInfo]
-
-    additional_requirements: list[GraphRequirementSet]
     prioritize_hints: bool
-    all_nodes: Sequence[WorldGraphNode]
-    graph: WorldGraph
-    game: GameDescription | None
 
     logger: ResolverLogger
+    world_specific: list[WorldSpecificLogic]
+    additional_requirements: list[list[GraphRequirementSet]]
 
     _attempts: int
 
     def __init__(
         self,
-        graph: WorldGraph,
-        configuration: BaseConfiguration,
+        graphs: list[WorldGraph],
         *,
         prioritize_hints: bool = False,
         record_paths: bool = False,
         disable_gc: bool = True,
     ):
-        self.all_nodes = graph.nodes
-        self.graph = graph
-
-        self.configuration = configuration
-        self.num_nodes = len(self.all_nodes)
-        self._victory_condition = graph.victory_condition
-        self.dangerous_resources = graph.dangerous_resources
-        self.additional_requirements = [GraphRequirementSet.trivial()] * self.num_nodes
+        # self.configuration = configuration
         self.prioritize_hints = prioritize_hints
         self.record_paths = record_paths
         self.disable_gc = disable_gc
 
         self.logger = TextResolverLogger()
+        self.world_specific = [WorldSpecificLogic(graph, self) for graph in graphs]
 
-    def get_additional_requirements(self, node: WorldGraphNode) -> GraphRequirementSet:
-        return self.additional_requirements[node.node_index]
+    def get_additional_requirements(self, world_index: int, node: WorldGraphNode) -> GraphRequirementSet:
+        return self.world_specific[world_index].additional_requirements[node.node_index]
 
-    def set_additional_requirements(self, node: WorldGraphNode, req: GraphRequirementSet) -> None:
-        self.additional_requirements[node.node_index] = req
+    def set_additional_requirements(self, world_index: int, node: WorldGraphNode, req: GraphRequirementSet) -> None:
+        self.world_specific[world_index].additional_requirements[node.node_index] = req
 
-    def victory_condition(self, state: State) -> GraphRequirementSet:
-        return self._victory_condition
+    def victory_conditions_satisfied(self, states: Sequence[State]) -> bool:
+        return all(
+            self.world_specific[state.world_index].graph.victory_condition.satisfied(
+                state.resources, state.health_for_damage_requirements
+            )
+            for state in states
+        )
 
     def get_attempts(self) -> int:
         return self._attempts

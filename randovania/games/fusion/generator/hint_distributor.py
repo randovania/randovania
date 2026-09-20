@@ -33,7 +33,7 @@ class FusionHintDistributor(HintDistributor):
         for feature in non_interesting_features:
             if target.pickup.has_hint_feature(feature):
                 return False
-        if target.player == player_id and ("Keycard" in target.pickup.name):
+        if target.world == player_id and ("Keycard" in target.pickup.name):
             # don't place a keycard hint on a navigation pad locked by itself
             return target.pickup.name not in str(hint_node.requirement_to_collect)
         return super().is_pickup_interesting(target, player_id, hint_node)

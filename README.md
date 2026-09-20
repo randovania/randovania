@@ -261,6 +261,7 @@ uvx pre-commit run qtui -a
 # Documentation
 
 - Unfamiliar with a term? Check the [glossary](docs/Glossary.md).
+- Writing or fixing tests? Check the [testing guide](docs/Testing.md).
 - Adding a new game? Check the [dedicated guide](docs/New%20Game.md).
 - Changing a data format? Check the [migrations documentation](docs/Migrations.md).
 - Working with the logic database?

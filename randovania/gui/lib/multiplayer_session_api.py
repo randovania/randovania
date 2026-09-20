@@ -10,7 +10,6 @@ from randovania.gui.lib.qt_network_client import NetworkErrorDelegator, handle_n
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import admin_actions
 from randovania.network_common.signals import server_signals
-from randovania.network_common.signals.common import SioDataType
 
 if typing.TYPE_CHECKING:
     import uuid
@@ -20,6 +19,7 @@ if typing.TYPE_CHECKING:
     from randovania.lib.type_lib import AsyncCallable
     from randovania.network_common.multiplayer_session import MultiplayerWorld
     from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+    from randovania.network_common.signals.common import SioDataType
 
 
 class SessionIdLoggingFilter(logging.Filter):
@@ -182,6 +182,11 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
         await self._session_admin_player(owner, admin_actions.SessionAdminUserAction.UNCLAIM, str(world_uid))
 
     @handle_network_errors
+    async def abandon_world(self, world_uid: uuid.UUID, owner: int, play_here: bool) -> None:
+        self.logger.info("Abandoning %s for %d", world_uid, owner)
+        await self._session_admin_player(owner, admin_actions.SessionAdminUserAction.ABANDON, str(world_uid), play_here)
+
+    @handle_network_errors
     async def rename_world(self, world_uid: uuid.UUID, new_name: str) -> None:
         self.logger.info("Renaming world %s to %s", world_uid, new_name)
         await self._session_admin_global(
@@ -258,6 +263,14 @@ class MultiplayerSessionApi(NetworkErrorDelegator, QtCore.QObject):
         self.logger.info("Setting whether everyone can claim to %s", flag)
         await self._session_admin_global(
             admin_actions.SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM,
+            flag,
+        )
+
+    @handle_network_errors
+    async def set_allow_abandon_worlds(self, flag: bool) -> None:
+        self.logger.info("Setting whether to allow abandoning worlds to %s", flag)
+        await self._session_admin_global(
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_ABANDON_WORLDS,
             flag,
         )
 

@@ -5,11 +5,11 @@ from enum import Enum
 from typing import TYPE_CHECKING, final, override
 
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.pickup_index import PickupIndex
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

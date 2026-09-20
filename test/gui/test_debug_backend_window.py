@@ -6,7 +6,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.lib import model_lib
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 
 
 @pytest.fixture(name="window")

@@ -30,7 +30,7 @@ class ResolverReach:
         return self._satisfiable_requirements_for_additionals
 
     def path_to_node(self, node: WorldGraphNode) -> tuple[WorldGraphNode, ...]:
-        all_nodes = self._logic.all_nodes
+        all_nodes = self._logic.world_specific[self._world_index].all_nodes
         if node.node_index in self._path_to_node:
             return tuple(all_nodes[part] for part in self._path_to_node[node.node_index])
         else:
@@ -39,9 +39,11 @@ class ResolverReach:
     def __init__(
         self,
         logic: Logic,
+        world_index: int,
         data: resolver_native.ProcessNodesResponse,
     ):
         self._logic = logic
+        self._world_index = world_index
         self._node_indices = tuple(data.reach_nodes.keys())
         self._health_at_node = data.reach_nodes
         self._path_to_node = data.path_to_node
@@ -59,11 +61,11 @@ class ResolverReach:
             initial_state,
             response,
         )
-        return ResolverReach(logic, response)
+        return ResolverReach(logic, initial_state.world_index, response)
 
     @property
     def nodes(self) -> Iterator[WorldGraphNode]:
-        all_nodes = self._logic.all_nodes
+        all_nodes = self._logic.world_specific[self._world_index].all_nodes
         for index in self._node_indices:
             yield all_nodes[index]
 
@@ -81,7 +83,7 @@ class ResolverReach:
 
     def possible_actions(self, state: State) -> Iterator[tuple[WorldGraphNode, DamageState]]:
         for node in self.collectable_resource_nodes(state.resources):
-            additional_requirements = self._logic.get_additional_requirements(node)
+            additional_requirements = self._logic.get_additional_requirements(state.world_index, node)
             health = self.health_for_damage_requirements_at_node(node.node_index)
             game_state = state.damage_state.with_health(health)
             if additional_requirements.satisfied(state.resources, health):

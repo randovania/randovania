@@ -5,23 +5,23 @@ import dataclasses
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory, MissingRng, weaknesses_for_unlocked_saves
 from randovania.generator.teleporter_distributor import get_dock_connections_assignment_for_teleporter
-from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from random import Random
 
     from randovania.game_description.db.dock import DockWeakness
+    from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 @dataclasses.dataclass(frozen=True)

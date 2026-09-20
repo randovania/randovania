@@ -5,7 +5,6 @@ import datetime
 import functools
 import logging
 import uuid
-from collections.abc import Callable
 from typing import TYPE_CHECKING, NamedTuple
 
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -13,6 +12,7 @@ from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
 from randovania import monitoring
+from randovania.game_connection.builder.abandoned_world_connector_builder import AbandonedWorldConnectorBuilder
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
@@ -23,7 +23,6 @@ from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
-from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_WORLD_NAME_LENGTH,
     WORLD_NAME_RE,
@@ -34,9 +33,12 @@ from randovania.network_common.multiplayer_session import (
 )
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.network_common.game_details import GameDetails
     from randovania.network_common.user import UserID
 
 logger = logging.getLogger(__name__)
@@ -101,8 +103,15 @@ class WorldWidgetEntry:
                 QtCore.QDateTime.fromSecsSinceEpoch(int(detail.last_activity.timestamp())),
             )
 
-        if world_details.has_been_beaten:
-            self.item.setText(6, "Beaten")
+        status_text = ", ".join(
+            text
+            for text, active in (
+                ("Beaten", world_details.has_been_beaten),
+                ("Abandoned", world_details.is_abandoned),
+            )
+            if active
+        )
+        self.item.setText(6, status_text)
 
 
 class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
@@ -116,18 +125,24 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     UNCLAIMED_PSEUDO_USER_ID = -1
     ALL_WORLDS_PSEUDO_USER_ID = -2
+    ABANDONED_PSEUDO_USER_ID = -3
 
     class UserState(NamedTuple):
         user_id: UserID
         name: str
         worlds: frozenset[uuid.UUID]
 
+    class WorldState(NamedTuple):
+        world_id: uuid.UUID
+        abandoned: bool
+
     class SessionState(NamedTuple):
         admin: bool
         allow_coop: bool
         allow_everyone_claim_world: bool
+        allow_abandon_worlds: bool
         users: tuple[MultiplayerSessionUsersWidget.UserState, ...]
-        worlds: tuple[uuid.UUID, ...]
+        worlds: tuple[MultiplayerSessionUsersWidget.WorldState, ...]
         generation_in_progress: int | None
         game_details: GameDetails | None
 
@@ -172,6 +187,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             self.is_admin(),
             session.allow_coop,
             session.allow_everyone_claim_world,
+            session.allow_abandon_worlds,
             tuple(
                 MultiplayerSessionUsersWidget.UserState(
                     user.id,
@@ -180,12 +196,16 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 )
                 for user in session.users_list
             ),
-            tuple(world.id for world in session.worlds),
+            tuple(
+                MultiplayerSessionUsersWidget.WorldState(
+                    world.id,
+                    world.is_abandoned,
+                )
+                for world in session.worlds
+            ),
             session.generation_in_progress,
             session.game_details,
         )
-
-    #
 
     def _create_select_preset_dialog(
         self, include_world_name_prompt: bool, default_game: RandovaniaGame | None
@@ -275,6 +295,35 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         )
         if result == async_dialog.StandardButton.Yes:
             await self._session_api.delete_world(world_uid)
+
+    @asyncSlot()
+    async def _world_abandon(self, world_uid: uuid.UUID, owner: int) -> None:
+        box = QtWidgets.QMessageBox(
+            QtWidgets.QMessageBox.Icon.Warning,
+            "Abandon world?",
+            f"Abandon world '{self._session.get_world(world_uid).name}'?\n\n"
+            "This is irreversible. The world is then played by a bot that collects its in-logic locations "
+            "over time, running in a Randovania instance that stays open and connected.\n\n"
+            "Start the bot here now, or abandon only and let a player or admin claim and start it later.",
+            QtWidgets.QMessageBox.StandardButton.Cancel,
+            self,
+        )
+        play_here_button = box.addButton("Abandon and play it here", QtWidgets.QMessageBox.ButtonRole.AcceptRole)
+        abandon_only_button = box.addButton("Abandon only", QtWidgets.QMessageBox.ButtonRole.DestructiveRole)
+        # style the custom buttons the same as the standard ones.
+        box.setStyleSheet("QMessageBox QPushButton { min-width: 72px; padding: 4px 16px; }")
+        box.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Cancel)
+        common_qt_lib.set_default_window_icon(box)
+
+        await async_dialog.execute_dialog(box)
+        clicked = box.clickedButton()
+        if clicked not in (play_here_button, abandon_only_button):
+            return
+
+        play_here = clicked is play_here_button
+        await self._session_api.abandon_world(world_uid, owner, play_here)
+        if play_here:
+            self._register_abandoned_world_connector(world_uid)
 
     @asyncSlot()
     async def _preset_view_summary(self, world_uid: uuid.UUID) -> None:
@@ -369,6 +418,20 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
         )
 
+    def _register_abandoned_world_connector(self, world_uid: uuid.UUID) -> None:
+        """Adds the connection builder that plays the given abandoned world, if not already present."""
+        game_connection = common_qt_lib.get_game_connection()
+        for builder in game_connection.connection_builders:
+            if isinstance(builder, AbandonedWorldConnectorBuilder) and builder.layout_uuid == world_uid:
+                return
+
+        game_connection.add_connection_builder(
+            AbandonedWorldConnectorBuilder.create(
+                self._get_preset(world_uid).game,
+                world_uid,
+            )
+        )
+
     #
 
     def _watch_inventory(self, world_uid: uuid.UUID, user_id: int) -> None:
@@ -387,6 +450,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
         can_change_preset = not has_layout and not in_generation
+        world_is_abandoned = self._session.get_world(world_id).is_abandoned
 
         world_item = QtWidgets.QTreeWidgetItem(parent)
         world_item.setText(0, "<the name>")
@@ -412,7 +476,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         if owner == self.your_id:
             export_action = world_menu.addAction("Export game")
-            export_action.setEnabled(has_layout)
+            export_action.setEnabled(has_layout and not world_is_abandoned)
             connect_to(export_action, self.world_export, world_id)
 
             if self._session.get_world(world_id).preset.game.gui.cosmetic_dialog is not None:
@@ -459,12 +523,28 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 world_menu.addSeparator()
                 create_unclaim_entry(text)
 
-        if owner == self.your_id or self.is_admin():
+        if world_is_abandoned and owner == self.your_id:
             world_menu.addSeparator()
-            connect_to(world_menu.addAction("Rename"), self._world_rename, world_id)
-            delete_action = world_menu.addAction("Delete")
-            delete_action.setEnabled(can_change_preset)
-            connect_to(delete_action, self._world_delete, world_id)
+            connect_to(
+                world_menu.addAction("Play abandoned world on this device"),
+                self._register_abandoned_world_connector,
+                world_id,
+            )
+
+        if owner == self.your_id or self.is_admin():
+            if not self._session.is_race_session:
+                world_menu.addSeparator()
+                connect_to(world_menu.addAction("Rename"), self._world_rename, world_id)
+                delete_action = world_menu.addAction("Delete")
+                delete_action.setEnabled(can_change_preset)
+                connect_to(delete_action, self._world_delete, world_id)
+
+            if not world_is_abandoned:
+                # if `is_valid_owner` is false, use your admin id to abandon an unclaimed world
+                abandon_owner = owner if is_valid_owner(owner) else self.your_id
+                abandon_action = world_menu.addAction("Abandon (release to bot)")
+                abandon_action.setEnabled(has_layout and self._session.allow_abandon_worlds)
+                connect_to(abandon_action, self._world_abandon, world_id, abandon_owner)
 
         if is_valid_owner(owner):
             world_menu.addSeparator()
@@ -532,7 +612,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
             self._user_widgets[user.id].update(user)
 
-        unclaimed_worlds = set(world_by_id.keys()) - used_worlds
+        abandoned_worlds = {world_uid for world_uid, world in world_by_id.items() if world.is_abandoned} - used_worlds
+        unclaimed_worlds = set(world_by_id.keys()) - used_worlds - abandoned_worlds
 
         if unclaimed_worlds:
             unclaimed_world_item = QtWidgets.QTreeWidgetItem(self)
@@ -542,8 +623,21 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
                     self._create_world_item(world_uid, unclaimed_world_item, self.UNCLAIMED_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
+                    )
+
+        # show abandoned worlds in their own section
+        if abandoned_worlds:
+            abandoned_world_item = QtWidgets.QTreeWidgetItem(self)
+            abandoned_world_item.setExpanded(True)
+            abandoned_world_item.setText(0, "Abandoned Worlds")
+
+            for world_uid, world in world_by_id.items():
+                if world_uid in abandoned_worlds:
+                    self._create_world_item(world_uid, abandoned_world_item, self.ABANDONED_PSEUDO_USER_ID).update(
+                        world,
+                        UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 
         if self._session.allow_coop:
@@ -553,7 +647,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_uid, world in world_by_id.items():
                 if world_uid in world_by_id.keys():
                     self._create_world_item(world_uid, total_world_item, self.ALL_WORLDS_PSEUDO_USER_ID).update(
-                        world_by_id[world_uid],
+                        world,
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 
@@ -576,7 +670,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             for world_id, state in user.worlds.items():
                 self._world_widgets[user.id, world_id].update(session.get_world(world_id), state)
 
-        for pseudo_user in [self.UNCLAIMED_PSEUDO_USER_ID, self.ALL_WORLDS_PSEUDO_USER_ID]:
+        for pseudo_user in [
+            self.UNCLAIMED_PSEUDO_USER_ID,
+            self.ALL_WORLDS_PSEUDO_USER_ID,
+            self.ABANDONED_PSEUDO_USER_ID,
+        ]:
             for world in self._session.worlds:
                 if self._world_widgets.get((pseudo_user, world.id), None) is not None:
                     self._world_widgets[pseudo_user, world.id].update(

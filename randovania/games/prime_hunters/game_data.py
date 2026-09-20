@@ -85,21 +85,31 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="GU4BKSH7",
+        expected_seed_hash="LDAZ4RE6",
     )
 
 
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Hunters",
     long_name="Metroid Prime Hunters",
-    development_state=randovania.game.development_state.DevelopmentState.STAGING,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
         "starter_preset.rdvpreset",
     ],
-    faq=[],
+    faq=[
+        (
+            "What versions of the game are supported?",
+            "Currently, only the US and European versions of the game are supported.",
+        ),
+        (
+            "Why is the Omega Cannon not an option to be shuffled into the pickup pool?",
+            "Once the Omega Cannon is collected, it overrides all other beams. "
+            "Currently, there are no plans to remedy this.",
+        ),
+    ],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
-            "All items, excluding Octoliths",
+            "All items",
             "Force Fields",
             "Portals",
         ),
@@ -121,5 +131,6 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     test_data=_test_data,
+    reject_undocumented_tricks_in_database=True,
     multiple_start_nodes_per_area=False,
 )
