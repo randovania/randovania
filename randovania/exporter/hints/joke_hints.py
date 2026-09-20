@@ -38,7 +38,8 @@ GENERIC_JOKE_HINTS = [
     "All your hints are belong to us.",
     "A joke hint? In my randomized game? It's more likely than you think!",
     "A wild joke hint appeared!",
-    "Shorts are comfy and easy to wear.",
     "Nobody expects a joke hint! Its chief weapon is surprise... and fear.",
-    "Randovania's first release was on the 10th October of 2017.",
+    "Randovania's first release was on the 10th of October 2017.",
+    "I just wanted to say that you look stunning today!",
+    "These aren't the hints you're looking for.",
 ]

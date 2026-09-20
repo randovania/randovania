@@ -64,10 +64,6 @@ FUSION_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Beep Boo-Boo Bop, Boo-Boo Beep",
     "Samus... Don't you have anything better to do?",
     "Repeatedly pressing UP after being hit by the Omega Metroid makes you recover faster.",
-    (
-        "Executing hint.exe.[NEWLINE]"
-        "10%... 50%... 70%... 90%... 30%...[NEWLINE]"
-        "A critical error has occurred. Program will now shut down."
-    ),
+    "The Power Suit and Power Beam, despite the names, are not very powerful.",
     "The X don't seem as intelligent as we thought. The dozen SA-X could've easily eliminated you by now.",
 ]
