@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Changed: All beam charge combos now additionally have a pickup hint feature of being "a missile system" and "a missile-related upgrade" for consistency with Echoes.
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
+
+### Metroid Prime 2: Echoes
+
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
 
 ### Metroid Prime Hunters
 
