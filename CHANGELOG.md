@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Solo games no longer show a message about being disconnected from Randovania.
 
+#### Logic Database
+
+##### Cataris
+
+- Fixed: Green EMMI Introduction: The Sensor Lock on Door to EMMI Zone West Exit Path had an unintended open requirement override.
+
 ### Metroid Fusion
 
 #### Main Deck
