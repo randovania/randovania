@@ -307,11 +307,14 @@ class HuntersPatchDataFactory(PatchDataFactory[HuntersConfiguration, HuntersCosm
         # Goal
         goal_text = ""
         gorea_text = "defeat GOREA in OUBLIETTE."
+        location_text = "on bosses"
+        if not config.octoliths.prefer_bosses:
+            location_text = "at any location"
         placed_octoliths = config.octoliths.placed_octoliths
         if placed_octoliths >= 2:
-            goal_text = f"collect {placed_octoliths} OCTOLITHS and {gorea_text}"
+            goal_text = f"collect {placed_octoliths} OCTOLITHS placed {location_text} and {gorea_text}"
         elif placed_octoliths == 1:
-            goal_text = f"collect 1 OCTOLITH and {gorea_text}"
+            goal_text = f"collect 1 OCTOLITH placed {location_text} and {gorea_text}"
         else:
             goal_text = gorea_text
 

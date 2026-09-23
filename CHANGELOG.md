@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Fixed: Solo games no longer show a message about being disconnected from Randovania.
+
 #### Logic Database
 
 ##### Cataris
@@ -31,13 +33,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Changed: All beam charge combos now additionally have a pickup hint feature of being "a missile system" and "a missile-related upgrade" for consistency with Echoes.
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
+
+### Metroid Prime 2: Echoes
+
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
 
 ### Metroid Prime Hunters
 
+- **MAJOR** - Added: It is now possible to shuffle Octoliths anywhere in the game instead of being forced to only be in the Biodefense Chambers.
 - Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
 - Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
 - Fixed: Sic Transit: The scan door will now unlock in the post-boss layers if the shuffled Shield Key is collected.
 - Fixed: Alinos Perch: The force field no longer despawns after defeating Cretaphid v3.
+- Fixed: It is no longer possible to skip activating triggers when collecting certain pickups.
 
 #### Logic Database
 
@@ -59,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Fixed: Items were not received in Multiworld until after a location had been collected in the game.
+- Fixed: Solo games no longer show a message about being disconnected from Randovania.
 
 ## [11.0.0] - 2026-09-01
 

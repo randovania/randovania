@@ -15,6 +15,7 @@ from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
@@ -596,7 +597,7 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             "mass_delete_actors": {
                 "to_remove": self._light_patches(),
             },
-            "layout_uuid": str(self.world_uuid),
+            "layout_uuid": str(self.world_uuid) if self.worlds_config.is_multiworld else str(INVALID_UUID),
         }
 
 
