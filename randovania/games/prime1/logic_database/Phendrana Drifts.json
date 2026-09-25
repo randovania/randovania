@@ -2681,7 +2681,7 @@
                                 ]
                             }
                         },
-                        "Stone Platform": {
+                        "Stone Archway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2722,7 +2722,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "For building pit, use a bomb jump and unmorph mid-air: https://youtu.be/b__DpiqBClE",
+                                                                                            "comment": "For building pit, use a bomb jump and unmorph mid-air: https://youtu.be/FAYeoF_btzc",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -2739,7 +2739,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "For building pit, jump onto the rim of pillar: https://youtu.be/PXnO85zshqw (TODO: video uses a different pillar)",
+                                                                                            "comment": "For building pit, jump onto the rim of pillar: https://youtu.be/nsSJPRNlIZ4",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -2779,76 +2779,51 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Get onto wodden platform directly",
+                                                                    "comment": "Get onto archway directly",
                                                                     "items": [
                                                                         {
-                                                                            "type": "or",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "comment": "Dash from a Crystallite",
+                                                                                "comment": "Dash across: https://youtu.be/haNjA77ymjs",
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "and",
+                                                                                        "type": "or",
                                                                                         "data": {
-                                                                                            "comment": "Before Research Core: https://youtu.be/0welXKqaL84",
+                                                                                            "comment": null,
                                                                                             "items": [
                                                                                                 {
-                                                                                                    "type": "resource",
+                                                                                                    "type": "and",
                                                                                                     "data": {
-                                                                                                        "type": "events",
-                                                                                                        "name": "Event19",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": true
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "or",
-                                                                                                    "data": {
-                                                                                                        "comment": "TODO: what are these different branches for?",
+                                                                                                        "comment": "Dash off of Crystallite near the pickup",
                                                                                                         "items": [
                                                                                                             {
-                                                                                                                "type": "and",
+                                                                                                                "type": "resource",
                                                                                                                 "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "template",
-                                                                                                                            "data": "Have Any Visor"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "template",
-                                                                                                                            "data": "Shoot Missile"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "tricks",
-                                                                                                                                "name": "Dash",
-                                                                                                                                "amount": 1,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
+                                                                                                                    "type": "events",
+                                                                                                                    "name": "Event19",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": true
                                                                                                                 }
                                                                                                             },
                                                                                                             {
-                                                                                                                "type": "and",
+                                                                                                                "type": "template",
+                                                                                                                "data": "Have Any Visor"
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "Dash off of ice cover that guards the pickup",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
                                                                                                                 "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "template",
-                                                                                                                            "data": "Have Any Visor"
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "tricks",
-                                                                                                                                "name": "Dash",
-                                                                                                                                "amount": 2,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Scan",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
                                                                                                                 }
                                                                                                             }
                                                                                                         ]
@@ -2858,67 +2833,12 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": "After Research Core TODO: same as above, what are the different branches for. Also where do you dash off of?",
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "template",
-                                                                                                                "data": "Shoot Missile"
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Scan",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "Dash",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Scan",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "Dash",
-                                                                                                                    "amount": 2,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "tricks",
+                                                                                            "name": "Dash",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -2988,7 +2908,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "Bomb Jump onto Stalactite: https://youtu.be/PXnO85zshqw?t=50",
+                                                                                            "comment": "Bomb Jump onto Stalactite: https://youtu.be/L1gcZrma8vs",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "template",
@@ -3009,13 +2929,76 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "Slope Jump from snow behind Stalactite",
+                                                                                            "comment": "Slope Jump from snow behind Stalactite: https://youtu.be/K7E5wPSFYQE",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "tricks",
                                                                                                         "name": "SJump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "Dash from top of building: https://youtu.be/cq_2ilR5Iow",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "or",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "and",
+                                                                                                                "data": {
+                                                                                                                    "comment": "Dash off of Crystallite near the pickup",
+                                                                                                                    "items": [
+                                                                                                                        {
+                                                                                                                            "type": "template",
+                                                                                                                            "data": "Have Any Visor"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "events",
+                                                                                                                                "name": "Event19",
+                                                                                                                                "amount": 1,
+                                                                                                                                "negate": true
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "and",
+                                                                                                                "data": {
+                                                                                                                    "comment": "Dash off of ice cover that guards the pickup",
+                                                                                                                    "items": [
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "items",
+                                                                                                                                "name": "Scan",
+                                                                                                                                "amount": 1,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Dash",
                                                                                                         "amount": 1,
                                                                                                         "negate": false
                                                                                                     }
@@ -3043,7 +3026,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "Bomb Jump to wooden platform: https://youtu.be/_tAyGmcRUH0?t=11",
+                                                                                            "comment": "Bomb Jump to broken building: https://youtu.be/L1gcZrma8vs?t=7",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "template",
@@ -3064,7 +3047,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "Top left side of edge is sloped: https://youtu.be/PXnO85zshqw?t=56",
+                                                                                            "comment": "Top left side of edge is sloped: https://youtu.be/K7E5wPSFYQE?t=9",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -3446,11 +3429,11 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 20.609690520528517,
-                        "y": 0.7432060499868669,
+                        "x": 20.61,
+                        "y": 0.74,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "This spot has Ice Shriekbats hanging above on the Pre-Research Core layer",
                     "layers": [
                         "default"
                     ],
@@ -3487,7 +3470,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/33NNFgHw8e4",
+                                            "comment": "Dash off of Crystallites on stone archway: https://youtu.be/33NNFgHw8e4",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3510,6 +3493,73 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Have Any Visor"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Dash off of Sheegoth",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dash",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Dash off of Sheegoth. If it's too close to you, stand back far to the wall and wait for it to retreat",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Scan",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "Event19",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Dash off of Crate Drops",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Missile"
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Have Any Visor"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3652,15 +3702,15 @@
                         }
                     }
                 },
-                "Stone Platform": {
+                "Stone Archway": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -8.10029537852526,
-                        "y": 5.361666475687791,
+                        "x": -8.1,
+                        "y": 5.36,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "This spot has 2 Crystallites on the Pre-Research Core layer",
                     "layers": [
                         "default"
                     ],
@@ -3683,7 +3733,7 @@
                         "Middle-Left Rooftop": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: R-jump? bunnyhop? bomb jump?",
+                                "comment": "TODO: bomb jump",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3697,7 +3747,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Get to edge of platform and hold L during jump",
+                                            "comment": "Get to edge of platform and hold L during jump: https://youtu.be/IQ6vui1U3VI",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3731,12 +3781,12 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Dash from Crystallites: https://youtu.be/0welXKqaL84?t=7 (TODO: see the same todo in door to stone platform node)",
+                                            "comment": "Dash across: https://youtu.be/0welXKqaL84?t=7 ",
                                             "items": [
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Before Research Core",
+                                                        "comment": "Dash using the Crystallite near the pickup",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3748,58 +3798,17 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Have Any Visor"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Shoot Missile"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Dash",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Have Any Visor"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Dash",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Dash",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Have Any Visor"
                                                             }
                                                         ]
                                                     }
@@ -3807,62 +3816,24 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "After Research Core",
+                                                        "comment": "Dash using the ice cover that guards the pickup",
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Dash",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Scan",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Dash",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Scan",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Dash",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "Scan",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
