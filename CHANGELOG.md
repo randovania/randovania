@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Fixed: Zazabi now has the same amount of minimum jumps as in the vanilla game.
+
 #### Main Deck
 
 - Changed: Station Entrance: The Shinespark through the Speedbooster blocks is now always possible in Door Lock Rando.
