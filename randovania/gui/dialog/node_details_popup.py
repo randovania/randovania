@@ -109,6 +109,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.layers_combo.addItem(layer)
         self.layers_combo.setCurrentIndex(self.layers_combo.findText(node.layers[0]))
 
+        grantable = [*game.resource_database.item, *game.resource_database.event]
+        self.event_grants_box.create_model(grantable)
+        self.pickup_grants_box.create_model(grantable)
+
         self.dock_incompatible_model = DockWeaknessListModel(
             self.game.dock_type_database, self.dock_incompatible_box.delegate
         )
@@ -252,9 +256,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.pickup_index_spin.setValue(node.pickup_index.index)
         signal_handling.set_combo_with_value(self.location_category_combo, node.location_category)
         self.hint_feature_box.model.items = sorted(node.hint_features)
+        self.pickup_grants_box.items = node.grants_on_collect
 
     def fill_for_event(self, node: EventNode) -> None:
         signal_handling.set_combo_with_value(self.event_resource_combo, node.event)
+        self.event_grants_box.items = node.grants_on_collect
 
     def fill_for_configurable(self, node: ConfigurableNode) -> None:
         pass
@@ -498,6 +504,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 PickupIndex(self.pickup_index_spin.value()),
                 location_category=self.location_category_combo.currentData(),
                 hint_features=frozenset(self.hint_feature_box.model.items),
+                grants_on_collect=self.pickup_grants_box.items,
             )
 
         elif node_type == EventNode:
@@ -514,6 +521,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 extra,
                 valid_starting_location,
                 event,
+                self.event_grants_box.items,
             )
 
         elif node_type == ConfigurableNode:
