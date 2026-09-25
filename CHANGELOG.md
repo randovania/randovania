@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Async race rooms can now be multiworld. A room can be created with any number of worlds, each with its own preset, and is then played by teams instead of individual players. Each team races the multiworld on their own, and the teams' times are compared. An async race played in teams can either give the whole team one shared timer, or time every member separately and add their times up. Either way the team's captain starts the race for the team.
 - Added: An async race room now tells you your own finished time as soon as your run is complete, rather than only once the whole race is over. In a race played in teams this is the team's time, however that team is timed.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
 - Changed: The Map Tracker components are now docks that can be moved around.
 - Fixed: The audit log of an async race room can now only be read by the room's creator.
 
@@ -76,7 +77,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The Map Tracker can now be opened directly from the Open menu, by selecting which preset to use.
 - Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
 - Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
-- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
 - Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
 - Fixed: Certain interactions with the server will no longer permanently fails in certain cases.
 
