@@ -25,6 +25,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.hint_node import HintNode, SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -885,15 +886,31 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.on_select_area()
 
     def _on_resource_changed(self, resource: ResourceInfo) -> None:
-        if resource.resource_type == ResourceType.EVENT:
-            for area in self.game_description.region_list.all_areas:
-                for i in range(len(area.nodes)):
-                    node = area.nodes[i]
-                    if not isinstance(node, EventNode):
-                        continue
+        if resource.resource_type not in (ResourceType.ITEM, ResourceType.EVENT):
+            return
 
-                    if node.event.short_name == resource.short_name:
-                        self.replace_node_with(area, node, dataclasses.replace(node, event=resource))
+        for area in self.game_description.region_list.all_areas:
+            for i in range(len(area.nodes)):
+                node = area.nodes[i]
+                if not isinstance(node, EventNode | PickupNode):
+                    continue
+
+                changes: dict = {
+                    "grants_on_collect": tuple(
+                        (resource if granted.short_name == resource.short_name else granted, amount)
+                        for granted, amount in node.grants_on_collect
+                    )
+                }
+                if (
+                    isinstance(node, EventNode)
+                    and resource.resource_type == ResourceType.EVENT
+                    and node.event.short_name == resource.short_name
+                ):
+                    changes["event"] = resource
+
+                new_node = dataclasses.replace(node, **changes)
+                if new_node != node:
+                    self.replace_node_with(area, node, new_node)
 
     def _on_filters_changed(self) -> None:
         if self.edit_mode:
