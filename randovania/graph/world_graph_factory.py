@@ -32,7 +32,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
 
 
 def _get_dock_open_requirement(node: DockNode, weakness: DockWeakness) -> Requirement:
@@ -210,11 +210,16 @@ def create_node(
     Creates one WorldGraphNode based on one original node.
     """
     resources: list[ResourceInfo] = []
+    granted: ResourceGainTuple = ()
 
     if isinstance(original_node, EventNode):
         resources.append(original_node.event)
+        granted = original_node.grants_on_collect
     elif isinstance(original_node, EventPickupNode):
         resources.append(original_node.event_node.event)
+        granted = original_node.event_node.grants_on_collect + original_node.pickup_node.grants_on_collect
+    elif isinstance(original_node, PickupNode):
+        granted = original_node.grants_on_collect
 
     pickup_index = None
     if isinstance(original_node, PickupNode):
@@ -237,6 +242,8 @@ def create_node(
     )
     for resource in resources:
         node.add_resource(resource, database)
+    for resource, amount in granted:
+        node.add_granted_resource(resource, amount, database)
     return node
 
 
@@ -444,6 +451,9 @@ def _calculate_dangerous_resources(graph: WorldGraph) -> None:
             for index in node.resource_gain_bitmask.get_set_bits():
                 if index in graph.dangerous_resources_by_index:
                     node.dangerous_resources.set_bit(index)
+            for resource, _ in node.extra_resource_gain:
+                if resource.resource_index in graph.dangerous_resources_by_index:
+                    node.dangerous_resources.set_bit(resource.resource_index)
 
 
 def graph_precache(graph: WorldGraph) -> None:

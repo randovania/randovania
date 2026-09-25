@@ -7,6 +7,7 @@ import pytest
 import randovania
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, pretty_print
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -108,3 +109,22 @@ def test_pretty_print_requirement_array_one_row_and_nested_array(echoes_resource
               Annihilator Beam and Light Beam
 """
         )
+
+
+def test_pretty_print_node_type_grants_on_collect(blank_game_description):
+    # Setup
+    region_list = blank_game_description.region_list
+    db = blank_game_description.resource_database
+    boss = region_list.node_by_identifier(NodeIdentifier.create("Intro", "Boss Arena", "Event - Boss"))
+    loot = region_list.node_by_identifier(NodeIdentifier.create("Intro", "Boss Arena", "Pickup (Free Loot)"))
+    weapon = region_list.node_by_identifier(NodeIdentifier.create("Intro", "Starting Area", "Pickup (Weapon)"))
+
+    # Run
+    boss_text = pretty_print.pretty_print_node_type(boss, blank_game_description, db)
+    loot_text = pretty_print.pretty_print_node_type(loot, blank_game_description, db)
+    weapon_text = pretty_print.pretty_print_node_type(weapon, blank_game_description, db)
+
+    # Assert
+    assert boss_text == "Event First Boss Killed; Grants 2x Useless"
+    assert loot_text.endswith("; Grants 1x Useless")
+    assert "Grants" not in weapon_text

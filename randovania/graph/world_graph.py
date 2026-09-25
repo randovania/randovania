@@ -135,6 +135,9 @@ class WorldGraphNode(BaseWorldGraphNode):
     has_event_resource: bool
     """If this node gives a resource of type EVENT."""
 
+    extra_resource_gain: list[tuple[ResourceInfo, int]]
+    """The `grants_on_collect` of the database node, which unlike the rest can give more than one of a resource."""
+
     is_lock_action: bool
     """If this node should be considered a ActionPriority.LOCK_ACTION by the resolver."""
 
@@ -174,6 +177,7 @@ class WorldGraphNode(BaseWorldGraphNode):
         self.pickup_index = pickup_index
         self.pickup_entry = None
         self.has_event_resource = False
+        self.extra_resource_gain = []
         self.is_lock_action = is_lock_action
         self.database_node = database_node
         self.area = area
@@ -186,6 +190,12 @@ class WorldGraphNode(BaseWorldGraphNode):
         if resource.resource_type == ResourceType.EVENT:
             self.has_event_resource = True
 
+    def add_granted_resource(self, resource: ResourceInfo, amount: int, database: ResourceDatabaseView) -> None:
+        """Registers one entry of the database node's `grants_on_collect`."""
+        mapping: dict[int, ResourceInfo] = database.get_resource_mapping()
+        mapping[resource.resource_index] = resource
+        self.extra_resource_gain.append((resource, amount))
+
     def resource_gain(self, database: ResourceDatabaseView) -> ResourceGain:
         """
         All the resources provided by collecting this node.
@@ -193,11 +203,12 @@ class WorldGraphNode(BaseWorldGraphNode):
         - HintNode/PickupNode: the node resource
         - DockLockNode: the dock node resources
 
-        These resources all provide exactly 1 quantity each.
+        These resources all provide exactly 1 quantity each, but a node's `grants_on_collect` can give more.
         """
         mapping: dict[int, ResourceInfo] = database.get_resource_mapping()
         for index in self.resource_gain_bitmask.get_set_bits():
             yield mapping[index], 1
+        yield from self.extra_resource_gain
 
     def is_resource_node(self) -> bool:
         return not self.resource_gain_bitmask.is_empty()
@@ -241,6 +252,7 @@ class WorldGraphNode(BaseWorldGraphNode):
             new_node.resource_gain_bitmask.union(self.resource_gain_bitmask)
             new_node.dangerous_resources.union(self.dangerous_resources)
             new_node.has_event_resource = self.has_event_resource
+        new_node.extra_resource_gain = list(self.extra_resource_gain)
         return new_node
 
 
