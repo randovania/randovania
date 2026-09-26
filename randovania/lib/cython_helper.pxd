@@ -1,5 +1,54 @@
 import cython
 from cpython.ref cimport PyObject, Py_INCREF, Py_DECREF
+from cython.cimports.libcpp.vector import vector
+
+cdef extern from "randovania/lib/native/pool.hpp" namespace "rdv" nogil:
+    cdef cppclass PoolAllocator[T]:
+        pass
+
+    # std::vector, pool-allocated instead of OS heap.
+    cdef cppclass pvector[T](vector[T]):
+        pvector() except +
+
+        # pvector<T> is `std::vector<T, PoolAllocator<T>>`, not `std::vector<T>`, so its
+        # iterator is a distinct type from the one it would otherwise inherit from vector[T].
+        # Redeclare begin/end/erase against our own iterator so generated code stays consistent
+        # (mixing the two breaks the build under libstdc++, which encodes the allocator in the
+        # iterator type).
+        cppclass iterator:
+            T& operator*()
+            iterator operator++()
+            iterator operator+(size_t)
+            bint operator==(iterator)
+            bint operator!=(iterator)
+        iterator begin()
+        iterator end()
+        iterator erase(iterator) except +
+
+    # Pool-backed FIFO, replaces std::deque.
+    cdef cppclass IndexQueue[T]:
+        IndexQueue() except +
+        void push_back(const T&) except +
+        void pop_front()
+        T& front()
+        T& operator[](size_t)
+        bint empty()
+        size_t size()
+        void clear()
+
+    # Diagnostics for the module-local Pool instance.
+    cdef cppclass PoolStats "rdv::Pool::Stats":
+        size_t allocations
+        size_t deallocations
+        size_t freelist_hits
+        size_t slabs_allocated
+        size_t bytes_from_slabs
+        size_t large_allocations
+
+    cdef cppclass Pool:
+        const PoolStats& stats()
+
+    Pool& pool()
 
 cdef extern from *:
     """
