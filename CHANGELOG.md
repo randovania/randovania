@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Map Tracker components are now docks that can be moved around.
 - Fixed: The audit log of an async race room can now only be read by the room's creator.
 
+### Cave Story
+
+- Fixed: Restoring Curly's memories in Plantation is now possible in logic.
+
 ### Metroid Dread
 
 - Fixed: Solo games no longer show a message about being disconnected from Randovania.
