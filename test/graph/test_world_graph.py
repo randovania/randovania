@@ -120,10 +120,10 @@ def test_grants_on_collect_event_node(blank_world_graph, blank_game_description)
     new_resources, modified = state_native.state_collect_resource_node(node, resources, 100)
 
     # Assert
-    assert list(node.resource_gain(db)) == [(boss, 1), (useless, 2)]
+    assert dict(node.resource_gain(db)) == {boss: 1, useless: 2}
     assert new_resources[boss] == 1
     assert new_resources[useless] == 2
-    assert modified == [boss, useless]
+    assert set(modified) == {boss, useless}
 
     # Collected once, so it can't grant again
     assert node.has_all_resources(new_resources)
@@ -142,7 +142,7 @@ def test_grants_on_collect_pickup_node(blank_world_graph, blank_game_description
     new_resources, _ = state_native.state_collect_resource_node(node, ResourceCollection.from_dict(db, {}), 100)
 
     # Assert
-    assert list(node.resource_gain(db)) == [(node_resource, 1), (useless, 1)]
+    assert dict(node.resource_gain(db)) == {node_resource: 1, useless: 1}
     assert new_resources[useless] == 1
     assert node.has_all_resources(new_resources)
 
@@ -169,9 +169,9 @@ def test_grants_on_collect_event_pickup_node(blank_game_description):
     )
 
     # Assert
-    assert list(node.resource_gain(db)) == [
-        (db.get_event("KeySwitch1"), 1),
-        (db.get_event("KeySwitch2"), 1),
-        (db.get_item("Useless"), 3),
-    ]
-    assert node.duplicate().extra_resource_gain == node.extra_resource_gain
+    assert dict(node.resource_gain(db)) == {
+        db.get_event("KeySwitch1"): 1,
+        db.get_event("KeySwitch2"): 1,
+        db.get_item("Useless"): 3,
+    }
+    assert dict(node.duplicate().resource_gain(db)) == dict(node.resource_gain(db))

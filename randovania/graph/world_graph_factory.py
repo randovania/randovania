@@ -451,9 +451,6 @@ def _calculate_dangerous_resources(graph: WorldGraph) -> None:
             for index in node.resource_gain_bitmask.get_set_bits():
                 if index in graph.dangerous_resources_by_index:
                     node.dangerous_resources.set_bit(index)
-            for resource, _ in node.extra_resource_gain:
-                if resource.resource_index in graph.dangerous_resources_by_index:
-                    node.dangerous_resources.set_bit(resource.resource_index)
 
 
 def graph_precache(graph: WorldGraph) -> None:
