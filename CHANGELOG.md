@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Fixed: Zazabi now has the same amount of minimum jumps as in the vanilla game.
+- Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
 
 #### Main Deck
 
