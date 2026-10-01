@@ -31,11 +31,15 @@ def widget(skip_qtbot):
 async def test_run_validator(mocker, success):
     # Setup
     old_print_function = debug.print_function
+    preset = MagicMock()
+    patches = MagicMock()
     logger = MagicMock()
     layout = MagicMock()
+    layout.all_presets = [preset]
+    layout.all_patches = [patches]
     debug_level = debug.LogLevel.HIGH
 
-    def side_effect(**kwargs):
+    def side_effect(*args, **kwargs):
         assert debug.debug_level() == debug_level
         return "YES" if success else None
 
@@ -48,8 +52,7 @@ async def test_run_validator(mocker, success):
 
     # Assert
     mock_resolve.assert_awaited_once_with(
-        configuration=layout.get_preset(0).configuration,
-        patches=layout.all_patches[0],
+        [(preset.configuration, patches)],
         logger=logger,
         record_paths=True,
     )

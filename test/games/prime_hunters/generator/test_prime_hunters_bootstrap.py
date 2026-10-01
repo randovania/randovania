@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from copy import copy
 from random import Random
 
 import pytest
@@ -39,3 +40,36 @@ def test_assign_pool_results_predetermined(
     expected_octoliths = {key for key in result.pickup_assignment.keys() if key.index <= 46}
     assert expected_octoliths == {PickupIndex(i) for i in expected}
     assert shuffled_octoliths == []
+
+
+@pytest.mark.parametrize(
+    "octoliths",
+    [
+        (HuntersOctolithConfig(False, 8)),
+        (HuntersOctolithConfig(False, 4)),
+        (HuntersOctolithConfig(False, 2)),
+    ],
+)
+def test_assign_pool_results_prefer_anywhere(prime_hunters_game_description, prime_hunters_configuration, octoliths):
+    prime_hunters_configuration = dataclasses.replace(
+        prime_hunters_configuration, octoliths=octoliths, shuffle_shield_keys=True
+    )
+    patches = GamePatches.create_from_game(prime_hunters_game_description, 0, prime_hunters_configuration)
+    pool_results = pool_creator.calculate_pool_results(prime_hunters_configuration, patches.game)
+    initial_starting_place = copy(pool_results.to_place)
+
+    # Run
+    result = HuntersBootstrap().assign_pool_results(
+        Random(8000),
+        prime_hunters_configuration,
+        patches,
+        pool_results,
+    )
+
+    # Assert
+    shuffled_octolith = [pickup for pickup in pool_results.to_place if pickup.gui_category.name == "octolith"]
+
+    assert pool_results.to_place == initial_starting_place
+    assert len(shuffled_octolith) == octoliths.placed_octoliths
+    assert result.starting_equipment == pool_results.starting
+    assert result.pickup_assignment == {}

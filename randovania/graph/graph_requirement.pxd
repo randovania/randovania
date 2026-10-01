@@ -23,7 +23,7 @@ cdef class GraphRequirementList:
     cdef GraphRequirementList create_empty(object resource_db)
 
     cdef void _check_can_write(self)
-    cdef tuple _complexity_key_for_simplify(self)
+    cdef tuple[int,int,int] _complexity_key_for_simplify(self)
     cdef void _simplify_handle_resource(self, size_t resource_index, int amount, bint negate, object progressive_item_info)
     cdef int _single_resource_optimize_logic(self, Bitmask single_req_mask)
     cdef int _find_other_idx(self, int) noexcept

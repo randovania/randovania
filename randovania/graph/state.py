@@ -27,6 +27,7 @@ NodeSequence = tuple[WorldGraphNode, ...]
 
 
 class State:
+    world_index: int
     resources: ResourceCollection
     new_resources: dict[ResourceInfo, int]
     collected_resource_nodes: NodeSequence
@@ -44,6 +45,7 @@ class State:
 
     def __init__(
         self,
+        world_index: int,
         resources: ResourceCollection,
         new_resources: dict[ResourceInfo, int],
         collected_resource_nodes: NodeSequence,
@@ -54,6 +56,7 @@ class State:
         resource_database: ResourceDatabaseView,
         hint_state: ResolverHintState | None = None,
     ):
+        self.world_index = world_index
         self.resources = resources
         self.new_resources = new_resources
         self.collected_resource_nodes = collected_resource_nodes
@@ -69,6 +72,7 @@ class State:
 
     def copy(self) -> Self:
         return self.__class__(
+            self.world_index,
             self.resources.duplicate(),
             copy.copy(self.new_resources),
             self.collected_resource_nodes,
@@ -148,6 +152,7 @@ class State:
         patches: GamePatches,
     ) -> Self:
         return self.__class__(
+            self.world_index,
             new_resources,
             {resource: new_resources[resource] - self.resources[resource] for resource in modified_resources},
             self.collected_resource_nodes + new_collected_resource_nodes,

@@ -241,6 +241,7 @@ class Bootstrap(Generic[Configuration]):  # noqa: UP046
         patches: GamePatches,
     ) -> State:
         return State(
+            graph.world_index,
             resources.duplicate(),
             {},
             (),

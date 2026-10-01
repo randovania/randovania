@@ -2,19 +2,24 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
 
+from randovania.gui.lib import async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.widgets.generate_game_mixin import GenerateGameMixin, RetryGeneration
+from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.permalink import Permalink
 from randovania.resolver.exceptions import ImpossibleForSolver
 
 if TYPE_CHECKING:
     import pytest_mock
+
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 @pytest.mark.parametrize("case", ["success", "ignore-solver", "abort", "retry", "error", "cancel"])
@@ -100,3 +105,61 @@ async def test_generate_layout_from_permalink(skip_qtbot, mocker: pytest_mock.Mo
         mock_dialog.assert_awaited_once()
     else:
         mock_dialog.assert_not_called()
+
+
+def _preset_with(name: str, unsupported: list[str]) -> VersionedPreset:
+    versioned_preset = MagicMock()
+    versioned_preset.name = name
+    versioned_preset.get_preset.return_value.configuration.unsupported_features.return_value = unsupported
+    return cast("VersionedPreset", versioned_preset)
+
+
+def _mixin_for_presets(mocker: pytest_mock.MockerFixture) -> tuple[GenerateGameMixin, AsyncMock]:
+    mocker.patch.object(GenerateGameMixin, "generate_parent_widget", MagicMock())
+    mock_from_permalink = mocker.patch.object(
+        GenerateGameMixin, "generate_layout_from_permalink", new_callable=AsyncMock
+    )
+    return GenerateGameMixin(), mock_from_permalink
+
+
+async def test_generate_layout_from_presets(mocker: pytest_mock.MockerFixture):
+    mocker.patch("randovania.gui.widgets.generate_game_mixin.random_seed_number", return_value=12341234)
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning")
+
+    presets = [_preset_with("First", []), _preset_with("Second", [])]
+    obj, mock_from_permalink = _mixin_for_presets(mocker)
+
+    # Run
+    result = await obj.generate_layout_from_presets(presets, spoiler=True)
+
+    # Assert
+    mock_warning.assert_not_awaited()
+    assert result is mock_from_permalink.return_value
+    mock_from_permalink.assert_awaited_once_with(
+        permalink=Permalink.from_parameters(
+            GeneratorParameters(
+                seed_number=12341234,
+                spoiler=True,
+                presets=[cast("MagicMock", preset).get_preset.return_value for preset in presets],
+            )
+        ),
+        retries=None,
+    )
+
+
+async def test_generate_layout_from_presets_checks_every_preset(mocker: pytest_mock.MockerFixture):
+    mocker.patch("randovania.is_dev_version", return_value=True)
+    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", side_effect=[async_dialog.StandardButton.No])
+
+    presets = [_preset_with("First", []), _preset_with("Second", ["Unsup"]), _preset_with("Third", ["Other"])]
+    obj, mock_from_permalink = _mixin_for_presets(mocker)
+
+    # Run
+    result = await obj.generate_layout_from_presets(presets, spoiler=True)
+
+    # Assert
+    assert result is None
+    mock_warning.assert_awaited_once()
+    assert mock_warning.await_args is not None
+    assert "Preset 'Second'" in mock_warning.await_args[0][2]
+    mock_from_permalink.assert_not_awaited()

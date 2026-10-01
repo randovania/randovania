@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
@@ -34,10 +35,6 @@ def distances_to_node(
     :param patches:
     :return: Dict keyed by area to shortest distance to starting_node.
     """
-    import networkx
-
-    g = networkx.DiGraph()
-
     if patches is None:
 
         def get_dock_connection_for(n: DockNode) -> NodeIdentifier:
@@ -50,7 +47,7 @@ def distances_to_node(
 
     node_to_area = {}
 
-    all_pairs = []
+    all_areas = []
     last_pair: tuple[Region, Area] | None = None
     for region, area, node in game_view.node_iterator():
         node_to_area[node.node_index] = area
@@ -60,10 +57,10 @@ def distances_to_node(
             continue
 
         last_pair = new_pair
-        g.add_node(area)
-        all_pairs.append(new_pair)
+        all_areas.append(area)
 
-    for region, area in all_pairs:
+    edges: dict[Area, set[Area]] = {}
+    for area in all_areas:
         new_areas = set()
         for node in area.nodes:
             connection: NodeIdentifier | None = None
@@ -73,10 +70,23 @@ def distances_to_node(
             if connection is not None:
                 new_areas.add(node_to_area[game_view.node_by_identifier(connection).node_index])
 
-        for next_area in new_areas:
-            g.add_edge(area, next_area)
+        edges[area] = new_areas
 
-    return networkx.single_source_shortest_path_length(g, node_to_area[starting_node.node_index], cutoff)
+    # Plain BFS - graph is small, and import a library costs more than the traversal.
+    source = node_to_area[starting_node.node_index]
+    distances = {source: 0}
+    queue = collections.deque([source])
+    while queue:
+        area = queue.popleft()
+        next_distance = distances[area] + 1
+        if cutoff is not None and next_distance > cutoff:
+            continue
+        for next_area in edges[area]:
+            if next_area not in distances:
+                distances[next_area] = next_distance
+                queue.append(next_area)
+
+    return distances
 
 
 def pickup_index_to_node(region_list: RegionList, index: PickupIndex) -> PickupNode:

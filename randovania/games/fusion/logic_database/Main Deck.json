@@ -867,7 +867,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE",
+                                            "comment": "Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE . Can safely not have DLR check, as you can always enter from one door, which is enough to spark.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -894,15 +894,6 @@
                                                         "name": "ShinesparkTrick",
                                                         "amount": 3,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "OpenHatchLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -9346,7 +9337,7 @@
                         "Other to Silo Tunnel": {
                             "type": "and",
                             "data": {
-                                "comment": "Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw",
+                                "comment": "Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw . Can safely not have DLR check, as if you can reach Aux and be here, you can go through doors.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9449,15 +9440,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "OpenHatchLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": "Beam requirements.",
@@ -9492,15 +9474,6 @@
                                                                     "amount": 5,
                                                                     "negate": false
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "RightSiloCheckpointShutter",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
                                                             }
                                                         ]
                                                     }
@@ -9513,6 +9486,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "RightSiloCheckpointShutter",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -10674,13 +10656,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Access Right of Silo Checkpoint Shutter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -10730,31 +10705,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Access Right of Silo Checkpoint Shutter": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 201.96,
-                        "y": 116.83,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "RightSiloCheckpointShutter",
-                    "connections": {
-                        "Door to Auxiliary Navigation Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -10863,6 +10813,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Aux Power Station Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -10889,6 +10846,31 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "connections": {
+                        "Door to Auxiliary Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Aux Power Station Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.35,
+                        "y": 164.02,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "RightSiloCheckpointShutter",
                     "connections": {
                         "Door to Auxiliary Navigation Room": {
                             "type": "and",

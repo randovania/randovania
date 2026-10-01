@@ -18,6 +18,10 @@ class AsyncRaceRoomEndpoints:
     room_admin_data_template: str = "/{room_id}/admin-data"
     room_admin_entries_template: str = "/{room_id}/admin-entries"
     room_join_and_export_template: str = "/{room_id}/join-and-export"
+    room_teams_template: str = "/{room_id}/teams"
+    room_team_join_code_template: str = "/{room_id}/team/join-code"
+    room_join_team_template: str = "/{room_id}/team/join"
+    room_leave_team_template: str = "/{room_id}/team/leave"
     room_state_template: str = "/{room_id}/state"
     room_own_proof_template: str = "/{room_id}/own-proof"
     room_submit_proof_template: str = "/{room_id}/proof"
@@ -59,6 +63,18 @@ class AsyncRaceRoomEndpoints:
 
     def room_join_and_export(self, room_id: int) -> str:
         return self._build(self.room_join_and_export_template, room_id=room_id)
+
+    def room_teams(self, room_id: int) -> str:
+        return self._build(self.room_teams_template, room_id=room_id)
+
+    def room_team_join_code(self, room_id: int) -> str:
+        return self._build(self.room_team_join_code_template, room_id=room_id)
+
+    def room_join_team(self, room_id: int) -> str:
+        return self._build(self.room_join_team_template, room_id=room_id)
+
+    def room_leave_team(self, room_id: int) -> str:
+        return self._build(self.room_leave_team_template, room_id=room_id)
 
     def room_state(self, room_id: int) -> str:
         return self._build(self.room_state_template, room_id=room_id)

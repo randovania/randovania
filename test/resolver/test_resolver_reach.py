@@ -10,7 +10,7 @@ from randovania.resolver.resolver_reach import ResolverReach
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = ResolverReach(MagicMock(), resolver_native.ProcessNodesResponse({}, {}, set()))
+    reach = ResolverReach(MagicMock(), 0, resolver_native.ProcessNodesResponse({}, {}, set()))
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -23,13 +23,12 @@ def test_possible_actions_no_resources():
     node_b = MagicMock(name="node_b")
     node_b.has_all_resources.return_value = True
     logic = MagicMock()
-    logic.all_nodes = [node_a, node_b]
-    logic.graph = None
+    logic.world_specific[0].all_nodes = [node_a, node_b]
     node_a.node_index = 0
     node_b.node_index = 1
 
     # Run
-    reach = ResolverReach(logic, resolver_native.ProcessNodesResponse({0: 1, 1: 1}, {}, set()))
+    reach = ResolverReach(logic, 0, resolver_native.ProcessNodesResponse({0: 1, 1: 1}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
@@ -40,7 +39,6 @@ def test_possible_actions_no_resources():
 
 def test_possible_actions_with_event():
     logic = MagicMock()
-    logic.graph = None
     state = MagicMock()
 
     event = MagicMock(spec=WorldGraphNode, name="event node")
@@ -48,15 +46,15 @@ def test_possible_actions_with_event():
     event.has_all_resources.return_value = False
     event.requirement_to_collect = MagicMock()
 
-    logic.all_nodes = [event]
+    logic.world_specific[0].all_nodes = [event]
     damage_state = MagicMock()
 
     # Run
-    reach = ResolverReach(logic, resolver_native.ProcessNodesResponse({0: damage_state}, {}, set()))
+    reach = ResolverReach(logic, 0, resolver_native.ProcessNodesResponse({0: damage_state}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == [event]
     event.has_all_resources.assert_called_once_with(state.resources)
-    logic.get_additional_requirements.assert_called_once_with(event)
+    logic.get_additional_requirements.assert_called_once_with(state.world_index, event)
     logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, damage_state)

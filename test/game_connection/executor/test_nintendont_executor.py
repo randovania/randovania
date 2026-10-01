@@ -12,7 +12,7 @@ from randovania.game_connection.executor.nintendont_executor import NintendontEx
 @pytest.fixture(name="executor")
 def nintendont_executor():
     executor = NintendontExecutor("localhost")
-    executor.SUPPORTED_API_VERSION = 1
+    executor.SUPPORTED_API_VERSION = 2
     return executor
 
 
@@ -41,8 +41,8 @@ async def test_perform_memory_operations_success(executor: NintendontExecutor):
     executor._socket.writer.drain.assert_has_awaits([call(), call()])
     executor._socket.writer.write.assert_has_calls(
         [
-            call(b"\x00\x02\x01\x01\x00\x00\x10\x00\x80\x32\xd0\x1e\x00\n" + (b"1" * 30)),
-            call(b"\x00\x01\x01\x01\x00\x00\x10\x00\x80\x3c"),
+            call(b"\x01\x01\x02\x01\x00\x00\x10\x00\x80\x32\xd0\x1e\x00\n" + (b"1" * 30)),
+            call(b"\x01\x01\x01\x01\x00\x00\x10\x00\x80\x3c"),
         ]
     )
     assert result == ops
@@ -75,7 +75,7 @@ async def test_perform_memory_operations_invalid(executor: NintendontExecutor):
     executor._socket.writer.drain.assert_has_awaits([call()])
     executor._socket.writer.write.assert_has_calls(
         [
-            call(b"\x00\x03\x02\x01\x00\x00\x10\x00\x00\x00 \x00\x802\x81\n\x81\n"),
+            call(b"\x01\x01\x03\x02\x00\x00\x10\x00\x00\x00 \x00\x802\x81\n\x81\n"),
         ]
     )
     executor._socket.reader.read.assert_has_awaits([call(1024)])
@@ -103,8 +103,8 @@ async def test_perform_single_giant_memory_operation(executor: NintendontExecuto
     executor._socket.writer.drain.assert_has_awaits([call(), call()])
     executor._socket.writer.write.assert_has_calls(
         [
-            call(b"\x00\x01\x01\x01\x00\x00\x10\x00\x40\x64" + (b"1" * 100)),
-            call(b"\x00\x01\x01\x01\x00\x00\x10\x64\x40\x64" + (b"1" * 100)),
+            call(b"\x01\x01\x01\x01\x00\x00\x10\x00\x40\x64" + (b"1" * 100)),
+            call(b"\x01\x01\x01\x01\x00\x00\x10\x64\x40\x64" + (b"1" * 100)),
         ]
     )
     assert result is None
@@ -114,7 +114,9 @@ async def test_perform_single_giant_memory_operation(executor: NintendontExecuto
 async def test_connect(executor, mocker):
     reader, writer = MagicMock(), MagicMock()
     writer.drain = AsyncMock()
-    reader.read = AsyncMock(return_value=b"\x00\x00\x00\x01\x00\x00\x00x\x00\x00\x00\xfa\x00\x00\x00\x03")
+    reader.read = AsyncMock(
+        return_value=b"\x00\x00\x00\x02\x00\x00\x00x\x00\x00\x00\xfa\x00\x00\x00\x03\x00\x00\x00\x06\x00\x00\x00\x02"
+    )
     mock_open = mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
 
     # Run
@@ -127,7 +129,7 @@ async def test_connect(executor, mocker):
     socket: SocketHolder = executor._socket
     assert socket.reader is reader
     assert socket.writer is writer
-    assert socket.api_version == 1
+    assert socket.api_version == 2
     assert socket.max_input == 120
     assert socket.max_output == 250
     assert socket.max_addresses == 3
@@ -215,7 +217,9 @@ async def test_connect_invalid_api_details(
 
     reader, writer = MagicMock(), MagicMock()
     writer.drain = AsyncMock()
-    reader.read = AsyncMock(return_value=b"\x00\x00\x00\x01" + max_input + max_output + max_addresses)
+    reader.read = AsyncMock(
+        return_value=b"\x00\x00\x00\x02" + max_input + max_output + max_addresses + b"\x00\x00\x00\x06\x00\x00\x00\x02"
+    )
     mock_open = mocker.patch("asyncio.open_connection", new_callable=AsyncMock, return_value=(reader, writer))
 
     # Run

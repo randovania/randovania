@@ -205,7 +205,7 @@ class GraphRequirementList:
             raise RuntimeError("Cannot modify a frozen GraphRequirementList")
 
     @cython.cfunc
-    def _complexity_key_for_simplify(self) -> tuple[int, int, int]:
+    def _complexity_key_for_simplify(self) -> tuple[cython.int, cython.int, cython.int]:
         """
         A value that indicates how "complex" this requirement is. Used for sorting the alternatives in
         GraphRequirementSet.optimize_alternatives
@@ -253,7 +253,7 @@ class GraphRequirementList:
             return "Trivial"
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_other_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._other_resources for an entry with the given resource_index.
@@ -266,7 +266,7 @@ class GraphRequirementList:
         return -1
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_damage_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._damage_resources for an entry with the given resource_index.
@@ -709,9 +709,9 @@ class GraphRequirementList:
             return 2
 
 
-TRIVIAL_LIST: GraphRequirementList = GraphRequirementList(None)
+TRIVIAL_LIST = cython.declare(GraphRequirementList, GraphRequirementList(None))
 TRIVIAL_LIST.freeze()
-INF: cython.float = float("inf")
+INF = cython.declare(cython.float, float("inf"))
 
 
 @cython.final
@@ -970,7 +970,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def trivial(cls) -> typing.Self:
+    def trivial(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is always satisfied.
         """
@@ -984,7 +984,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def impossible(cls) -> typing.Self:
+    def impossible(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is never satisfied.
         """
@@ -1052,12 +1052,12 @@ class GraphRequirementSet:
         return set_resources, resources_with_negate
 
 
-TRIVIAL_SET = GraphRequirementSet()
+TRIVIAL_SET = cython.declare(GraphRequirementSet, GraphRequirementSet())
 TRIVIAL_SET.add_alternative(TRIVIAL_LIST)
 TRIVIAL_SET.freeze()
 
 # No alternatives makes satisfied always return False
-IMPOSSIBLE_SET = GraphRequirementSet()
+IMPOSSIBLE_SET = cython.declare(GraphRequirementSet, GraphRequirementSet())
 IMPOSSIBLE_SET.freeze()
 
 

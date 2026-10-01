@@ -45,7 +45,6 @@ async def test_build_connector_success(default_preset, mocker):
     preset_raw = json.dumps(VersionedPreset.with_preset(default_preset).as_json)
     builder.network_client.get_abandoned_world_data = AsyncMock(
         return_value={
-            "order": 2,
             "preset_raw": preset_raw,
             "game_modifications": {"the": "modifications"},
             "collected_locations": [3, 5],
@@ -63,7 +62,7 @@ async def test_build_connector_success(default_preset, mocker):
     args = mock_connector.call_args.args
     assert args[0] == builder.layout_uuid
     assert args[1].as_json == VersionedPreset.with_preset(default_preset).as_json
-    assert args[2:] == (2, {"the": "modifications"}, [3, 5])
+    assert args[2:] == ({"the": "modifications"}, [3, 5])
     assert builder.get_status_message() is None
 
 

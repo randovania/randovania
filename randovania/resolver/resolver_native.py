@@ -9,8 +9,6 @@ from __future__ import annotations
 import typing
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Sequence
-
     # The package is named `Cython`, so in a case-sensitive system mypy fails to find cython with just `import cython`
     import Cython as cython
 
@@ -18,7 +16,7 @@ if typing.TYPE_CHECKING:
     from randovania.lib.bitmask import Bitmask
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
-    from randovania.resolver.logic import Logic
+    from randovania.resolver.logic import Logic, WorldSpecificLogic
 else:
     # However cython's compiler seems to expect the import to be this way, otherwise `cython.compiled` breaks
     import cython
@@ -38,13 +36,14 @@ else:
         GraphRequirementSet,
         GraphRequirementSetRef,
     )
+    from randovania.graph.world_graph import BaseWorldGraphNode
     from randovania.lib.cython_helper import Pair as pair
     from randovania.lib.cython_helper import Vector as vector
     from randovania.resolver.process_nodes_state import ProcessNodesState
 
     if typing.TYPE_CHECKING:
         from randovania.game_description.resources.resource_collection import ResourceCollection
-        from randovania.graph.world_graph import BaseWorldGraphNode, WorldGraphNode, WorldGraphNodeConnection
+        from randovania.graph.world_graph import WorldGraphNodeConnection
 
 
 class ProcessNodesResponse(typing.NamedTuple):
@@ -143,7 +142,7 @@ def _generic_is_damage_state_strictly_better(
     return True
 
 
-@cython.exceptval(check=False)  # type: ignore[call-arg]
+@cython.exceptval(check=False)
 @cython.cfunc
 def _energy_is_damage_state_strictly_better(
     damage_health: cython.float,
@@ -191,7 +190,7 @@ def _add_to_requirements_excluding_leaving_by_node(
     )
 
 
-INF: cython.float = float("inf")
+INF = cython.declare(cython.float, float("inf"))
 
 
 # FIXME: figure out a way to not disable the complexity requirement
@@ -200,11 +199,13 @@ def resolver_reach_process_nodes(  # noqa: C901
     initial_state: State,
     output: ProcessNodesResponse,
 ) -> None:
-    all_nodes: Sequence[WorldGraphNode] = logic.all_nodes
     resources: ResourceCollection = initial_state.resources
     initial_game_state: EnergyTankDamageState = initial_state.damage_state  # type: ignore[assignment]
     resource_bitmask: Bitmask = resources.resource_bitmask
-    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+
+    world_specific = logic.world_specific[initial_state.world_index]
+    all_nodes: list[BaseWorldGraphNode] = cython.cast(list[BaseWorldGraphNode], world_specific.all_nodes)
+    additional_requirements_list: list[GraphRequirementSet] = world_specific.additional_requirements
 
     record_paths: cython.bint = logic.record_paths
     initial_node_index: cython.int = initial_state.node.node_index
@@ -350,9 +351,11 @@ def resolver_reach_process_nodes(  # noqa: C901
             else:
                 # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                 # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                if not cython.cast(GraphRequirementSet, connection.requirement_without_leaving).satisfied(
-                    resources, damage_health
-                ):
+                # Skip the bookkeeping entirely if target_node_index was already reached through some other
+                # path: `_fill_satisfiable_requirements_for_additionals` discards it later anyway.
+                if state.checked_nodes[target_node_index] == -1 and not cython.cast(
+                    GraphRequirementSet, connection.requirement_without_leaving
+                ).satisfied(resources, damage_health):
                     new_set: GraphRequirementSet | None = (
                         state_ptr[0].satisfied_requirement_on_node[node_index].first.get()
                     )
@@ -363,20 +366,20 @@ def resolver_reach_process_nodes(  # noqa: C901
                         new_set,
                         connection,
                     )
-                    if not all_nodes[node_index].requirement_to_collect.satisfied(resources, damage_health):
+                    if not node.requirement_to_collect.satisfied(resources, damage_health):
                         requirements_excluding_leaving_by_node[target_node_index].append(
-                            (all_nodes[node_index].requirement_to_collect, new_set)
+                            (node.requirement_to_collect, new_set)
                         )
 
     for node_index in found_node_order:
         if node_index != initial_node_index:
             output.reach_nodes[node_index] = state.checked_nodes[node_index]
 
-    _fill_satisfiable_requirements_for_additionals(logic, requirements_excluding_leaving_by_node, output)
+    _fill_satisfiable_requirements_for_additionals(world_specific, requirements_excluding_leaving_by_node, output)
 
 
 def _fill_satisfiable_requirements_for_additionals(
-    logic: Logic,
+    world_specific_logic: WorldSpecificLogic,
     requirements_excluding_leaving_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
     output: ProcessNodesResponse,
 ) -> None:
@@ -387,7 +390,7 @@ def _fill_satisfiable_requirements_for_additionals(
     if requirements_excluding_leaving_by_node:
         output.satisfiable_requirements_for_additionals.update(
             build_satisfiable_requirements(
-                logic,
+                world_specific_logic,
                 requirements_excluding_leaving_by_node,
             )
         )
@@ -396,12 +399,12 @@ def _fill_satisfiable_requirements_for_additionals(
 @cython.locals(node_index=cython.int)
 @cython.ccall
 def build_satisfiable_requirements(
-    logic: Logic,
+    world_specific_logic: WorldSpecificLogic,
     requirements_by_node: dict[int, list[tuple[GraphRequirementSet, GraphRequirementSet]]],
 ) -> list[GraphRequirementList]:
     data: list[GraphRequirementList] = []
 
-    additional_requirements_list: list[GraphRequirementSet] = logic.additional_requirements
+    additional_requirements_list: list[GraphRequirementSet] = world_specific_logic.additional_requirements
     trivial_set: GraphRequirementSet = GraphRequirementSet.trivial()
 
     for node_index, reqs in requirements_by_node.items():

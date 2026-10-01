@@ -137,6 +137,7 @@ class MultiplayerSessionEntry(JsonDataclass):
     allow_coop: bool
     allow_everyone_claim_world: bool
     allow_abandon_worlds: bool
+    is_race_session: bool = False
 
     @property
     def users(self) -> dict[int, MultiplayerUser]:

@@ -781,6 +781,7 @@ SOLO_RDVGAMES = [
         True,
     ),  # starter preset with shuffled item refills and shield keys, added extra locations, skip planet intros
     ("prime_hunters/no_shuffled_octoliths.rdvgame", True),  # starter preset without any shuffled octoliths
+    ("prime_hunters/octoliths_anywhere.rdvgame", True),  # starter preset with octoliths placed anyhere
     # Prime 1
     ("prime1-vanilla.rdvgame", True),  # vanilla
     ("prime1_crazy_seed.rdvgame", False),  # chaos features

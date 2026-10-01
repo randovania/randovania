@@ -101,6 +101,11 @@ class BaseWorldGraphNode:
     require_collected_to_leave: bool
     """When set, leaving this node requires it to have been collected."""
 
+    requirement_to_collect: GraphRequirementSet
+    """
+    A requirement that must be satisfied before being able to collect
+    """
+
     @cython.ccall
     def has_all_resources(self, resources: ResourceCollection) -> bool:
         """
@@ -119,11 +124,6 @@ class WorldGraphNode(BaseWorldGraphNode):
     back_connections: list[NodeIndex]
     """
     A list of nodes that connects to this one.
-    """
-
-    requirement_to_collect: GraphRequirementSet
-    """
-    A requirement that must be satisfied before being able to collect
     """
 
     pickup_index: PickupIndex | None
@@ -249,6 +249,9 @@ class WorldGraph:
     """
     Represents a highly optimised view of a RegionList, with all per-Preset tweaks baked in.
     """
+
+    world_index: int
+    """In the context of a multiworld, the index of the world this graph belongs to."""
 
     game_enum: RandovaniaGame
     resource_database: ResourceDatabaseView

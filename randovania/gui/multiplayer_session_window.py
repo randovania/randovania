@@ -459,7 +459,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         }
         self.session_visibility_button.setText(_state_to_label[session.visibility])
 
-        self.copy_permalink_button.setEnabled(session.game_details is not None)
+        is_race = session.is_race_session
+        race_tooltip = "Not available while this session is part of an async race" if is_race else ""
+        for button in (self.copy_permalink_button, self.view_game_details_button):
+            button.setToolTip(race_tooltip)
+
+        self.copy_permalink_button.setEnabled(session.game_details is not None and not is_race)
         if session.game_details is None:
             self.seed_hash_label.setText("Seed Hash: <Game not generated>")
             self.view_game_details_button.setEnabled(False)
@@ -467,7 +472,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         else:
             game_details = session.game_details
             self.seed_hash_label.setText(f"Seed Hash: {game_details.word_hash} ({game_details.seed_hash})")
-            self.view_game_details_button.setEnabled(game_details.spoiler)
+            self.view_game_details_button.setEnabled(game_details.spoiler and not is_race)
             if len(own_entry.worlds) > 1:
                 self.export_game_button.setEnabled(True)
                 self.export_game_menu.clear()

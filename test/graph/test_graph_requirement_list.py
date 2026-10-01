@@ -322,6 +322,7 @@ def test_copy_then_and_with_independence(blank_resource_db):
 
     # Create a copy using copy_then_and_with
     copied = req1.copy_then_and_with(req2)
+    assert copied is not None
 
     # Verify initial state
     assert copied.get_requirement_for(weapon, False) == (5, False)
@@ -358,6 +359,7 @@ def test_copy_then_and_with_vector_mutation(blank_resource_db):
 
     # Create a copy using copy_then_and_with
     copied = req1.copy_then_and_with(req2)
+    assert copied is not None
 
     # Verify req1's values are unchanged via public API
     req1_weapon_after = req1.get_requirement_for(weapon, False)
@@ -417,6 +419,7 @@ def test_damage_resource_copy_independence(blank_resource_db):
 
     # Use copy_then_and_with
     copied = req1.copy_then_and_with(req2)
+    assert copied is not None
 
     # Verify damage is combined (50 + 30 = 80 for damage resources)
     assert copied.get_requirement_for(damage, True) == (80, False)
@@ -447,6 +450,7 @@ def test_and_with_mutation_independence(blank_resource_db):
 
     # Use copy_then_and_with
     copied = req1.copy_then_and_with(req2)
+    assert copied is not None
 
     # Verify copied has the max
     assert copied.get_requirement_for(weapon, False) == (10, False)
@@ -473,6 +477,7 @@ def test_copy_then_and_with_does_not_mutate_original_vectors(blank_resource_db):
 
     # Create a copy using copy_then_and_with
     copied = req1.copy_then_and_with(req2)
+    assert copied is not None
 
     # Verify req1's values weren't mutated during the copy
     req1_weapon_after = req1.get_requirement_for(weapon, False)

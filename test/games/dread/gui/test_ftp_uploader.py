@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import platform
+import socket
+import time
 from pathlib import Path
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call
@@ -11,6 +13,24 @@ from randovania.lib.ftp_uploader import FtpUploader
 
 if TYPE_CHECKING:
     from pytest_localftpserver.servers import PytestLocalFTPServer
+
+
+def _wait_until_listening(port: int, timeout: float = 5.0) -> None:
+    """Waits until the ftp server accepts connections.
+
+    The ftpserver fixture binds its socket in the main thread, but only calls listen() later,
+    from the thread that serves the requests. Connecting in between fails with
+    ConnectionRefusedError, so poll the port instead of assuming the server is already up.
+    """
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            with socket.create_connection(("127.0.0.1", port), timeout=1.0):
+                return
+        except OSError:
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(0.1)
 
 
 @pytest.mark.skipif(platform.system() == "Darwin", reason="ftpserver fails on macOS")
@@ -31,13 +51,14 @@ def test_upload(ftpserver: PytestLocalFTPServer, tmp_path):
 
     ftp = FtpUploader(
         auth=(ftpserver.username, ftpserver.password),
-        ip="localhost",
+        ip="127.0.0.1",
         port=ftpserver.server_port,
         local_path=tmp_path.joinpath("local"),
         remote_path="/remote",
     )
 
     # Run
+    _wait_until_listening(ftpserver.server_port)
     ftp(progress_update)
 
     # Assert
