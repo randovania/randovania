@@ -617,12 +617,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if current_connection_node:
             self.focus_on_node(current_connection_node)
 
-    def replace_connection_with(self, target_node: Node, requirement: Requirement | None) -> None:
+    def replace_connection_with(self, target_node: Node, requirement: Requirement) -> None:
         current_node = self.current_node
         assert current_node
-
-        if requirement == Requirement.impossible():
-            requirement = None
 
         self.editor.edit_connections(self.current_area, current_node, target_node, requirement)
         self.update_connections()
