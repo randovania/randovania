@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.array_base import RequirementArrayBase
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 
 if TYPE_CHECKING:
@@ -14,7 +15,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node, NodeIndex
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.base import Requirement
 
 
 def replace_identifiers_in_requirement(
@@ -43,10 +43,10 @@ class Editor:
         self.next_node_index += 1
         return result
 
-    def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Requirement | None) -> None:
+    def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Requirement) -> None:
         current_connections = area.connections[from_node]
 
-        if requirement is None:
+        if requirement == Requirement.impossible():
             if target_node in area.connections[from_node]:
                 del area.connections[from_node][target_node]
         else:

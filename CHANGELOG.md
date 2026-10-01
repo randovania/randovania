@@ -54,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Sic Transit: The scan door will now unlock in the post-boss layers if the shuffled Shield Key is collected.
 - Fixed: Alinos Perch: The force field no longer despawns after defeating Cretaphid v3.
 - Fixed: It is no longer possible to skip activating triggers when collecting certain pickups.
+- Fixed: Certain values for starting Missiles/UA Ammo being invalid. The max capacity for starting is now set to 100.
 
 #### Logic Database
 

@@ -123,9 +123,9 @@ async def test_add_change_and_remove_worlds(skip_qtbot, preset_manager, options,
     window_manager.preset_manager = preset_manager
     dialog = AsyncRaceCreationDialog(parent, window_manager, options)
 
-    blank = preset_manager.default_preset_for_game(RandovaniaGame.BLANK)
+    prime = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME)
     dread = preset_manager.default_preset_for_game(RandovaniaGame.METROID_DREAD)
-    to_select = [blank, blank, dread]
+    to_select = [prime, prime, dread]
 
     async def execute_dialog_effect(diag: SelectPresetDialog) -> QtWidgets.QDialog.DialogCode:
         preset = to_select.pop(0)
@@ -154,7 +154,7 @@ async def test_add_change_and_remove_worlds(skip_qtbot, preset_manager, options,
     dialog.ui.world_list.setCurrentRow(1)
     await dialog._on_select_preset(replace_row=1)
     assert [preset.game for preset in dialog.selected_presets] == [
-        RandovaniaGame.BLANK,
+        RandovaniaGame.METROID_PRIME,
         RandovaniaGame.METROID_DREAD,
     ]
     assert dialog.ui.world_list.count() == 2
@@ -254,7 +254,7 @@ async def test_multiworld_capable_first_world_keeps_add_available(
     window_manager.preset_manager = preset_manager
     dialog = AsyncRaceCreationDialog(parent, window_manager, options)
 
-    dialog.selected_presets = [preset_manager.default_preset_for_game(RandovaniaGame.BLANK)]
+    dialog.selected_presets = [preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME)]
     dialog._update_world_list()
 
     assert dialog._worlds_allow_multiworld
