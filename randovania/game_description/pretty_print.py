@@ -119,6 +119,13 @@ def pretty_print_requirement(
         print_function("{}{}{}".format(prefix, "    " * nested_level, text))
 
 
+def _grants_on_collect_text(node: EventNode | PickupNode) -> str:
+    if not node.grants_on_collect:
+        return ""
+    granted = ", ".join(f"{amount}x {resource.long_name}" for resource, amount in node.grants_on_collect)
+    return f"; Grants {granted}"
+
+
 def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: ResourceDatabaseView) -> str:
     if isinstance(node, DockNode):
         try:
@@ -144,10 +151,10 @@ def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: Resource
         message = f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
         if node.custom_index_group is not None:
             message += f"; Index Group: {node.custom_index_group}"
-        return message
+        return message + _grants_on_collect_text(node)
 
     elif isinstance(node, EventNode):
-        return f"Event {node.event.long_name}"
+        return f"Event {node.event.long_name}" + _grants_on_collect_text(node)
 
     elif isinstance(node, ConfigurableNode):
         return "Configurable Node"

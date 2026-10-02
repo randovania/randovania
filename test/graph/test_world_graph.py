@@ -1,13 +1,15 @@
 from __future__ import annotations
 
+import dataclasses
 from typing import TYPE_CHECKING
 
 import pytest
 
+from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.graph import world_graph_factory
+from randovania.graph import state_native, world_graph_factory
 from randovania.graph.graph_requirement import create_requirement_list, create_requirement_set
 from randovania.graph.world_graph import WorldGraphNodeConnection
 
@@ -103,3 +105,73 @@ def test_hint_node_should_collect(hint_node, blank_world_graph):
     assert node.has_all_resources(col(resource, translator))
 
     assert list(node.resource_gain(db)) == [(resource, 1)]
+
+
+def test_grants_on_collect_event_node(blank_world_graph, blank_game_description):
+    # Setup
+    db = blank_world_graph.resource_database
+    game_db = blank_game_description.resource_database
+    useless = game_db.get_item("Useless")
+    boss = game_db.get_event("Boss")
+    node = blank_world_graph.node_identifier_to_node[NodeIdentifier.create("Intro", "Boss Arena", "Event - Boss")]
+    resources = ResourceCollection.from_dict(db, {})
+
+    # Run
+    new_resources, modified = state_native.state_collect_resource_node(node, resources, 100)
+
+    # Assert
+    assert list(node.resource_gain(db)) == [(boss, 1), (useless, 2)]
+    assert new_resources[boss] == 1
+    assert new_resources[useless] == 2
+    assert modified == [boss, useless]
+
+    # Collected once, so it can't grant again
+    assert node.has_all_resources(new_resources)
+    with pytest.raises(ValueError, match="uncollectable"):
+        state_native.state_collect_resource_node(node, new_resources, 100)
+
+
+def test_grants_on_collect_pickup_node(blank_world_graph, blank_game_description):
+    # Setup
+    db = blank_world_graph.resource_database
+    useless = blank_game_description.resource_database.get_item("Useless")
+    node = blank_world_graph.node_identifier_to_node[NodeIdentifier.create("Intro", "Boss Arena", "Pickup (Free Loot)")]
+    node_resource = blank_world_graph.resource_info_for_node(node)
+
+    # Run
+    new_resources, _ = state_native.state_collect_resource_node(node, ResourceCollection.from_dict(db, {}), 100)
+
+    # Assert
+    assert list(node.resource_gain(db)) == [(node_resource, 1), (useless, 1)]
+    assert new_resources[useless] == 1
+    assert node.has_all_resources(new_resources)
+
+
+def test_grants_on_collect_event_pickup_node(blank_game_description):
+    # Setup
+    db = blank_game_description.resource_database
+    region_list = blank_game_description.region_list
+    event_node = region_list.node_by_identifier(
+        NodeIdentifier.create("Intro", "Back-Only Lock Room", "Event - Key Switch 1")
+    )
+    pickup_node = region_list.node_by_identifier(
+        NodeIdentifier.create("Intro", "Back-Only Lock Room", "Pickup (Extra Key)")
+    )
+    combo = EventPickupNode.create_from(
+        1000,
+        dataclasses.replace(event_node, grants_on_collect=((db.get_event("KeySwitch2"), 1),)),
+        dataclasses.replace(pickup_node, grants_on_collect=((db.get_item("Useless"), 3),)),
+    )
+
+    # Run
+    node = world_graph_factory.create_node(
+        0, combo, region_list.nodes_to_area(event_node), region_list.nodes_to_region(event_node), db
+    )
+
+    # Assert
+    assert list(node.resource_gain(db)) == [
+        (db.get_event("KeySwitch1"), 1),
+        (db.get_event("KeySwitch2"), 1),
+        (db.get_item("Useless"), 3),
+    ]
+    assert node.duplicate().extra_resource_gain == node.extra_resource_gain

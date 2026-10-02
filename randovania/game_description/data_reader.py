@@ -363,6 +363,7 @@ class RegionReader:
             elif node_type == "pickup":
                 return PickupNode(
                     **generic_args,
+                    grants_on_collect=read_resource_gain_tuple(data["grants_on_collect"], self.resource_database),
                     pickup_index=PickupIndex(data["pickup_index"]),
                     location_category=LocationCategory(data["location_category"]),
                     custom_index_group=data["custom_index_group"],
@@ -370,7 +371,11 @@ class RegionReader:
                 )
 
             elif node_type == "event":
-                return EventNode(**generic_args, event=self.resource_database.get_event(data["event_name"]))
+                return EventNode(
+                    **generic_args,
+                    event=self.resource_database.get_event(data["event_name"]),
+                    grants_on_collect=read_resource_gain_tuple(data["grants_on_collect"], self.resource_database),
+                )
 
             elif node_type == "configurable_node":
                 return ConfigurableNode(

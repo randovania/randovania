@@ -811,6 +811,10 @@ SOLO_RDVGAMES = [
     ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
     # Zero Mission
     ("zero_mission/starter_preset.rdvgame", True),  # starter preset
+    # Yoku's Island Express
+    ("yokus_island_express/starter_preset.rdvgame", True),  # starter preset (starting trackers)
+    ("yokus_island_express/shuffled_trackers.rdvgame", True),  # shuffled trackers
+    ("yokus_island_express/starting_fruit.rdvgame", True),  # starting fruit
 ]
 
 COOP_RDVGAMES = [
