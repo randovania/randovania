@@ -69,16 +69,21 @@ jobs:
           - { name: "Windows", image: windows-latest, event_name: "${{ github.event_name }}" }
         is_stable:
           - ${{ startsWith(github.ref, 'refs/heads/stable') || startsWith(github.ref, 'refs/tags/v') }}
+        shard: [1, 2]
 
         exclude:
+          # Exclude non-required jobs on merge_group: Linux/macOS and Pure python
           - os: { name: "Linux", image: ubuntu-latest, event_name: merge_group }
           - os: { name: "macOS", image: macos-latest, event_name: merge_group }
           - compiled: { env_var: "0", suffix: " (Pure)", event_name: merge_group }
+          # Exclude pure macOS
+          - os: { name: "macOS", image: macos-latest, event_name: "${{ github.event_name }}" }
+            compiled: { env_var: "0", suffix: " (Pure)", event_name: "${{ github.event_name }}" }
 
     runs-on: ${{ matrix.os.image }}
     timeout-minutes: 30
 
-    name: ${{ matrix.os.name }}${{ matrix.compiled.suffix }}
+    name: ${{ matrix.os.name }}${{ matrix.compiled.suffix }} (${{ matrix.shard }}/2)
 
     steps:
       - name: Checkout
@@ -117,7 +122,7 @@ jobs:
 
       # Don't use `-n auto` as it causes issues with Cython coverage
       - name: run pytest
-        run: $PREFIX uv run pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests --durations=100
+        run: $PREFIX uv run pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests --durations=100 --test-group=${{ matrix.shard }} --test-group-count=2
         shell: bash
         env:
           QT_QPA_PLATFORM: "${{ matrix.os.image == 'ubuntu-latest' && 'xcb' || '' }}"
