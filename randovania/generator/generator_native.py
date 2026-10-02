@@ -24,7 +24,6 @@ else:
 if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.cpython.ref import PyObject
-        from cython.cimports.libcpp.deque import deque
         from cython.cimports.libcpp.unordered_map import unordered_map
         from cython.cimports.libcpp.unordered_set import unordered_set
         from cython.cimports.libcpp.utility import pair
@@ -35,6 +34,8 @@ if cython.compiled:
         from cython.cimports.randovania.graph.graph_requirement import GraphRequirementSet, GraphRequirementSetRef
         from cython.cimports.randovania.graph.world_graph import BaseWorldGraphNode
         from cython.cimports.randovania.lib.bitmask import Bitmask
+        from cython.cimports.randovania.lib.cython_helper import IndexQueue as deque
+        from cython.cimports.randovania.lib.cython_helper import pvector
 else:
     from randovania.generator.generator_native_helper import DistancesMapping, SearchHeapEntry
     from randovania.generator.generator_native_helper import MinPriorityQueue as min_priority_queue
@@ -48,6 +49,8 @@ else:
     from randovania.lib.cython_helper import UnorderedMap as unordered_map
     from randovania.lib.cython_helper import UnorderedSet as unordered_set
     from randovania.lib.cython_helper import Vector as vector
+
+    pvector = vector
 
     if typing.TYPE_CHECKING:
         from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -63,7 +66,7 @@ if cython.compiled:
     @cython.cclass
     class GeneratorDiGraph:
         _added_nodes: unordered_set[cython.int]
-        _edges: vector[vector[pair[cython.int, GraphRequirementSetRef]]]
+        _edges: pvector[pvector[pair[cython.int, GraphRequirementSetRef]]]
 
         def __init__(self) -> None:
             raise TypeError("normal construction not allowed")
@@ -73,7 +76,7 @@ if cython.compiled:
             num_nodes: cython.int = len(game.nodes)
 
             result: GeneratorDiGraph = GeneratorDiGraph.__new__(GeneratorDiGraph)
-            result._edges.resize(num_nodes, vector[pair[cython.int, GraphRequirementSetRef]]())
+            result._edges.resize(num_nodes, pvector[pair[cython.int, GraphRequirementSetRef]]())
 
             return result
 
@@ -125,14 +128,14 @@ if cython.compiled:
 
             # Uses the Tarjan's algorithm, stolen from networkx
 
-            preorder: vector[cython.int] = vector[cython.int]()
+            preorder: pvector[cython.int] = pvector[cython.int]()
             preorder.resize(self._edges.size(), -1)
-            lowlink: vector[cython.int] = vector[cython.int]()
+            lowlink: pvector[cython.int] = pvector[cython.int]()
             lowlink.resize(self._edges.size(), 1000000)
-            scc_found: vector[cython.bint] = vector[cython.bint]()
+            scc_found: pvector[cython.bint] = pvector[cython.bint]()
             scc_found.resize(self._edges.size(), False)
-            scc_queue: vector[cython.int] = vector[cython.int]()
-            neighbors_vec: vector[cython.int] = vector[cython.int]()
+            scc_queue: pvector[cython.int] = pvector[cython.int]()
+            neighbors_vec: pvector[cython.int] = pvector[cython.int]()
             neighbors_vec.resize(self._edges.size(), 0)
 
             i: cython.int = 0  # Preorder counter
@@ -142,7 +145,7 @@ if cython.compiled:
 
             for source in self._added_nodes:
                 if not scc_found[source]:
-                    queue: vector[cython.int] = vector[cython.int]()
+                    queue: pvector[cython.int] = pvector[cython.int]()
                     queue.push_back(source)
                     while not queue.empty():
                         v: cython.int = queue.back()
@@ -196,13 +199,13 @@ if cython.compiled:
             nodes: list[BaseWorldGraphNode] = cython.cast(list[BaseWorldGraphNode], world_graph.nodes)
             num_nodes: cython.int = len(nodes)
 
-            is_collected: vector[cython.int] = vector[cython.int]()
+            is_collected: pvector[cython.int] = pvector[cython.int]()
             is_collected.resize(num_nodes, 2)
 
             source: cython.int = state.node.node_index
 
             dist: _DistancesDict = _DistancesDict.__new__(_DistancesDict)  # dictionary of final distances
-            seen: vector[cython.int] = vector[cython.int]()
+            seen: pvector[cython.int] = pvector[cython.int]()
             seen.resize(num_nodes, 2**30)  # really high distance
 
             # fringe is heapq with 3-tuples (distance,c,node)
