@@ -38,6 +38,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: All beam charge combos now additionally have a pickup hint feature of being "a missile system" and "a missile-related upgrade" for consistency with Echoes.
 - Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Hall of the Elders: Expert Bomb Space Jump to activate bomb slots without Space Jump Boots.
+
 ### Metroid Prime 2: Echoes
 
 - Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
