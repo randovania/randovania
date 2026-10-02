@@ -1,0 +1,54 @@
+{% extends "layout.html.jinja" %}
+
+{% block title %}
+	Async Race Rooms
+{% endblock %}
+
+{% block header %}
+	Async Race Rooms
+{% endblock header %}
+
+{% block content %}
+	<div class="main-content__body" data-lead-id="main-content-body">
+		<table>
+            <thead>
+                <td>Name</td>
+                <td>Game</td>
+                <td>Start Date</td>
+                <td>End Date</td>
+                <td>Has Password?</td>
+                <td>Creator</td>
+                <td>Creation Date</td>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                    <tr>
+                        <td><a href="{{ url_for('admin_async_room', async_room_id=room.id) }}">
+                            {{ room.name }}
+                        </a></td>
+                        <td>{{ room.layout_description.all_patches[0].game.game.long_name }}</td>
+                        <td>{{ room.start_datetime.strftime("%H:%M %Z, %d %b %Y") }}</td>
+                        <td>{{ room.end_datetime.strftime("%H:%M %Z, %d %b %Y") }}</td>
+                        <td>{{ room.password != None }}</td>
+                        <td>{{ room.creator.name }}</td>
+                        <td>{{ room.creation_datetime.strftime("%H:%M %Z, %d %b %Y") }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>
+            Page {{ page }} of {{ page_count }}.
+            {% if page > 1 %}
+                <a href="{{ url_for('admin_async_rooms') }}?page={{ page - 1 }}">Previous</a>
+            {% else %}
+                Previous
+            {% endif %}
+            /
+            {% if page < page_count %}
+                <a href="{{ url_for('admin_async_rooms') }}?page={{ page + 1 }}">Next</a>
+            {% else %}
+                Next
+            {% endif %}
+        </p>
+	</div>
+{% endblock content %}
