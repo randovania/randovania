@@ -22,9 +22,11 @@
                         "default"
                     ],
                     "extra": {
-                        "object_id": 100022
+                        "object_id": 100022,
+                        "global_x": 640,
+                        "global_y": 832
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Brinstar",
@@ -402,136 +404,124 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Gate 1": {
+                        "Event - Mother Brain": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Gate 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 672.3588175331294,
-                        "y": 181.3251783893986,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "MBGate1Destroyed",
-                    "connections": {
-                        "Gate 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Gate 2": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 547.0988786952089,
-                        "y": 186.54434250764527,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "MBGate2Destroyed",
-                    "connections": {
-                        "Gate 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Gate 3": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 419.2293577981651,
-                        "y": 202.20183486238534,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "MBGate3Destroyed",
-                    "connections": {
-                        "Gate 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Gate 4": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 286.1406727828746,
-                        "y": 183.93476044852193,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "MBGate4Destroyed",
-                    "connections": {
-                        "Gate 4": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Gate 5": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 163.49031600407747,
-                        "y": 183.93476044852193,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "MBGate5Destroyed",
-                    "connections": {
-                        "Gate 5": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Health Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 500,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 300,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Ammo requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 90,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Have to go farm after zebetites",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -540,8 +530,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 85.20285423037717,
-                        "y": 189.1539245667686,
+                        "x": 169.904761486358,
+                        "y": 121.98072123001168,
                         "z": 0.0
                     },
                     "description": "",
@@ -552,7 +542,14 @@
                     "valid_starting_location": false,
                     "event_name": "MotherBrainDead",
                     "connections": {
-                        "Mother Brain": {
+                        "Door to Pipe Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Escape Route": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -588,261 +585,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Mother Brain": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "MotherBrainDead",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Gate 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 680.0,
-                        "y": 128.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Pipe Hall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Gate 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 10,
-                                "negate": false
-                            }
-                        },
-                        "Gate 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "MBGate1Destroyed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Gate 5": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 168.0,
-                        "y": 128.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Event - Gate 5": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 10,
-                                "negate": false
-                            }
-                        },
-                        "Mother Brain": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "MBGate5Destroyed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Gate 4": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Mother Brain": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 72.0,
-                        "y": 112.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Event - Mother Brain": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 33,
-                                "negate": false
-                            }
-                        },
-                        "Dock to Escape Route": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "MotherBrainDead",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Gate 5": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Gate 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 552.0,
-                        "y": 128.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Event - Gate 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 10,
-                                "negate": false
-                            }
-                        },
-                        "Gate 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Gate 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "MBGate2Destroyed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Gate 3": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 424.0,
-                        "y": 128.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Event - Gate 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 10,
-                                "negate": false
-                            }
-                        },
-                        "Gate 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Gate 4": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "MBGate3Destroyed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Gate 4": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 296.0,
-                        "y": 128.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Event - Gate 4": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 10,
-                                "negate": false
-                            }
-                        },
-                        "Gate 5": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "MBGate4Destroyed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Gate 3": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -887,43 +630,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Teleporter to Escape Route": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Escape Route": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 128.0,
-                        "y": 2032.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Tourian",
-                        "area": "Escape Route",
-                        "node": "Event - End Game"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
-                    "connections": {
-                        "Door to Command Center": {
+                        "Event - End Game": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -936,8 +643,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 119.45299145299144,
-                        "y": 2149.5970695970695,
+                        "x": 125.44408945686898,
+                        "y": 2049.968051118211,
                         "z": 0.0
                     },
                     "description": "",
@@ -948,7 +655,7 @@
                     "valid_starting_location": false,
                     "event_name": "Credits",
                     "connections": {
-                        "Teleporter to Escape Route": {
+                        "Door to Command Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
