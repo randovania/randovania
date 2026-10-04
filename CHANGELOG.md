@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Check if Beatable should no longer error in multiworld games.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Cataris
+
+- Fixed: Teleport to Ghavoran: Missing requirement that Door Lock Rando has to be disabled to use Speed Booster to get up to the teleporter without Gravity Suit.
+
 ### Metroid Fusion
 
 - Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
