@@ -154,7 +154,7 @@ def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: Resource
         return message + _grants_on_collect_text(node)
 
     elif isinstance(node, EventNode):
-        return f"Event {node.event.long_name}" + _grants_on_collect_text(node)
+        return f"Event {node.event.long_name}{_grants_on_collect_text(node)}"
 
     elif isinstance(node, ConfigurableNode):
         return "Configurable Node"
