@@ -406,6 +406,14 @@ def _migrate_v33(data: dict, game: RandovaniaGame) -> None:
         dock_type["weakness_distributor"] = settings
 
 
+def _migrate_v34(data: dict, game: RandovaniaGame) -> None:
+    for region in data["regions"]:
+        for area in region["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] in ("event", "pickup"):
+                    node["grants_on_collect"] = []
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -440,6 +448,7 @@ _MIGRATIONS = [
     _migrate_v31,  # add quantity to damage reduction
     _migrate_v32,  # split HintNode into three
     _migrate_v33,  # dock lock parameters
+    _migrate_v34,  # add grants_on_collect to EventNode and PickupNode
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

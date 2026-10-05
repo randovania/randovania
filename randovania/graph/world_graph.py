@@ -135,6 +135,9 @@ class WorldGraphNode(BaseWorldGraphNode):
     has_event_resource: bool
     """If this node gives a resource of type EVENT."""
 
+    resource_gain_amounts: dict[int, int]
+    """The quantity for each resource in `resource_gain_bitmask` that provides more than 1."""
+
     is_lock_action: bool
     """If this node should be considered a ActionPriority.LOCK_ACTION by the resolver."""
 
@@ -174,6 +177,7 @@ class WorldGraphNode(BaseWorldGraphNode):
         self.pickup_index = pickup_index
         self.pickup_entry = None
         self.has_event_resource = False
+        self.resource_gain_amounts = {}
         self.is_lock_action = is_lock_action
         self.database_node = database_node
         self.area = area
@@ -186,18 +190,28 @@ class WorldGraphNode(BaseWorldGraphNode):
         if resource.resource_type == ResourceType.EVENT:
             self.has_event_resource = True
 
+    def add_granted_resource(self, resource: ResourceInfo, amount: int, database: ResourceDatabaseView) -> None:
+        """Registers one entry of the database node's `grants_on_collect`."""
+        index = resource.resource_index
+        if self.resource_gain_bitmask.is_set(index):
+            amount += self.resource_gain_amounts.get(index, 1)
+        self.add_resource(resource, database)
+        if amount > 1:
+            self.resource_gain_amounts[index] = amount
+
     def resource_gain(self, database: ResourceDatabaseView) -> ResourceGain:
         """
         All the resources provided by collecting this node.
         - EventNode: the event
         - HintNode/PickupNode: the node resource
         - DockLockNode: the dock node resources
+        - EventNode/PickupNode: the database node's `grants_on_collect`
 
-        These resources all provide exactly 1 quantity each.
+        These resources provide 1 quantity each, unless `resource_gain_amounts` says otherwise.
         """
         mapping: dict[int, ResourceInfo] = database.get_resource_mapping()
         for index in self.resource_gain_bitmask.get_set_bits():
-            yield mapping[index], 1
+            yield mapping[index], self.resource_gain_amounts.get(index, 1)
 
     def is_resource_node(self) -> bool:
         return not self.resource_gain_bitmask.is_empty()
@@ -241,6 +255,7 @@ class WorldGraphNode(BaseWorldGraphNode):
             new_node.resource_gain_bitmask.union(self.resource_gain_bitmask)
             new_node.dangerous_resources.union(self.dangerous_resources)
             new_node.has_event_resource = self.has_event_resource
+            new_node.resource_gain_amounts = dict(self.resource_gain_amounts)
         return new_node
 
 
