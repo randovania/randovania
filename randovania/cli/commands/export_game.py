@@ -21,7 +21,7 @@ def _add_parser_arguments_for(
         type_, is_optional = type_lib.resolve_optional(resolved_types[field.name])
 
         arg_kwargs: dict = {}
-        if type_ is Path:
+        if type_ is Path or type_ is int:
             arg_kwargs["type"] = type_
             arg_kwargs["required"] = not is_optional
 
