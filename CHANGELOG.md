@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [11.1.1] - 2026-10-06
+
+- Fixed: Check if Beatable should no longer error in multiworld games.
+
 ## [11.1.0] - 2026-10-01
 
 - Added: Async race rooms can now be multiworld. A room can be created with any number of worlds, each with its own preset, and is then played by teams instead of individual players. Each team races the multiworld on their own, and the teams' times are compared. An async race played in teams can either give the whole team one shared timer, or time every member separately and add their times up. Either way the team's captain starts the race for the team.
