@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
 
-- Fixed: Check if Beatable should no longer error in multiworld games.
-
 ### Metroid Fusion
 
 - Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
+
+## [11.1.1] - 2026-10-06
+
+- Fixed: Check if Beatable should no longer error in multiworld games.
 
 ## [11.1.0] - 2026-10-01
 
