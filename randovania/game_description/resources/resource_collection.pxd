@@ -1,11 +1,11 @@
 from cython.cimports.libcpp.unordered_map import unordered_map
-from cython.cimports.libcpp.vector import vector
 from cython.cimports.randovania.lib.bitmask import Bitmask
+from cython.cimports.randovania.lib.cython_helper import pvector
 
 
 cdef class ResourceCollection:
     cdef public Bitmask resource_bitmask
-    cdef vector[int] _resource_array
+    cdef pvector[int] _resource_array
     cdef dict[int, object] _existing_resources
     cdef unordered_map[size_t, float] _damage_reduction_cache
     cdef object _resource_database
