@@ -2643,8 +2643,25 @@
                             "data": "Has Vacuum"
                         },
                         "Pickup (Wl. 72: Crystal Skull Slug Rock)": {
-                            "type": "template",
-                            "data": "Has Vacuum"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Vacuum"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Hook",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Pickup (Wl. 73: Crystal Skull Chest)": {
                             "type": "template",
