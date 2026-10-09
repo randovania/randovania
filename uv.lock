@@ -20,6 +20,7 @@ mp2hudcolor = false
 open-dread-rando = false
 open-prime-hunters-rando = false
 open-samus-returns-rando = false
+open-yoku-rando = false
 planets-yapr = false
 py-randomprime = false
 random-enemy-attributes = false
@@ -2280,6 +2281,18 @@ wheels = [
 ]
 
 [[package]]
+name = "open-yoku-rando"
+version = "0.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "jsonschema" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/88/d4/c63113ca9a6d606740ce45d4be9711e58cd1c2bb153b61689231f7047463/open_yoku_rando-0.0.1.tar.gz", hash = "sha256:e0eaf8f09872bf391d1fb005ee8c177738fd8e06a055523f2743f2632d4d1622", size = 1031964, upload-time = "2026-10-09T16:59:35.341Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6b/01/48cd26d13311dff65913e7d6e23dbfab3b0c7535b6b2e355d91131bcc1a9/open_yoku_rando-0.0.1-py3-none-any.whl", hash = "sha256:cb9eaf286cfe2898b177cf0dce4b2ab63a8b4655473e1771c0c421bf7efdd983", size = 909134, upload-time = "2026-10-09T16:59:33.768Z" },
+]
+
+[[package]]
 name = "packaging"
 version = "26.3"
 source = { registry = "https://pypi.org/simple" }
@@ -3271,6 +3284,7 @@ exporters = [
     { name = "open-prime-hunters-rando" },
     { name = "open-prime-rando", extra = ["nod"] },
     { name = "open-samus-returns-rando" },
+    { name = "open-yoku-rando" },
     { name = "planets-yapr" },
     { name = "ppc-asm" },
     { name = "py-randomprime" },
@@ -3389,6 +3403,7 @@ requires-dist = [
     { name = "open-prime-hunters-rando", marker = "extra == 'exporters'", specifier = "==0.15.0" },
     { name = "open-prime-rando", extras = ["nod"], marker = "extra == 'exporters'", specifier = "==0.20.1" },
     { name = "open-samus-returns-rando", marker = "extra == 'exporters'", specifier = "==3.6.2" },
+    { name = "open-yoku-rando", marker = "extra == 'exporters'", specifier = "==0.0.1" },
     { name = "packaging" },
     { name = "peewee", marker = "extra == 'server'", specifier = "<4" },
     { name = "pid", marker = "extra == 'gui'", specifier = ">=3.0.0" },
