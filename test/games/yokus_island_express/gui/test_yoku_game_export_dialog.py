@@ -2,10 +2,22 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.yokus_island_express.exporter.game_exporter import YokuGameExportParams
 from randovania.games.yokus_island_express.exporter.options import YokuPerGameOptions
 from randovania.games.yokus_island_express.gui.dialog.game_export_dialog import YokuGameExportDialog
+from randovania.games.yokus_island_express.layout.yokus_island_express_configuration import YokuConfiguration
 from randovania.games.yokus_island_express.layout.yokus_island_express_cosmetic_patches import YokuCosmeticPatches
+from randovania.interface_common.preset_manager import PresetManager
+
+
+@pytest.fixture
+def configuration() -> YokuConfiguration:
+    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.YOKUS_ISLAND_EXPRESS).get_preset()
+    assert isinstance(preset.configuration, YokuConfiguration)
+    return preset.configuration
 
 
 def _game_folder(tmp_path: Path) -> Path:
@@ -15,8 +27,8 @@ def _game_folder(tmp_path: Path) -> Path:
     return game
 
 
-def test_save_options(skip_qtbot, options):
-    window = YokuGameExportDialog(options, {}, "MyHash", True, [])
+def test_save_options(skip_qtbot, options, configuration):
+    window = YokuGameExportDialog(options, configuration, "MyHash", True, [])
     window.input_folder_edit.setText("somewhere/game")
 
     # Run
@@ -27,7 +39,7 @@ def test_save_options(skip_qtbot, options):
     assert per_game.input_path == Path("somewhere/game")
 
 
-def test_get_game_export_params(skip_qtbot, tmp_path, options):
+def test_get_game_export_params(skip_qtbot, tmp_path, options, configuration):
     game = _game_folder(tmp_path)
 
     with options:
@@ -38,7 +50,7 @@ def test_get_game_export_params(skip_qtbot, tmp_path, options):
             )
         )
 
-    window = YokuGameExportDialog(options, {}, "MyHash", False, [])
+    window = YokuGameExportDialog(options, configuration, "MyHash", False, [])
 
     # Run
     result = window.get_game_export_params()
@@ -51,9 +63,9 @@ def test_get_game_export_params(skip_qtbot, tmp_path, options):
     )
 
 
-def test_spoiler_goes_into_the_game_folder(skip_qtbot, tmp_path, options):
+def test_spoiler_goes_into_the_game_folder(skip_qtbot, tmp_path, options, configuration):
     game = _game_folder(tmp_path)
-    window = YokuGameExportDialog(options, {}, "MyHash", True, [])
+    window = YokuGameExportDialog(options, configuration, "MyHash", True, [])
     window.input_folder_edit.setText(str(game))
     window.auto_save_spoiler_check.setChecked(True)
 
@@ -65,8 +77,8 @@ def test_spoiler_goes_into_the_game_folder(skip_qtbot, tmp_path, options):
     assert result.spoiler_output.parent == game
 
 
-def test_invalid_game_folder(skip_qtbot, tmp_path, options):
-    window = YokuGameExportDialog(options, {}, "MyHash", True, [])
+def test_invalid_game_folder(skip_qtbot, tmp_path, options, configuration):
+    window = YokuGameExportDialog(options, configuration, "MyHash", True, [])
 
     # Run
     window.input_folder_edit.setText(str(tmp_path))
