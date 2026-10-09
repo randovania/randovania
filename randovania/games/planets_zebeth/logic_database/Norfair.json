@@ -202,11 +202,73 @@
                                 "items": []
                             }
                         },
-                        "Tunnel entrance (Right)": {
+                        "Door to Questionable Stairs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/OVvbbLT4axE",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Long Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Wave Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -238,68 +300,74 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 760.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/OVvbbLT4axE",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Long Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Wave Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
-                        },
-                        "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 520.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Questionable Stairs": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
                         }
                     }
                 }
@@ -592,13 +660,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Climb High Ledge"
                                     }
                                 ]
                             }
@@ -661,13 +724,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Climb High Ledge"
                                     }
                                 ]
                             }
@@ -709,12 +767,10 @@
                             }
                         },
                         "Door to Hidden Cache": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Hi-Jump",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -907,14 +963,19 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
+                        "Door to Item Room (Ice Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -922,19 +983,19 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice Beam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "TODO: make this HBJ",
+                                                        "comment": null,
                                                         "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -946,67 +1007,81 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/GipMU8Cnecg",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Long Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Wave Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "ibj over to the hole",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bombs",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DIBJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 504.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Bubble Tower": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 264.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        },
-                        "Door to Item Room (Ice Beam)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -1038,11 +1113,82 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/Zh0_NWxkUMM",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Long Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Wave Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Damage Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1121,22 +1267,9 @@
                                 "items": []
                             }
                         },
-                        "Tunnel entrance (Right)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph Ball",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                        "Door to Cache Access": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         }
                     }
                 },
@@ -1167,68 +1300,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 392.0,
-                        "y": 120.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Item Trial (Ice Beam)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph Ball",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 200.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Cache Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Right)": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
@@ -1351,68 +1423,9 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 200.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Cache Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 520.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        },
                         "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         }
                     }
                 },
@@ -1474,12 +1487,9 @@
                     "hint_features": [],
                     "grants_on_collect": [],
                     "connections": {
-                        "Tunnel entrance (Right)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Door to Cache Access": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         },
                         "Pickup (Missile Tank 2)": {
                             "type": "and",
@@ -1716,83 +1726,34 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1288.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Bubble Tower": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 792.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        },
-                        "Tall wall": {
-                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Ice Beam",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Climbing the high wall",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Climb High Ledge"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1822,14 +1783,11 @@
                     "hint_features": [],
                     "grants_on_collect": [],
                     "connections": {
-                        "Pickup (Missile Tank 2)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Door to Bubble Tower": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         },
-                        "Tall wall": {
+                        "Pickup (Missile Tank 2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1860,37 +1818,6 @@
                     "hint_features": [],
                     "grants_on_collect": [],
                     "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tall wall": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 640.0,
-                        "y": 192.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
@@ -2017,78 +1944,15 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph Ball",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Hi-Jump)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1160.0,
-                        "y": 120.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Item Trial (High Jump)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph Ball",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 776.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        },
                         "Door to Runway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb High Ledge"
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -2097,17 +1961,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Pickup (Hi-Jump)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2139,7 +2001,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
+                        "Door to Item Trial (High Jump)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3021,11 +2883,60 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
+                        "Door to Lava Pier": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/R0V-1nmA-fg",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Long Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3057,66 +2968,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1528.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "Upper tunnel is 5 blocks above",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Bubble Atrium": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1784.0,
-                        "y": 104.0,
-                        "z": 0.0
-                    },
-                    "description": "Upper tunnel is 5 blocks above",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Lava Pier": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Left)": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
@@ -3232,12 +3084,20 @@
                     "grants_on_collect": [],
                     "connections": {
                         "Door to Lava Pier": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Morph Ball",
-                                "amount": 1,
-                                "negate": false
+                                "comment": "Shoot the block from the lowest platform.",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph Ball",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3281,6 +3141,49 @@
                                             "name": "Morph Ball",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Break the block and damage boost off the dragon's fireball",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Damage Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 20,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4021,68 +3924,9 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 520.0,
-                        "y": 184.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Bubble Corridor East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Right)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 760.0,
-                        "y": 184.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
-                        },
                         "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         }
                     }
                 },
@@ -4108,12 +3952,9 @@
                     "hint_features": [],
                     "grants_on_collect": [],
                     "connections": {
-                        "Tunnel entrance (Right)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                        "Door to Bubble Corridor East": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
                         }
                     }
                 }
