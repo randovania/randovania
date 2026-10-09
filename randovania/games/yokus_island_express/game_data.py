@@ -87,9 +87,30 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
     presets=[
         "starter_preset.rdvpreset",
-        "shuffled_trackers.rdvpreset",
+        "beacon_hunt.rdvpreset",
     ],
-    faq=[],
+    faq=[
+        (
+            "Which versions of the game are supported?",
+            "The PC versions from Epic, GOG and Steam, each in its current version. Console versions are not "
+            "supported.",
+        ),
+        (
+            "How do I start a seed?",
+            "Export the seed to your game folder and launch the game. Pick an empty save slot and choose "
+            "'Start Randovania Seed'. The entry shows the seed's hash, so you can check that it is the right one.",
+        ),
+        (
+            "What is the goal?",
+            "Beat the final boss. If the preset requires beacons, Nim only starts the ceremony that leads to the "
+            "final boss once that many Wickerling beacons are lit. Each beacon takes 10 Wickerlings.",
+        ),
+        (
+            "How do I remove the mod?",
+            "Delete xinput9_1_0.dll and the open-yoku-rando folder from the game folder. The game's own files are "
+            "not changed.",
+        ),
+    ],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
             "The 248 locations of the game's own randomizer",
