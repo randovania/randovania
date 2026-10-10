@@ -1,3 +1,7 @@
+:root {
+  color-scheme: light dark;
+}
+
 .cf:before,
 .cf:after {
     content: " ";
@@ -13,25 +17,25 @@
 
 html {
     font-size: 16px;
-    background-color: #fffffe;
+    background-color: light-dark(#fffffe, #202124);
 }
 body {
     padding: 0 20px;
     min-width: 300px;
     font-family: 'Akkurat-Regular', sans-serif;
-    background-color: #fffffe;
-    color: #1a1a1a;
+    background-color: light-dark(#fffffe, #202124);
+    color: light-dark(#1a1a1a, #e4e7eb);
     text-align: center;
     word-wrap: break-word;
     -webkit-font-smoothing: antialiased
 }
 a:link,
 a:visited {
-    color: #00c2a8;
+    color: light-dark(#00c2a8, #8ab4f7);
 }
 a:hover,
 a:active {
-    color: #03a994;
+    color: light-dark(#03a994, #6c8dc3);
 }
 
 .site-header {
@@ -93,21 +97,22 @@ table td {
 	padding: 15px;
 }
 table thead td {
-	background-color: #333;
+	background-color: light-dark(#333, #3f4042);
 	color: #ffffff;
 	font-weight: bold;
 	border: 1px solid #54585d;
     text-align: center;
 }
 table tbody td {
-	color: #333;
-	border: 1px solid #dddfe1;
+    color: light-dark(#333, #e4e7eb);
+	/* color: #333; */
+	border: 1px solid light-dark(#dddfe1, #3f4042);
 }
 table tbody tr {
-	background-color: #f9fafb;
+	background-color: light-dark(#f9fafb, #101012);
 }
 table tbody tr:nth-child(odd) {
-	background-color: white;
+	background-color: light-dark(white, #101012);
 }
 
 pre {
@@ -119,8 +124,9 @@ pre {
     max-width: 80ch;
     margin: auto;
     
-    background-color: whitesmoke;
-    border: 1px solid gray;
+    background-color:light-dark(whitesmoke, #161719);
+    color: light-dark(#1a1a1a, #e4e7eb);
+    border: 1px solid light-dark(gray, #3f4042);
     border-radius: 3px;
     padding: 1ch;
     display: block;
