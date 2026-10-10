@@ -111,6 +111,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "not changed.",
         ),
     ],
+    defaults_available_in_game_sessions=False,
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
             "The 248 locations of the game's own randomizer",
