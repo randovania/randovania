@@ -6,6 +6,7 @@ from enum import Enum
 from typing import Self
 
 import randovania
+from randovania.game.game_enum import RandovaniaGame
 
 
 class ConnectorBuilderChoice(Enum):
@@ -17,6 +18,7 @@ class ConnectorBuilderChoice(Enum):
     DREAD = "dread"
     NINTENDONT = "nintendont"
     MSR = "msr"
+    YOKU = "yoku"
 
     @property
     def pretty_text(self) -> str:
@@ -34,6 +36,9 @@ class ConnectorBuilderChoice(Enum):
                 return False
             if sys.platform == "linux" and randovania.is_frozen():
                 return os.getuid() == 0 and not randovania.is_flatpak()
+
+        if self is ConnectorBuilderChoice.YOKU:
+            return RandovaniaGame.YOKUS_ISLAND_EXPRESS.data.development_state.can_view()
 
         return True
 
@@ -54,4 +59,5 @@ _pretty_backend_name = {
     ConnectorBuilderChoice.DREAD: "Dread",
     ConnectorBuilderChoice.NINTENDONT: "Nintendont",
     ConnectorBuilderChoice.MSR: "Samus Returns",
+    ConnectorBuilderChoice.YOKU: "Yoku's Island Express",
 }
