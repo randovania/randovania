@@ -730,6 +730,7 @@ SOLO_RDVGAMES = [
     ("multi-cs+dread+prime1+prime2.rdvgame", None),
     ("multi-am2r+cs+dread+prime1+prime2.rdvgame", None),
     ("multi-am2r+cs+dread+prime1+prime2+msr.rdvgame", None),
+    ("multi-dread+msr+yoku.rdvgame", None),
     ("prime1_and_2_multi.rdvgame", None),
     ("cs_echoes_multi_1.rdvgame", None),
     ("dread_prime1_multiworld.rdvgame", None),  # dread-prime1 multi

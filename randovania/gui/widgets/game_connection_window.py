@@ -271,6 +271,9 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             # TODO: in the future, for maybe Android, add a nice GUI that allows one to have a user provided ip.
             args["ip"] = "localhost"
 
+        if choice == ConnectorBuilderChoice.YOKU:
+            args["ip"] = "127.0.0.1"
+
         if choice == ConnectorBuilderChoice.MSR:
             new_ip = await MSRConnectorPromptDialog.prompt(
                 parent=self,

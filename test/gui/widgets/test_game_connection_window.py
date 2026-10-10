@@ -13,6 +13,7 @@ from randovania.game_connection.builder.debug_connector_builder import DebugConn
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.dread_connector_builder import DreadConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
+from randovania.game_connection.builder.yoku_connector_builder import YokuConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
@@ -140,6 +141,19 @@ async def test_add_connector_builder_dread(window: GameConnectionWindow, abort, 
         window.game_connection.add_connection_builder.assert_called_once_with(ANY)
         assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], DreadConnectorBuilder)
         assert window.game_connection.add_connection_builder.call_args[0][0].ip == "my_ip"
+
+
+async def test_add_connector_builder_yoku(window: GameConnectionWindow):
+    # Setup
+    window.game_connection.add_connection_builder = MagicMock()
+
+    # Run
+    await window._add_connector_builder(ConnectorBuilderChoice.YOKU)
+
+    # Assert
+    window.game_connection.add_connection_builder.assert_called_once_with(ANY)
+    assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], YokuConnectorBuilder)
+    assert window.game_connection.add_connection_builder.call_args[0][0].ip == "127.0.0.1"
 
 
 @pytest.mark.parametrize("system", ["darwin", "win32"])
