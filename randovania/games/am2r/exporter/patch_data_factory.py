@@ -108,7 +108,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
 
 
 class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatches]):
-    _EASTER_EGG_SHINY = 1024
+    _EASTER_EGG_SHINY = 1023
 
     # Effect, sprite, header => new_sprite, new_header
     SHINIES: ClassVar[dict[tuple[str, str, str], tuple[str, str]]] = {
