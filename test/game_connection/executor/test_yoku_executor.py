@@ -145,7 +145,7 @@ async def test_handshake_timeout(executor: YokuExecutor, mocker):
     async def never(*args):
         await asyncio.Event().wait()
 
-    executor._handshake_timeout = 0.01
+    mocker.patch.object(YokuExecutor, "_handshake_timeout", 0.01)
     reader, _ = _connection(mocker, [])
     reader.read = never
 

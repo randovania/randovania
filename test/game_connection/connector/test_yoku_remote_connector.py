@@ -19,6 +19,8 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.network_common.remote_pickup import RemotePickup
 
 if TYPE_CHECKING:
+    from collections.abc import Mapping
+
     from pytest_mock import MockerFixture
 
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -46,7 +48,7 @@ def _pickup(connector: YokuRemoteConnector, name: str) -> PickupEntry:
     )
 
 
-def _inventory_json(index: int, counts: dict[int, float]) -> str:
+def _inventory_json(index: int, counts: Mapping[int, float]) -> str:
     inventory = [counts.get(slot, 0) for slot in range(INVENTORY_SIZE)]
     return json.dumps({"index": index, "inventory": inventory})
 
