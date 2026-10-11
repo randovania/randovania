@@ -86,10 +86,14 @@ class Foldable(QtWidgets.QWidget):
         else:
             self._unfold()
 
+    def getFolded(self) -> bool:
+        return self._folded
+
     Notify = Signal()
 
     folded = Property(
         bool,
+        fget=getFolded,
         fset=setFolded,
         notify=Notify,
     )
