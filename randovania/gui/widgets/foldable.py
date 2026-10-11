@@ -77,6 +77,9 @@ class Foldable(QtWidgets.QWidget):
     def setTitle(self, title: str) -> None:
         self._toggle_button.setText(title)
 
+    def getTitle(self) -> str:
+        return self._toggle_button.text()
+
     def setFolded(self, folded: bool) -> None:
         if folded:
             self._fold()
@@ -92,6 +95,7 @@ class Foldable(QtWidgets.QWidget):
     )
     title = Property(
         str,
+        fget=getTitle,
         fset=setTitle,
         notify=Notify,
     )

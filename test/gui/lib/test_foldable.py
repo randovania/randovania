@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from PySide6 import QtWidgets
+
 from randovania.gui.widgets.foldable import Foldable
 
 
@@ -31,3 +33,12 @@ def test_foldable_actions(skip_qtbot):
     foldable._fold()
     assert foldable._folded
     assert foldable._content_area.isHidden()
+
+
+def test_foldable_title_ui_property() -> None:
+    app = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
+    foldable = Foldable(None)
+
+    assert foldable.setProperty("title", "Title from UI file")
+    assert foldable._toggle_button.text() == "Title from UI file"
+    app.processEvents()
