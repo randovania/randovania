@@ -350,7 +350,10 @@ async def guest_login(sa: ServerAppDep, request: Request) -> Response:
 
 @router.post("/guest_login")
 async def guest_login_post(
-    sa: ServerAppDep, request: Request, name: typing.Annotated[str, Form()], sid: typing.Annotated[str, Form()]
+    sa: ServerAppDep,
+    request: Request,
+    name: typing.Annotated[str, Form()],
+    sid: typing.Annotated[str | None, Form()] = None,
 ) -> Response:
     if not sa.app.debug:
         return unable_to_login(sa, request, "Unable to perform login", 400)
@@ -360,12 +363,16 @@ async def guest_login_post(
         discord_id=None,
     )
 
-    async with sa.sio.session(sid) as session:
-        session["user-id"] = user.id
-
     if sa.is_api_request(request):
+        if sid is None:
+            return unable_to_login(sa, request, "Missing sid", 400)
+
+        async with sa.sio.session(sid) as session:
+            session["user-id"] = user.id
+
         return JSONResponse(await _create_client_side_session(sa, sid, user, session))
     else:
+        request.session["user_id"] = user.id
         return RedirectResponse(
             request.url_for("browser_me"),
             status_code=status.HTTP_303_SEE_OTHER,  # POST to GET
