@@ -229,3 +229,12 @@ def test_on_type_combo_changed_changes_requirement_to_type(controller, select, t
         assert result.resource.resource_type == to_type
     else:
         assert isinstance(result, to_type)
+
+
+def test_on_duplicate_triggered_duplicates(controller, select):
+    select(OR)
+    controller.on_duplicate_triggered()
+    result = controller._model.build_requirement()
+    expected = requirement_tree.at_path(result, OR)
+    actual = requirement_tree.at_path(result, OR.next_sibling())
+    assert expected == actual

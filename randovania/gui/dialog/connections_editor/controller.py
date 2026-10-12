@@ -270,3 +270,17 @@ class ConnectionsEditorController(QObject):
             after = requirement_tree.replace_at_path(before, path, requirement)
 
         self._push_command(before, after, path, "Edit Requirement")
+
+    def on_duplicate_triggered(self) -> None:
+        if self._active_is_root():
+            return
+
+        before: Requirement = self._model.build_requirement()
+        assert isinstance(before, RequirementArrayBase)
+
+        path = self._model.path_from_index(self._active_item_index)
+        duplicate: Requirement = requirement_tree.at_path(before, path)
+
+        after: Requirement = requirement_tree.insert_at_path(before, path, duplicate)
+
+        self._push_command(before, after, path, "Add Requirement")
