@@ -90,7 +90,7 @@ def test_on_add_requirement_pressed_adds_as_sibling(controller, select, echoes_g
     expected_item_requirement = requirement_tree.default_from_type(
         ResourceType.ITEM, echoes_game_description.resource_database, echoes_game_description.region_list
     )
-    assert requirement_tree._at_path(result, POWER.next_sibling()) == expected_item_requirement
+    assert requirement_tree.at_path(result, POWER.next_sibling()) == expected_item_requirement
 
 
 def test_on_add_requirement_pressed_adds_as_last_child(controller, select, echoes_game_description):
@@ -100,7 +100,7 @@ def test_on_add_requirement_pressed_adds_as_last_child(controller, select, echoe
     expected_or_requirement = requirement_tree.default_from_type(
         RequirementOr, echoes_game_description.resource_database, echoes_game_description.region_list
     )
-    assert requirement_tree._at_path(result, LIGHT.next_sibling()) == expected_or_requirement
+    assert requirement_tree.at_path(result, LIGHT.next_sibling()) == expected_or_requirement
 
 
 def test_on_add_requirement_pressed_rejects_add(controller, select, single_requirement):
@@ -147,7 +147,7 @@ def test_on_shift_up_pressed_shifts_as_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(LIGHT).data(ROLE)
     controller.on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, LIGHT.previous_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, LIGHT.previous_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_escapes_to_parent(controller, select):
@@ -155,7 +155,7 @@ def test_on_shift_up_pressed_escapes_to_parent(controller, select):
     selected_requirement = controller._model.index_from_path(DARK).data(ROLE)
     controller.on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, POWER.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, POWER.next_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_ascends_into_sibling(controller, select):
@@ -163,7 +163,7 @@ def test_on_shift_up_pressed_ascends_into_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(ANNIHILATOR).data(ROLE)
     controller.on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, LIGHT.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, LIGHT.next_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_rejects_shift(controller, select, basic_requirement):
@@ -177,7 +177,7 @@ def test_on_shift_down_pressed_shifts_as_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(DARK).data(ROLE)
     controller.on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, DARK.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, DARK.next_sibling()) == selected_requirement
 
 
 def test_on_shift_down_pressed_escapes_to_parent(controller, select):
@@ -185,7 +185,7 @@ def test_on_shift_down_pressed_escapes_to_parent(controller, select):
     selected_requirement = controller._model.index_from_path(LIGHT).data(ROLE)
     controller.on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, OR.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, OR.next_sibling()) == selected_requirement
 
 
 def test_on_shift_down_pressed_descends_into_sibling(controller, select):
@@ -193,7 +193,7 @@ def test_on_shift_down_pressed_descends_into_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(POWER).data(ROLE)
     controller.on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, OR.previous_sibling().extend_with(0)) == selected_requirement
+    assert requirement_tree.at_path(result, OR.previous_sibling().extend_with(0)) == selected_requirement
 
 
 def test_on_shift_down_pressed_rejects_shift(controller, select, basic_requirement):

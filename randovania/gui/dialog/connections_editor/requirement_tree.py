@@ -98,7 +98,7 @@ def change_to_type(
     return default_from_type(to_type, db, region_list)
 
 
-def _at_path(requirement: Requirement, path: RequirementTreePath) -> Requirement:
+def at_path(requirement: Requirement, path: RequirementTreePath) -> Requirement:
     if len(path) == 0:
         return requirement
-    return _at_path(cast("RequirementArrayBase", requirement).items[path.head()], path.tail())
+    return at_path(cast("RequirementArrayBase", requirement).items[path.head()], path.tail())
