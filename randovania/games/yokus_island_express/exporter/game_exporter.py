@@ -4,9 +4,8 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-# from randovania import monitoring
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from randovania.exporter.patch_data_factory import PatcherDataMeta
@@ -56,13 +55,11 @@ class YokuGameExporter(GameExporter[YokuGameExportParams]):
         progress_update: status_update_lib.ProgressUpdateCallable,
         randovania_meta: PatcherDataMeta,
     ) -> None:
-        raise UnableToExportError("Exporting Yoku's Island Express is currently not supported.")
+        with monitoring.trace_block("open_yoku_rando.patch_with_status_update"):
+            import open_yoku_rando
 
-        # with monitoring.trace_block("open_yoku_rando.patch_with_status_update"):
-        #     import open_yoku_rando
-        #
-        #     open_yoku_rando.patch_with_status_update(
-        #         export_params.input_path,
-        #         patch_data,
-        #         lambda progress, message: progress_update(message, progress),
-        #     )
+            open_yoku_rando.patch_with_status_update(
+                export_params.input_path,
+                patch_data,
+                lambda progress, message: progress_update(message, progress),
+            )
