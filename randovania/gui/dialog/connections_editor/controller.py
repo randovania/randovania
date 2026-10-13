@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import json
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QModelIndex, QObject
+from PySide6.QtWidgets import QApplication
 
+from randovania.game_description import data_reader, data_writer
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
@@ -145,7 +148,7 @@ class ConnectionsEditorController(QObject):
             )
         )
 
-    def on_add_requirement_pressed(self) -> None:
+    def _add_requirement(self, requirement: Requirement) -> None:
         active = self._active_item_index.data(ROLE)
         path = self._model.path_from_index(self._active_item_index)
 
@@ -159,12 +162,15 @@ class ConnectionsEditorController(QObject):
 
         before: Requirement = self._model.build_requirement()
         assert isinstance(before, RequirementArrayBase)
+        after: Requirement = requirement_tree.insert_at_path(before, path, requirement)
+
+        self._push_command(before, after, path, "Add Requirement")
+
+    def on_add_requirement_pressed(self) -> None:
         new_requirement: Requirement = requirement_tree.default_from_type(
             self._combo_type.currentData(ROLE), self._db, self._region_list
         )
-        after: Requirement = requirement_tree.insert_at_path(before, path, new_requirement)
-
-        self._push_command(before, after, path, "Add Requirement")
+        self._add_requirement(new_requirement)
 
     def on_delete_requirement_pressed(self) -> None:
         # Can't delete root
@@ -284,3 +290,18 @@ class ConnectionsEditorController(QObject):
         after: Requirement = requirement_tree.insert_at_path(before, path, duplicate)
 
         self._push_command(before, after, path, "Add Requirement")
+
+    def on_copy(self) -> None:
+        requirement = self._active_item_index.data(ROLE)
+        as_dict = data_writer.write_requirement(requirement)
+        text = json.dumps(as_dict, indent=4)
+        QApplication.clipboard().setText(text)
+
+    def on_paste(self) -> None:
+        try:
+            current = QApplication.clipboard().text()
+            text = json.loads(current)
+            requirement = data_reader.read_requirement(text, self._db)
+            self._add_requirement(requirement)
+        except Exception:
+            pass

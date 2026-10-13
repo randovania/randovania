@@ -85,11 +85,23 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         duplicate_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
         duplicate_action.triggered.connect(self._controller.on_duplicate_triggered)
 
+        copy_action = QAction("Copy", self._view._tree)
+        copy_action.setShortcut(QKeySequence("Ctrl+C"))
+        copy_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
+        copy_action.triggered.connect(self._controller.on_copy)
+
+        paste_action = QAction("Paste", self._view._tree)
+        paste_action.setShortcut(QKeySequence("Ctrl+V"))
+        paste_action.setShortcutContext(Qt.ShortcutContext.WidgetShortcut)
+        paste_action.triggered.connect(self._controller.on_paste)
+
         self.tree_view.addAction(add_action)
         self.tree_view.addAction(delete_action)
         self.tree_view.addAction(move_up_action)
         self.tree_view.addAction(move_down_action)
         self.tree_view.addAction(duplicate_action)
+        self.tree_view.addAction(copy_action)
+        self.tree_view.addAction(paste_action)
 
         # Connect Signals
         self._model.model_rebuilt.connect(self._view.on_model_rebuilt)

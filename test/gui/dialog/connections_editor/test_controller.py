@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 from PySide6.QtGui import QUndoStack
-from PySide6.QtWidgets import QComboBox, QStackedWidget, QTreeView, QWidget
+from PySide6.QtWidgets import QApplication, QComboBox, QStackedWidget, QTreeView, QWidget
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.node_requirement import NodeRequirement
@@ -238,3 +238,36 @@ def test_on_duplicate_triggered_duplicates(controller, select):
     expected = requirement_tree.at_path(result, OR)
     actual = requirement_tree.at_path(result, OR.next_sibling())
     assert expected == actual
+
+
+POWER_AS_TEXT = """{
+    "type": "resource",
+    "data": {
+        "type": "items",
+        "name": "Power",
+        "amount": 1,
+        "negate": false
+    }
+}"""
+
+
+def test_on_copy_copies(controller, select):
+    select(POWER)
+    controller.on_copy()
+    assert QApplication.clipboard().text() == POWER_AS_TEXT
+
+
+@pytest.fixture
+def copy_to_clipboard():
+    def _copy(text: str) -> None:
+        QApplication.clipboard().setText(text)
+
+    return _copy
+
+
+def test_on_paste_adds_requirement(controller, select, copy_to_clipboard, echoes_item):
+    copy_to_clipboard(POWER_AS_TEXT)
+    select(OR)
+    controller.on_paste()
+    result = controller._model.build_requirement()
+    assert requirement_tree.at_path(result, LIGHT.next_sibling()) == echoes_item("Power")
