@@ -34,8 +34,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
     _placeholder_metroid_message = "placeholder metroid text"
     _metroid_message_id = 56
     _lang_list = ("JAPANESE_KANJI", "JAPANESE_HIRAGANA", "ENGLISH", "GERMAN", "FRENCH", "ITALIAN", "SPANISH")
-    _easter_egg_bob = 64
-    _easter_egg_shiny = 1024
+    _easter_egg_bob = 63
+    _easter_egg_shiny = 1023
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
