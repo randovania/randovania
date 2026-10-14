@@ -10,14 +10,15 @@ from randovania.layout.layout_description import LayoutDescription
 TRACKERS = {"tracker_caves", "tracker_jungle", "tracker_peak", "tracker_scarabs", "tracker_springs"}
 
 
-def _create_data(test_files_dir, mocker, rdvgame: str) -> tuple[YokuPatchDataFactory, dict]:
+def _create_data(test_files_dir, mocker, rdvgame: str, world_index: int = 0) -> tuple[YokuPatchDataFactory, dict]:
     mocker.patch("randovania.exporter.patch_data_factory.PatchDataFactory._attach_to_sentry")
-    description = LayoutDescription.from_file(
-        test_files_dir.joinpath("log_files", "yokus_island_express", f"{rdvgame}.rdvgame")
-    )
+    description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame))
     factory = YokuPatchDataFactory(
         description,
-        WorldsConfiguration(world_index=0, world_names={0: "World 1"}),
+        WorldsConfiguration(
+            world_index=world_index,
+            world_names={i: f"World {i + 1}" for i in range(description.world_count)},
+        ),
         YokuCosmeticPatches(),
     )
     data = factory.create_data()
@@ -26,7 +27,7 @@ def _create_data(test_files_dir, mocker, rdvgame: str) -> tuple[YokuPatchDataFac
 
 
 def test_create_data_starting_trackers(test_files_dir, mocker) -> None:
-    _, data = _create_data(test_files_dir, mocker, "starter_preset")
+    _, data = _create_data(test_files_dir, mocker, "yokus_island_express/starter_preset.rdvgame")
     items = collections.Counter(pickup["item"] for pickup in data["pickups"])
 
     assert data["starting_items"] == dict.fromkeys(sorted(TRACKERS), 1)
@@ -39,7 +40,7 @@ def test_create_data_starting_trackers(test_files_dir, mocker) -> None:
 
 
 def test_create_data_shuffled_trackers_fruit_beacons(test_files_dir, mocker) -> None:
-    _, data = _create_data(test_files_dir, mocker, "shuffled_trackers_fruit_beacons")
+    _, data = _create_data(test_files_dir, mocker, "yokus_island_express/shuffled_trackers_fruit_beacons.rdvgame")
     items = collections.Counter(pickup["item"] for pickup in data["pickups"])
 
     assert data["starting_items"] == {}
@@ -50,9 +51,30 @@ def test_create_data_shuffled_trackers_fruit_beacons(test_files_dir, mocker) -> 
 
 
 def test_create_data_seed_hash(test_files_dir, mocker) -> None:
-    factory, data = _create_data(test_files_dir, mocker, "starter_preset")
+    factory, data = _create_data(test_files_dir, mocker, "yokus_island_express/starter_preset.rdvgame")
     description = factory.description
 
     # The game's menu shows the hash the way Randovania does.
     assert data["seed_hash"] == f"{description.shareable_word_hash} ({description.shareable_hash})"
     assert data["configuration_identifier"] == description.shareable_hash
+
+
+def test_create_data_multiworld(test_files_dir, mocker) -> None:
+    factory, data = _create_data(test_files_dir, mocker, "multi-dread+msr+yoku.rdvgame", world_index=2)
+    region_list = factory.game.region_list
+    pickups = {pickup["location"]: pickup for pickup in data["pickups"]}
+    other_worlds = set()
+
+    for index, target in factory.patches.pickup_assignment.items():
+        pickup = pickups[region_list.node_from_pickup_index(index).extra["spawn_id"]]
+        if target.world == 2:
+            assert "caption" not in pickup
+        else:
+            other_worlds.add(target.world)
+            assert pickup == {
+                "location": pickup["location"],
+                "item": "nothing",
+                "caption": f"Sent {target.pickup.name} to World {target.world + 1}!",
+            }
+
+    assert other_worlds == {0, 1}

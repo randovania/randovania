@@ -38,12 +38,13 @@ class YokuPatchDataFactory(PatchDataFactory[YokuConfiguration, YokuCosmeticPatch
         for details in sorted(self.export_pickup_list(), key=lambda pickup: pickup.index):
             node = self.game.region_list.node_from_pickup_index(details.index)
             item = None if details.is_for_remote_player else details.original_pickup.extra.get("item_id")
-            pickups.append(
-                {
-                    "location": node.extra["spawn_id"],
-                    "item": item or NOTHING_ITEM,
-                }
-            )
+            pickup = {
+                "location": node.extra["spawn_id"],
+                "item": item or NOTHING_ITEM,
+            }
+            if details.is_for_remote_player:
+                pickup["caption"] = details.collection_text[0]
+            pickups.append(pickup)
         return pickups
 
     def _create_starting_items(self) -> dict[str, int]:
