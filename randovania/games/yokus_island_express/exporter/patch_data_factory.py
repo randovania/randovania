@@ -44,6 +44,8 @@ class YokuPatchDataFactory(PatchDataFactory[YokuConfiguration, YokuCosmeticPatch
             }
             if details.is_for_remote_player:
                 pickup["caption"] = details.collection_text[0]
+                if details.model.game == self.game_enum():
+                    pickup["model"] = details.model.name
             pickups.append(pickup)
         return pickups
 
