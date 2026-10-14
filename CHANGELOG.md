@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
 - Added: When used via a flatpak, Randovania now has a desktop context option to open the Auto Tracker directly.
+- Fixed: Exporting a preset now works again.
 
 ### Metroid Dread
 
