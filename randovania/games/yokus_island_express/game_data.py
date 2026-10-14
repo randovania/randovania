@@ -11,6 +11,7 @@ import randovania.game.hints
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.yokus_island_express import layout
+from randovania.games.yokus_island_express.db_integrity import find_yoku_db_errors
 
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -134,4 +135,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     test_data=_test_data,
     reject_undocumented_tricks_in_database=True,
     multiple_start_nodes_per_area=True,
+    logic_db_integrity=find_yoku_db_errors,
 )
