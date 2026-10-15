@@ -8,6 +8,7 @@ import uuid
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
+from randovania.layout.base.standard_pickup_state import StandardPickupPriority
 from randovania.lib import migration_lib
 
 if typing.TYPE_CHECKING:
@@ -1298,6 +1299,20 @@ def _migrate_v120(preset: dict, game: RandovaniaGame, *, from_layout_description
     preset["configuration"].pop("staggered_multi_pickup_placement")
 
 
+def _migrate_v121(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    states = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
+    mapping = {
+        0.25: StandardPickupPriority.VERY_LOW,
+        0.5: StandardPickupPriority.LOW,
+        1.0: StandardPickupPriority.NORMAL,
+        1.5: StandardPickupPriority.HIGH,
+        2.0: StandardPickupPriority.VERY_HIGH,
+    }
+    for name, state in states.items():
+        if "priority" in state:
+            state["priority"] = mapping[state["priority"]].value
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1419,6 +1434,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v118,  # core: improved multi-dock support in dock weakness distributor
     _migrate_v119,  # prime: remove `allow_underwater_movement_without_gravity`
     _migrate_v120,  # remove staggered pickup placement
+    _migrate_v121,  # change pickup priority from float to enum
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
