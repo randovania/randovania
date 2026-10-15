@@ -17,12 +17,6 @@ if TYPE_CHECKING:
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
 DEFAULT_MAXIMUM_SHUFFLED = (2, 10, 99)
-PRIORITY_LIMITS = {
-    "if_different": 1.0,
-    "min": 0.0,
-    "max": 10.0,
-    "precision": 2.0,
-}
 
 
 class StandardPickupStateCase(enum.Enum):
@@ -46,12 +40,44 @@ _CASE_PRETTY_TEXT = {
 }
 
 
+class StandardPickupPriority(bitpacking.BitPackEnum, enum.Enum):
+    VERY_LOW = "very-low"
+    LOW = "low"
+    NORMAL = "normal"
+    HIGH = "high"
+    VERY_HIGH = "very-high"
+
+    @property
+    def pretty_text(self) -> str:
+        return _PRIORITY_PRETTY_TEXT[self]
+
+    @property
+    def multiplier(self) -> float:
+        return _PRIORITY_MULTIPLIER[self]
+
+
+_PRIORITY_PRETTY_TEXT = {
+    StandardPickupPriority.VERY_LOW: "Very Low",
+    StandardPickupPriority.LOW: "Low",
+    StandardPickupPriority.NORMAL: "Normal",
+    StandardPickupPriority.HIGH: "High",
+    StandardPickupPriority.VERY_HIGH: "Very High",
+}
+_PRIORITY_MULTIPLIER = {
+    StandardPickupPriority.VERY_LOW: 0.25,
+    StandardPickupPriority.LOW: 0.5,
+    StandardPickupPriority.NORMAL: 1.0,
+    StandardPickupPriority.HIGH: 1.5,
+    StandardPickupPriority.VERY_HIGH: 2,
+}
+
+
 @dataclasses.dataclass(frozen=True)
 class StandardPickupState:
     include_copy_in_original_location: bool = False
     num_shuffled_pickups: int = 0
     num_included_in_starting_pickups: int = 0
-    priority: float = 1.0
+    priority: StandardPickupPriority = StandardPickupPriority.NORMAL
     included_ammo: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
@@ -87,14 +113,6 @@ class StandardPickupState:
         if self.include_copy_in_original_location and not pickup.original_locations:
             raise ValueError(f"No vanilla location defined. ({pickup.name})")
 
-        if not (PRIORITY_LIMITS["min"] <= self.priority <= PRIORITY_LIMITS["max"]):
-            raise ValueError(
-                "Priority must be between {min} and {max}, got {priority}".format(
-                    priority=self.priority,
-                    **PRIORITY_LIMITS,
-                )
-            )
-
         if len(self.included_ammo) != len(pickup.ammo):
             raise ValueError(f"Mismatched included_ammo array size. ({pickup.name})")
 
@@ -117,6 +135,9 @@ class StandardPickupState:
         if "included_ammo" in result:
             result["included_ammo"] = list(result["included_ammo"])
 
+        if "priority" in result:
+            result["priority"] = result["priority"].value
+
         return result
 
     @classmethod
@@ -129,6 +150,9 @@ class StandardPickupState:
 
         if "included_ammo" in kwargs:
             kwargs["included_ammo"] = tuple(kwargs["included_ammo"])
+
+        if "priority" in kwargs:
+            kwargs["priority"] = StandardPickupPriority(kwargs["priority"])
 
         return cls(**kwargs)
 
@@ -160,7 +184,7 @@ class StandardPickupState:
             yield self.num_included_in_starting_pickups, main_item.max_capacity + 1
 
         # priority
-        yield from bitpacking.BitPackFloat(self.priority).bit_pack_encode(PRIORITY_LIMITS)
+        yield from self.priority.bit_pack_encode({})
 
         # ammo index
         assert len(self.included_ammo) == len(pickup.ammo)
@@ -206,7 +230,7 @@ class StandardPickupState:
             starting = decoder.decode_single(main_item.max_capacity + 1)
 
         # priority
-        priority = bitpacking.BitPackFloat.bit_pack_unpack(decoder, PRIORITY_LIMITS)
+        priority = StandardPickupPriority.bit_pack_unpack(decoder, {})
 
         # ammo index
         included_ammo: Sequence[int]
