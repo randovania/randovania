@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from PySide6 import QtGui, QtWidgets
 
@@ -17,10 +17,13 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
+if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
+
 
 class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog[CSCosmeticPatches], Ui_CSCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: CSCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: CSCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         for i, value in enumerate(MusicRandoType):

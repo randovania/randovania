@@ -5,7 +5,827 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [10.3.0] - 2025-11-??
+## [11.2.0] - 2026-11-01
+
+- Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
+- Added: When used via a flatpak, Randovania now has a desktop context option to open the Auto Tracker directly.
+- Fixed: Exporting a preset now works again.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Cataris
+
+- Fixed: Teleport to Ghavoran: Missing requirement that Door Lock Rando has to be disabled to use Speed Booster to get up to the teleporter without Gravity Suit.
+
+### Metroid Fusion
+
+- Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
+
+## [11.1.1] - 2026-10-06
+
+- Fixed: Check if Beatable should no longer error in multiworld games.
+
+## [11.1.0] - 2026-10-01
+
+- Added: Async race rooms can now be multiworld. A room can be created with any number of worlds, each with its own preset, and is then played by teams instead of individual players. Each team races the multiworld on their own, and the teams' times are compared. An async race played in teams can either give the whole team one shared timer, or time every member separately and add their times up. Either way the team's captain starts the race for the team.
+- Added: An async race room now tells you your own finished time as soon as your run is complete, rather than only once the whole race is over. In a race played in teams this is the team's time, however that team is timed.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii. It will now reconnect to the network once it has lost a connection.
+- Changed: The Map Tracker components are now docks that can be moved around.
+- Fixed: The audit log of an async race room can now only be read by the room's creator.
+
+### Metroid Dread
+
+- Fixed: Solo games no longer show a message about being disconnected from Randovania.
+
+#### Logic Database
+
+##### Cataris
+
+- Fixed: Green EMMI Introduction: The Sensor Lock on Door to EMMI Zone West Exit Path had an unintended open requirement override.
+
+### Metroid Fusion
+
+- Fixed: Zazabi now has the same amount of minimum jumps as in the vanilla game.
+
+#### Main Deck
+
+- Changed: Station Entrance: The Shinespark through the Speedbooster blocks is now always possible in Door Lock Rando.
+- Changed: Central Reactor Core: The Shinespark from Silo Checkpoint to Silo Tunnel is now always possible in Door Lock Rando.
+- Changed: Central Reactor Core: Doing the Shinespark from Silo Checkpoint to Silo Tunnel without Hijump has been changed to a Ludicrous Shinespark.
+
+### Metroid Prime
+
+- Changed: All beam charge combos now additionally have a pickup hint feature of being "a missile system" and "a missile-related upgrade" for consistency with Echoes.
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
+
+### Metroid Prime 2: Echoes
+
+- Added: A notification will appear in-game if Randovania reconnects to the game if several locations were collected while disconnected, to the point where it achieved an invalid state.
+
+### Metroid Prime Hunters
+
+- **MAJOR** - Added: It is now possible to shuffle Octoliths anywhere in the game instead of being forced to only be in the Biodefense Chambers.
+- Fixed: The Alimbic Turrets in Celestial Archives - Data Shrine 03 will now always respawn on room reload to prevent a softlock if the door to Synergy Core was not unlocked prior to leaving.
+- Fixed: The boss door in all Biodefense Chambers will now unlock automatically when collecting the Octolith pickup.
+- Fixed: Sic Transit: The scan door will now unlock in the post-boss layers if the shuffled Shield Key is collected.
+- Fixed: Alinos Perch: The force field no longer despawns after defeating Cretaphid v3.
+- Fixed: It is no longer possible to skip activating triggers when collecting certain pickups.
+- Fixed: Certain values for starting Missiles/UA Ammo being invalid. The max capacity for starting is now set to 100.
+
+#### Logic Database
+
+##### Alinos
+
+- Added: Crash Site:
+  - Collecting the pickup in the Artifact Shield with a Wall Clip and either Missiles (Expert) or Magmaul (Advanced).
+  - Bypassing the force field with a Wall Clip (Expert) and either Missiles or Magmaul.
+- Fixed: Piston Hall: The pickup in the Artifact Shield now properly requires the correct Shield Key.
+
+##### Arcterra
+
+- Added: Sic Transit: Escaping the inner room with a Wall Clip (Expert) and either Missiles or Magmaul.
+
+##### Vesper Defense Outpost
+
+- Added: Weapons Complex: Collecting the pickup in the lower Artifact Shield with a Wall Clip (Advanced) and either Missiles or Magmaul.
+
+### Metroid: Samus Returns
+
+- Fixed: Items were not received in Multiworld until after a location had been collected in the game.
+- Fixed: Solo games no longer show a message about being disconnected from Randovania.
+
+## [11.0.0] - 2026-09-01
+
+- **Major** - Added: Metroid Prime Hunters has been added. Shuffle the items including Artifacts and Refills, portal destinations, Force Field weaknesses, and even Shield Keys.
+- Added: The Map Tracker can now be opened directly from the Open menu, by selecting which preset to use.
+- Changed: Automatic Item Tracker: The layout and the theme are now split and can be selected separately.
+- Changed: Improved average location distribution of "inert" pickups such as Prime Artifacts and Echoes STKs.
+- Changed: The Nintendont connector will not try to connect to the Homebrew Channel anymore for giving better feedback.
+- Fixed: Certain interactions with the server will no longer permanently fails in certain cases.
+
+
+### Metroid Dread
+
+- Changed: The following pickups will now be placed in bulk at the same step during generation when multiple pickups are necessary to progress:
+  - Missile Tank
+  - Missile+ Tank
+  - Energy Part
+  - Energy Tank
+  - Power Bomb Tank
+  - Flash Shift Uprade
+  - Speed Booster Upgrade
+- Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
+
+### Metroid Fusion
+
+- Added: Playing on the same seed will now always have consistent patterns for Gadoras, Zazabi and Yakuza, instead of it being RNG dependant.
+- Changed: When enabling Door Lock Rando for the default presets, Open Hatches are now also shuffled by default.
+- Changed: Rephrased the text that appears when the Operations Deck Navigation Terminal or Restricted Navigation Terminal hints 0 Metroids.
+
+#### Logic Database
+
+##### Main Deck
+- Changed: Operations Deck: Shinesparking up to reach the Operations Room Door is now possible in Door Lock Rando.
+- Added: Operations Ventilation: It is now possible to destroy the Missile Geron by running into it from Operations Deck.
+- Changed: Operations Ventilation: Shinesparking the Missile Geron is now possible in Door Lock Rando.
+- Changed: Quarantine Junction: The Speedboost through the blocks from Main Elevator Access is now possible in Door Lock Rando.
+- Central Reactor: Adjusted the Shinespark from Silo Checkpoint to Silo Tunnel:
+  - Doing it without Hi-Jump is now a ludicrous Shinespark instead of intermediate Movement.
+  - The Beam requirements have been adjusted. Having Wave Beam does not change the difficulty of the shinespark, not having Wave Beam bumps it to a ludicrous Shinespark.
+- Central Reactor: Shinesparking up from the Save Station is now always possible in Door Lock Rando.
+- Quarantine Bay: Added a node to refill infinitely, as it's very quick to do with the Hornoad.
+
+##### Sector 1 (SRX)
+- Changed: Watering Hole: Getting the item is now possible in Door Lock Rando.
+- Changed: Charge Core Arena: Getting the upper item locked by a Shinespark is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Central: Sparking the Stabilizer from Stabilizer Checkpoint is now possible in Door Lock Rando.
+- Changed: Atmospheric Stabilizer Southeast: Sparking the Stabilizer from Tourian Trapdoor or Zebesian Zag is now possible in Door Lock Rando.
+- Changed: Zebesian Zag: Sparking the room up from Atmospheric Stabilizer Southeast is now possible in Door Lock Rando.
+
+##### Sector 4 (AQA)
+- Added: Evir Enclosure: A video to go up by freezing the Evir and performing Underwater Walljumps.
+
+##### Sector 6 (NOC)
+- Changed: Spaceboost Alley: It is now possible to escape with an intermediate Walljump, instead of being able to Single-Wall Walljump.
+- Changed: X-B.O.X Arena Access: Shinesparking out of Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of Forbidden Entrance to Spaceboost Alley is now possible in Door Lock Rando.
+- Changed: X-B.O.X. Arena Access: Shinesparking out of X-B.O.X. Arena is now possible in Door Lock Rando.
+- Changed: Nocturnal Shaft: Shinesparking out of Forbidden Entrance to Pillar Highway is now possible in Door Lock Rando.
+
+### Metroid: Samus Returns
+
+- Fixed: Some situations where the generator thinks pathing via certain doors is not possible with randomized doors.
+
+### Metroid Prime
+
+- Fixed: Less vulnerable to "Alloc Failed" and frame-perfect cutscene skip crashes.
+- Fixed: In some minimal inventory starts, players could use Power Beam and Scan Visor out of logic and experience other unintuitive behavior.
+- Fixed: Gravity Suit HD model looking more blue/purple than the low-poly counterpart when color customized.
+- Fixed: Power Suit and Varia Suit color customization both affecting shared chest-piece texture.
+- Fixed: Warp-to-start tutorial text not visible on non-English languages.
+- Fixed: Transport to Magmoor Caverns North: Longer load time when approached from Sun Tower Access.
+- Fixed: Research Lab Hydra: Battle music behaving differently than vanilla.
+- Fixed: Ruined Shrine: Large beetle does not aggro player until cutscene duration elapses regardless the cutscene was skipped.
+- Fixed: Life Grove: Boostless spinner manipulation trick not working if the pillar rise cutscene is skipped.
+- Fixed: Sunchamber: In specific circumstances, tentacles retracted while Flaahgra was not fainted.
+- Elite Research: Softlock prevention was inconsistent across game versions. Prevention no longer locks the player in the room until they collect the item.
+- Added: Players can temporarily unequip Gravity Suit using in-game options.
+- Added: Replaced vanilla's inventory-based completion percent calculation with an algorithm based on location count. Completion percent now always reflects the progress towards collection of all non-nothing pickups in the player's world.
+- Added: The color of Samus' Gunship can now be customized.
+- Added: Rainbow Ball cosmetic option.
+- Changed: Organized cosmetic options into collapsible sections, suit customization now features preview images and Fusion Suit color preferences are now saved independently from non-Fusion.
+- Changed: Morph Ball now always renders the "inner glow" color appropriate for the current highest suit instead of the vanilla behavior which renders the "wrong" color when Spider, Gravity or Phazon are collected out of the vanilla-intended order.
+- Changed: It is now impossible for players to load save slots which belong to another rdvgame or multiworld slot.
+- Changed: In-game hint option is now hidden.
+- Changed: Save Station Mines A: Automatically unlock gate if "Unlock Save Station Doors" option is enabled or any time the player spawns into the room (starting room, one-way anywhere elevator).
+- Changed: Hive Totem: Removed door lock present on NTSC 0-02+.
+- Changed: Research Lab Aether: Unlock door when the Metroid dies in addition to the breakable wall.
+- Changed: Sunchamber: Doors no longer instantly lock upon entering.
+
+#### Logic Database
+
+- Changed: Games which start without Combat, Thermal and X-Ray Visor now require one of the three to target enemies or combat dash. All fight logic adjusted to require one Combat trick level higher when enemies are not able to be targeted.
+- Changed: The use of the arm cannon is no longer dependent on acquiring Combat, Thermal or X-Ray Visor.
+- Removed: All "No Gravity Suit" and "Enabled Allow Dangerous Gravity Suit Logic" requirements. These are no longer necessary due to the player's ability to unequip Gravity Suit. A FAQ entry has been added to assist with player education.
+
+##### Magmoor Caverns
+
+- Fixed: Monitor Station: Heat run logic assumed Charge Beam and Missiles could be fired without the Arm Cannon.
+
+##### Phazon Mines
+
+- Changed: Save Station Mines A: Now a valid target for Starting Room and Shuffled Elevator destination. No longer requires Scan Visor when "Unlock Save Station Doors" option is enabled.
+- Fixed: Mines Security Station: The event to unlock the doors can now be logically visited multiple times, making it possible for it to be considered a safe action.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Viewing the Debug Info tracker layout doesn't cause disconnects anymore.
+
+#### Logic Database
+
+##### Dark Torvus Bog
+
+- Added: NSJ variant of the BSJ to go up through Sacrificial Chamber before Grapple Guardian, set as advanced.
+- Added: The various tricks that require power bombs to go up through Sacrificial Chamber now have videos.
+
+## [10.10.0] - 2026-08-02
+
+- **Major** - Added: Multiworld worlds can now be abandoned; abandoning a world is irreversible. An abandoned world can be played automatically by your own Randovania instance like a bot, via a dedicated game connection: it collects one location that is in logic for it every few seconds, and keeps doing so as it receives more items from other players.
+- Added: You can now disable game connections, preventing them from connecting without having to be removed entirely.
+- Changed: Automatic Item Tracker: The selected theme for the default game is now always shown while the selected game connection is not connected.
+- Changed: The "History" tab in the "Multiworld session" window now displays pickups where the provider and receiver are the same world, even in non-coop sessions.
+- Fixed: Automatic Item Tracker: The text "Not currently connected to any games" is now always shown when the selected game connection is not connected and no default game is set.
+- Fixed: In the Data Visualizer and Editor, when the game uses region images these images are no longer be stretched in certain situations.
+- Fixed: In the Data Visualizer and Editor, when panning away from the selected area the region image is now displayed correctly.
+- Fixed: In the Data Visualizer and Editor, when changing the zoom the pan is adjusted now relative to either the center or the mouse position.
+
+### Resolver
+
+- Fixed: Some games being wrongly considered impossible.
+
+### Another Metroid 2 Remake
+
+- Fixed: Generating a game with the new Teleporter Pipes in final areas disabled no longer causes an exception.
+
+### Metroid Dread
+
+- Changed: The icon for the Super Missile in the automatic item tracker has been made lighter in color so that it matches the other icons better.
+
+#### Logic Database
+
+##### Burenia
+
+- Changed: Merged event nodes for breaking the floor in Gravity Suit Tower, decluttering the room and helping the generator see when it is safe to complete the sequence.
+- Changed: Added connection back to the Early Gravity Blob in the Gravity Suit Tower to help the generator see when it is safe to complete the breakable floor sequence.
+- Changed: The dangerous logic surrounding the water underneath Drogyga in terms of getting up the left ledge and across to the right ledge is now waived. Logically by construction, if the water is there then Drogyga has been defeated, which requires Grapple Beam, which is a solution to the connections that are changed.
+
+##### Cataris
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+
+##### Dairon
+
+- Fixed: The door into the Central Unit is changed from Access Open to EMMI Door.
+- Fixed: Destroying the Hidden Blob in Freezer was available as a dangerous action with neither Gravity Suit or Highly Dangerous Logic.
+
+##### Ferenia
+
+- Changed: The Twin Robot fight is now logically active from the start of the game, unless Highly Dangerous Logic is active. That means passing through the arena now logically requires meeting the fight requirements also before obtaining the Storm Missiles.
+
+### Metroid Fusion
+
+- Fixed: Typo in the knowledge trick description.
+- Fixed: Generation now takes takes into account when Open Hatches in Door Lock Rando are shuffled.
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Fixed: Atmospheric Stabilizer Southeast: Destroying the Stabilizer with Screw Attack is now only possible if the Primary Geron Vulnerabilities setting is disabled. It's also not possible anymore to destroy it with Hi-Jump.
+- Added: Atmospheric Stabilizer Southeast: Destroying the Stabilizer is now possible with Power Bombs and Beginner Knowledge if the Primary Geron Vulnerabilities setting is disabled.
+
+##### Sector 3 (PYR)
+
+- Changed: Alcove: The Intermediate Shinespark trick from Deserted Runway to Alcove no longer requires L0 Keycard in Door Lock Rando settings.
+
+### Metroid: Samus Returns
+
+- Changed: The Buff Charge Beam Doors option now also affects Beam Burst.
+- Changed: Solo Plasma Beam now deals more damage to Steel Orbs.
+- Changed: Grapple Beam is now auto-selected when you aim at a Grapple Beam shield.
+- Changed: Usages of Power Bombs and Beam Burst to open Charge Beam Doors with the Buff Charge Beam Doors option disabled have been changed to no longer require Knowledge (Beginner).
+- Fixed: The area item collection percentage is now correct and counts all items and all Metroids.
+
+## [10.9.0] - 2026-07-06
+
+- Added: The Data Visualizer now displays more information about Hint nodes.
+- Changed: Updated the Nintendont version that is used when uploading it directly to the Wii.
+  Includes faster connection speeds and better crash resilience.
+- Changed: Nintendont Connector: Better error messages when connecting to an invalid Nintendont.
+- Changed: Nintendont Connector: Increase the timeout limit from 5s to 10s.
+
+### Another Metroid 2 Remake
+
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid Dread
+
+- Changed: Usages of Power Bombs to open Charge Beam Doors and destroying Enkies with the Power Bomb Limitations disabled have been changed to no longer require Knowledge (Beginner).
+- Removed: The option for disabling required mains for Power Bombs has been removed. Old presets will still work, but
+  are unsupported.
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Single-wall Wall Jump traversal option to get to EMMI Zone Dome.
+- Added: Speed booster conservation trick to get to the top of the EMMI Zone Hub without disabled door lock randomizer.
+- Added: Added several videos for various connections in Artaria.
+- Changed: The connection from EMMI Zone Exit North to EMMI Zone Exit Northwest using Speedbooster is now classified as a Beginner Speedbooster Conservation trick.
+
+### Metroid Fusion
+
+- Fixed: Missile and Power Bomb ammo is now correctly capped at 999 and 99 respectively. This also prevents a softlock when using a Recharge Station with more than 246 Power Bombs.
+- Changed: In Sector 5 - Training Grounds, lowered the Speed Booster runway by one tile to make it easier to shinespark through the door.
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Dark Stairwell: Using the hidden connection to/from Central Nexus can now expect Mid-Air Morphs instead of Bombs/Hi-Jump.
+
+##### Sector 1 (SRX)
+
+- Added: Atmospheric Stabilizer Northwest: Shinespark chain starting from Moto Motorway, recharging in Atmospheric Stabilizer Northeast, using any combination of either Wide, Plasma, or Wave Beam to clear Hornoad Hole and run off ledge in time to spark into the left slope, to ultimately spark into the stabilizer geron. Intermediate Knowledge, Intermediate or Advanced Combat, and Ludicrous Shinespark. Potential softlock after the hard parts are done.
+- Added: Yameba Corridor: As above, but chaining sparks one room further, and including Charge Beam option. This trick must account for Hornoad Hole's room state after all stabilizers are restored: dodging the aerial enemy requires moving further left, necessitating tighter movement in Twin Junctions West, but no risk of softlock. Intermediate Knowledge, Advanced Combat, and Ludicrous Shinespark.
+
+##### Sector 3 (PYR)
+
+- Fixed: Attic: Breaking the bottom right bomb block with Screw Attack now requires Beginner Knowledge.
+- Changed: Attic: Breaking the bottom right bomb block with an Intermediate Shinespark from Deserted Runway is no longer excluded from Door Lock Rando.
+
+##### Sector 6 (NOC)
+
+- Changed: Zozoro Wine Cellar: Zozoros can be frozen on the ground to give you enough height to reach the ledge, reducing Stand On Frozen Enemies to Beginner. Video replaced.
+- Added: Zozoro Wine Cellar: Ludicrous Wall Jump into back of a Zozoro to Ludicrous Damage Boost, then Ludicrous Jump Extend to reduce invincibility frames to d-boost off another zozoro, then use Morph Ball jump extends to turn more quickly and reach the ledge.
+
+### Metroid Prime
+
+- Changed: Slightly reworked the way the inventory is read for the sake of a slight speedup. No expected changes in fuctionality.
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid Prime 2: Echoes
+
+- Changed: Slightly reworked the way the inventory is read for the sake of a significant speedup. No expected changes in fuctionality.
+- Fixed: The stream-friendly auto tracker theme now properly displays text when using the light theme.
+
+### Metroid: Samus Returns
+
+- Added: Cosmetic option to reveal the map at the start (default: on)
+- Added: Cosmetic option to use Fusion suits (default: off)
+- Added: Preset option to skip the opening storyboard cutscene (default: off)
+- Fixed: Spazer and Plasma beam projectiles no longer shoot through blocks without Wave
+- Fixed: Exporter error when Door Lock Randomizer used "Access Open" as a "Doors to Change" option.
+
+## [10.8.2] - 2026-06-14
+
+### Metroid Prime
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Edge case of Randovania sending wrong items to the game when it cannot read the inventory.
+
+## [10.8.1] - 2026-06-13
+
+- Changed: The seed hash text in the Multiplayer window can now be interacted with.
+- Changed: Nintendont: The time on how long Randovania waits for requests for the Wii before it disconnects has been made consistent and reduced to 5 seconds.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
+
+### Metroid Prime
+
+- Fixed: Exporting for NTSC 0-01 and Korean
+- Fixed: When having Randovania connected to the game while booting up or rebooting, it will not throw warnings (Dolphin) or disconnect (Nintendont) from the game.
+- Fixed: Converting Metroid Prime 2: Echoes models for multiworld, for certain pickups.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: When connected to the game via Nintendont, don't disconnect when resetting the game.
+
+## [10.8.0] - 2026-06-01
+
+- Fixed: The Spoiler: Playthrough window no longer errors when the first step is hidden by your filters.
+- Changed: When using the Nintendont game connection, it will now give better feedback when you're in the Homebrew Channel and haven't launched Nintendont yet.
+
+### Generator
+
+- Fixed: When using logical pickup placement set to Major pickups or All pickups, generated pickups would not be considered required. For example, Red Keys in Metroid Prime 2: Echoes.
+
+### Resolver
+
+- Fixed: An issue where damage reduction multipliers above 1.0 were being ignored.
+
+### Metroid Dread
+
+- Added: Unique Save Slots cosmetic option. Stores this randomizer's saves in a unique location based on the seed hash.
+
+#### Logic Database
+
+- Fixed: Door override requirements for Shutter Gates (Flash Shift Doors) mentioned in version 10.5.0 didn't work and had no effect.
+
+##### Artaria
+
+- Changed: Implementation detail that should make the generator understand when the Varia Suit Climb is logically safe.
+- Added: Added videos for reaching Door to EMMI Zone First Entrance from above before destroying the blob.
+
+##### Dairon
+
+- Changed: When comming in to Teleport to Artaria from Transport to Cataris, climbing up to above the Wide Block has these changes:
+  - Using Grapple Beam now requires Grapple Movement (Beginner)
+  - Using Simple IBJ now requires Diagonal Bomb Jump (Beginner)
+  - Added option to use just Speed Booster with Speed Booster Conservation (Intermediate)
+
+##### Ferenia
+
+- Changed: Added Movement (Beginner) requirement to reach Missile Tank Pickup in Space Jump Room using Space Jump and Normal Bomb.
+- Changed: Added Speed Booster Conservation trick to reach Missile Tank Pickup in Space Jump Room using Speed Booster. Beginner with Power Bombs and Intermediate with Cross Bombs.
+
+##### Ghavoran
+
+- Changed: Some implementation details surrounding the Chozo-X to help the Resolver in some cases.
+- Fixed: Logic bug that failed to account for how, after fighting the Central Unit,  one needs to finish the Ice EMMI fight before leaving the EMMI Zone.
+
+### Metroid Fusion
+
+- Added: Environmental Damage (Heat, Lava, Cold, Acid) rates can now be configured.
+
+#### Logic Database
+
+##### Main Deck
+
+- Changed: Habitation Deck Entrance: Changed the NHJ WJ Freeze trick from Movement (Advanced) to Stand on Frozen Enemies (Expert). Also added in Stand On Frozen Enemies (Beginner) to the other WJ trick to account for diffusion timing.
+
+### Metroid Prime
+
+- Fixed: Metroid Prime Lair: Softlock when playing with Skippable/Competitive cutscenes on platforms with faster than disk read speed (Nintendont, Dolphin Emulate Disk Speed: false, etc.) and the Subchamber Five cutscene is skipped after the next room has finished loading.
+- Fixed: When having Randovania connected to the game while on the title screen, it will not throw warnings (Dolphin) or repeatedly disconnect (Nintendont) from the game.
+- Fixed: Observatory: Softlock if the upper 1st-pass pirates are killed before entering the room
+- Fixed: Training Chamber: Softlock if the room unloaded after triggering fight but before killing both ghosts (e.g. wallcrawl)
+- Fixed: GM8E30 (Korean) support
+- Changed: Wavebuster no longer consumes ammo if cancelled due to "point blank range" rule
+- Changed: Updated tournament scan to include 2025 winners
+
+#### Logic Database
+
+- Changed: Reduced logical cost to open Wavebuster door locks: 11->10
+
+##### Phendrana Drifts
+
+- Changed: Transport to Magmoor Caverns South: Reorganized the climb from the elevator up to Transport Access for readability and consistency.
+    - Changed: The L-Jump portion of the NSJ climb was increased from Beginner to Advanced.
+    - Added: A way to climb without Space Jump or Bombs using a Ledge Clip Jump (Movement Expert) and then a Slope + L-Jump (both Advanced).
+
+### Metroid Prime 2: Echoes
+
+- Changed: Dark, Light, and Beam Ammo Expansions are now considered dark-aligned, light-aligned and both, respectively.
+- Removed: A setting that disabled all room names on the map when elevators are randomized. This setting is redundant, since elevator rooms are not revealed on the map at all when randomized.
+
+#### Logic Database
+
+##### Sanctuary Fortress
+
+- Changed: Minor adjustment aimed at making Aerie safer for the generator, no changes to requirements in practice.
+- Fixed: It was not logical to fight Dark Samus 2 when comming in to Aerie with a randomized elevator.
+
+### Metroid: Samus Returns
+
+- Fixed: When you changed the final boss setting to not being Ridley and the pickup Ridley drops after defeat was an item which was exclusively on Metroids, it would not have spawned.
+
+#### Logic Database
+
+##### Area 6 Poisonous Tunnel
+
+- Fixed: Going back from the Pickup to the upper section now has the correct requirements.
+
+## [10.7.0] - 2026-05-02
+
+### Generator
+
+- Changed: Adjusted the check for which resources are unlocked safely after an action, so it both doesn't collect some dangerous actions too early, but also calculates deeper what is is safe.
+
+### Metroid Dread
+
+- Changed: Increased likelihood that doors that are logically challenging to reach get locks when using Individual Doors mode to randomize Door Locks.
+- Changed: Increased likelihood of the generator placing Energy Tanks or Energy Parts sooner.
+
+### Metroid Fusion
+
+- Added: Door Lock Randomizer is now available.
+- Fixed: Low-Health alarm now plays correctly when using the alternative Health Display.
+- Fixed: HUD no longer disappears after saving the animals (again).
+- Removed: MARS patcher version no longer appears on title screen.
+
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Added: X-B.O.X. Garage: Knowledge (Advanced) + Movement (Beginner) method to grab the upper item using power bombs without killing the Owtch.
+
+## [10.6.0] - 2026-04-01
+
+- Fixed: The resolver now correctly handles damage requirements with item alternatives.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Burenia
+
+- Added: Underneath Drogyga: Cross the grapple blocks with a horizontal bomb jump (Expert Diagonal Bomb Jump)
+- Added: Underneath Drogyga: Climb out of the water after drogyga using single-wall wall jump with a water bomb jump
+
+### Metroid Fusion
+
+- Fixed: The credits text for random starting items now appears correctly.
+
+#### Logic Database
+
+- Changed: Blue-X Damage has been separated from Cold Damage.
+- Changed: Acid Damage has been separated from Normal Damage.
+
+##### Sector 1 (SRX)
+
+- Update Ripper Sauna to use Acid Damage.
+
+##### Sector 6 (NOC)
+
+- Fixed: Nocturnal Shaft: When going from top right to top left, damage boosting through the Blue-X now correctly expects at least 70 health.
+
+### Metroid Prime
+
+- Fixed: Metroid Prime Lair: Black screen softlock if Subchamber Five cutscene is skipped late
+- Fixed: Burn Dome: Wasps remain active if Incinerator Drone death cutscene is skipped on first frame
+- Fixed: [PAL] Frost Cave: Game stutter when loading Hunter Metroid layer
+
+### Metroid Prime 2: Echoes
+
+- Fixed: All custom randomizer text now properly appears in all languages, though always in English.
+
+
+## [10.5.0] - 2026-03-02
+
+- Changed: Removed game-specific text from the preset editor's header to make information more clear for all games in RDV.
+
+### Metroid Dread
+
+- Added: Current and total DNA count are now displayed in the "Samus" menu on the pause screen. A cosmetic option is also available to display it in the HUD, next to the Death Counter (if enabled).
+- Changed: The appearance of the Death Counter was improved to use an icon instead of the "Deaths:" text.
+- Added: The current improvements gained to Speed Booster and Flash Shift from the "Upgrade" items (if present) will be displayed in the "Samus" menu.
+  - The current "number of chained Flash Shifts" is displayed when Flash Shift Upgrades are present in the item pool, and either Flash Shift or at least one Flash Shift Upgrade has been obtained.
+  - The current "time-to-charge Speed Booster" is displayed when Speed Booster Upgrades are present in the item pool, and either Speed Booster or at least one Speed Booster Upgrade has been obtained.
+- Added: Icons for individual Beam and Missile upgrades are displayed in the header of each respective category in the "Samus" menu, clearly indicating whether or not "earlier" items have been obtained even if a "later" item was obtained first.
+  - For example, if the player has obtained Plasma Beam, an icon will be displayed on the Beams category for Wide Beam. The icon will be "dimmed" if the player has not yet obtained Wide Beam, and it will light up once Wide Beam is acquired.
+  - Likewise, if the player has obtained Wave Beam, an icon with similar behavior is displayed for Plasma Beam.
+  - Likewise, if the player has obtained Ice Missiles, an icon with similar behavior is displayed for Super Missiles.
+- Added: An option is now available in the "Other" preset settings tab to skip item acquisition popups, replacing them with a short on-screen message instead (similar to receiving Multiworld items).
+- Added: An option to enable Lua debug logging is available in the Cosmetic Options dialog when "Show Experimental Settings" is enabled (intended for game patcher developers).
+
+#### Logic Database
+
+##### Burenia
+
+- Added: Door Lock Overrides:
+    - The Shutter Gate in Main Hub Tower Top leading to Flash Shift Room is now additionally logical with Speed Booster.
+    - The Shutter Gate in Flash Shift Room is now additionally logical with Flash Shift Skip (Beginner) and either Wall Jump (Beginner) or using Spin Boost.
+    - The Shutter Gate in Main Hub Tower Top leading to Underwater Horseshoe is now additionally logical with Speed Booster and either Speed Booster Conservation (Intermediate) or Speed Booster Conservation (Beginner) and Gravity Suit.
+
+##### Cataris
+
+- Added: Door Lock Overrides:
+    - The Shutter Gate in EMMI Zone Exits West is now additionally logical with with many more options.
+    - The Shutter Gate in Green EMMI Introduction is now additionally logical with with many more options.
+
+##### Ferenia
+
+- Added: Door Lock Override:
+    - The Shutter Gate in Total Recharge Station is now additionally logical with Flash Shift Skip (Beginner) and either Movement (Beginner) or using Spin Boost.
+
+##### Hanubia
+
+- Fixed: Requirements for Power Bomb ammo in Ferenia Shortcut have been strengthened, so 2 ammo is required to reach the Pickup, 3 ammo is required to leave from the pickup, in either direction.
+- Fixed: Requirements for Power Bomb ammo in Speedboost Puzzle Room have been strengthened, so 4 ammo is required to get from Ferenia Shortcut to the Navigation Station.
+
+### Metroid Fusion
+
+- Changed: The hatch graphics have been changed in order to be more accessible to color blind people.
+- Changed: The Missile Geron in Sector 1 (SRX) - Yameba Corridor has been moved a few tiles to the left.
+- Changed: Renamed a lot of rooms that either reference other Sectors or unofficial enemy names to be more aligned with where they are in the B.S.L rather than their destination. This is done in order to bring more clarity to them. The full list is as follows:
+    - Main Deck:
+        - Elevator to Sector 1 (SRX) => Sector Hub Lift 1
+        - Elevator to Sector 2 (TRO) => Sector Hub Lift 2
+        - Elevator to Sector 3 (PYR) => Sector Hub Lift 3
+        - Elevator to Sector 4 (AQA) => Sector Hub Lift 4
+        - Elevator to Sector 5 (ARC) => Sector Hub Lift 5
+        - Elevator to Sector 6 (NOC) => Sector Hub Lift 6
+        - Elevator to Sector Hub => Main Elevator
+        - Elevator to Crew Quarters => Operations Deck Elevator
+        - Elevator to Operations Deck => Crew Quarters Elevator
+        - Elevator to Tourian (SRX) => Restricted Zone Elevator
+        - Elevator to Habitation Deck => Nexus Elevator
+        - Elevator to Central Nexus => Habitation Deck Elevator
+        - Back Door to Sector 6 (NOC) => Restricted Back Door
+    - Sector 1 (SRX):
+        - Elevator to Main Deck => Sector 1 (SRX) Entrance Elevator
+        - Elevator to Restricted Zone => Tourian Elevator
+        - Glass Tube to Sector 2 (TRO) => Sector 1 (SRX) Eastbound Glass Tube
+        - Glass Tube to Sector 3 (PYR) => Sector 1 (SRX) Westbound Glass Tube
+        - Ridley Arena => Neo-Ridley Arena
+        - Ridley Arena Access => Neo-Ridley Arena Access
+    - Sector 2 (TRO):
+        - Elevator to Main Deck => Sector 2 (TRO) Entrance Elevator
+        - Glass Tube to Sector 1 (SRX) => Sector 2 (TRO) Westbound Glass Tube
+        - Glass Tube to Sector 4 (AQA) => Sector 2 (TRO) Eastbound Glass Tube
+        - Zoro Zig-Zag => Zig-Zag-Zone
+    - Sector 3 (PYR):
+        - Elevator to Main Deck => Sector 3 (PYR) Entrance Elevator
+        - Glass Tube to Sector 5 (ARC) => Sector 3 (PYR) Westbound Glass Tube
+        - Glass Tube to Sector 1 (SRX) => Sector 3 (PYR) Eastbound Glass Tube
+    - Sector 4 (AQA):
+        - Elevator to Main Deck => Sector 4 (AQA) Entrance Elevator
+        - Cargo Hold to Sector 5 (ARC) => Cargo Hold
+        - Glass Tube to Sector 6 (NOC) => Sector 4 (AQA) Eastbound Glass Tube
+        - Glass Tube to Sector 2 (TRO) => Sector 4 (AQA) Westbound Glass Tube
+    - Sector 5 (ARC):
+        - Elevator to Main Deck => Sector 5 (ARC) Entrance Elevator
+        - Flooded Airlock to Sector 4 (AQA) => Flooded Airlock
+        - Glass Tube to Sector 6 (NOC) => Sector 5 (ARC) Westbound Glass Tube
+        - Glass Tube to Sector 3 (PYR) => Sector 5 (ARC) Eastbound Glass Tube
+    - Sector 6 (NOC):
+        - Elevator to Main Deck => Sector 6 (NOC) Entrance Elevator
+        - Glass Tube to Sector 4 (AQA) => Sector 6 (NOC) Westbound Glass Tube
+        - Glass Tube to Sector 5 (ARC) => Sector 6 (NOC) Eastbound Glass Tube
+        - Checkpoint to Restricted Zone => Authorization Checkpoint
+- Fixed: The HUD no longer occasionally disappears after rescuing the animals.
+- Fixed: Discrepancies on the map and minimap regarding boss icons.
+- Fixed: Fixed a typo in the Open Sector Hub preset.
+
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Changed: Nocturnal Shaft: When going from top left to top right, dealing with the Blue-X is now trivial.
+
+### Metroid Prime 2: Echoes
+
+- Added: Added a notice to the door lock rando tab that new patcher is both required and will be enabled alongside any randomization settings.
+
+#### Logic Database
+
+- Changed: Fighting Bomb Guardian with only Charged Dark shots now requires 31 Dark Ammo and Combat Intermediate.
+
+##### Sanctuary Fortress
+
+- Added: Hall Of Combat Mastery: A ludicrous BSJ + Instant Morph over the spider track to access Central Area Transport East without Spider Ball or Space Jump Boots.
+
+### Metroid: Samus Returns
+
+- Fixed: Certain output preferences from old versions of Randovania no longer causes issues on start.
+
+## [10.4.0] - 2026-02-01
+
+- **Major** - Changed: The generator and resolver are now significantly faster.
+  - For standard settings across all games, the mean time went from 5.38 seconds to 0.86 seconds - an improvement of 524%.
+  - For Echoes door lock rando, the mean time went from 430 seconds to 15 seconds - an improvement of 2772%. Other games are similarly improved.
+  - For a 100 worlds test multiworld, the mean time went from 2000+ seconds to 269 seconds.
+
+- Added: Integration with LiveSplit One for Async Races - after some configuration, starting, pausing and finishing in LiveSplit One will update your status in the Async Race.
+- Changed: The "Verify if game is beatable after ..." option is no longer experimental.
+- Changed: The "Spoiler: Playthrough" tab was adjusted slightly to improve readability.
+- Changed: When hiding item models or scans, the preset summary no longer references an ETM.
+- Fixed: The "Spoiler: Playthrough" tab is much faster when calculating the playthrough, especially at high verbosity.
+- Fixed: Reduced the Windows install size by about 7 MB, as a regression from last release.
+- Fixed: Logical Pickup placement "All pickups" and expansions with negative amount are now compatible.
+- Fixed: Impossible generation cases that are caused due to walking into a point of no return that's impossible to escape from.
+- Fixed: Text such as the Seed Hash in the Async Race window is now selectable via mouse.
+- Fixed: Saving previous versions of presets when modififying no longer fails on certain cases.
+- Fixed: Certain scenarios at the start of generation with low possible actions are now less likely to fail.
+- Removed: The "Consider possible unsafe resources" experimental option has been removed and is now always enabled. The speed up mentioned above are including the slowdown from this setting.
+- Removed: The "Revised door solver" experimental option has been removed and is now always enabled.
+- Added: Added "Create New Preset" button to preset menu to improve UX.
+- Added: Added the ability to pan maps in the data visualizer by dragging with left or center click.
+
+### Another Metroid 2 Remake
+
+- Changed: Prime 1's Refill Pickups will now use more appropriate models.
+
+### Factorio
+
+- Fixed: Exporting from Flatpak now works.
+
+### Metroid Dread
+
+- Changed: Energy Parts are now logical.
+
+#### Logic Database
+
+- Changed: The energy requirements for the Corpius, Kraid, Silver Chozo Robot, Gold Chozo Robot and Gold Chozo Robot have been reduced, so that when using medium damage strictness the available energy is enough to satisfy these fights.
+
+##### Artaria
+
+- Changed: Minor adjustment in Arbitrary Enky Room to increase seed variety.
+- Changed: Minor adjustment related to the EMMI Zone Spinner, to increase seed variety.
+
+##### Cataris
+
+- Changed: Minor adjustment related to Kraid to increase seed variety.
+
+##### Ferenia
+
+- Fixed: Removed Diffusion Abuse trick to push Wide Beam Block in Purple EMMI Arena. This one is impossible because when you want to aim you automatically enable the Omega Cannon.
+
+### Metroid Fusion
+
+- Added: Option to change Geron vulnerabilities to their primary weaknesses.
+- Added: Cosmetic option that allows using an alternative health display on the HUD.
+- Changed: The doors between Cathedral and Cathedral Save Access have been changed from a Level-0 door to an open one.
+- Changed: Maximum Energy has been limited to 9999.
+- Changed: Optimized the "Reveal hidden blocks" cosmetic option to now be nearly identical in performance compared to without it.
+- Changed: Hatches during a Navigation Room Conversation will now always show as locked.
+- Changed: Samus is now controllable during the animals freeing sequence, removing an RNG consistency issue.
+- Fixed: Energy values over 2099 now correctly render in-game and on the file select screen.
+- Fixed: The SA-X monster form will no longer form out of bounds and get stuck.
+
+#### Logic Database
+
+- Fixed: Typo on "Boss Ridley Defeated" event.
+- Fixed: Getting the Operations Deck Navigation Hint now requires the L1-Keycard.
+- Fixed: Getting the Restricted Sector Navigation Hint now requires the L4-Keycard.
+
+##### Main Deck
+
+- Changed: Habitation Deck: It's now possible to move from the top right door to the top left entrance after the animals have been freed.
+
+##### Sector 2 (TRO)
+
+- Fixed: Oasis is now included in the "near an extendable pillar" featural hint category.
+
+##### Sector 6
+
+- Changed: Clogged Cavern: Going down via the Speed Booster Blocks doesn't require Charge Beam or Intermediate Shinesparking anymore.
+- Changed: Nocturnal Shaft: Going from the bottom door to the topmost door is now trivial.
+- Changed: Warehouse: Going from the bottom level to the top level is now trivial.
+
+### Metroid Prime
+
+- Changed: AM2R's Drop Pickups will now use more appropriate models.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Revised the requirements for fighting Chozo Ghosts and made them consistent. Fighting multiple of them without Charge Beam is now Intermediate Combat, fighting a single one is still Beginner Combat.
+- Changed: Reflecting Pool: Jumping off of the Stone Toad has been changed from the Standable trick to the Jump Off Enemies trick.
+- Fixed: Ruined Gallery: Requirements for dealing with the enemies in the room.
+- Changed: Ruined Nursery: The boost into the tunnel from the standable pillar was changed from Intermediate Movement to Advanced Movement.
+- Fixed: Ruined Nursery: Requirements for dealing with the enemies in the room.
+- Added: Ruined Nursery: Requirements for avoiding the Trigger that activates the Main Plaza Wasps. This includes:
+  - Intermediate Knowledge and either Space Jump or Beginner Bomb Jump or Beginner Standable Terrain to get from Eyon Tunnel door to the North Atrium door.
+  - Intermediate Knowledge, Beginner Standable Terrain and Bombs to get the pickup.
+- Fixed: Ruined Fountain: The NSJ Dash over to the pickup now requires a visor.
+- Fixed: Ruined Fountain Access: Requirements for dealing with the enemies in the room.
+- Added: Ruined Shrine: Path from the Tower of Light Access Door to the Ruined Shrine Access Door via a Beginner Bomb Jump and Spider Ball.
+- Added: Ruined Shrine: Multiple ways to go from the Tower of Light Access Door to the top of the Half-Pipe near the pickup:
+    - Space Jump and Intermediate Standable Terrain
+    - No Space Jump, Expert Standable Terrain and an Intermediate L-Jump
+- Added: Ruined Shrine: An Intermediate dash from the top of the Half-Pipe to the Tower of Light Access Door with Space Jump.
+- Changed: Ruined Shrine: Scan Dashing from the Ruined Shrine Access Door over the fight trigger to the Pedestal now also requires Intermediate Knowledge.
+- Changed: Ruined Shrine: The NSJ escape from the pit now requires an Intermediate Dash, Intermediate L-Jump and Advanced Standable Terrain.
+- Added: Ruined Shrine: Health requirements for dealing with the Beetles
+- Changed: Ruined Shrine: Defeating the Beetles with only Bombs has been bumped to Expert Combat.
+- Changed: Ruined Shrine: Getting the Morph Pickup after triggering the beetle fight via escaping the pit and dashing over the wall to the item now requires an Intermediate L-Jump, Advanced Standable Terrain and either an Expert Combat Dash or an Advanced Scan Dash.
+- Fixed: Ruined Shrine Access: Requirements for dealing with the enemies in the room.
+- Fixed: Sunchamber Access: Requirements for dealing with the enemies in the room.
+- Fixed: Sunchamber Lobby: Requirements for dealing with the enemies in the room.
+- Changed: Sunchamber: Jumping onto the plant after defeating the Chozo Ghosts is now trivial.
+- Changed: Sunchamber: Reworked the Flaaghra fight. Key points are:
+    - Killing Flaaghra with only Missiles is now Combat Beginner
+    - There is now a way to kill Flaaghra with only 4 Missiles, gated behind Combat Advanced
+    - Adjusted health requirements
+    - Destroying the Bomb slots from outside is now Knowledge Intermediate
+    - Destroying the Bomb Slots with Power Bombs is now Knowledge Beginner
+    - Added a way to kill Flaaghra with Wavebuster, 20 Missiles and Ludicrous Combat
+    - When fighting Flaaghra from the back, there is now an Intermediate Knowledge trick for using only 2 Power Bombs
+    - When fighting Flaaghra from the back, you can now get to the platform via either an Intermediate Scan Dash, or a Beginner Scan Dash with Space Jump
+- Fixed: Sun Tower: Being able to go down Sun Tower without having killed Flaaghra.
+- Added: Watery Hall: Going to the Missile Expansion via an Intermediate Wall Boost without Gravity Suit.
+- Changed: Watery Hall: Going to the Missile Expansion by going through Poison Water has had several changes: it is now gated behind Beginner Movement, it has slightly more accurate damage numbers now and it increases the difficulty of the tricks.
+- Fixed: Watery Hall: Going to the Missile Expansion via a Bomb Jump is now possible without taking damage after Flaaghra has been defeated.
+- Fixed: Watery Hall: Requirements for dealing with the enemies in the room.
+- Fixed: Totem Access: Requirements for dealing with the enemies in the room.
+- Fixed: Tower of Light: Climbing up the tower via an Oculus dash now requires you to have a visor.
+- Removed: Tower of Light: Redundant combination of Combat Dash, L-Jump and Standable Terrain to collect the Pickup.
+- Removed: Tower of Light: Redundant combination of Combat Dash, Slope Jump and Standable Terrain to collect the Pickup.
+
+##### Tallon Overworld
+
+- Added: Alcove: Escaping the pit with a Beginner Wallboost.
+
+##### Phazon Mines
+
+- Fixed: Killing Elite Pirates on Hard Mode now requires Missiles instead of Power Beams.
+- Changed: Killing Elite Pirates with Beginner Combat but now requires Charge Beam or Plasma Beam, but less health.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Temple Grounds
+
+- Added: Sacred Bridge: Crossing the room in reverse without opening the gate with a ludicrous IUJ and advanced movement.
+
+### Metroid: Samus Returns
+
+#### Logic Database
+
+##### Area 2 Dam Entryway
+
+- Fixed: Lightning Armor & Transport to Dam Exterior East: You can now logically unlock the door from the Elevator space.
+
+## [10.3.2] - 2025-11-05
+
+- Changed: The Multiworld Session is more responsive in sessions with many worlds.
+- Changed: In a Multiworld Session with many worlds, the server now responds faster when exporting a world.
+
+### Metroid Prime
+
+- Fixed: Artifact Temple teleporter not working when room is reloaded and the warp cutscene is skipped.
+
+## [10.3.1] - 2025-11-01
 
 - Added: The Multiworld Session will now display when a world has been beaten. This is supported for the following games:
   - Another Metroid 2 Remake
@@ -167,6 +987,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Dropped support for Citra and switched to Azahar.
 - Fixed: Reserve Tanks won't be hinted anymore.
 - Removed: The Missile Related, Morph Ball Related, Beam Related and Key pickup features. These were only used if a game in a Multiworld was hinting a Samus Returns pickup.
+
+## [10.3.0]
+
+- Skipped for technical reasons.
 
 ## [10.2.0] - 2025-10-02
 
@@ -409,6 +1233,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The generator will now check for the count of major pickups when major/minor split is enabled.
 
 ### Metroid Dread
+
 - Fixed: A crash when attempting to fire Proto EMMI's Omega Blaster while having 0 maximum missiles.
 
 ### Metroid: Samus Returns

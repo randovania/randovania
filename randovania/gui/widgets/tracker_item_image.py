@@ -15,7 +15,7 @@ class TrackerItemImage(QLabel):
 
     is_checked: bool
 
-    def __init__(self, parent: QWidget, transparent_pixmap: QPixmap, opaque_pixmap: QPixmap):
+    def __init__(self, parent: QWidget, transparent_pixmap: QPixmap, opaque_pixmap: QPixmap) -> None:
         super().__init__(parent)
         self.transparent_pixmap = transparent_pixmap
         self.opaque_pixmap = opaque_pixmap

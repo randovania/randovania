@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'game_validator_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -45,6 +45,7 @@ class Ui_GameValidatorWidget(object):
         QTreeWidgetItem(self.log_widget)
         QTreeWidgetItem(self.log_widget)
         self.log_widget.setObjectName(u"log_widget")
+        self.log_widget.setUniformRowHeights(True)
         self.log_widget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.log_widget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.log_widget.setTextElideMode(Qt.ElideNone)
@@ -63,10 +64,6 @@ class Ui_GameValidatorWidget(object):
         self.options_layout.addWidget(self.verbosity_label, 0, 0, 1, 1)
 
         self.verbosity_combo = QComboBox(GameValidatorWidget)
-        self.verbosity_combo.addItem("")
-        self.verbosity_combo.addItem("")
-        self.verbosity_combo.addItem("")
-        self.verbosity_combo.addItem("")
         self.verbosity_combo.setObjectName(u"verbosity_combo")
 
         self.options_layout.addWidget(self.verbosity_combo, 0, 1, 1, 1)
@@ -133,22 +130,17 @@ class Ui_GameValidatorWidget(object):
         self.start_button.setText(QCoreApplication.translate("GameValidatorWidget", u"Start", None))
         self.status_label.setText(QCoreApplication.translate("GameValidatorWidget", u"Not started", None))
         ___qtreewidgetitem = self.log_widget.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Playthrough", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Playthrough", None))
 
         __sortingEnabled = self.log_widget.isSortingEnabled()
         self.log_widget.setSortingEnabled(False)
         ___qtreewidgetitem1 = self.log_widget.topLevelItem(0)
-        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("GameValidatorWidget", u"To view the playthrough, it's necessary to run the solver.", None));
+        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("GameValidatorWidget", u"To view the playthrough, it's necessary to run the solver.", None))
         ___qtreewidgetitem2 = self.log_widget.topLevelItem(1)
-        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Press the Start button at the bottom-right and wait for it to finish.", None));
+        ___qtreewidgetitem2.setText(0, QCoreApplication.translate("GameValidatorWidget", u"Press the Start button at the bottom-right and wait for it to finish.", None))
         self.log_widget.setSortingEnabled(__sortingEnabled)
 
         self.verbosity_label.setText(QCoreApplication.translate("GameValidatorWidget", u"<html><head/><body><p>Verbosity</p></body></html>", None))
-        self.verbosity_combo.setItemText(0, QCoreApplication.translate("GameValidatorWidget", u"Silent", None))
-        self.verbosity_combo.setItemText(1, QCoreApplication.translate("GameValidatorWidget", u"Normal", None))
-        self.verbosity_combo.setItemText(2, QCoreApplication.translate("GameValidatorWidget", u"High", None))
-        self.verbosity_combo.setItemText(3, QCoreApplication.translate("GameValidatorWidget", u"Extreme", None))
-
         self.show_pickups_check.setText(QCoreApplication.translate("GameValidatorWidget", u"Majors", None))
         self.show_minors_check.setText(QCoreApplication.translate("GameValidatorWidget", u"Minors", None))
         self.show_events_check.setText(QCoreApplication.translate("GameValidatorWidget", u"Events", None))

@@ -43,9 +43,9 @@ class HintExporter:
         with_color: bool,
     ) -> str:
         all_patches = self.namer.all_patches
-        players_config = self.namer.players_config
+        worlds_config = self.namer.worlds_config
 
-        patches = all_patches[players_config.player_index]
+        patches = all_patches[worlds_config.world_index]
 
         if isinstance(hint, JokeHint):
             return self.namer.format_joke(self.create_joke_hint(), with_color)
@@ -53,7 +53,7 @@ class HintExporter:
         elif isinstance(hint, RedTempleHint):
             assert isinstance(self.namer, EchoesHintNamer)
             return create_temple_key_hint(
-                all_patches, players_config.player_index, hint.dark_temple, self.namer, with_color
+                all_patches, worlds_config.world_index, hint.dark_temple, self.namer, with_color
             )
 
         else:
@@ -61,7 +61,7 @@ class HintExporter:
             assert hint.precision.include_owner is not None
             assert not isinstance(hint.precision.item, SpecificHintPrecision)
 
-            configuration = all_patches[players_config.player_index].configuration
+            configuration = all_patches[worlds_config.world_index].configuration
 
             pickup_target = patches.pickup_assignment.get(hint.target)
             phint = pickup_hint.create_pickup_hint(
@@ -69,7 +69,7 @@ class HintExporter:
                 self.owner_game_view,
                 hint.precision.item,
                 pickup_target,
-                players_config,
+                worlds_config,
                 hint.precision.include_owner,
             )
             return self.namer.format_location_hint(

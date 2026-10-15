@@ -45,13 +45,7 @@ class DreadRemoteConnector(MercuryConnector):
         parent = LuaEditor.get_parent_for(None, main_item_id, 1)
 
         execute_string = (
-            f"RL.ReceivePickup({repr(message)},{parent},{repr(progression_as_lua)},"
-            f"{num_pickups},{self.inventory_index})"
+            f"RL.ReceivePickup({message!r},{parent},{progression_as_lua!r},{num_pickups},{self.inventory_index})"
         )
 
-        await self.executor.run_lua_code(execute_string)
-
-    async def display_arbitrary_message(self, message: str) -> None:
-        escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
-        execute_string = f"Game.AddSF(0, 'Scenario.QueueAsyncPopup', 'si', '{escaped_message}', 10.0)"
         await self.executor.run_lua_code(execute_string)

@@ -367,6 +367,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "OmegaMetroid",
+                    "grants_on_collect": [],
                     "connections": {
                         "Event - Victory": {
                             "type": "and",
@@ -392,6 +393,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "VictoryEvent",
+                    "grants_on_collect": [],
                     "connections": {
                         "Ship": {
                             "type": "and",
@@ -422,7 +424,8 @@
                         "x": 18,
                         "y": 13
                     }
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Docking Bay Hangar": {
@@ -767,6 +770,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Docking Bay Climb": {
                             "type": "and",
@@ -867,7 +871,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE",
+                                            "comment": "Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE . Can safely not have DLR check, as you can always enter from one door, which is enough to spark.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -894,15 +898,6 @@
                                                         "name": "ShinesparkTrick",
                                                         "amount": 3,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "OpenHatchLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -1258,7 +1253,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "MainDeckEast",
+                        "hint_name": "MAIN_DECK_EAST",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -1524,7 +1519,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Elevator to Central Nexus": {
+                "Door to Habitation Deck Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1545,7 +1540,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Central Nexus",
+                        "area": "Habitation Deck Elevator",
                         "node": "Door to Habitation Deck Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1582,7 +1577,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Elevator to Central Nexus": {
+                        "Door to Habitation Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1655,7 +1650,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Elevator to Operations Deck": {
+                        "Door to Crew Quarters Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1704,7 +1699,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Operations Deck": {
+                "Door to Crew Quarters Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1725,7 +1720,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Operations Deck",
+                        "area": "Crew Quarters Elevator",
                         "node": "Door to Crew Quarters West"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1930,7 +1925,7 @@
                                 ]
                             }
                         },
-                        "Door to Elevator to Crew Quarters": {
+                        "Door to Operations Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2009,7 +2004,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Crew Quarters": {
+                        "Door to Operations Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2018,7 +2013,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Crew Quarters": {
+                "Door to Operations Deck Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2033,15 +2028,14 @@
                     "extra": {
                         "door_idx": [
                             141,
-                            174,
-                            204
+                            174
                         ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Crew Quarters",
+                        "area": "Operations Deck Elevator",
                         "node": "Door to Operations Deck"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2082,7 +2076,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY",
+                                                        "comment": "Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2106,15 +2100,6 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "misc",
-                                                                    "name": "DoorLockRando",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
                                                                     "name": "EntranceRando",
                                                                     "amount": 1,
                                                                     "negate": true
@@ -2123,8 +2108,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "L0Locks",
+                                                                    "type": "events",
+                                                                    "name": "OpDeckSave",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -2229,14 +2214,13 @@
                         "y": 400.0,
                         "z": 0.0
                     },
-                    "description": "This door is currently an event door and thus always Level-0",
+                    "description": "Room Graphics are incorrect, this is an L0 door.",
                     "layers": [
                         "default"
                     ],
                     "extra": {
                         "door_idx": [
-                            193,
-                            146
+                            193
                         ]
                     },
                     "valid_starting_location": false,
@@ -2277,6 +2261,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "SA-X",
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Operations Room Hatch": {
                             "type": "and",
@@ -2302,7 +2287,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Elevator to Crew Quarters": {
+                        "Door to Operations Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2732,6 +2717,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckOperationsMissileShield",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
                             "type": "and",
@@ -2915,7 +2901,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Central Nexus": {
+                "Door to Habitation Deck Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2936,7 +2922,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Central Nexus",
+                        "area": "Habitation Deck Elevator",
                         "node": "Door to Habitation Deck Entrance"
                     },
                     "default_dock_weakness": "L2 Hatch",
@@ -3043,8 +3029,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 2,
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -3058,41 +3044,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Ice Missiles"
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Ice Beam"
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "With Diffusion it's stricter: https://www.youtube.com/watch?v=H5AlKJwEuTU",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Freeze Enemies With Diffusion"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 }
                                             ]
                                         }
@@ -3123,6 +3076,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Freeze Enemies With Any Weapon"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3221,7 +3183,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Central Nexus": {
+                        "Door to Habitation Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3261,7 +3223,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Central Nexus": {
+                        "Door to Habitation Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3322,7 +3284,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Central Nexus": {
+                        "Door to Habitation Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3466,7 +3428,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "MainDeckWest",
+                        "hint_name": "MAIN_DECK_WEST",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -3563,6 +3525,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Restricted Navigation Room": {
                             "type": "or",
@@ -3800,7 +3763,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Habitation Deck": {
+                "Door to Nexus Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3821,7 +3784,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Habitation Deck",
+                        "area": "Nexus Elevator",
                         "node": "Door to Central Nexus"
                     },
                     "default_dock_weakness": "L2 Hatch",
@@ -3871,7 +3834,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Habitation Deck": {
+                        "Door to Nexus Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3915,16 +3878,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Break Single Bomb Blocks"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Break Single Bomb Blocks"
                                     },
                                     {
                                         "type": "and",
@@ -4389,6 +4344,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckPBGeron",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Station Entrance": {
                             "type": "and",
@@ -4500,6 +4456,15 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
@@ -4515,8 +4480,54 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Reach the upper spot",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Walljump off the platform",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Jump Upgrade"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get into tunnel",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4693,6 +4704,15 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
@@ -4708,12 +4728,24 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -5261,7 +5293,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Speedboost from other room",
+                                            "comment": "Speedboost from other room. This can safely not have DLR check; either you come from here in which case you opened the door, or you arrived here, in which case you can go back the way you came from.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5270,15 +5302,6 @@
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 },
                                                 {
@@ -5398,6 +5421,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "MAIN_HUB_BOTTOM",
                         "door_idx": [
                             50
                         ],
@@ -5418,14 +5443,14 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 2 (TRO)": {
+                        "Door to Sector Hub Lift 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Elevator to Sector 1 (SRX)": {
+                        "Door to Sector Hub Lift 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5441,7 +5466,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Sector 2 (TRO)": {
+                "Door to Sector Hub Lift 2": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5463,7 +5488,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 2 (TRO)",
+                        "area": "Sector Hub Lift 2",
                         "node": "Door to Sector Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5482,7 +5507,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Sector 1 (SRX)": {
+                "Door to Sector Hub Lift 1": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5504,7 +5529,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 1 (SRX)",
+                        "area": "Sector Hub Lift 1",
                         "node": "Door to Sector Hub"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5538,6 +5563,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckHubVisited",
+                    "grants_on_collect": [],
                     "connections": {
                         "Elevator to Main Elevator Shaft": {
                             "type": "and",
@@ -5550,7 +5576,7 @@
                 }
             }
         },
-        "Elevator to Sector 2 (TRO)": {
+        "Sector Hub Lift 2": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -5593,7 +5619,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Sector Hub",
-                        "node": "Door to Elevator to Sector 2 (TRO)"
+                        "node": "Door to Sector Hub Lift 2"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5602,7 +5628,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 4 (AQA)": {
+                        "Door to Sector Hub Lift 4": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5618,7 +5644,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Sector 4 (AQA)": {
+                "Door to Sector Hub Lift 4": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5640,8 +5666,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 4 (AQA)",
-                        "node": "Door to Elevator to Sector 2 (TRO)"
+                        "area": "Sector Hub Lift 4",
+                        "node": "Door to Sector Hub Lift 2"
                     },
                     "default_dock_weakness": "L1 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5672,6 +5698,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_2",
                         "door_idx": [
                             68
                         ]
@@ -5680,7 +5708,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Sector 2 (TRO)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 2 (TRO) Entrance Elevator",
                         "node": "Elevator to Main Deck"
                     },
                     "default_dock_weakness": "Elevator",
@@ -5701,7 +5729,7 @@
                 }
             }
         },
-        "Elevator to Sector 4 (AQA)": {
+        "Sector Hub Lift 4": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -5721,7 +5749,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Sector 2 (TRO)": {
+                "Door to Sector Hub Lift 2": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5743,8 +5771,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 2 (TRO)",
-                        "node": "Door to Elevator to Sector 4 (AQA)"
+                        "area": "Sector Hub Lift 2",
+                        "node": "Door to Sector Hub Lift 4"
                     },
                     "default_dock_weakness": "L1 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5753,7 +5781,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 6 (NOC)": {
+                        "Door to Sector Hub Lift 6": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5769,7 +5797,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Sector 6 (NOC)": {
+                "Door to Sector Hub Lift 6": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5791,8 +5819,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 6 (NOC)",
-                        "node": "Door to Elevator to Sector 4 (AQA)"
+                        "area": "Sector Hub Lift 6",
+                        "node": "Door to Sector Hub Lift 4"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5801,7 +5829,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 2 (TRO)": {
+                        "Door to Sector Hub Lift 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5823,6 +5851,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_4",
                         "door_idx": [
                             70
                         ]
@@ -5831,7 +5861,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 4 (AQA) Entrance Elevator",
                         "node": "Elevator to Main Deck"
                     },
                     "default_dock_weakness": "Elevator",
@@ -5841,7 +5871,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 2 (TRO)": {
+                        "Door to Sector Hub Lift 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5852,7 +5882,7 @@
                 }
             }
         },
-        "Elevator to Sector 6 (NOC)": {
+        "Sector Hub Lift 6": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -5872,7 +5902,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Sector 4 (AQA)": {
+                "Door to Sector Hub Lift 4": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5894,8 +5924,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 4 (AQA)",
-                        "node": "Door to Elevator to Sector 6 (NOC)"
+                        "area": "Sector Hub Lift 4",
+                        "node": "Door to Sector Hub Lift 6"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5926,6 +5956,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_6",
                         "door_idx": [
                             72
                         ]
@@ -5934,7 +5966,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 6 (NOC) Entrance Elevator",
                         "node": "Elevator to Main Deck"
                     },
                     "default_dock_weakness": "Elevator",
@@ -5944,7 +5976,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 4 (AQA)": {
+                        "Door to Sector Hub Lift 4": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5955,7 +5987,7 @@
                 }
             }
         },
-        "Elevator to Sector 1 (SRX)": {
+        "Sector Hub Lift 1": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -5998,7 +6030,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Sector Hub",
-                        "node": "Door to Elevator to Sector 1 (SRX)"
+                        "node": "Door to Sector Hub Lift 1"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6007,7 +6039,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 3 (PYR)": {
+                        "Door to Sector Hub Lift 3": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6023,7 +6055,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Sector 3 (PYR)": {
+                "Door to Sector Hub Lift 3": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6045,8 +6077,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 3 (PYR)",
-                        "node": "Door to Elevator to Sector 1 (SRX)"
+                        "area": "Sector Hub Lift 3",
+                        "node": "Door to Sector Hub Lift 1"
                     },
                     "default_dock_weakness": "L1 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6077,6 +6109,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_1",
                         "door_idx": [
                             67
                         ]
@@ -6085,7 +6119,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 1 (SRX) Entrance Elevator",
                         "node": "Elevator to Main Deck"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6106,7 +6140,7 @@
                 }
             }
         },
-        "Elevator to Sector 3 (PYR)": {
+        "Sector Hub Lift 3": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -6126,7 +6160,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Sector 1 (SRX)": {
+                "Door to Sector Hub Lift 1": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6148,8 +6182,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 1 (SRX)",
-                        "node": "Door to Elevator to Sector 3 (PYR)"
+                        "area": "Sector Hub Lift 1",
+                        "node": "Door to Sector Hub Lift 3"
                     },
                     "default_dock_weakness": "L1 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6158,7 +6192,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 5 (ARC)": {
+                        "Door to Sector Hub Lift 5": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6174,7 +6208,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Sector 5 (ARC)": {
+                "Door to Sector Hub Lift 5": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6196,8 +6230,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 5 (ARC)",
-                        "node": "Door to Elevator to Sector 3 (PYR)"
+                        "area": "Sector Hub Lift 5",
+                        "node": "Door to Sector Hub Lift 3"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6206,7 +6240,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 1 (SRX)": {
+                        "Door to Sector Hub Lift 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6228,6 +6262,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_3",
                         "door_idx": [
                             69
                         ]
@@ -6236,7 +6272,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 3 (PYR) Entrance Elevator",
                         "node": "Elevator to Main Deck"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6246,7 +6282,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 1 (SRX)": {
+                        "Door to Sector Hub Lift 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6257,7 +6293,7 @@
                 }
             }
         },
-        "Elevator to Sector 5 (ARC)": {
+        "Sector Hub Lift 5": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -6277,7 +6313,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Sector 3 (PYR)": {
+                "Door to Sector Hub Lift 3": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6299,8 +6335,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 3 (PYR)",
-                        "node": "Door to Elevator to Sector 5 (ARC)"
+                        "area": "Sector Hub Lift 3",
+                        "node": "Door to Sector Hub Lift 5"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6331,6 +6367,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_5",
                         "door_idx": [
                             71
                         ]
@@ -6339,7 +6377,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 5 (ARC) Entrance Elevator",
                         "node": "Elevator to Main Deck"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6349,7 +6387,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Sector 3 (PYR)": {
+                        "Door to Sector Hub Lift 3": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6476,7 +6514,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "OperationsDeck",
+                        "hint_name": "OPERATIONS_DECK",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -6491,7 +6529,7 @@
                                     "type": "resource",
                                     "data": {
                                         "type": "items",
-                                        "name": "L0Locks",
+                                        "name": "L1Locks",
                                         "amount": 1,
                                         "negate": false
                                     }
@@ -6661,7 +6699,7 @@
                 ]
             },
             "nodes": {
-                "Other to Elevator to Sector Hub": {
+                "Other to Main Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6682,7 +6720,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector Hub",
+                        "area": "Main Elevator",
                         "node": "Elevator to Main Elevator Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -6732,7 +6770,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Elevator to Sector Hub": {
+                        "Other to Main Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6811,6 +6849,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Crew Quarters East": {
                             "type": "and",
@@ -6928,7 +6967,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y",
+                                            "comment": "Destroy with Speed Booster",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6942,37 +6981,10 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
                                                         "type": "misc",
                                                         "name": "EntranceRando",
                                                         "amount": 1,
                                                         "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -6991,6 +7003,57 @@
                                                         "name": "Knowledge",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Run from edge of Operations Deck. TODO: vid.",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Run from Save Station, spark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y . This can safely have no DLR check",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "OpDeckSave",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -7055,7 +7118,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            81
+                            81,
+                            146
                         ]
                     },
                     "valid_starting_location": false,
@@ -7188,7 +7252,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            82
+                            82,
+                            204
                         ]
                     },
                     "valid_starting_location": false,
@@ -7251,6 +7316,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckMaintainanceGeronLower",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Crew Quarters West": {
                             "type": "and",
@@ -7276,6 +7342,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckMaintainanceGeronUpper",
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Operations Deck": {
                             "type": "and",
@@ -7444,6 +7511,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -7673,6 +7741,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Arachnus",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Morph Ball)": {
                             "type": "and",
@@ -7698,7 +7767,7 @@
                     "extra": {
                         "area": 0,
                         "room": 38,
-                        "source": "Arachnus",
+                        "source": "ARACHNUS",
                         "boss_hint_name": "Arachnus",
                         "infant_weight": 3.5
                     },
@@ -7709,6 +7778,7 @@
                     "hint_features": [
                         "boss"
                     ],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -8019,7 +8089,7 @@
                     "extra": {
                         "area": 0,
                         "room": 39,
-                        "source": "MainDeckData",
+                        "source": "MAIN_DECK_DATA",
                         "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
@@ -8027,6 +8097,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
                             "type": "and",
@@ -8039,7 +8110,7 @@
                 }
             }
         },
-        "Elevator to Sector Hub": {
+        "Main Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -8073,6 +8144,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TOP",
                         "door_idx": [
                             94,
                             49
@@ -8083,7 +8156,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Shaft",
-                        "node": "Other to Elevator to Sector Hub"
+                        "node": "Other to Main Elevator"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -8124,7 +8197,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Access",
-                        "node": "Other to Elevator to Sector Hub"
+                        "node": "Other to Main Elevator"
                     },
                     "default_dock_weakness": "Destroyed Door",
                     "exclude_from_dock_rando": false,
@@ -8171,7 +8244,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Cache",
-                        "node": "Other to Elevator to Sector Hub"
+                        "node": "Other to Main Elevator"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -8212,7 +8285,7 @@
                 ]
             },
             "nodes": {
-                "Other to Elevator to Sector Hub": {
+                "Other to Main Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8234,7 +8307,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector Hub",
+                        "area": "Main Elevator",
                         "node": "Other to Main Elevator Access"
                     },
                     "default_dock_weakness": "Destroyed Door",
@@ -8285,7 +8358,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Elevator to Sector Hub": {
+                        "Other to Main Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8377,6 +8450,39 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Operations Save Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Operations Save Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 88.56,
+                        "y": 131.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "OpDeckSave",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -8422,6 +8528,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Operations Ventilation": {
                             "type": "and",
@@ -8596,6 +8703,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Dark Stairwell": {
                             "type": "or",
@@ -8704,6 +8812,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Station Entrance": {
                             "type": "and",
@@ -9248,7 +9357,7 @@
                         "Other to Silo Tunnel": {
                             "type": "and",
                             "data": {
-                                "comment": "Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw",
+                                "comment": "Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw . Can safely not have DLR check, as if you can reach Aux and be here, you can go through doors.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9271,7 +9380,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get high enough to spark",
+                                            "comment": "Get high enough to the third platform to spark",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9286,8 +9395,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 2,
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 }
@@ -9351,15 +9460,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "OpenHatchLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": "Beam requirements.",
@@ -9369,15 +9469,6 @@
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ChargeBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -9393,67 +9484,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Having only one beam makes this harder to hit / have only one attempt",
-                                                        "items": [
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "If you only have charge, you need to have access to the other side",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "ChargeBeam",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "events",
-                                                                                            "name": "RightSiloCheckpointShutter",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "WaveBeam",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Without Wave nor Charge, there's only one attempt and its hard.",
+                                                        "comment": "Without Wave, there's only one attempt and its hard.",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9461,15 +9492,6 @@
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
                                                                     "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "RightSiloCheckpointShutter",
-                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -9484,6 +9506,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "RightSiloCheckpointShutter",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -9604,7 +9635,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4",
+                                            "comment": "Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4 .  Can safely not have DLR check as Save Station is a dead-end",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9629,15 +9660,6 @@
                                                     "data": {
                                                         "type": "misc",
                                                         "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "OpenHatchLockRando",
                                                         "amount": 1,
                                                         "negate": true
                                                     }
@@ -9749,6 +9771,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Silo Scaffolding": {
                             "type": "and",
@@ -10105,6 +10128,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Pickup": {
                             "type": "and",
@@ -10654,13 +10678,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Access Right of Silo Checkpoint Shutter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -10710,31 +10727,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Access Right of Silo Checkpoint Shutter": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 201.96,
-                        "y": 116.83,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "RightSiloCheckpointShutter",
-                    "connections": {
-                        "Door to Auxiliary Navigation Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -10843,6 +10835,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Aux Power Station Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -10861,7 +10860,7 @@
                     "extra": {
                         "area": 0,
                         "room": 54,
-                        "source": "AuxiliaryPower",
+                        "source": "AUXILIARY_POWER",
                         "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
@@ -10869,6 +10868,33 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Door to Auxiliary Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Aux Power Station Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.35,
+                        "y": 164.02,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "RightSiloCheckpointShutter",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Auxiliary Navigation Room": {
                             "type": "and",
@@ -11160,7 +11186,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "AuxiliaryPower",
+                        "hint_name": "AUXILIARY_POWER",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "DETAILED"
                     },
@@ -11225,6 +11251,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Central Nexus": {
                             "type": "or",
@@ -11411,7 +11438,7 @@
                 }
             }
         },
-        "Elevator to Crew Quarters": {
+        "Operations Deck Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11431,7 +11458,7 @@
                 ]
             },
             "nodes": {
-                "Elevator to Elevator to Operations Deck": {
+                "Elevator to Crew Quarters Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11444,6 +11471,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "OPERATIONS_DECK_TOP",
                         "door_idx": [
                             26
                         ]
@@ -11452,8 +11481,8 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Operations Deck",
-                        "node": "Elevator to Elevator to Crew Quarters"
+                        "area": "Crew Quarters Elevator",
+                        "node": "Elevator to Operations Deck Elevator"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -11493,7 +11522,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Operations Deck",
-                        "node": "Door to Elevator to Crew Quarters"
+                        "node": "Door to Operations Deck Elevator"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11502,7 +11531,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Elevator to Operations Deck": {
+                        "Elevator to Crew Quarters Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11513,7 +11542,7 @@
                 }
             }
         },
-        "Elevator to Operations Deck": {
+        "Crew Quarters Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11533,7 +11562,7 @@
                 ]
             },
             "nodes": {
-                "Elevator to Elevator to Crew Quarters": {
+                "Elevator to Operations Deck Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11546,6 +11575,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "OPERATIONS_DECK_BOTTOM",
                         "door_idx": [
                             25
                         ]
@@ -11554,8 +11585,8 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Crew Quarters",
-                        "node": "Elevator to Elevator to Operations Deck"
+                        "area": "Operations Deck Elevator",
+                        "node": "Elevator to Crew Quarters Elevator"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -11595,7 +11626,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Crew Quarters West",
-                        "node": "Door to Elevator to Operations Deck"
+                        "node": "Door to Crew Quarters Elevator"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11604,7 +11635,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Elevator to Crew Quarters": {
+                        "Elevator to Operations Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11615,7 +11646,7 @@
                 }
             }
         },
-        "Back Door to Sector 6 (NOC)": {
+        "Restricted Back Door": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11635,7 +11666,7 @@
                 ]
             },
             "nodes": {
-                "Other to Checkpoint to Restricted Zone": {
+                "Other to Authorization Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11656,8 +11687,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Checkpoint to Restricted Zone",
-                        "node": "Other to Back Door to Sector 6 (NOC)"
+                        "area": "Authorization Checkpoint",
+                        "node": "Other to Restricted Back Door"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -11697,7 +11728,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Save Room",
-                        "node": "Door to Back Door to Sector 6 (NOC)"
+                        "node": "Door to Restricted Back Door"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11706,7 +11737,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Checkpoint to Restricted Zone": {
+                        "Other to Authorization Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11758,7 +11789,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Equipment manip",
+                                                        "comment": "Disable Screw during the walljump to ledge grab on the left side and jump to the right side",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -11808,7 +11839,7 @@
                 "unlocked_save_recharge_station": true
             },
             "nodes": {
-                "Door to Back Door to Sector 6 (NOC)": {
+                "Door to Restricted Back Door": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11829,7 +11860,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Back Door to Sector 6 (NOC)",
+                        "area": "Restricted Back Door",
                         "node": "Door to Restricted Save Room"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -11879,7 +11910,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Back Door to Sector 6 (NOC)": {
+                        "Door to Restricted Back Door": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12042,7 +12073,7 @@
                 ]
             },
             "nodes": {
-                "Door to Elevator to Tourian (SRX)": {
+                "Door to Restricted Zone Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12063,7 +12094,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Tourian (SRX)",
+                        "area": "Restricted Zone Elevator",
                         "node": "Door to Restricted Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -12113,7 +12144,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Tourian (SRX)": {
+                        "Door to Restricted Zone Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12142,17 +12173,19 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "RestrictedLabs",
+                        "hint_name": "RESTRICTED_LABS",
                         "location_precision": "DETAILED",
                         "item_precision": "DETAILED"
                     },
                     "valid_starting_location": false,
                     "kind": "generic",
                     "requirement_to_collect": {
-                        "type": "and",
+                        "type": "resource",
                         "data": {
-                            "comment": null,
-                            "items": []
+                            "type": "items",
+                            "name": "L4Locks",
+                            "amount": 1,
+                            "negate": false
                         }
                     },
                     "connections": {
@@ -12167,7 +12200,7 @@
                 }
             }
         },
-        "Elevator to Tourian (SRX)": {
+        "Restricted Zone Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -12209,7 +12242,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Navigation Room",
-                        "node": "Door to Elevator to Tourian (SRX)"
+                        "node": "Door to Restricted Zone Elevator"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -12218,7 +12251,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Elevator to Restricted Zone": {
+                        "Elevator to Tourian Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12227,7 +12260,7 @@
                         }
                     }
                 },
-                "Elevator to Elevator to Restricted Zone": {
+                "Elevator to Tourian Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12240,6 +12273,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "RESTRICTED_LAB_TO_SECTOR_1",
                         "door_idx": [
                             154
                         ]
@@ -12248,8 +12283,8 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Elevator to Restricted Zone",
-                        "node": "Elevator to Elevator to Tourian (SRX)"
+                        "area": "Tourian Elevator",
+                        "node": "Elevator to Restricted Zone Elevator"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -12343,6 +12378,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Pickup": {
                             "type": "and",
@@ -12501,15 +12537,15 @@
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
+                                            "type": "events",
+                                            "name": "Animals",
                                             "amount": 1,
-                                            "negate": true
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -12598,13 +12634,13 @@
                         "Door to Habitation Deck Entrance (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "GeneratorHack",
+                                            "type": "events",
+                                            "name": "Animals",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -12612,7 +12648,7 @@
                                 ]
                             }
                         },
-                        "Pickup (Save the Animals)": {
+                        "Event - Activate Animal Controls": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12636,7 +12672,7 @@
                     "extra": {
                         "area": 0,
                         "room": 69,
-                        "source": "Animals",
+                        "source": "ANIMALS",
                         "infant_weight": 0.4
                     },
                     "valid_starting_location": false,
@@ -12646,6 +12682,7 @@
                     "hint_features": [
                         "systems_console"
                     ],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",
@@ -12748,6 +12785,32 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Activate Animal Controls": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200.68454661558107,
+                        "y": 376.59770114942535,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Animals",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Pickup (Save the Animals)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -12903,7 +12966,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Hornoad)": {
+                        "Hornoad": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12936,8 +12999,40 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Hornoad": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hornoad": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 221.97,
+                        "y": 140.41,
+                        "z": 0.0
+                    },
+                    "description": "Always drops Refill-X.",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Quarantine Junction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Hornoad)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12988,6 +13083,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Dark Stairwell": {
                             "type": "and",
@@ -13100,8 +13196,9 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
-                        "Other to Elevator to Sector Hub": {
+                        "Other to Main Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13110,7 +13207,7 @@
                         }
                     }
                 },
-                "Other to Elevator to Sector Hub": {
+                "Other to Main Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13131,7 +13228,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector Hub",
+                        "area": "Main Elevator",
                         "node": "Other to Main Elevator Cache"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -13171,7 +13268,7 @@
                 }
             }
         },
-        "Elevator to Habitation Deck": {
+        "Nexus Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -13213,7 +13310,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Central Nexus",
-                        "node": "Door to Elevator to Habitation Deck"
+                        "node": "Door to Nexus Elevator"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -13222,7 +13319,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Elevator to Elevator to Central Nexus": {
+                        "Elevator to Habitation Deck Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13231,7 +13328,7 @@
                         }
                     }
                 },
-                "Elevator to Elevator to Central Nexus": {
+                "Elevator to Habitation Deck Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13244,6 +13341,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "HABITATION_DECK_BOTTOM",
                         "door_idx": [
                             177
                         ]
@@ -13252,8 +13351,8 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Central Nexus",
-                        "node": "Elevator to Elevator to Habitation Deck"
+                        "area": "Habitation Deck Elevator",
+                        "node": "Elevator to Nexus Elevator"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -13273,7 +13372,7 @@
                 }
             }
         },
-        "Elevator to Central Nexus": {
+        "Habitation Deck Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -13315,7 +13414,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck Save Room",
-                        "node": "Door to Elevator to Central Nexus"
+                        "node": "Door to Habitation Deck Elevator"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -13333,7 +13432,7 @@
                         }
                     }
                 },
-                "Elevator to Elevator to Habitation Deck": {
+                "Elevator to Nexus Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13346,6 +13445,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "HABITATION_DECK_TOP",
                         "door_idx": [
                             178
                         ]
@@ -13354,8 +13455,8 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Habitation Deck",
-                        "node": "Elevator to Elevator to Central Nexus"
+                        "area": "Nexus Elevator",
+                        "node": "Elevator to Habitation Deck Elevator"
                     },
                     "default_dock_weakness": "Elevator",
                     "exclude_from_dock_rando": false,
@@ -13395,7 +13496,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Habitation Deck Entrance",
-                        "node": "Door to Elevator to Central Nexus"
+                        "node": "Door to Habitation Deck Elevator"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -13411,7 +13512,7 @@
                                 "items": []
                             }
                         },
-                        "Elevator to Elevator to Habitation Deck": {
+                        "Elevator to Nexus Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13580,7 +13681,7 @@
                         "y": 80.0,
                         "z": 0.0
                     },
-                    "description": "This door is currently an event door and thus always Level-0",
+                    "description": "Room Graphics are incorrect, this is an L0 door.",
                     "layers": [
                         "default"
                     ],
@@ -13627,6 +13728,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Controls",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Operations Deck": {
                             "type": "and",
@@ -13679,6 +13781,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Arachnus Arena": {
                             "type": "and",
@@ -13852,6 +13955,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Yakuza",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Space Jump)": {
                             "type": "and",
@@ -13877,7 +13981,7 @@
                     "extra": {
                         "area": 0,
                         "room": 86,
-                        "source": "Yakuza",
+                        "source": "YAKUZA",
                         "boss_hint_name": "Yakuza",
                         "infant_weight": 3.5
                     },
@@ -13886,6 +13990,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",

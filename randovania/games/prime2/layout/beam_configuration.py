@@ -13,9 +13,8 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True)
 class BeamAmmoConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
-    item_index: int = dataclasses.field(metadata={"min": 0, "max": 108})
-    ammo_a: int = dataclasses.field(metadata={"min": -1, "max": 108})
-    ammo_b: int = dataclasses.field(metadata={"min": -1, "max": 108})
+    ammo_a: int | None = dataclasses.field(metadata={"min": 0, "max": 108})
+    ammo_b: int | None = dataclasses.field(metadata={"min": 0, "max": 108})
     uncharged_cost: int = dataclasses.field(metadata={"min": 0, "max": 250, "if_different": 1})
     charged_cost: int = dataclasses.field(metadata={"min": 0, "max": 250, "if_different": 5})
     combo_missile_cost: int = dataclasses.field(metadata={"min": 1, "max": 250, "if_different": 5})

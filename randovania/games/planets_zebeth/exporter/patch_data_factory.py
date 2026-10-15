@@ -33,7 +33,10 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
     def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], _rng: Random) -> dict:
         pickup_map_dict = {}
         for pickup in pickup_list:
-            quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.is_for_remote_player else 0
+            if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
+                quantity = pickup.conditional_resources[0].resources[0][1]
+            else:
+                quantity = 0
             object_id = str(self.game.region_list.node_from_pickup_index(pickup.index).extra["object_id"])
             res_lock = pickup.original_pickup.resource_lock
             text_index = (
@@ -54,7 +57,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                     pickup_type = pickup.original_pickup.name
 
             acquired_msg = pickup.name
-            if not self.players_config.is_multiworld:
+            if not self.worlds_config.is_multiworld:
                 acquired_msg = f"{pickup.original_pickup.name} acquired"
 
             pickup_map_dict[object_id] = {
@@ -75,7 +78,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         starting_resources = self.patches.starting_resources()
         return {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
 
-    def _create_starting_memo(self) -> dict:
+    def _create_starting_memo(self) -> dict | None:
         starting_memo = None
         extra_starting = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
         if extra_starting:
@@ -87,6 +90,8 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
                 "description": textwrap.wrap(starting_memo, width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX),
             }
 
+        return None
+
     def _create_starting_location(self) -> dict:
         return {
             "x": self.game.region_list.node_by_identifier(self.patches.starting_location).extra["global_x"],
@@ -97,27 +102,61 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         return {
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
-            "session_uuid": str(self.players_config.get_own_uuid()),
+            "session_uuid": str(self.world_uuid),
         }
 
-    def _create_game_config_dict(self):
+    def _create_game_config_dict(self, pickup_list: list[ExportedPickupDetails]) -> dict:
+        def get_locked_ammo_text(ammo_item: str) -> dict[str, str | list[str]]:
+            text = "MISSING TEXT, PLEASE REPORT THIS!"
+            for pickup in pickup_list:
+                if pickup.original_pickup.name != ammo_item:
+                    continue
+                text = pickup.collection_text[0]
+                break
+            return {
+                "header": f"Locked {ammo_item} acquired",
+                "description": textwrap.wrap(
+                    text,
+                    width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX,
+                ),
+            }
+
+        required_amount_of_keys = 2
+        if not self.configuration.artifacts.vanilla_tourian_keys:
+            required_amount_of_keys = self.configuration.artifacts.required_artifacts
+
+        missile_tank_locked_text = get_locked_ammo_text("Missile Tank")
+        big_missile_tank_locked_text = get_locked_ammo_text("Big Missile Tank")
+
         return {
             "starting_room": self._create_starting_location(),
             "seed_identifier": self._create_hash_dict(),
+            "required_messages": {
+                "Missile Tank": missile_tank_locked_text,
+                "Big Missile Tank": big_missile_tank_locked_text,
+            },
             "starting_items": self._create_starting_items_dict(),
             "starting_memo": self._create_starting_memo(),
+            "warp_to_start": self.configuration.warp_to_start,
+            "open_missile_doors_with_one_missile": self.configuration.open_missile_doors_with_one_missile,
+            "allow_downward_shots": self.configuration.allow_downward_shots,
+            "allow_screw_attack_to_break_blocks": self.configuration.allow_screw_attack_to_break_blocks,
             "credits_string": self._credits_spoiler(),
+            "required_amount_of_keys": required_amount_of_keys,
         }
 
     def _create_cosmetics(self) -> dict:
         c = self.cosmetic_patches
         return {
-            "show_unexplored_map": c.show_unexplored_map,
+            "disable_low_health_beeping": c.disable_low_health_beeping,
             "room_names_on_hud": c.show_room_names.value,
+            "show_unexplored_map": c.show_unexplored_map,
+            "use_alternative_escape_theme": c.use_alternative_escape_theme,
+            "use_sm_boss_theme": c.use_sm_boss_theme,
         }
 
     def _get_item_data(self) -> dict:
-        item_data: dict = json_lib.read_path(
+        item_data: dict = json_lib.read_dict(
             RandovaniaGame.METROID_PLANETS_ZEBETH.data_path.joinpath("pickup_database", "item_data.json")
         )
 
@@ -135,8 +174,8 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         spoiler_dict = credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            PlanetsZebethHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            PlanetsZebethHintNamer(self.description.all_patches, self.worlds_config),
             "{}",
             False,
         )
@@ -171,8 +210,8 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory[PlanetsZebethConfiguration,
         pickup_list = self.export_pickup_list()
 
         return {
-            "seed": self.description.get_seed_for_world(self.players_config.player_index),
-            "game_config": self._create_game_config_dict(),
+            "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
+            "game_config": self._create_game_config_dict(pickup_list),
             "preferences": self._create_cosmetics(),
             "level_data": {"room": "rm_Zebeth", "pickups": self._create_pickups_dict(pickup_list, self.rng)},
         }

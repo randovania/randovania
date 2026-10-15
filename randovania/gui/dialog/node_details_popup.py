@@ -5,6 +5,7 @@ import itertools
 import json
 import logging
 import traceback
+import typing
 from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
@@ -15,7 +16,12 @@ from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import DockWeakness
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import (
+    HintNode,
+    HintNodeKind,
+    SpecificLocationHintNode,
+    SpecificPickupHintNode,
+)
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
@@ -31,14 +37,16 @@ from randovania.gui.widgets.editable_list_view import EditableListModel
 from randovania.lib import enum_lib, frozen_lib
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.dock import DockType, DockWeaknessDatabase
+    from randovania.game_description.db.dock import DockType, DockTypeDatabase
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.widgets.combo_box_item_delegate import ComboBoxItemDelegate
 
 
-def refresh_if_needed(combo: QtWidgets.QComboBox, func) -> None:
+def refresh_if_needed(combo: QtWidgets.QComboBox, func: Callable[[int], None]) -> None:
     if combo.currentIndex() == 0:
         func(0)
 
@@ -47,7 +55,7 @@ class DockWeaknessListModel(EditableListModel[DockWeakness]):
     delegate: ComboBoxItemDelegate
     type: DockType
 
-    def __init__(self, db: DockWeaknessDatabase, delegate: ComboBoxItemDelegate):
+    def __init__(self, db: DockTypeDatabase, delegate: ComboBoxItemDelegate) -> None:
         super().__init__()
         self.db = db
         self.delegate = delegate
@@ -70,8 +78,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     _unlocked_by_requirement = Requirement.trivial()
     _activated_by_requirement = Requirement.trivial()
     _connections_visualizers: dict[QtWidgets.QWidget, ConnectionsVisualizer]
+    _edit_popup: ConnectionsEditor | None = None
 
-    def __init__(self, game: GameDescription, node: Node):
+    def __init__(self, game: GameDescription, node: Node) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -100,13 +109,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.layers_combo.addItem(layer)
         self.layers_combo.setCurrentIndex(self.layers_combo.findText(node.layers[0]))
 
+        grantable = [*game.resource_database.item, *game.resource_database.event]
+        self.event_grants_box.create_model(grantable)
+        self.pickup_grants_box.create_model(grantable)
+
         self.dock_incompatible_model = DockWeaknessListModel(
-            self.game.dock_weakness_database, self.dock_incompatible_box.delegate
+            self.game.dock_type_database, self.dock_incompatible_box.delegate
         )
         self.dock_incompatible_box.setModel(self.dock_incompatible_model)
 
         self.dock_type_combo.clear()
-        for i, dock_type in enumerate(game.dock_weakness_database.dock_types):
+        for i, dock_type in enumerate(game.dock_type_database.dock_types):
             self.dock_type_combo.addItem(dock_type.long_name, userData=dock_type)
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
 
@@ -123,8 +136,16 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.event_resource_combo.addItem("No events in database", None)
             self.event_resource_combo.setEnabled(False)
 
+        # Hint
         for hint_node_kind in enum_lib.iterate_enum(HintNodeKind):
             self.hint_kind_combo.addItem(hint_node_kind.long_name, hint_node_kind)
+
+        specific_pickup_hints = game.game.hints.specific_pickup_hints
+        if specific_pickup_hints:
+            for specific_hint, details in specific_pickup_hints.items():
+                self.specific_pickup_target_combo.addItem(details.long_name, specific_hint)
+        else:
+            signal_handling.remove_value_from_combo(self.hint_kind_combo, HintNodeKind.SPECIFIC_PICKUP)
 
         # Pickup
         for category in enum_lib.iterate_enum(LocationCategory):
@@ -149,6 +170,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.on_teleporter_destination_region_combo
         )
         self.hint_requirement_to_collect_button.clicked.connect(self.on_hint_requirement_to_collect_button)
+        self.hint_kind_combo.currentIndexChanged.connect(self.on_hint_kind_combo)
+        self.specific_location_target_spin.valueChanged.connect(self.on_specific_location_target_spin)
         self.teleporter_network_unlocked_button.clicked.connect(self.on_teleporter_network_unlocked_button)
         self.teleporter_network_activate_button.clicked.connect(self.on_teleporter_network_activated_button)
 
@@ -205,7 +228,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return self.tab_teleporter_network
 
         else:
-            raise ValueError(f"Unknown node type: {node}")
+            raise TypeError(f"Unknown node type: {node}")
 
     def fill_for_dock(self, node: DockNode) -> None:
         # Connection
@@ -233,16 +256,32 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.pickup_index_spin.setValue(node.pickup_index.index)
         signal_handling.set_combo_with_value(self.location_category_combo, node.location_category)
         self.hint_feature_box.model.items = sorted(node.hint_features)
+        self.pickup_grants_box.items = node.grants_on_collect
 
     def fill_for_event(self, node: EventNode) -> None:
         signal_handling.set_combo_with_value(self.event_resource_combo, node.event)
+        self.event_grants_box.items = node.grants_on_collect
 
     def fill_for_configurable(self, node: ConfigurableNode) -> None:
         pass
 
     def fill_for_hint(self, node: HintNode) -> None:
         signal_handling.set_combo_with_value(self.hint_kind_combo, node.kind)
-        self.set_hint_requirement_to_collect(node.lock_requirement)
+        self.set_hint_requirement_to_collect(node.requirement_to_collect)
+
+        if isinstance(node, SpecificLocationHintNode):
+            self.specific_location_target_spin.setValue(node.target_index.index)
+        elif isinstance(node, SpecificPickupHintNode):
+            signal_handling.set_combo_with_value(self.specific_pickup_target_combo, node.specific_pickup_hint_id)
+
+        self._update_hint_target_visibility(node.kind)
+
+    def _update_hint_target_visibility(self, kind: HintNodeKind) -> None:
+        self.specific_location_target_label.setHidden(kind != HintNodeKind.SPECIFIC_LOCATION)
+        self.specific_location_target_spin.setHidden(kind != HintNodeKind.SPECIFIC_LOCATION)
+
+        self.specific_pickup_target_combo.setHidden(kind != HintNodeKind.SPECIFIC_PICKUP)
+        self.specific_pickup_target_label.setHidden(kind != HintNodeKind.SPECIFIC_PICKUP)
 
     def set_hint_requirement_to_collect(self, requirement: Requirement) -> None:
         self._hint_requirement_to_collect = requirement
@@ -299,17 +338,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         common_qt_lib.set_error_border_stylesheet(self.name_edit, has_error)
 
-    def on_node_type_combo(self, _: None) -> None:
+    def on_node_type_combo(self, index: int) -> None:
         self.tab_widget.setCurrentWidget(self._type_to_tab[self.node_type_combo.currentData()])
 
-    def on_dock_connection_region_combo(self, _: None) -> None:
+    def on_dock_connection_region_combo(self, index: int) -> None:
         region: Region = self.dock_connection_region_combo.currentData()
 
         self.dock_connection_area_combo.clear()
         for area in sorted(region.areas, key=lambda x: x.name):
             self.dock_connection_area_combo.addItem(area.name, userData=area)
 
-    def on_dock_connection_area_combo(self, _: None) -> None:
+    def on_dock_connection_area_combo(self, index: int) -> None:
         area: Area | None = self.dock_connection_area_combo.currentData()
 
         self.dock_connection_node_combo.clear()
@@ -321,14 +360,14 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         if empty:
             self.dock_connection_node_combo.addItem("Other", None)
 
-    def on_dock_type_combo(self, _) -> None:
+    def on_dock_type_combo(self, index: int) -> None:
         self.dock_weakness_combo.clear()
         current_type: DockType = self.dock_type_combo.currentData()
 
         self.dock_incompatible_model.change_type(current_type)
         self.dock_incompatible_box.list.reset()
 
-        for weakness in self.game.dock_weakness_database.get_by_type(current_type):
+        for weakness in self.game.dock_type_database.get_by_type(current_type):
             self.dock_weakness_combo.addItem(weakness.name, weakness)
 
     def on_dock_update_name_button(self) -> None:
@@ -337,6 +376,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         expected_name = next(integrity_check.expected_dock_names(new_node))
         self.name_edit.setText(expected_name)
         self.on_name_edit(self.name_edit.text())
+
+    def on_hint_kind_combo(self, index: int) -> None:
+        self._update_hint_target_visibility(self.hint_kind_combo.currentData())
+
+    def on_specific_location_target_spin(self, value: int) -> None:
+        has_error = not integrity_check.pickup_index_exists(PickupIndex(value), self.game)
+        common_qt_lib.set_error_border_stylesheet(self.specific_location_target_spin, has_error)
 
     # Pickup
 
@@ -353,7 +399,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self.pickup_index_spin.setValue(new_index)
                 return
 
-    def on_teleporter_destination_region_combo(self, _) -> None:
+    def on_teleporter_destination_region_combo(self, index: int) -> None:
         region: Region = self.teleporter_destination_region_combo.currentData()
 
         self.teleporter_destination_area_combo.clear()
@@ -458,6 +504,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 PickupIndex(self.pickup_index_spin.value()),
                 location_category=self.location_category_combo.currentData(),
                 hint_features=frozenset(self.hint_feature_box.model.items),
+                grants_on_collect=self.pickup_grants_box.items,
             )
 
         elif node_type == EventNode:
@@ -474,6 +521,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 extra,
                 valid_starting_location,
                 event,
+                self.event_grants_box.items,
             )
 
         elif node_type == ConfigurableNode:
@@ -489,7 +537,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             )
 
         elif node_type == HintNode:
-            return HintNode(
+            kind = typing.cast("HintNodeKind", self.hint_kind_combo.currentData())
+
+            hint_args = {}
+            if kind == HintNodeKind.SPECIFIC_LOCATION:
+                target_index = self.specific_location_target_spin.value()
+                hint_args["target_index"] = PickupIndex(target_index)
+            elif kind == HintNodeKind.SPECIFIC_PICKUP:
+                specific_pickup_hint_id = self.specific_pickup_target_combo.currentData()
+                hint_args["specific_pickup_hint_id"] = specific_pickup_hint_id
+
+            return kind.hint_node_class(
                 identifier,
                 node_index,
                 heal,
@@ -498,8 +556,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 layers,
                 extra,
                 valid_starting_location,
-                self.hint_kind_combo.currentData(),
                 self._hint_requirement_to_collect,
+                **hint_args,
             )
 
         elif node_type == TeleporterNetworkNode:

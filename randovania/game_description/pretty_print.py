@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pprint
 import typing
 from typing import TYPE_CHECKING, TextIO
 
@@ -7,7 +8,7 @@ from randovania.game_description.data_writer import REGION_NAME_TO_FILE_NAME_RE
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import HintNode, SpecificLocationHintNode, SpecificPickupHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -17,18 +18,19 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterable, Iterator, Mapping
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
-    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.hint_features import HintFeature
-    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
@@ -38,15 +40,15 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
         return requirement.pretty_text
 
 
-def get_template_name(db: ResourceDatabase, requirement: RequirementTemplate) -> str:
+def get_template_name(db: ResourceDatabaseView, requirement: RequirementTemplate) -> str:
     try:
-        return db.requirement_template[requirement.template_name].display_name
+        return db.get_template_requirement(requirement.template_name).display_name
     except KeyError:
         return f"Unknown Template ({requirement.template_name})"
 
 
 def pretty_print_requirement_array(
-    requirement: RequirementArrayBase, db: ResourceDatabase, level: int
+    requirement: RequirementArrayBase, db: ResourceDatabaseView, level: int
 ) -> Iterator[tuple[int, str]]:
     if len(requirement.items) == 1 and requirement.comment is None:
         yield from pretty_format_requirement(requirement.items[0], db, level)
@@ -84,7 +86,7 @@ def pretty_print_requirement_array(
 
 
 def pretty_format_requirement(
-    requirement: Requirement, db: ResourceDatabase, level: int = 0
+    requirement: Requirement, db: ResourceDatabaseView, level: int = 0
 ) -> Iterator[tuple[int, str]]:
     if requirement == Requirement.impossible():
         yield level, "Impossible"
@@ -109,7 +111,7 @@ def pretty_format_requirement(
 
 def pretty_print_requirement(
     requirement: Requirement,
-    db: ResourceDatabase,
+    db: ResourceDatabaseView,
     prefix: str = "",
     print_function: typing.Callable[[str], None] = print,
 ) -> None:
@@ -117,10 +119,17 @@ def pretty_print_requirement(
         print_function("{}{}{}".format(prefix, "    " * nested_level, text))
 
 
-def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceDatabase) -> str:
+def _grants_on_collect_text(node: EventNode | PickupNode) -> str:
+    if not node.grants_on_collect:
+        return ""
+    granted = ", ".join(f"{amount}x {resource.long_name}" for resource, amount in node.grants_on_collect)
+    return f"; Grants {granted}"
+
+
+def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: ResourceDatabaseView) -> str:
     if isinstance(node, DockNode):
         try:
-            other = region_list.node_by_identifier(node.default_connection)
+            other = game_view.node_by_identifier(node.default_connection)
             other_name = other.full_name(with_region=False)
         except IndexError as e:
             other_name = f"(Area {node.default_connection.area}, index {node.default_connection.node}) [{e}]"
@@ -142,16 +151,24 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
         message = f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
         if node.custom_index_group is not None:
             message += f"; Index Group: {node.custom_index_group}"
-        return message
+        return message + _grants_on_collect_text(node)
 
     elif isinstance(node, EventNode):
-        return f"Event {node.event.long_name}"
+        return f"Event {node.event.long_name}{_grants_on_collect_text(node)}"
 
     elif isinstance(node, ConfigurableNode):
         return "Configurable Node"
 
     elif isinstance(node, HintNode):
-        return "Hint"
+        message = f"{node.kind.long_name} Hint"
+        if (requirement := str(node.requirement_to_collect)) != "Trivial":
+            message += f"; Requirement? {requirement}"
+        if isinstance(node, SpecificLocationHintNode):
+            message += f"; Target? {node.target_index}"
+        elif isinstance(node, SpecificPickupHintNode):
+            details = game_view.get_game_enum().hints.specific_pickup_hints[node.specific_pickup_hint_id]
+            message += f"; Target? {details.long_name}"
+        return message
 
     elif isinstance(node, TeleporterNetworkNode):
         unlocked_pretty = list(pretty_format_requirement(node.is_unlocked, db))
@@ -168,10 +185,25 @@ def pretty_print_hint_features(features: Iterable[HintFeature]) -> str:
     return f"Hint Features - {', '.join([feature.long_name for feature in sorted(features)])}"
 
 
-def pretty_print_area(game: GameDescription, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
+def _pretty_print_extra(
+    prefix: str,
+    extra: Mapping[str, typing.Any],
+    print_function: typing.Callable[[str], None],
+) -> None:
+    for extra_name, extra_field in extra.items():
+        extra_field_decoded = frozen_lib.unwrap(extra_field)
+        split = " "
+        if isinstance(extra_field_decoded, dict | list):
+            extra_field_decoded = pprint.pformat(extra_field_decoded, width=120, sort_dicts=False)
+            if "\n" in extra_field_decoded:
+                split = "\n"
+
+        print_function(f"{prefix}Extra - {extra_name}:{split}{extra_field_decoded}")
+
+
+def pretty_print_area(game: GameDatabaseView, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
-    for extra_name, extra_field in area.extra.items():
-        print_function(f"Extra - {extra_name}: {extra_field}")
+    _pretty_print_extra("", area.extra, print_function)
 
     if area.hint_features:
         print_function(pretty_print_hint_features(area.hint_features))
@@ -188,15 +220,14 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
         print_function(message)
         print_function(f"  * Layers: {', '.join(node.layers)}")
 
-        description_line = pretty_print_node_type(node, game.region_list, game.resource_database)
+        description_line = pretty_print_node_type(node, game, game.get_resource_database_view())
         if description_line:
             print_function(f"  * {description_line}")
         if isinstance(node, PickupNode) and node.hint_features:
             print_function(f"  * {pretty_print_hint_features(node.hint_features)}")
         if node.description:
             print_function(f"  * {node.description}")
-        for extra_name, extra_field in node.extra.items():
-            print_function(f"  * Extra - {extra_name}: {extra_field}")
+        _pretty_print_extra("  * ", node.extra, print_function)
 
         if isinstance(node, DockNode):
             for label, req in (
@@ -207,7 +238,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
                     print_function(f"  * Override default {label} requirement:")
                     pretty_print_requirement(
                         req.simplify(keep_comments=True),
-                        game.resource_database,
+                        game.get_resource_database_view(),
                         prefix="    ",
                         print_function=print_function,
                     )
@@ -220,7 +251,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
             print_function(f"  > {target_node.name}")
             pretty_print_requirement(
                 requirement.simplify(keep_comments=True),
-                game.resource_database,
+                game.get_resource_database_view(),
                 prefix="      ",
                 print_function=print_function,
             )
@@ -231,49 +262,66 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("====================\nTemplates\n")
     for template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template.display_name}:\n")
-        for level, text in pretty_format_requirement(template.requirement, game.resource_database):
-            output.write("      {}{}\n".format("    " * level, text))
+        output.writelines(
+            "      {}{}\n".format("    " * level, text)
+            for level, text in pretty_format_requirement(template.requirement, game.resource_database)
+        )
 
     output.write("\n====================\nDock Weaknesses\n")
-    for dock_type in game.dock_weakness_database.dock_types:
+    for dock_type in game.dock_type_database.dock_types:
         output.write(f"\n> {dock_type.long_name}")
-        for extra_name, extra_field in dock_type.extra.items():
-            output.write(f"\n* Extra - {extra_name}: {extra_field}")
+        output.writelines(
+            f"\n* Extra - {extra_name}: {extra_field}" for extra_name, extra_field in dock_type.extra.items()
+        )
 
-        for weakness in game.dock_weakness_database.get_by_type(dock_type):
+        for weakness in game.dock_type_database.get_by_type(dock_type):
             output.write(f"\n  * {weakness.name}\n")
-            for extra_name, extra_field in weakness.extra.items():
-                output.write(f"      Extra - {extra_name}: {extra_field}\n")
+            output.writelines(
+                f"      Extra - {extra_name}: {extra_field}\n" for extra_name, extra_field in weakness.extra.items()
+            )
+            if weakness.unsafe_target_in_distributor_wtw:
+                output.write(
+                    f"      Considered unsafe as target for "
+                    f'"{DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS.long_name}"\n'
+                )
 
             output.write("      Open:\n")
-            for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1):
-                output.write("      {}{}\n".format("    " * level, text))
+            output.writelines(
+                "      {}{}\n".format("    " * level, text)
+                for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1)
+            )
 
             if weakness.lock is not None:
                 output.write(f"      Lock type: {weakness.lock}\n")
-                for level, text in pretty_format_requirement(
-                    weakness.lock.requirement, game.resource_database, level=1
-                ):
-                    output.write("      {}{}\n".format("    " * level, text))
+                output.writelines(
+                    "      {}{}\n".format("    " * level, text)
+                    for level, text in pretty_format_requirement(
+                        weakness.lock.requirement, game.resource_database, level=1
+                    )
+                )
             else:
                 output.write("      No lock\n")
             output.write("\n")
 
-        dock_rando = game.dock_weakness_database.dock_rando_params.get(dock_type)
-        if dock_rando is None:
+        distributor_settings = dock_type.weakness_distributor
+        if distributor_settings is None:
             output.write("  > Dock Rando: Disabled\n\n")
         else:
             output.write("  > Dock Rando:")
 
-            output.write(f"\n      Unlocked: {dock_rando.unlocked.name}")
-            output.write(f"\n      Locked: {dock_rando.locked.name}")
+            output.write(f"\n      Unlocked: {distributor_settings.unlocked.name}")
+            output.write(f"\n      Locked: {distributor_settings.locked.name}")
 
             output.write("\n      Change from:")
-            for weakness in sorted(dock_rando.change_from):
+            for weakness in sorted(distributor_settings.change_from):
                 output.write(f"\n          {weakness.name}")
 
             output.write("\n      Change to:")
-            for weakness in sorted(dock_rando.change_to):
+            for weakness in sorted(distributor_settings.change_to):
+                output.write(f"\n          {weakness.name}")
+
+            output.write("\n      Indirect Change from:")
+            for weakness in sorted(distributor_settings.indirect_change_from):
                 output.write(f"\n          {weakness.name}")
 
             output.write("\n\n")

@@ -19,17 +19,17 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter import patch_data_factory
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.lib import json_lib
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
@@ -153,10 +153,10 @@ def test_add_header_data_to_result():
 
 def test_create_spawn_point_field(echoes_game_description, echoes_pickup_database, empty_patches):
     # Setup
-    resource_db = echoes_game_description.resource_database
+    resource_db = echoes_game_description.get_resource_database_view()
 
     morph = pickup_creator.create_standard_pickup(
-        echoes_pickup_database.get_pickup_with_name("Morph Ball"), StandardPickupState(), resource_db, None, False
+        echoes_pickup_database.standard_pickups["Morph Ball"], StandardPickupState(), resource_db, None, False
     )
 
     loc = NodeIdentifier.create("Temple Grounds", "Hive Chamber B", "Door to Hive Storage")
@@ -164,12 +164,12 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
     capacities = [
         {"amount": 1 if item.short_name == "MorphBall" else 0, "index": item.extra["item_id"]}
-        for item in resource_db.item
+        for item in resource_db.get_all_items()
         if item.extra["item_id"] < 1000
     ]
 
     # Run
-    result = patch_data_factory._create_spawn_point_field(patches, echoes_game_description)
+    result = patch_data_factory._create_spawn_point_field(patches, echoes_game_description, resource_db)
 
     # Assert
     assert result == {
@@ -183,9 +183,9 @@ def test_create_spawn_point_field(echoes_game_description, echoes_pickup_databas
 
 
 def test_create_elevators_field_no_elevator(empty_patches, echoes_game_description):
-    with pytest.raises(InvalidConfiguration, match="Invalid elevator count. Expected 22, got 0."):
+    with pytest.raises(InvalidConfiguration, match=r"Invalid elevator count. Expected 22, got 0."):
         patch_data_factory._create_elevators_field(
-            empty_patches, echoes_game_description, echoes_game_description.dock_weakness_database.find_type("elevator")
+            empty_patches, echoes_game_description, echoes_game_description.dock_type_database.find_type("elevator")
         )
 
 
@@ -236,7 +236,7 @@ def test_create_elevators_field_elevators_for_a_seed(
 
     # Run
     result = patch_data_factory._create_elevators_field(
-        patches, echoes_game_description, echoes_game_description.dock_weakness_database.find_type("elevator")
+        patches, echoes_game_description, echoes_game_description.dock_type_database.find_type("elevator")
     )
 
     # Assert
@@ -418,7 +418,7 @@ def test_apply_translator_gate_patches(teleporters):
 def test_get_single_hud_text_locked_pbs():
     # Run
     result = pickup_exporter._get_single_hud_text(
-        "Locked Power Bomb Expansion", patch_data_factory._simplified_memo_data(), ()
+        "Locked Power Bomb Expansion", patch_data_factory.simplified_prime2_memo_data(), ()
     )
 
     # Assert
@@ -441,7 +441,7 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item
         True,
     )
     creator = pickup_exporter.PickupExporterSolo(
-        patch_data_factory._simplified_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
+        patch_data_factory.simplified_prime2_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
     )
 
     # Run
@@ -491,7 +491,7 @@ def test_pickup_data_for_pb_expansion_locked(
         echoes_resource_database,
     )
     if simplified:
-        memo = patch_data_factory._simplified_memo_data()
+        memo = patch_data_factory.simplified_prime2_memo_data()
         hud_text = [
             "Power Bomb Expansion acquired, but the main Power Bomb is required to use it.",
             "Power Bomb Expansion acquired!",
@@ -537,7 +537,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
         echoes_resource_database,
     )
     creator = pickup_exporter.PickupExporterSolo(
-        patch_data_factory._simplified_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
+        patch_data_factory.simplified_prime2_memo_data(), RandovaniaGame.METROID_PRIME_ECHOES
     )
 
     # Run
@@ -562,7 +562,7 @@ def test_create_pickup_all_from_pool(echoes_game_description, default_echoes_con
     item_pool = pool_creator.calculate_pool_results(default_echoes_configuration, echoes_game_description)
     index = PickupIndex(0)
     if disable_hud_popup:
-        memo_data = patch_data_factory._simplified_memo_data()
+        memo_data = patch_data_factory.simplified_prime2_memo_data()
     else:
         memo_data = patch_data_factory.default_prime2_memo_data()
     creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
@@ -613,7 +613,7 @@ def test_create_string_patches(
     # Setup
     game: GameDescription = MagicMock()
     all_patches = MagicMock()
-    player_config = PlayersConfiguration(0, {0: "you"})
+    player_config = WorldsConfiguration(0, {0: "you"})
 
     mock_item_create_hints: MagicMock = mocker.patch(
         "randovania.games.prime2.exporter.hints.create_patches_hints",
@@ -637,7 +637,7 @@ def test_create_string_patches(
     )
 
     mock_akul_testament: MagicMock = mocker.patch(
-        "randovania.games.prime2.exporter.patch_data_factory._akul_testament_string_patch",
+        "randovania.games.prime2.exporter.patch_data_factory.akul_testament_string_patch",
         autospec=True,
     )
     mock_akul_testament.return_values = []
@@ -650,7 +650,7 @@ def test_create_string_patches(
     # Run
     result = patch_data_factory._create_string_patches(
         hint_config,
-        False,
+        EchoesNewPatcher.DISABLED,
         game,
         all_patches,
         player_config,
@@ -660,7 +660,7 @@ def test_create_string_patches(
 
     # Assert
     expected_result = ["item", "hints"]
-    mock_item_create_hints.assert_called_once_with(all_patches, player_config, exporter)
+    mock_item_create_hints.assert_called_once_with(all_patches[0], exporter)
     mock_logbook_title_string_patches.assert_called_once_with()
     mock_akul_testament.assert_called_once_with(namer)
 
@@ -671,7 +671,11 @@ def test_create_string_patches(
 
     else:
         mock_stk_create_hints.assert_called_once_with(
-            all_patches, player_config, game.resource_database, namer, stk_mode == SpecificPickupHintMode.HIDE_AREA
+            all_patches,
+            player_config,
+            game.get_resource_database_view(),
+            namer,
+            stk_mode == SpecificPickupHintMode.HIDE_AREA,
         )
         mock_stk_hide_hints.assert_not_called()
         expected_result.extend(["show", "hints"])
@@ -683,15 +687,21 @@ def test_create_string_patches(
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "use_new_patcher"),
     [
-        ("seed_a.rdvgame", "seed_a_old_patcher.json", False),
-        ("seed_a.rdvgame", "seed_a_new_patcher.json", True),
-        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_old_patcher.json", False),
-        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_new_patcher.json", True),
+        ("seed_a.rdvgame", "seed_a_old_patcher.json", EchoesNewPatcher.DISABLED),
+        ("seed_a.rdvgame", "seed_a_new_patcher.json", EchoesNewPatcher.BOTH),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_old_patcher.json", EchoesNewPatcher.DISABLED),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_new_patcher.json", EchoesNewPatcher.BOTH),
+        ("prime2_no_pbs.rdvgame", "prime2_no_pbs_only_new_patcher.json", EchoesNewPatcher.ONLY),
     ],
 )
 def test_generate_patcher_data(
-    test_files_dir, rdvgame_filename, expected_results_filename, use_new_patcher, monkeypatch, mocker
-):
+    test_files_dir,
+    rdvgame_filename: str,
+    expected_results_filename: str,
+    use_new_patcher: EchoesNewPatcher,
+    monkeypatch: pytest.MonkeyPatch,
+    acceptance_check,
+) -> None:
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", rdvgame_filename))
     player_index = 0
@@ -703,16 +713,9 @@ def test_generate_patcher_data(
 
     # Run
     factory = patch_data_factory.EchoesPatchDataFactory(
-        description, PlayersConfiguration(player_index, {0: "you"}), cosmetic_patches
+        description, WorldsConfiguration(player_index, {0: "you"}), cosmetic_patches
     )
     result = factory.create_data()
 
     # Assert
-    expected_results_path = test_files_dir.joinpath("patcher_data", "prime2", expected_results_filename)
-
-    # Uncomment to easily view diff of failed test
-    # json_lib.write_path(expected_results_path, result)
-
-    expected_result = json_lib.read_path(expected_results_path)
-
-    assert result == expected_result
+    acceptance_check(test_files_dir.joinpath("patcher_data", "prime2", expected_results_filename), result)

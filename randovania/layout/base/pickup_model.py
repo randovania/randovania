@@ -45,7 +45,7 @@ class PickupModelDataSource(BitPackEnum, Enum):
 enum_lib.add_long_name(
     PickupModelDataSource,
     {
-        PickupModelDataSource.ETM: "ETM",
+        PickupModelDataSource.ETM: "Nothing",
         PickupModelDataSource.RANDOM: "Random",
         PickupModelDataSource.LOCATION: "Vanilla",
     },

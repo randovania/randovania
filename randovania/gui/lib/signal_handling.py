@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import functools
 import typing
+from contextlib import contextmanager
 from typing import TYPE_CHECKING, TypeVar
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Generator
 
     from PySide6 import QtWidgets
 
@@ -38,6 +39,13 @@ def set_combo_with_value(combo: QtWidgets.QComboBox, value: typing.Any) -> None:
     combo.setCurrentIndex(combo.findData(value))
 
 
+def remove_value_from_combo(combo: QtWidgets.QComboBox, value: typing.Any) -> None:
+    """
+    Removes the first item with the given value from the combo.
+    """
+    combo.removeItem(combo.findData(value))
+
+
 def refresh_if_needed(combo: QtWidgets.QComboBox, func: Callable[[int], None]) -> None:
     if combo.currentIndex() == 0:
         func(0)
@@ -48,3 +56,13 @@ def clear_without_notify(combo: QtWidgets.QComboBox) -> None:
     old_blocking = combo.blockSignals(True)
     combo.clear()
     combo.blockSignals(old_blocking)
+
+
+@contextmanager
+def signals_blocked(widget: QtWidgets.QWidget) -> Generator[None]:
+    try:
+        previous = widget.signalsBlocked()
+        widget.blockSignals(True)
+        yield
+    finally:
+        widget.blockSignals(previous)

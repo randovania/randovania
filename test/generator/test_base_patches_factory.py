@@ -74,7 +74,7 @@ def test_add_elevator_connections_to_dock_connections_random(
 
     wl = echoes_game_description.region_list
     elevator_connection: list[tuple[DockNode, Node]] = []
-    teleporter_dock_types = echoes_game_description.dock_weakness_database.all_teleporter_dock_types
+    teleporter_dock_types = echoes_game_description.dock_type_database.all_teleporter_dock_types
 
     def ni(w: str, a: str, n: str, tw: str, ta: str, tn: str):
         elevator_connection.append(
@@ -286,7 +286,7 @@ def test_add_elevator_connections_to_dock_connections_random(
     def generator(give_me_a_type):
         return [
             (dock_node, node)
-            for dock_node, node in give_me_a_type.all_dock_connections()
+            for dock_node, node in give_me_a_type.all_dock_connections(echoes_game_patches.game)
             if dock_node.dock_type in teleporter_dock_types
         ]
 
@@ -302,7 +302,7 @@ def test_add_elevator_connections_to_dock_connections_random(
 def test_blue_save_doors(prime_game_description: GameDescription, default_prime_configuration):
     # Setup
     patches_factory = prime_game_description.game.generator.base_patches_factory
-    power_weak = prime_game_description.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
+    power_weak = prime_game_description.dock_type_database.get_by_weakness("door", "Normal Door (Forced)")
 
     configuration = dataclasses.replace(
         default_prime_configuration,
@@ -314,7 +314,7 @@ def test_blue_save_doors(prime_game_description: GameDescription, default_prime_
     results = patches_factory.create_base_patches(configuration, Random(1000), prime_game_description, False, 0)
 
     # Assert
-    weaknesses = list(results.all_dock_weaknesses())
+    weaknesses = list(results.all_dock_weaknesses(prime_game_description))
     assert len(weaknesses) == 24
     assert all(weakness == power_weak for _, weakness in weaknesses)
 

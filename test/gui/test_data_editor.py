@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
@@ -10,18 +11,20 @@ from PySide6 import QtWidgets
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader, pretty_print
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.node import NodeContext, NodeLocation
+from randovania.game_description.db.node import NodeLocation
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games import default_data
 from randovania.gui.data_editor import DataEditorWindow, _ui_patch_and_simplify
 
 if TYPE_CHECKING:
     import pytest_mock
+
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 def test_select_area_by_name(
@@ -108,8 +111,9 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
         "randovania.game_description.integrity_check.find_database_errors", return_value=["DB Errors", "Unknown"]
     )
     mock_write_human_readable_game = mocker.patch("randovania.game_description.pretty_print.write_human_readable_game")
-    mock_create_new = mocker.patch("randovania.gui.lib.scroll_message_box.ScrollMessageBox.create_new")
+    mock_create_new = mocker.patch("randovania.gui.lib.scroll_message_box.ScrollMessageBox.__new__")
     mock_create_new.return_value.exec_.return_value = QtWidgets.QMessageBox.No
+    mock_init = mocker.patch("randovania.gui.data_editor.ScrollMessageBox")
 
     tmp_path.joinpath("test-game", "game").mkdir(parents=True)
     tmp_path.joinpath("human-readable").mkdir()
@@ -125,13 +129,13 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
     # Assert
     mock_find_database_errors.assert_called_once_with(window.game_description)
     mock_write_human_readable_game.assert_not_called()
-    mock_create_new.assert_called_once_with(
-        window,
+    mock_init.assert_called_once_with(
         QtWidgets.QMessageBox.Icon.Critical,
         "Integrity Check",
         "Database has the following errors:\n\nDB Errors\n\nUnknown\n\nIgnore?",
-        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
-        QtWidgets.QMessageBox.No,
+        parent=window,
+        buttons=QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+        default_button=QtWidgets.QMessageBox.No,
     )
 
 
@@ -185,7 +189,7 @@ def test_create_new_dock(skip_qtbot, tmp_path, blank_game_data):
     assert target_area.node_with_name("Dock to Back-Only Lock Room") is not None
 
 
-def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database):
+def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database: ResourceDatabase):
     # Trivial in Or
     assert (
         _ui_patch_and_simplify(
@@ -196,13 +200,14 @@ def test_ui_patch_and_simplify_trivial_in_or(echoes_resource_database):
                 ],
                 comment="COM",
             ),
-            NodeContext(None, ResourceCollection(), echoes_resource_database, None),
+            echoes_resource_database.create_resource_collection(),
+            echoes_resource_database,
         )
         == Requirement.trivial()
     )
 
 
-def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database):
+def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database: ResourceDatabase):
     # Impossible in And
     assert (
         _ui_patch_and_simplify(
@@ -213,17 +218,18 @@ def test_ui_patch_and_simplify_impossible_in_and(echoes_resource_database):
                 ],
                 comment="COM",
             ),
-            NodeContext(None, ResourceCollection(), echoes_resource_database, None),
+            echoes_resource_database.create_resource_collection(),
+            echoes_resource_database,
         )
         == Requirement.impossible()
     )
 
 
-def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database, echoes_game_description):
+def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database: ResourceDatabase):
     db = echoes_resource_database
 
     # Remove present resources, plus trivial in And
-    col = echoes_game_description.create_resource_collection()
+    col = db.create_resource_collection()
     col.set_resource(db.get_item("Seekers"), 1)
     assert _ui_patch_and_simplify(
         RequirementAnd(
@@ -234,22 +240,108 @@ def test_ui_patch_and_simplify_remove_present_resources(echoes_resource_database
             ],
             comment="COM",
         ),
-        NodeContext(None, col, db, None),
+        col,
+        db,
     ) == RequirementAnd([ResourceRequirement.simple(db.get_item("ScrewAttack"))])
 
 
-def test_ui_patch_and_simplify_template(echoes_resource_database, echoes_game_description):
+def test_ui_patch_and_simplify_template(echoes_resource_database: ResourceDatabase):
     db = echoes_resource_database
 
-    def context(collection):
-        return NodeContext(None, collection, db, None)
-
     assert _ui_patch_and_simplify(
-        RequirementTemplate("Use Screw Attack (No Space Jump)"), context(ResourceCollection())
+        RequirementTemplate("Use Screw Attack (No Space Jump)"), db.create_resource_collection(), db
     ) == RequirementTemplate("Use Screw Attack (No Space Jump)")
 
-    col = echoes_game_description.create_resource_collection()
+    col = db.create_resource_collection()
     col.set_resource(db.get_item("ScrewAttack"), 1)
     assert _ui_patch_and_simplify(
-        RequirementTemplate("Use Screw Attack (No Space Jump)"), context(col)
+        RequirementTemplate("Use Screw Attack (No Space Jump)"),
+        col,
+        db,
     ) == RequirementAnd([ResourceRequirement.simple(db.get_item("MorphBall"))])
+
+
+@pytest.mark.parametrize(
+    ("identifier", "expected"),
+    [
+        (("Starting Area", "Pickup (Weapon)"), "Pickup 0; Category? Major"),
+        (("Starting Area", "Spawn Point"), ""),
+        (
+            ("Starting Area", "Door to Boss Arena"),
+            ('Explosive Door to <a href="node://Intro/Boss Arena/Door to Starting Area">Door to Starting Area</a>'),
+        ),
+        (
+            ("Hint Room", "Hint with Translator"),
+            ("Generic Hint\n<br />Requirement: (Blue Key ≥ 1)"),
+        ),
+        (
+            ("Hint Room", "Hint no Translator"),
+            "Generic Hint",
+        ),
+        (
+            ("Hint Room", "Hint Specific Location"),
+            (
+                "Specific Location Hint"
+                '\n<br />Target: <a href="node://Intro/Starting Area/Pickup (Weapon)">'
+                "Starting Area: Pickup (Weapon)</a>"
+            ),
+        ),
+        (
+            ("Hint Room", "Hint Specific Pickup"),
+            ("Specific Pickup Hint\n<br />Target: Victory Key"),
+        ),
+    ],
+)
+def test_node_details(identifier: tuple[str, str], expected: str, skip_qtbot, tmp_path, blank_game_data):
+    # Setup
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+
+    window = DataEditorWindow(blank_game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+    skip_qtbot.addWidget(window)
+
+    area_id, node_id = identifier
+    node = window.game_description.region_list.node_by_identifier(NodeIdentifier.create("Intro", area_id, node_id))
+
+    # Run
+    result = window.node_details(node)
+
+    # Assert
+    assert result == expected
+
+
+def test_on_resource_changed_updates_grants_on_collect(skip_qtbot, tmp_path, blank_game_data):
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+    window = DataEditorWindow(blank_game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+    skip_qtbot.addWidget(window)
+
+    region_list = window.game_description.region_list
+    boss_identifier = NodeIdentifier.create("Intro", "Boss Arena", "Event - Boss")
+    loot_identifier = NodeIdentifier.create("Intro", "Boss Arena", "Pickup (Free Loot)")
+    useless = window.game_description.resource_database.get_item("Useless")
+
+    # Run
+    window._on_resource_changed(dataclasses.replace(useless, long_name="Pointless"))
+
+    # Assert
+    [(boss_granted, boss_amount)] = region_list.node_by_identifier(boss_identifier).grants_on_collect
+    [(loot_granted, loot_amount)] = region_list.node_by_identifier(loot_identifier).grants_on_collect
+    assert (boss_granted.long_name, boss_amount) == ("Pointless", 2)
+    assert (loot_granted.long_name, loot_amount) == ("Pointless", 1)
+
+
+def test_on_resource_changed_ignores_other_resource_types(skip_qtbot, tmp_path, blank_game_data, mocker):
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+    window = DataEditorWindow(blank_game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+    skip_qtbot.addWidget(window)
+    mock_replace = mocker.patch.object(window, "replace_node_with")
+
+    trick = window.game_description.resource_database.get_trick("Combat")
+
+    # Run
+    window._on_resource_changed(dataclasses.replace(trick, long_name="Fighting"))
+
+    # Assert
+    mock_replace.assert_not_called()

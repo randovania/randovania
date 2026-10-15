@@ -151,7 +151,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, msr_configuration, o
 
     # A valid file
     window.rom_validation = MagicMock()
-    window.rom_validation.side_effect = [False]
+    window.rom_validation.side_effect = lambda _: False
     skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("existing-folder"))
     assert not window.input_file_edit.has_error
@@ -353,7 +353,7 @@ def test_export_button(skip_qtbot, tmp_path, mocker, msr_configuration, options)
 
     # force that input_file_edit is valid
     window.input_file_edit.has_error = False
-    window.update_accept_validation()
+    window.accept_button.update_validation()
 
     # export button is enabled
     assert window.accept_button.isEnabled()

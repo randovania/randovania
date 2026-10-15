@@ -204,6 +204,13 @@ In order to run the tests:
    1. Run the "Getting started" step with `--full` instead of `--thin`.
    2. Run `uv run pytest`.
 
+In order to compile the native extension:
+   1. Install the C++ compilers for your OS.
+      1. Windows: [Visual Studio Community](https://visualstudio.microsoft.com/downloads/), selecting "Desktop development with C++".
+      2. macOS: Xcode
+      3. Linux: `build-essential` or similar packages that provide the full `gcc` suite.
+   2. Run the "Getting started" step with `--native` in addition.
+
 In order to run the server:
    1. Run the "Getting started" step.
    2. Run `uv run tools/prepare_dev_server_config.py` once.
@@ -254,6 +261,7 @@ uvx pre-commit run qtui -a
 # Documentation
 
 - Unfamiliar with a term? Check the [glossary](docs/Glossary.md).
+- Writing or fixing tests? Check the [testing guide](docs/Testing.md).
 - Adding a new game? Check the [dedicated guide](docs/New%20Game.md).
 - Changing a data format? Check the [migrations documentation](docs/Migrations.md).
 - Working with the logic database?

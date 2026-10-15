@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'games_tab_dread_widget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -315,7 +315,7 @@ class Ui_DreadGameTabWidget(object):
         DreadGameTabWidget.setTabText(DreadGameTabWidget.indexOf(self.pickup_hint_features_tab), QCoreApplication.translate("DreadGameTabWidget", u"Pickup Hint Features", None))
         self.hint_locations_label.setText(QCoreApplication.translate("DreadGameTabWidget", u"<html><head/><body><p>Hints are placed in the game by replacing the ADAM briefings in the Navigation Stations. The following are the areas that have a hint added to them: </p></body></html>", None))
         ___qtreewidgetitem = self.hint_locations_tree_widget.headerItem()
-        ___qtreewidgetitem.setText(0, QCoreApplication.translate("DreadGameTabWidget", u"Location", None));
+        ___qtreewidgetitem.setText(0, QCoreApplication.translate("DreadGameTabWidget", u"Location", None))
         DreadGameTabWidget.setTabText(DreadGameTabWidget.indexOf(self.hint_locations_tab), QCoreApplication.translate("DreadGameTabWidget", u"Hint Locations", None))
         pass
     # retranslateUi

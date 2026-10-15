@@ -1,0 +1,1666 @@
+{
+    "schema_version": 41,
+    "info": {
+        "randovania_version": "10.8.0.dev77",
+        "randovania_version_git": "431d0ab5",
+        "permalink": "DYnDQ6N6yUMdCrUfOK9nlu_mn1Bp5G5wDYzTJCFDa0RGzpXY7fUTvQfhFyRX",
+        "has_spoiler": true,
+        "seed": 1733500080,
+        "hash": "YNB2G6WJ",
+        "word_hash": "Bob Laboratory Containment",
+        "presets": [
+            {
+                "schema_version": 114,
+                "base_preset_uuid": null,
+                "name": "Force lava lake first item",
+                "uuid": "d65b95cb-0e48-445c-8ae7-821c993137ba",
+                "description": "A copy version of Open Sector Hub.",
+                "game": "fusion",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": false,
+                        "specific_levels": {
+                            "Combat": "ludicrous",
+                            "DamageRuns": "ludicrous"
+                        }
+                    },
+                    "starting_location": [
+                        {
+                            "region": "Sector 1 (SRX)",
+                            "area": "Twin Junctions Save Room",
+                            "node": "Save Station"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": [
+                            13,
+                            14,
+                            21,
+                            101,
+                            125
+                        ]
+                    },
+                    "standard_pickup_configuration": {
+                        "pickups_state": {
+                            "Charge Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Wide Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Plasma Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Wave Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Ice Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Missile Launcher Data": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Super Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Ice Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Diffusion Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Morph Ball": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Morph Ball Bomb Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Power Bomb Data": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Hi-Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Space Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Speed Booster": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Screw Attack": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Varia Suit": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Gravity Suit": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Energy Tank": {
+                                "num_included_in_starting_pickups": 6
+                            },
+                            "Level 0 Keycard": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Level 1 Keycard": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 2 Keycard": {},
+                            "Level 3 Keycard": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 4 Keycard": {
+                                "num_shuffled_pickups": 1
+                            }
+                        },
+                        "default_pickups": {},
+                        "minimum_random_starting_pickups": 0,
+                        "maximum_random_starting_pickups": 0
+                    },
+                    "ammo_pickup_configuration": {
+                        "pickups_state": {
+                            "Missile Tank": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 48,
+                                "requires_main_item": true
+                            },
+                            "Power Bomb Tank": {
+                                "ammo_count": [
+                                    2
+                                ],
+                                "pickup_count": 32,
+                                "requires_main_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "dock_rando": {
+                        "mode": "vanilla",
+                        "types_state": {
+                            "Door": {
+                                "can_change_from": [
+                                    "L0 Hatch",
+                                    "L1 Hatch",
+                                    "L2 Hatch",
+                                    "L3 Hatch",
+                                    "L4 Hatch"
+                                ],
+                                "can_change_to": [
+                                    "L0 Hatch",
+                                    "L1 Hatch",
+                                    "L2 Hatch",
+                                    "L3 Hatch",
+                                    "L4 Hatch",
+                                    "Open Hatch"
+                                ]
+                            }
+                        }
+                    },
+                    "single_set_for_pickups_that_solve": true,
+                    "staggered_multi_pickup_placement": true,
+                    "check_if_beatable_after_base_patches": false,
+                    "logical_pickup_placement": "minimal",
+                    "hints": {
+                        "enable_random_hints": true,
+                        "enable_specific_location_hints": true,
+                        "specific_pickup_hints": {
+                            "artifacts": "precise",
+                            "charge_beam": "hide-area"
+                        },
+                        "minimum_available_locations_for_hint_placement": 0,
+                        "minimum_location_weight_for_hint_placement": 0.0,
+                        "use_resolver_hints": false
+                    },
+                    "instant_transitions": false,
+                    "energy_per_tank": 100,
+                    "acid_damage": 60,
+                    "lava_damage": 100,
+                    "heat_damage": 6,
+                    "cold_damage": 15,
+                    "subzero_damage": 6,
+                    "artifacts": {
+                        "required_artifacts": 0,
+                        "placed_artifacts": 0
+                    },
+                    "open_save_recharge_hatches": false,
+                    "unlock_sector_hub": true,
+                    "short_intro_text": false,
+                    "instant_morph": true,
+                    "adjusted_geron_weaknesses": true
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "fusion",
+            "starting_equipment": {
+                "pickups": [
+                    "Morph Ball",
+                    "Varia Suit",
+                    "Energy Tank",
+                    "Energy Tank",
+                    "Energy Tank",
+                    "Energy Tank",
+                    "Energy Tank",
+                    "Energy Tank",
+                    "Level 0 Keycard",
+                    "Infant Metroid 1",
+                    "Infant Metroid 2",
+                    "Infant Metroid 3",
+                    "Infant Metroid 4",
+                    "Infant Metroid 5",
+                    "Infant Metroid 6",
+                    "Infant Metroid 7",
+                    "Infant Metroid 8",
+                    "Infant Metroid 9",
+                    "Infant Metroid 10",
+                    "Infant Metroid 11",
+                    "Infant Metroid 12",
+                    "Infant Metroid 13",
+                    "Infant Metroid 14",
+                    "Infant Metroid 15",
+                    "Infant Metroid 16",
+                    "Infant Metroid 17",
+                    "Infant Metroid 18",
+                    "Infant Metroid 19",
+                    "Infant Metroid 20"
+                ]
+            },
+            "starting_location": "Sector 1 (SRX)/Twin Junctions Save Room/Save Station",
+            "dock_connections": {},
+            "dock_weakness": {
+                "Main Deck/Sector Hub/Door to Sector Hub Lift 2": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub/Door to Sector Hub Lift 1": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 2/Door to Sector Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 2/Door to Sector Hub Lift 4": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 4/Door to Sector Hub Lift 2": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 4/Door to Sector Hub Lift 6": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 6/Door to Sector Hub Lift 4": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 1/Door to Sector Hub": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 1/Door to Sector Hub Lift 3": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 3/Door to Sector Hub Lift 1": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 3/Door to Sector Hub Lift 5": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Main Deck/Sector Hub Lift 5/Door to Sector Hub Lift 3": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Sector 2 (TRO)/Cathedral/Door to Ripper Tower": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Sector 2 (TRO)/Ripper Tower/Door to Cathedral": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Sector 5 (ARC)/Arctic Containment/Door to Ripper Road": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                },
+                "Sector 5 (ARC)/Ripper Road/Door to Arctic Containment": {
+                    "type": "Door",
+                    "name": "Open Hatch (Forced)"
+                }
+            },
+            "locations": [
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Arachnus Arena",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 3,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Arachnus Arena",
+                        "node": "Pickup (Morph Ball)"
+                    },
+                    "index": 100,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Attic",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 12,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Auxiliary Power Station",
+                        "node": "Pickup (Reactor Control)"
+                    },
+                    "index": 122,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Cubby Hole",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 10,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Genesis Speedway",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 5,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Habitation Deck",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 9,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Habitation Deck",
+                        "node": "Pickup (Save the Animals)"
+                    },
+                    "index": 120,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Main Elevator Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 11,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Nexus Storage",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 8,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Operations Deck Data Room",
+                        "node": "Pickup (Missile Launcher)"
+                    },
+                    "index": 15,
+                    "pickup": "Screw Attack",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Operations Ventilation Storage",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 4,
+                    "pickup": "Charge Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Operations Ventilation",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 2,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Quarantine Bay",
+                        "node": "Pickup (Hornoad)"
+                    },
+                    "index": 124,
+                    "pickup": "Power Bomb Data",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Restricted Airlock",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 1,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Silo Catwalk",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 6,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Silo Scaffolding",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 7,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Station Entrance",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 0,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Sub-Zero Containment",
+                        "node": "Pickup (Frozen Ridley)"
+                    },
+                    "index": 123,
+                    "pickup": "Wave Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Main Deck",
+                        "area": "Yakuza Arena",
+                        "node": "Pickup (Space Jump)"
+                    },
+                    "index": 106,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Animorphs Cache",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 24,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Antechamber",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 18,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Atmospheric Stabilizer Northeast",
+                        "node": "Pickup (NE Stabilizer)"
+                    },
+                    "index": 125,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Charge Core Arena",
+                        "node": "Pickup (Charge Beam)"
+                    },
+                    "index": 114,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Charge Core Arena",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 19,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Crab Rave",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 20,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Hornoad Hole",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 13,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Lava Lake",
+                        "node": "Pickup (Missile Tank in Lava)"
+                    },
+                    "index": 16,
+                    "pickup": "Hi-Jump",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Lava Lake",
+                        "node": "Pickup (Missile Tank on Cliffside)"
+                    },
+                    "index": 14,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Lava Lake",
+                        "node": "Pickup (Missile Tank on Platform)"
+                    },
+                    "index": 101,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Neo-Ridley Arena",
+                        "node": "Pickup (Screw Attack)"
+                    },
+                    "index": 104,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Ripper Maze",
+                        "node": "Pickup (Hidden Energy Tank)"
+                    },
+                    "index": 17,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Stabilizer Storage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 21,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Wall Jump Tutorial",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 23,
+                    "pickup": "Missile Launcher Data",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 1 (SRX)",
+                        "area": "Watering Hole",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 22,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Crumble City",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 38,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Crumble City",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 39,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Cultivation Station",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 27,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Data Courtyard",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 32,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Data Room",
+                        "node": "Pickup (Morph Ball Bombs)"
+                    },
+                    "index": 105,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Dessgeega Dorm",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 31,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Kago Room",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 33,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Level 1 Security Room",
+                        "node": "Pickup (L1 Locks)"
+                    },
+                    "index": 116,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Lobby Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 25,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Nettori Arena",
+                        "node": "Pickup (Plasma Beam)"
+                    },
+                    "index": 115,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Oasis Storage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 30,
+                    "pickup": "Speed Booster",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Oasis",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 34,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Overgrown Cache",
+                        "node": "Pickup (Hidden Energy Tank)"
+                    },
+                    "index": 29,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Puyo Palace",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 35,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Ripper Tower",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 37,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Ripper Tower",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 36,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Zazabi Arena Access",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 28,
+                    "pickup": "Plasma Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Zazabi Arena",
+                        "node": "Pickup (High Jump)"
+                    },
+                    "index": 107,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Zazabi Speedway",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 41,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Zazabi Speedway",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 40,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 2 (TRO)",
+                        "area": "Zig-Zag-Zone",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 26,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Alcove",
+                        "node": "Pickup (Hidden Energy Tank)"
+                    },
+                    "index": 45,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Alcove",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 44,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Bob's Abode",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 43,
+                    "pickup": "Morph Ball Bomb Data",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Data Room",
+                        "node": "Pickup (Super Missiles)"
+                    },
+                    "index": 112,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Deserted Runway",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 46,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Fiery Storage",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 50,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Fiery Storage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 51,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Garbage Chute",
+                        "node": "Pickup (Power Bomb Tank in Cave)"
+                    },
+                    "index": 55,
+                    "pickup": "Space Jump",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Garbage Chute",
+                        "node": "Pickup (Power Bomb Tank in Shaft)"
+                    },
+                    "index": 56,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Geron's Treasure",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 53,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Lava Maze",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 47,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Level 2 Security Room",
+                        "node": "Pickup (L2 Locks)"
+                    },
+                    "index": 117,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Main Boiler Control Room",
+                        "node": "Pickup (Cooling Unit)"
+                    },
+                    "index": 121,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Main Boiler Control Room",
+                        "node": "Pickup (Wide Beam)"
+                    },
+                    "index": 110,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Namihe's Lair",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 52,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Processing Access",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 54,
+                    "pickup": "Level 3 Keycard",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Sector 3 (PYR) Westbound Glass Tube",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 57,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Security Access",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 42,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Sova Processing",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 48,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 3 (PYR)",
+                        "area": "Sova Processing",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 49,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Aquarium Kago Storage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 70,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Aquarium Kago Storage",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 69,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Aquarium Pirate Tank",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 63,
+                    "pickup": "Gravity Suit",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Broken Bridge",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 59,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "C-Cache",
+                        "node": "Pickup (Underwater Missile Tank)"
+                    },
+                    "index": 72,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Cargo Hold",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 64,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Cheddar Bay",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 65,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Data Room",
+                        "node": "Pickup (Diffusion Missiles)"
+                    },
+                    "index": 103,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Drain Pipe",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 68,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Level 4 Security Room",
+                        "node": "Pickup (L4 Locks)"
+                    },
+                    "index": 119,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Pump Control Unit",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 67,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Reservoir East",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 58,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Reservoir Vault",
+                        "node": "Pickup (Lower Missile Tank)"
+                    },
+                    "index": 61,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Reservoir Vault",
+                        "node": "Pickup (Upper Missile Tank)"
+                    },
+                    "index": 60,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Sanctuary Cache",
+                        "node": "Pickup (Hidden Energy Tank)"
+                    },
+                    "index": 71,
+                    "pickup": "Level 1 Keycard",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Serris Arena",
+                        "node": "Pickup (Speed Booster)"
+                    },
+                    "index": 102,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Waterway",
+                        "node": "Pickup (Underwater Missile Tank)"
+                    },
+                    "index": 66,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 4 (AQA)",
+                        "area": "Yard Firing Range",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 62,
+                    "pickup": "Super Missile Data",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Crow's Nest",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 84,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Data Room",
+                        "node": "Pickup (Power Bomb Data)"
+                    },
+                    "index": 113,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "E-Tank Mimic Den",
+                        "node": "Pickup (Hidden Energy Tank)"
+                    },
+                    "index": 75,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Flooded Airlock",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 86,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Gerubus Gully",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 82,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Level 3 Security Room",
+                        "node": "Pickup (L3 Locks)"
+                    },
+                    "index": 118,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Magic Box",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 81,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Mini-Fridge",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 76,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Nightmare Arena",
+                        "node": "Pickup (Gravity Suit)"
+                    },
+                    "index": 109,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Nightmare Hub",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 77,
+                    "pickup": "Ice Missile Data",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Nightmare Nook",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 83,
+                    "pickup": "Ice Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Ripper Road",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 80,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Ripper's Treasure",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 79,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Ruined Break Room",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 85,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Security Shaft East",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 78,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Training Aerie",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 74,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Training Aerie",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 73,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 5 (ARC)",
+                        "area": "Transmutation Trial",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 87,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Catacombs",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 93,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Entrance Lobby",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 88,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Missile Mimic Lodge",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 92,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Pillar Highway",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 97,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Spaceboost Alley",
+                        "node": "Pickup (Power Bomb Tank 2)"
+                    },
+                    "index": 99,
+                    "pickup": "Diffusion Missile Data",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Spaceboost Alley",
+                        "node": "Pickup (Power Bomb Tank)"
+                    },
+                    "index": 98,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Twin Caverns West",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 95,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Twin Caverns West",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 94,
+                    "pickup": "Nothing",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Varia Core-X Arena",
+                        "node": "Pickup (Varia Suit)"
+                    },
+                    "index": 108,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Vault",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 96,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "X-B.O.X. Arena",
+                        "node": "Pickup (Wave Beam)"
+                    },
+                    "index": 111,
+                    "pickup": "Wide Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "X-B.O.X. Garage",
+                        "node": "Pickup (Hidden Power Bomb Tank)"
+                    },
+                    "index": 90,
+                    "pickup": "Power Bomb Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "X-B.O.X. Garage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 91,
+                    "pickup": "Level 4 Keycard",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Zozoro Wine Cellar",
+                        "node": "Pickup (Hidden Missile Tank)"
+                    },
+                    "index": 89,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                }
+            ],
+            "hints": {
+                "Main Deck/Auxiliary Navigation Room/Navigation Terminal": {
+                    "hint_type": "joke"
+                },
+                "Main Deck/Restricted Navigation Room/Navigation Terminal": {
+                    "hint_type": "joke"
+                },
+                "Main Deck/Operations Deck Navigation Room/Navigation Terminal": {
+                    "hint_type": "joke"
+                },
+                "Main Deck/Crew Quarters Navigation Room/Navigation Terminal": {
+                    "hint_type": "joke"
+                },
+                "Main Deck/Nexus Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 83,
+                    "hint_type": "location"
+                },
+                "Sector 1 (SRX)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 99,
+                    "hint_type": "location"
+                },
+                "Sector 2 (TRO)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 23,
+                    "hint_type": "location"
+                },
+                "Sector 3 (PYR)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null,
+                        "location_feature": "geron"
+                    },
+                    "target": 43,
+                    "hint_type": "location"
+                },
+                "Sector 4 (AQA)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null,
+                        "location_feature": "extreme-temp"
+                    },
+                    "target": 123,
+                    "hint_type": "location"
+                },
+                "Sector 5 (ARC)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 28,
+                    "hint_type": "location"
+                },
+                "Sector 6 (NOC)/Entrance Navigation Room/Navigation Terminal": {
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": false,
+                        "relative": null
+                    },
+                    "target": 55,
+                    "hint_type": "location"
+                }
+            },
+            "game_specific": {}
+        }
+    ],
+    "item_order": [
+        "Hi-Jump at Sector 1 (SRX)/Lava Lake/Pickup (Missile Tank in Lava)",
+        "Missile Launcher Data at Sector 1 (SRX)/Wall Jump Tutorial/Pickup (Missile Tank)",
+        "Charge Beam at Main Deck/Operations Ventilation Storage/Pickup (Hidden Missile Tank)"
+    ],
+    "checksum": "0b8c8e3a13d56697b8cc15f029c76308f2e48ad3e1ed682d1de0d7e9bbe21ddacf1de4474c2265b4fd98681c54b49c473155f971eb135f2b0c16b10cd3a10e6c"
+}

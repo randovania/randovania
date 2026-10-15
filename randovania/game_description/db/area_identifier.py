@@ -22,10 +22,7 @@ class AreaIdentifier:
 
     @classmethod
     def from_json(cls, value: dict) -> Self:
-        try:
-            return cls(value["region"], value["area"])
-        except Exception:
-            raise
+        return cls(value["region"], value["area"])
 
     @property
     def as_tuple(self) -> tuple[str, str]:

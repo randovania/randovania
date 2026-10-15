@@ -28,7 +28,7 @@ from randovania.layout.base.logical_pickup_placement_configuration import Logica
 )
 def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
     # Setup
-    game, has_specific_settings, has_min_logic, tab = game_data
+    game, _has_specific_settings, has_min_logic, tab = game_data
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     options = MagicMock()
@@ -69,7 +69,8 @@ def test_persist_logical_pickup_placement(skip_qtbot, preset_manager):
     skip_qtbot.addWidget(window)
 
     # Run
-    skip_qtbot.keyClicks(window.logical_pickup_placement_combo, "Major pickups")
+    combo = window.logical_pickup_placement_combo
+    combo.setCurrentIndex(combo.findData(LogicalPickupPlacementConfiguration.MAJORS))
 
     # Assert
     editor.__enter__.return_value.set_configuration_field.assert_called_once_with(

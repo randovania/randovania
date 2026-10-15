@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -29,22 +30,19 @@ _NOTHING_PICKUP_NAME = "Nothing"
 
 
 def _pickup_assignment_to_pickup_locations(
-    region_list: RegionList,
+    game: GameDatabaseView,
     pickup_assignment: PickupAssignment,
     current_world: int,
     num_worlds: int,
 ) -> list[dict]:
     pickup_locations = []
 
-    for region, area, node in region_list.all_regions_areas_nodes:
-        if not node.is_resource_node or not isinstance(node, PickupNode):
-            continue
-
+    for _, _, node in game.iterate_nodes_of_type(PickupNode):
         if node.pickup_index in pickup_assignment:
             target = pickup_assignment[node.pickup_index]
             item_name = target.pickup.name
             if num_worlds > 1:
-                target_world = target.player
+                target_world = target.world
             else:
                 target_world = 0
         else:
@@ -82,10 +80,9 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
     :return:
     """
     game = filtered_database.game_description_for_layout(patches.configuration)
-    region_list = game.region_list
 
     dock_weakness_to_type = {}
-    for dock_type, weaknesses in game.dock_weakness_database.weaknesses.items():
+    for dock_type, weaknesses in game.dock_type_database.weaknesses.items():
         for weakness in weaknesses.values():
             dock_weakness_to_type[weakness] = dock_type
 
@@ -108,18 +105,16 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
         },
         "starting_location": patches.starting_location.as_string,
         "dock_connections": {
-            dock.identifier.as_string: target.identifier.as_string for dock, target in patches.all_dock_connections()
+            dock.as_string: target.as_string for dock, target in patches.all_dock_connections_identifiers()
         },
         "dock_weakness": {
             dock.identifier.as_string: {
                 "type": dock_weakness_to_type[weakness].short_name,
                 "name": weakness.name,
             }
-            for dock, weakness in patches.all_dock_weaknesses()
+            for dock, weakness in patches.all_dock_weaknesses(game)
         },
-        "locations": _pickup_assignment_to_pickup_locations(
-            region_list, patches.pickup_assignment, world_index, num_worlds
-        ),
+        "locations": _pickup_assignment_to_pickup_locations(game, patches.pickup_assignment, world_index, num_worlds),
         "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
         "game_specific": patches.game_specific,
     }
@@ -127,6 +122,29 @@ def serialize_single(world_index: int, num_worlds: int, patches: GamePatches) ->
     if patches.custom_patcher_data:
         result["custom_patcher_data"] = patches.custom_patcher_data
 
+    return result
+
+
+def serialize_single_world_only(world_index: int, num_worlds: int, patches: GamePatches) -> dict:
+    """
+    Like ``serialize_single``, but strips all data about other worlds: pickups owned by them become
+    Nothing, and hints are removed entirely.
+
+    The result is enough to compute the world's own logic (only self-owned pickups affect it),
+    without spoiling what the world's locations hold for other worlds. It can be decoded with
+    ``decode_single`` using only this world's game and pool.
+    """
+
+    def _adjust_location(location: dict) -> dict:
+        if location["owner"] != world_index:
+            location["pickup"] = _NOTHING_PICKUP_NAME
+
+        location["owner"] = 0
+        return location
+
+    result = serialize_single(world_index, num_worlds, patches)
+    result["locations"] = [_adjust_location(loc) for loc in result["locations"]]
+    result["hints"] = {}
     return result
 
 
@@ -147,7 +165,7 @@ def _get_pickup_from_pool(pickup_list: list[PickupEntry], name: str) -> PickupEn
 
 def _decode_pickup_assignment(
     player_index: int,
-    all_pools: dict[int, PoolResults],
+    all_pools: list[PoolResults],
     region_list: RegionList,
     locations: dict,
 ) -> PickupAssignment:
@@ -161,7 +179,7 @@ def _decode_pickup_assignment(
         if pickup_name == _NOTHING_PICKUP_NAME:
             continue
 
-        target_world = location["owner"]
+        target_world: int = location["owner"]
 
         pickup_index = PickupIndex(location["index"])
         node = region_list.node_from_pickup_index(pickup_index)
@@ -192,16 +210,16 @@ def _decode_pickup_assignment(
 
 
 def decode_single(
-    player_index: int,
-    all_pools: dict[int, PoolResults],
+    world_index: int,
+    all_pools: list[PoolResults],
     game: GameDescription,
     game_modifications: dict,
     configuration: BaseConfiguration,
-    all_games: dict[int, GameDescription],
+    all_games: list[GameDescription],
 ) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
-    :param player_index:
+    :param world_index:
     :param all_pools:
     :param game:
     :param game_modifications:
@@ -210,16 +228,12 @@ def decode_single(
     :return:
     """
     region_list = game.region_list
-    weakness_db = game.dock_weakness_database
+    weakness_db = game.dock_type_database
 
     if game_modifications["game"] != game.game.value:
         raise ValueError(f"Expected '{game.game.value}', got '{game_modifications['game']}'")
 
-    if "custom_patcher_data" in game_modifications:
-        custom_patcher_data = game_modifications["custom_patcher_data"]
-    else:
-        custom_patcher_data = []
-
+    custom_patcher_data = game_modifications.get("custom_patcher_data", [])
     game_specific = game_modifications["game_specific"]
 
     # Starting Location
@@ -229,14 +243,14 @@ def decode_single(
     starting_equipment: StartingEquipment
     if "items" in game_modifications["starting_equipment"]:
         starting_equipment = ResourceCollection.from_dict(
-            game,
+            game.resource_database,
             {
                 find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
                 for resource_name, quantity in game_modifications["starting_equipment"]["items"].items()
             },
         )
     else:
-        player_pool = all_pools[player_index]
+        player_pool = all_pools[world_index]
         starting_equipment = []
         for starting in game_modifications["starting_equipment"]["pickups"]:
             try:
@@ -275,7 +289,7 @@ def decode_single(
 
     # Pickups
     pickup_assignment = _decode_pickup_assignment(
-        player_index,
+        world_index,
         all_pools,
         region_list,
         game_modifications["locations"],
@@ -289,7 +303,7 @@ def decode_single(
             pickup_db = default_database.pickup_database_for_game(game.game)
 
             def get_target_pickup_db(target: PickupTarget) -> PickupDatabase:
-                target_game = all_games[target.player]
+                target_game = all_games[target.world]
                 target_pickup_db = default_database.pickup_database_for_game(target_game.game)
                 return target_pickup_db
 
@@ -311,7 +325,7 @@ def decode_single(
 
         hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint, **extra)
 
-    patches = GamePatches.create_from_game(game, player_index, configuration)
+    patches = GamePatches.create_from_game(game, world_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)
     patches = patches.assign_dock_weakness(dock_weakness)
     return dataclasses.replace(
@@ -327,21 +341,20 @@ def decode_single(
 
 def decode(
     game_modifications: list[dict],
-    layout_configurations: dict[int, BaseConfiguration],
-) -> dict[int, GamePatches]:
-    all_games = {
-        index: filtered_database.game_description_for_layout(configuration)
-        for index, configuration in layout_configurations.items()
-    }
-    all_pools = {
-        index: pool_creator.calculate_pool_results(configuration, all_games[index])
-        for index, configuration in layout_configurations.items()
-    }
-    return {
-        index: decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index], all_games)
+    layout_configurations: list[BaseConfiguration],
+) -> list[GamePatches]:
+    all_games = [
+        filtered_database.game_description_for_layout(configuration) for configuration in layout_configurations
+    ]
+    all_pools = [
+        pool_creator.calculate_pool_results(configuration, game)
+        for configuration, game in zip(layout_configurations, all_games, strict=True)
+    ]
+    return [
+        decode_single(index, all_pools, all_games[index], modifications, layout_configurations[index], all_games)
         for index, modifications in enumerate(game_modifications)
-    }
+    ]
 
 
-def serialize(all_patches: dict[int, GamePatches]) -> list[dict]:
-    return [serialize_single(index, len(all_patches), patches) for index, patches in all_patches.items()]
+def serialize(all_patches: list[GamePatches]) -> list[dict]:
+    return [serialize_single(index, len(all_patches), patches) for index, patches in enumerate(all_patches)]

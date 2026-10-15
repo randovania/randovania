@@ -403,12 +403,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GrappleMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -476,8 +493,51 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -505,6 +565,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Top Floor": {
                             "type": "and",
@@ -727,6 +788,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironWideBeamBlockCataris",
+                    "grants_on_collect": [],
                     "connections": {
                         "Wide Beam Block - Adjacent": {
                             "type": "and",
@@ -1050,6 +1112,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
+                    "grants_on_collect": [],
                     "connections": {
                         "Top Floor": {
                             "type": "and",
@@ -1329,6 +1392,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironWideBeamBlockSave",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to EMMI Zone Exit East": {
                             "type": "and",
@@ -1523,6 +1587,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironGrappleBlockElevatorFerenia",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to EMMI Zone Exit East": {
                             "type": "and",
@@ -1921,6 +1986,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Yellow EMMI Introduction": {
                             "type": "and",
@@ -1949,6 +2015,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_reg_b1_005",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Wide Beam Room": {
                             "type": "and",
@@ -1977,6 +2044,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_007",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Hub Access": {
                             "type": "and",
@@ -2212,6 +2280,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironWideBeamBlockHub",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Hub Access": {
                             "type": "and",
@@ -2402,6 +2471,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironFereniaTransportSpeedBlocks",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to East Transport to Ferenia": {
                             "type": "and",
@@ -2510,6 +2580,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -2716,6 +2787,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:powergenerator_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -3080,6 +3152,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_dif_b1_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom-Left Corner": {
                             "type": "and",
@@ -3361,6 +3434,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_dif_b1_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Total Recharge Station East": {
                             "type": "and",
@@ -3738,6 +3812,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Heated Room West": {
                             "type": "and",
@@ -4147,6 +4222,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_hdoor_b1_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Right Alcove": {
                             "type": "and",
@@ -4725,6 +4801,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Early Grapple Room": {
                             "type": "or",
@@ -5076,6 +5153,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_006",
+                    "grants_on_collect": [],
                     "connections": {
                         "Elevator to Artaria": {
                             "type": "or",
@@ -5598,6 +5676,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Lava Floor with Gravity Suit": {
                             "type": "and",
@@ -5928,6 +6007,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Transport to Artaria": {
                             "type": "and",
@@ -6359,6 +6439,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_000",
+                    "grants_on_collect": [],
                     "connections": {
                         "Upper Left Alcove": {
                             "type": "and",
@@ -6387,6 +6468,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Transport to Artaria": {
                             "type": "and",
@@ -7587,6 +7669,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Energy Recharge Station Middle": {
                             "type": "and",
@@ -7939,6 +8022,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Cross Bomb Puzzle Room": {
                             "type": "template",
@@ -7964,6 +8048,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_dif_b1_002",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to West Transport to Ferenia": {
                             "type": "and",
@@ -8399,6 +8484,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to EMMI Zone Exit North": {
                             "type": "and",
@@ -8528,6 +8614,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironYellowSpeedBlocks",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to EMMI Zone Exit North": {
                             "type": "and",
@@ -8852,6 +8939,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironWideBeamBlockFerenia",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Navigation Station North (Lower)": {
                             "type": "and",
@@ -8877,6 +8965,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironWideBeamBlockFerenia",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Navigation Station North (Upper)": {
                             "type": "and",
@@ -9208,6 +9297,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Total Recharge Station West": {
                             "type": "template",
@@ -9233,6 +9323,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_002",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Total Recharge Station West": {
                             "type": "and",
@@ -9325,6 +9416,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door from Total Recharge Station West": {
                             "type": "and",
@@ -9407,6 +9499,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door from Total Recharge Station West": {
                             "type": "or",
@@ -10175,6 +10268,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_reg_b1_003",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Freezer": {
                             "type": "and",
@@ -10205,6 +10299,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:powergenerator_002",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Freezer": {
                             "type": "and",
@@ -10622,6 +10717,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom-Left Corner": {
                             "type": "and",
@@ -10732,6 +10828,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Left Blob Alcove": {
                             "type": "and",
@@ -10856,6 +10953,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_reg_b1_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Left Blob Alcove": {
                             "type": "and",
@@ -10884,6 +10982,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_reg_b1_002",
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside the Blob": {
                             "type": "and",
@@ -11107,6 +11206,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_reg_b1_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Freezer Navigation": {
                             "type": "and",
@@ -11552,6 +11652,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:db_reg_b1_002",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Map Station": {
                             "type": "and",
@@ -11702,6 +11803,49 @@
                                             "name": "Knowledge",
                                             "amount": 2,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "s030_baselab:default:powergenerator_002",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "HighDanger",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -11991,6 +12135,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironFreezerSpeedBlocks",
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Top": {
                             "type": "and",
@@ -12738,6 +12883,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Shinespark Tutorial": {
                             "type": "and",
@@ -12799,6 +12945,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Total Recharge Station West": {
                             "type": "and",
@@ -12959,6 +13106,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to EMMI Zone Exit West": {
                             "type": "resource",
@@ -13650,6 +13798,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to EMMI Zone Exit West": {
                             "type": "and",
@@ -13704,6 +13853,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_005",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Experiment Z-57 Test Chamber": {
                             "type": "and",
@@ -13894,6 +14044,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Save Station West": {
                             "type": "template",
@@ -14232,6 +14383,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -14345,6 +14497,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironStormMissileGate",
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -14542,6 +14695,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironStormSpeedBlocks",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "and",
@@ -14828,6 +14982,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Above Grapple Block": {
                             "type": "resource",
@@ -14858,6 +15013,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s030_baselab:default:grapplepulloff1x2_003",
+                    "grants_on_collect": [],
                     "connections": {
                         "Ledge": {
                             "type": "and",
@@ -15835,7 +15991,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Central Unit Access": {
+                        "Dock to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15844,7 +16000,7 @@
                         }
                     }
                 },
-                "Door to Central Unit Access": {
+                "Dock to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15858,13 +16014,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "Central Unit Access",
-                        "node": "Door to Central Unit"
+                        "node": "Dock to Central Unit"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "EMMI Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -15892,8 +16048,9 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "DaironCU",
+                    "grants_on_collect": [],
                     "connections": {
-                        "Door to Central Unit Access": {
+                        "Dock to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16122,6 +16279,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to EMMI Zone Exit South (Open)": {
                             "type": "resource",
@@ -16214,7 +16372,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Central Unit": {
+                        "Dock to Central Unit": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -16264,7 +16422,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Central Unit": {
+                        "Dock to Central Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16273,7 +16431,7 @@
                         }
                     }
                 },
-                "Door to Central Unit": {
+                "Dock to Central Unit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16287,13 +16445,13 @@
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "region": "Dairon",
                         "area": "Central Unit",
-                        "node": "Door to Central Unit Access"
+                        "node": "Dock to Central Unit Access"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "EMMI Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -16393,8 +16551,9 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
-                        "Door to Central Unit": {
+                        "Dock to Central Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16466,7 +16625,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Central Unit": {
+                        "Dock to Central Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16743,6 +16902,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Freezer (Upper)": {
                             "type": "and",

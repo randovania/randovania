@@ -12,7 +12,7 @@ from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.common.dotnet import is_dotnet_set_up
 
 if TYPE_CHECKING:
-    from multiprocessing.connection import Connection
+    from multiprocessing.connection import _ConnectionBase
 
     from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.lib import status_update_lib
@@ -85,7 +85,7 @@ class PlanetsZebethGameExporter(GameExporter[PlanetsZebethGameExportParams]):
 
 # TODO: implement some json validation in the patcher and call it here
 @monitoring.trace_function
-def _run_patcher(patch_data: dict, export_params: PlanetsZebethGameExportParams, output_pipe: Connection) -> None:
+def _run_patcher(patch_data: dict, export_params: PlanetsZebethGameExportParams, output_pipe: _ConnectionBase) -> None:
     # Delay this, so that we only load CLR/dotnet when exporting
     import planets_yapr  # type: ignore[import-untyped]
 

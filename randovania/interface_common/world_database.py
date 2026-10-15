@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import dataclasses
+import itertools
 import json
 import logging
 import typing
@@ -9,8 +10,9 @@ import uuid
 from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import is_uuid_multiworld
 from randovania.lib import json_lib, migration_lib
+from randovania.lib.migration_lib import UnsupportedVersion
 from randovania.lib.signal import RdvSignal
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.world_sync import ServerWorldSync
@@ -20,12 +22,12 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 _MIGRATIONS = [
-    # lambda data: None,
+    lambda data: None,  # added beaten fields
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
 
-def migrate_to_current(data: dict):
+def migrate_to_current(data: dict) -> dict:
     return migration_lib.apply_migrations(data, _MIGRATIONS, copy_before_migrating=True)
 
 
@@ -74,7 +76,7 @@ class WorldDatabase:
 
     WorldDataUpdate = RdvSignal()
 
-    def __init__(self, persist_path: Path):
+    def __init__(self, persist_path: Path) -> None:
         super().__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -85,41 +87,47 @@ class WorldDatabase:
         self._all_data = {}
         self._lock = asyncio.Lock()
 
-    async def _read_data(self, uid: uuid.UUID) -> WorldData | None:
+    async def _read_data(self, path: Path) -> WorldData | None:
         try:
             raw_data = typing.cast(
                 "dict",
-                await json_lib.read_path_async(self._persist_path.joinpath(f"{uid}.json")),
+                await json_lib.read_path_async(path),
             )
             return WorldData.from_json(migrate_to_current(raw_data)["data"])
+        except UnsupportedVersion:
+            return None
         except json.decoder.JSONDecodeError:
-            self._persist_path.joinpath(f"{uid}.json").unlink()
+            path.unlink()
             return None
 
-    async def _write_data(self, uid: uuid.UUID, data: WorldData):
+    async def _write_data(self, uid: uuid.UUID, data: WorldData) -> None:
         json_lib.write_path(
-            self._persist_path.joinpath(f"{uid}.json"),
+            self._persist_path.joinpath(str(CURRENT_VERSION), f"{uid}.json"),
             {
                 "schema_version": CURRENT_VERSION,
                 "data": data.as_json,
             },
         )
 
-    async def load_existing_data(self):
-        for f in self._persist_path.glob("*.json"):
+    async def load_existing_data(self) -> None:
+        paths = [self._persist_path]
+        for version in range(2, CURRENT_VERSION + 1):  # versioned folder started at 2
+            paths.append(self._persist_path.joinpath(str(version)))
+
+        for f in itertools.chain.from_iterable([path.glob("*.json") for path in reversed(paths)]):
             try:
                 uid = uuid.UUID(f.stem)
             except ValueError:
                 self.logger.warning("File name is not a UUID: %s", f)
                 continue
 
-            if uid != INVALID_UUID:
-                data = await self._read_data(uid)
+            if is_uuid_multiworld(uid) and uid not in self._all_data:
+                data = await self._read_data(f)
                 if data:
                     self._all_data[uid] = data
 
     def get_data_for(self, uid: uuid.UUID) -> WorldData:
-        if uid == INVALID_UUID:
+        if not is_uuid_multiworld(uid):
             raise ValueError("UID not allowed for Multiworld")
 
         if uid not in self._all_data:
@@ -127,10 +135,10 @@ class WorldDatabase:
 
         return self._all_data[uid]
 
-    async def set_data_for(self, uid: uuid.UUID, data: WorldData):
+    async def set_data_for(self, uid: uuid.UUID, data: WorldData) -> None:
         await self.set_many_data({uid: data})
 
-    async def set_many_data(self, new_data: dict[uuid.UUID, WorldData]):
+    async def set_many_data(self, new_data: dict[uuid.UUID, WorldData]) -> None:
         async with self._lock:
             for uid, data in new_data.items():
                 if data != self._all_data.get(uid):

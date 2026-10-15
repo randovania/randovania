@@ -1,16 +1,20 @@
 from __future__ import annotations
 
 import asyncio
+import datetime
+import json
+import re
 import uuid
 from pathlib import Path
-from typing import TYPE_CHECKING
-from unittest.mock import AsyncMock, MagicMock, call
+from typing import TYPE_CHECKING, cast
+from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import aiohttp.client_exceptions
 import pytest
 import socketio.exceptions
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel, StartingPickupBehavior
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -18,16 +22,36 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
-from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
+from randovania.network_common.async_race_room import (
+    AsyncRaceRoomEntry,
+    AsyncRaceRoomRaceStatus,
+    AsyncRaceRoomUserStatus,
+)
+from randovania.network_common.async_race_room_endpoints import async_race_room_endpoints as race_endpoints
+from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.error import (
+    InvalidActionError,
+    InvalidSessionError,
+    RequestTimeoutError,
+    ServerError,
+    WorldNotAssociatedError,
+)
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
 from randovania.network_common.remote_pickup import RemotePickup
+from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
     import pytest_mock
 
+    from randovania.lib.json_lib import JsonType_RO
+    from randovania.network_common.configuration import NetworkConfiguration
+
 
 @pytest.fixture
-async def client(tmp_path):
+def client(tmp_path, mocker: pytest_mock.MockerFixture):
+    mock_http_session = mocker.patch("randovania.lib.http_lib.http_session")
+    mock_http_session.return_value.closed = False
     client = NetworkClient(
         tmp_path,
         {
@@ -35,12 +59,126 @@ async def client(tmp_path):
             "socketio_path": "/socket.io",
         },
     )
-    yield client
-    await client.http.close()
+    return client
 
 
-async def test_on_connect_no_restore(tmp_path):
-    client = NetworkClient(
+@pytest.fixture
+async def make_client():
+    clients: list[NetworkClient] = []
+
+    def create(user_data_dir: Path, configuration: NetworkConfiguration) -> NetworkClient:
+        client = NetworkClient(user_data_dir, configuration)
+        clients.append(client)
+        return client
+
+    yield create
+
+    for client in clients:
+        await client.shutdown()
+
+
+async def test_shutdown(tmp_path, make_client):
+    # Explicitly not mocking http_session
+    # The assert is not leaking a resource.
+    client = make_client(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
+    session = client.http
+
+    await client.shutdown()
+
+    assert session.closed
+    with pytest.raises(RuntimeError, match="was shut down"):
+        _ = client.http
+
+
+async def test_http_recreated_when_closed(tmp_path, make_client):
+    # Explicitly not mocking http_session
+    client = make_client(
+        tmp_path,
+        {
+            "server_address": "http://localhost:5000",
+            "socketio_path": "/socket.io",
+        },
+    )
+
+    # Run
+    # A ClientSession can be closed by something outside our control, and can't be re-opened.
+    first_session = client.http
+    await first_session.close()
+    second_session = client.http
+
+    # Assert
+    assert second_session is not first_session
+    assert not second_session.closed
+
+
+async def test_rest_headers_come_from_the_client(client: NetworkClient):
+    # The authentication state lives in the client and is applied per-request, so that the session
+    # can be re-created at any point without losing it.
+    client._session_id = "the-sid"
+    client._encoded_session = "the-session"
+    http = cast("MagicMock", client.http)
+
+    expected_headers = {
+        **connection_headers(),
+        "Accept": "application/json",
+        "X-Randovania-Sid": "the-sid",
+        "X-Randovania-Session": "the-session",
+    }
+
+    # Run
+    client.server_get("some-path")
+    client.server_post("some-path")
+
+    # Assert
+    http.get.assert_called_once_with("http://localhost:5000/some-path", headers=expected_headers)
+    http.post.assert_called_once_with("http://localhost:5000/some-path", headers=expected_headers)
+
+
+async def test_rest_headers_does_not_override_given_headers(client: NetworkClient):
+    http = cast("MagicMock", client.http)
+
+    client.server_get("some-path", headers={"Accept": "text/plain"})
+
+    http.get.assert_called_once_with(
+        "http://localhost:5000/some-path",
+        headers={**connection_headers(), "Accept": "text/plain"},
+    )
+
+
+class MockResponse:
+    def __init__(self, text: str | JsonType_RO, status: int):
+        if not isinstance(text, str):
+            text = json.dumps(text)
+        self._text = text
+        self.status = status
+
+    async def text(self) -> str:
+        return self._text
+
+    async def json(self) -> dict:
+        import json as jsonlib
+
+        return jsonlib.loads(self._text)
+
+    def raise_for_status(self) -> None:
+        if self.status >= 400:
+            raise aiohttp.ClientError("Request not OK")
+
+    async def __aexit__(self, exc_type, exc, tb):
+        pass
+
+    async def __aenter__(self):
+        return self
+
+
+async def test_on_connect_no_restore(tmp_path, make_client):
+    client = make_client(
         tmp_path,
         {
             "server_address": "http://localhost:5000",
@@ -56,8 +194,8 @@ async def test_on_connect_no_restore(tmp_path):
 
 
 @pytest.mark.parametrize("valid_session", [False, True])
-async def test_on_connect_restore(tmpdir, valid_session: bool):
-    client = NetworkClient(
+async def test_on_connect_restore(tmpdir, valid_session: bool, make_client):
+    client = make_client(
         Path(tmpdir),
         {
             "server_address": "http://localhost:5000",
@@ -89,7 +227,7 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
 
     # Assert
     if valid_session:
-        assert client.http.headers["X-Randovania-Sid"] == 12341234
+        assert client._session_id == 12341234
     client.sio.call.assert_awaited_once_with("restore_user_session", b"foo", namespace=None, timeout=30)
 
     if valid_session:
@@ -114,11 +252,12 @@ async def test_on_connect_restore_timeout(client: NetworkClient):
     client.disconnect_from_server.assert_awaited_once_with()
 
 
-async def test_connect_to_server(tmp_path):
+async def test_connect_to_server(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
+        assert client._waiting_for_on_connect is not None
         client._waiting_for_on_connect.set_result(True)
 
     client.sio.connect = AsyncMock(side_effect=connect)
@@ -134,9 +273,9 @@ async def test_connect_to_server(tmp_path):
     )
 
 
-async def test_connect_to_server_cancel(tmp_path):
+async def test_connect_to_server_cancel(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     client.sio.disconnect = AsyncMock()
     client._internal_connect_to_server = AsyncMock(side_effect=asyncio.CancelledError())
@@ -148,9 +287,9 @@ async def test_connect_to_server_cancel(tmp_path):
     client.sio.disconnect.assert_awaited_once_with()
 
 
-async def test_internal_connect_to_server_failure(tmp_path):
+async def test_internal_connect_to_server_failure(tmp_path, make_client):
     # Setup
-    client = NetworkClient(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
+    client = make_client(tmp_path, {"server_address": "http://localhost:5000", "socketio_path": "/path"})
 
     async def connect(*args, **kwargs):
         raise (aiohttp.client_exceptions.ContentTypeError(MagicMock(), (), message="thing"))
@@ -184,7 +323,9 @@ async def test_session_admin_global(client: NetworkClient):
 
     # Assert
     assert result == client.server_call.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_admin_session", (1234, "change_world", 5))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_admin_session", (1234, "change_world", 5), namespace=None, handle_invalid_session=True
+    )
 
 
 @pytest.mark.parametrize("was_listening", [False, True])
@@ -200,11 +341,39 @@ async def test_listen_to_session(client: NetworkClient, listen, was_listening):
     await client.listen_to_session(session_meta.id, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with("multiplayer_listen_to_session", (1234, listen))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_listen_to_session", (1234, listen), namespace=None, handle_invalid_session=True
+    )
     if listen:
         assert client._sessions_interested_in == {1234}
     else:
         assert client._sessions_interested_in == set()
+
+
+@pytest.mark.parametrize("connected", [False, True])
+@pytest.mark.parametrize("was_listening", [False, True])
+async def test_remove_interest_in_session(client: NetworkClient, was_listening, connected):
+    client.server_call = AsyncMock()
+    client._connection_state = ConnectionState.Connected if connected else ConnectionState.Disconnected
+    if was_listening:
+        client._sessions_interested_in.add(1234)
+
+    # Run
+    client.remove_interest_in_session(1234)
+
+    # Let any scheduled background task run to completion.
+    for task in list(client._background_tasks):
+        await task
+
+    # Assert
+    assert client._sessions_interested_in == set()
+    assert client._background_tasks == set()
+    if connected:
+        client.server_call.assert_awaited_once_with(
+            "multiplayer_listen_to_session", (1234, False), namespace=None, handle_invalid_session=True
+        )
+    else:
+        client.server_call.assert_not_awaited()
 
 
 @pytest.mark.parametrize("was_listening", [False, True])
@@ -221,7 +390,9 @@ async def test_world_track_inventory(client: NetworkClient, listen, was_listenin
     await client.world_track_inventory(uid, 4567, listen)
 
     # Assert
-    client.server_call.assert_awaited_once_with("multiplayer_watch_inventory", (str(uid), 4567, listen, True))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_watch_inventory", (str(uid), 4567, listen, True), namespace=None, handle_invalid_session=True
+    )
     if listen:
         assert client._tracking_worlds == {(uid, 9999), (uid, 4567)}
     else:
@@ -295,7 +466,7 @@ async def test_refresh_received_pickups(client: NetworkClient, blank_game_descri
     }
 
     pickups = [MagicMock(), MagicMock(), MagicMock()]
-    mock_decode = mocker.patch("randovania.network_client.network_client._decode_pickup", side_effect=pickups)
+    mock_decode = mocker.patch("randovania.network_common.remote_pickup._decode_pickup", side_effect=pickups)
 
     client.on_world_pickups_update = AsyncMock()
 
@@ -314,7 +485,13 @@ async def test_refresh_received_pickups(client: NetworkClient, blank_game_descri
             ),
         )
     )
-    mock_decode.assert_has_calls([call("VtI6Bb3p", db), call("VtI6Bb3y", db), call("VtI6Bb3*", db)])
+    mock_decode.assert_has_calls(
+        [
+            call("VtI6Bb3p", ANY),
+            call("VtI6Bb3y", ANY),
+            call("VtI6Bb3*", ANY),
+        ]
+    )
 
 
 def test_decode_pickup(
@@ -362,16 +539,92 @@ async def test_on_disconnect(client: NetworkClient):
 
 async def test_create_new_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
     mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
-    client.server_call = AsyncMock()
+    client.server_post = MagicMock(return_value=AsyncMock())
+    response = client.server_post.return_value.__aenter__.return_value
+    response.raise_for_status = MagicMock()
+    client._session_id = "1234"
 
     # Run
     result = await client.create_new_session("The Session")
 
     # Assert
     assert result is mock_session_from.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_create_session", "The Session")
-    mock_session_from.assert_called_once_with(client.server_call.return_value)
+    client.server_post.assert_called_once_with("session", json={"name": "The Session"})
+    mock_session_from.assert_called_once_with(response.json.return_value)
+    response.raise_for_status.assert_called_once_with()
     assert client._sessions_interested_in == {mock_session_from.return_value.id}
+
+
+async def test_create_new_session_bad(client: NetworkClient, mocker: pytest_mock.MockerFixture):
+    mock_session_from = mocker.patch("randovania.network_common.multiplayer_session.MultiplayerSessionEntry.from_json")
+    client.server_post = MagicMock(return_value=AsyncMock())
+    response = client.server_post.return_value.__aenter__.return_value
+    response.status = 422
+    response.json.return_value = {
+        "errors": [
+            {
+                "ctx": {"max_length": 50},
+                "input": "My Room With A Name that is really really really long",
+                "loc": ["body", "name"],
+                "msg": "String should have at most 50 characters",
+                "type": "string_too_long",
+            }
+        ],
+        "status_message": "422 Unprocessable Entity",
+    }
+    response.raise_for_status = MagicMock()
+    client._session_id = "1234"
+
+    # Run
+    with pytest.raises(
+        InvalidActionError, match=re.escape(r"Invalid Action: String should have at most 50 characters")
+    ):
+        await client.create_new_session("The Session")
+
+    # Assert
+    client.server_post.assert_called_once_with("session", json={"name": "The Session"})
+    mock_session_from.assert_not_called()
+    response.raise_for_status.assert_not_called()
+    assert client._sessions_interested_in == set()
+
+
+async def test_get_abandoned_world_data(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 200
+    response.json.return_value = {"order": 2}
+
+    # Run
+    result = await client.get_abandoned_world_data(world_uid)
+
+    # Assert
+    assert result == {"order": 2}
+    client.server_get.assert_called_once_with(f"world/{world_uid}/abandoned-data")
+
+
+async def test_get_abandoned_world_data_error(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 409
+    response.json.return_value = {"detail": "World is not abandoned"}
+
+    # Run
+    with pytest.raises(InvalidActionError, match="World is not abandoned"):
+        await client.get_abandoned_world_data(world_uid)
+
+
+async def test_get_abandoned_world_data_not_claimed(client: NetworkClient):
+    world_uid = uuid.UUID("00000000-0000-0000-0000-000000000001")
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 403
+    response.json.return_value = {"detail": "You must claim this world to run its bot"}
+
+    # Run
+    with pytest.raises(WorldNotAssociatedError):
+        await client.get_abandoned_world_data(world_uid)
 
 
 async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mock.MockerFixture):
@@ -384,7 +637,9 @@ async def test_join_multiplayer_session(client: NetworkClient, mocker: pytest_mo
 
     # Assert
     assert result is mock_session_from.return_value
-    client.server_call.assert_awaited_once_with("multiplayer_join_session", (session.id, "mahSecret"))
+    client.server_call.assert_awaited_once_with(
+        "multiplayer_join_session", (session.id, "mahSecret"), namespace=None, handle_invalid_session=True
+    )
     mock_session_from.assert_called_once_with(client.server_call.return_value)
     assert client._sessions_interested_in == {mock_session_from.return_value.id}
 
@@ -405,3 +660,83 @@ async def test_on_world_user_inventory_raw(client: NetworkClient):
             inventory={"MyKey": 4},
         )
     )
+
+
+async def test_on_world_important_status_message_raw(client: NetworkClient) -> None:
+    client.on_world_important_status_message = AsyncMock()
+
+    our_uuid = uuid.uuid4()
+    message = ImportantStatusMessage.DISCONNECTED_FROM_SERVER
+
+    await client._on_world_important_status_message_raw(our_uuid.bytes, message.value)
+    client.on_world_important_status_message.assert_called_once_with(our_uuid, message)
+
+
+async def test_authentication_methods(client: NetworkClient):
+    client.server_get = MagicMock(
+        return_value=MockResponse(
+            [
+                "discord",
+            ],
+            200,
+        )
+    )
+
+    result = await client.query_authentication_methods()
+
+    client.server_get.assert_called_once_with("authentication_methods")
+    assert result == {AuthenticationMethod.DISCORD}
+
+
+async def test_login_as_guest(client: NetworkClient):
+    client.on_user_session_updated = AsyncMock()
+    client.connect_to_server = AsyncMock()
+    client.server_post = MagicMock(return_value=MockResponse({"data": 5}, 200))
+    client.sio.get_sid = MagicMock(return_value="1234")
+
+    await client.login_as_guest("Foo")
+
+    client.server_post.assert_called_once_with("guest_login", data={"name": "Foo", "sid": "1234"})
+    client.on_user_session_updated.assert_awaited_once_with({"data": 5})
+    client.connect_to_server.assert_awaited_once_with()
+
+
+async def test_async_race_get_livesplit_url(client: NetworkClient):
+    client.server_get = MagicMock(return_value=AsyncMock())
+    response = client.server_get.return_value.__aenter__.return_value
+    response.status = 200
+    response.json.return_value = "https://example.com/livesplit/1234"
+
+    room = MagicMock()
+    room.id = 1234
+
+    # Run
+    result = await client.async_race_get_livesplit_url(room)
+
+    # Assert
+    assert result == "https://example.com/livesplit/1234"
+    client.server_get.assert_called_once_with(race_endpoints.room_livesplit_url(1234))
+
+
+async def test_on_async_race_room_update_raw(client: NetworkClient):
+    client.on_async_race_room_update = AsyncMock()
+
+    room = AsyncRaceRoomEntry(
+        id=1000,
+        name="Async Room",
+        creator="TheCreator",
+        creation_date=datetime.datetime(2020, 1, 1, tzinfo=datetime.UTC),
+        start_date=datetime.datetime(2020, 2, 1, tzinfo=datetime.UTC),
+        end_date=datetime.datetime(2020, 3, 1, tzinfo=datetime.UTC),
+        visibility=MultiplayerSessionVisibility.VISIBLE,
+        race_status=AsyncRaceRoomRaceStatus.ACTIVE,
+        auth_token="Token",
+        game_details=GameDetails(seed_hash="HASH", word_hash="Words Words", spoiler=False),
+        presets_raw=[b""],
+        is_admin=True,
+        self_status=AsyncRaceRoomUserStatus.NOT_MEMBER,
+        allow_pause=False,
+    )
+
+    await client._on_async_race_room_update_raw(room.as_json)
+    client.on_async_race_room_update.assert_awaited_once_with(room)

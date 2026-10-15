@@ -6,6 +6,7 @@ from unittest.mock import NonCallableMagicMock
 
 import cryptography.fernet
 import pytest
+import uvicorn
 from fastapi.testclient import TestClient
 from peewee import SqliteDatabase
 from socketio import AsyncServer
@@ -18,29 +19,30 @@ from randovania.server.configuration import ServerConfiguration
 from randovania.server.fastapi_discord import DiscordOAuthClient
 
 if TYPE_CHECKING:
-    from collections.abc import Generator
+    from collections.abc import AsyncGenerator, Callable, Generator
     from pathlib import Path
 
     from pytest_mock import MockerFixture
 
+    from randovania.network_client.network_client import NetworkClient
     from randovania.server.server_app import RdvFastAPI
 
 
 @pytest.fixture
-def empty_database():
+def empty_database(db_path, request: pytest.FixtureRequest):
     old_db = database.db
     try:
-        test_db = SqliteDatabase(":memory:")
+        test_db = SqliteDatabase(db_path, uri=True)
         database.db = test_db
         with test_db.bind_ctx(database.all_classes):
-            test_db.connect(reuse_if_open=True)
+            assert test_db.connect(reuse_if_open=False)
             yield test_db
     finally:
         database.db = old_db
 
 
 @pytest.fixture
-def clean_database(empty_database) -> SqliteDatabase:
+def clean_database(empty_database, request: pytest.FixtureRequest) -> SqliteDatabase:
     empty_database.create_tables(database.all_classes)
     return empty_database
 
@@ -56,26 +58,30 @@ def default_game_list(is_dev_version):
 
 
 @pytest.fixture(name="db_path")
-def db_path_fixture(tmp_path: Path):
-    return tmp_path.joinpath("database.db")
+def db_path_fixture(tmp_path):
+    # Use cache=shared, so multiple threads can use the same in-memory database
+    # Use a unique per-test file name as the file name is how they're shared
+    return f"file:{tmp_path.joinpath('db')}?mode=memory&cache=shared"
 
 
 @pytest.fixture(name="server_app")
-def server_app_fixture(db_path, mocker: MockerFixture):
+def server_app_fixture(mocker: MockerFixture):
     pytest.importorskip("engineio.async_drivers.threading")
     from randovania.server.server_app import ServerApp
+
+    # Don't let test_client create the database
+    mocker.patch("randovania.server.server_app.database_lifespan")
 
     server_config = ServerConfiguration(
         secret_key="key",
         discord_client_secret="5678",
         fernet_key="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         client_version_checking="ignore",
-        database_path=str(db_path),
+        database_path=":INVALID:",
     )
     configuration = NetworkConfiguration(
         server_address="http://127.0.0.1:5000",
         socketio_path="/socket.io",
-        guest_secret="s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         server_config=server_config,
         discord_client_id=1234,
     )
@@ -104,10 +110,58 @@ class RdvTestClient(TestClient):
 def test_client_fixture(server_app) -> Generator[RdvTestClient, None, None]:
     client = RdvTestClient(server_app.app)
     with client:
-        database.db.database = client.sa.db.database
-        database.db.close()
-        assert database.db.connect()
         yield client
+
+
+@pytest.fixture(name="live_server")
+async def live_server_fixture(server_app) -> AsyncGenerator[str, None]:
+    """
+    Serves the app on a free port, so a real `NetworkClient` can talk to it over HTTP.
+    Unlike `test_client`, this exercises the client's aiohttp requests as well.
+
+    Uses only uvicorn's socket and ASGI protocol: `Server.serve()`'s polling main loop and
+    graceful shutdown cost ~0.2s per test, and `make_live_client` has already closed every
+    client by teardown, so there's nothing left to drain.
+
+    Yields the server's address.
+    """
+    config = uvicorn.Config(server_app.app, host="127.0.0.1", port=0, log_level="warning")
+    server = uvicorn.Server(config)
+    # Both are done by `Server._serve` before it calls `startup`
+    config.load()
+    server.lifespan = config.lifespan_class(config)
+
+    await server.startup()
+    try:
+        port = server.servers[0].sockets[0].getsockname()[1]
+        yield f"http://127.0.0.1:{port}"
+    finally:
+        for socket_server in server.servers:
+            socket_server.close()
+            await socket_server.wait_closed()
+        await server.lifespan.shutdown()
+
+
+@pytest.fixture(name="make_live_client")
+async def make_live_client_fixture(
+    live_server, server_app, tmp_path: Path
+) -> AsyncGenerator[Callable[[int], NetworkClient], None]:
+    """Creates `NetworkClient`s connected to `live_server`, already authenticated as the given user id."""
+    from randovania.network_client.network_client import NetworkClient
+    from randovania.server.user_session import _encrypt_session_for_user
+
+    clients: list[NetworkClient] = []
+
+    def create(user_id: int) -> NetworkClient:
+        client = NetworkClient(tmp_path, {"server_address": live_server, "socketio_path": "/socket.io"})
+        client._encoded_session = _encrypt_session_for_user(server_app, {"user-id": user_id})
+        clients.append(client)
+        return client
+
+    yield create
+
+    for client in clients:
+        await client.shutdown()
 
 
 @pytest.fixture(name="mock_sa")

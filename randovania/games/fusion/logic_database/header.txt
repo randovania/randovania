@@ -44,13 +44,14 @@ Templates
 
 * Can Kill Missile Geron:
       Any of the following:
+          # Dev Note: MD Operations Ventilation and S1 Yameba Corridor contain extra rules
           Any of the following:
               Missiles ≥ 6
               Missiles ≥ 3 and 10+ DMG Missiles
               Missiles ≥ 2 and 20 DMG Missiles
               Missiles and 30 DMG Missiles
           All of the following:
-              Knowledge (Beginner)
+              Knowledge (Beginner) and Disabled Primary Geron Vulnerabilities
               Screw Attack or Can Use Power Bombs
 
 * Can Single Walljump:
@@ -58,6 +59,7 @@ Templates
 
 * Can Kill Super Geron:
       Any of the following:
+          # Dev Note: Please sync this up with S4 Drain Pipe! And S3 Bob's Abode + S6 Geron's Crossing contain shinesparks
           All of the following:
               Super Missile Data
               Any of the following:
@@ -65,15 +67,16 @@ Templates
                   Missiles ≥ 3 and 30 DMG Missiles
                   Missiles ≥ 2 and 45 DMG Missiles
           All of the following:
-              Knowledge (Beginner)
+              Knowledge (Beginner) and Disabled Primary Geron Vulnerabilities
               Any of the following:
                   Screw Attack
                   Power Bombs ≥ 2 and Can Use Power Bombs
 
 * Can Kill PB Geron:
       Any of the following:
+          # Dev Note: MD Central Nexus can be destroyed by shinesparking
           Can Use Power Bombs
-          Screw Attack and Knowledge (Beginner)
+          Screw Attack and Knowledge (Beginner) and Disabled Primary Geron Vulnerabilities
 
 * Can Bounce in Ball:
       Can Use Bombs or Can Use Springball
@@ -120,10 +123,11 @@ Templates
 
 * Can Kill Stabilizer Geron:
       Any of the following:
+          # Dev Note: Most instances can also be shinesparked. Also, Central and Southeast Stabilizer contains extra rules.
           # Stabilizers need 6 Missiles at most, which is perfectly adequate to farm on.
           Charge Beam or Missiles
           All of the following:
-              Knowledge (Beginner)
+              Knowledge (Beginner) and Disabled Primary Geron Vulnerabilities
               Screw Attack or Can Use Power Bombs
 
 * Can Kill Tough Underwater Beam-Resistant Enemy:
@@ -141,49 +145,57 @@ Dock Weaknesses
 
 > Door
   * Open Hatch
-      Extra - type: Open
+      Extra - type: OPEN
+      Open:
+          Trivial
+      No lock
+
+
+  * Open Hatch (Forced)
+      Extra - type: OPEN
       Open:
           Trivial
       No lock
 
 
   * Locked Hatch
-      Extra - type: Locked
+      Extra - type: LOCKED
+      Considered unsafe as target for "By Type"
       Open:
           Impossible
       No lock
 
 
   * L0 Hatch
-      Extra - type: Level0
+      Extra - type: LEVEL_0
       Open:
           Level 0 Keycard
       No lock
 
 
   * L1 Hatch
-      Extra - type: Level1
+      Extra - type: LEVEL_1
       Open:
           Level 1 Keycard
       No lock
 
 
   * L2 Hatch
-      Extra - type: Level2
+      Extra - type: LEVEL_2
       Open:
           Level 2 Keycard
       No lock
 
 
   * L3 Hatch
-      Extra - type: Level3
+      Extra - type: LEVEL_3
       Open:
           Level 3 Keycard
       No lock
 
 
   * L4 Hatch
-      Extra - type: Level4
+      Extra - type: LEVEL_4
       Open:
           Level 4 Keycard
       No lock
@@ -206,6 +218,7 @@ Dock Weaknesses
           L4 Hatch
           Locked Hatch
           Open Hatch
+      Indirect Change from:
 
 
 > Elevator

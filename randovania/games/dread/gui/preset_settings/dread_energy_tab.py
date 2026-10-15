@@ -39,7 +39,7 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
                     spin,
                 ),
             )
-            spin.valueChanged.connect(self._persist_argument(field_name))
+            spin.valueChanged.connect(self._persist_float(field_name))
 
     @classmethod
     def tab_title(cls) -> str:

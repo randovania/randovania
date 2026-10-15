@@ -5,6 +5,7 @@ import datetime
 import typing
 from typing import override
 
+from pydantic import BaseModel
 from PySide6 import QtCore
 from PySide6.QtCore import QDateTime, Qt
 
@@ -257,13 +258,14 @@ class EditableTableModel[T: DataclassInstance](DataclassTableModel[T]):
                     valid, new_value = field.from_qt(value)
 
                 if valid:
-                    self._set_item(
-                        index.row(),
-                        dataclasses.replace(
-                            item,
-                            **{field.field_name: new_value},
-                        ),
-                    )
+                    updates = {field.field_name: new_value}
+                    if dataclasses.is_dataclass(item):
+                        new_item = dataclasses.replace(item, **updates)
+                    elif isinstance(item, BaseModel):
+                        new_item = item.model_copy(update=updates)
+                    else:
+                        raise TypeError(f"Unsupported item type: {type(item)!r}")
+                    self._set_item(index.row(), new_item)
                     self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole])
                     return True
         return False

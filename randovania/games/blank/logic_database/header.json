@@ -1,5 +1,5 @@
 {
-    "schema_version": 31,
+    "schema_version": 35,
     "game": "blank",
     "resource_database": {
         "items": {
@@ -79,6 +79,10 @@
             "Damage": {
                 "long_name": "Normal Damage",
                 "extra": {}
+            },
+            "Caltrops": {
+                "long_name": "Caltrops Damage",
+                "extra": {}
             }
         },
         "versions": {
@@ -119,7 +123,28 @@
                 }
             }
         },
-        "damage_reductions": [],
+        "damage_reductions": [
+            {
+                "name": "Caltrops",
+                "reductions": [
+                    {
+                        "name": "Jump",
+                        "quantity": 1,
+                        "multiplier": 0.5
+                    },
+                    {
+                        "name": "Jump",
+                        "quantity": 2,
+                        "multiplier": 0.0
+                    },
+                    {
+                        "name": "DoubleJump",
+                        "quantity": 1,
+                        "multiplier": 0.0
+                    }
+                ]
+            }
+        ],
         "energy_tank_item_index": "Health"
     },
     "layers": [
@@ -186,7 +211,7 @@
             ]
         }
     },
-    "dock_weakness_database": {
+    "dock_type_database": {
         "types": {
             "door": {
                 "name": "Door",
@@ -201,7 +226,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Explosive Door": {
                         "extra": {},
@@ -231,7 +257,8 @@
                                     ]
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Back-Only Door": {
                         "extra": {},
@@ -251,7 +278,8 @@
                                     "items": []
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Blue Key Door": {
                         "extra": {},
@@ -273,7 +301,8 @@
                                     "negate": false
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Locked Door": {
                         "extra": {},
@@ -293,10 +322,11 @@
                                     "items": []
                                 }
                             }
-                        }
+                        },
+                        "unsafe_target_in_distributor_wtw": true
                     }
                 },
-                "dock_rando": {
+                "weakness_distributor": {
                     "unlocked": "Normal Door",
                     "locked": "Locked Door",
                     "change_from": [
@@ -312,7 +342,12 @@
                         "Explosive Door",
                         "Locked Door",
                         "Normal Door"
-                    ]
+                    ],
+                    "indirect_change_from": [],
+                    "force_change_two_way": false,
+                    "resolver_attempts": 125,
+                    "to_shuffle_proportion": 1.0,
+                    "ui_label": "Door Locks"
                 }
             },
             "other": {
@@ -328,7 +363,8 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     },
                     "Not Determined": {
                         "extra": {},
@@ -339,20 +375,16 @@
                                 "items": []
                             }
                         },
-                        "lock": null
+                        "lock": null,
+                        "unsafe_target_in_distributor_wtw": false
                     }
                 },
-                "dock_rando": null
+                "weakness_distributor": null
             }
         },
         "default_weakness": {
             "type": "other",
             "name": "Not Determined"
-        },
-        "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
         }
     },
     "hint_feature_database": {

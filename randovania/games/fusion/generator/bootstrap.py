@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
+from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.fusion.layout import FusionConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
@@ -51,23 +53,36 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("EnergyTank"),
+            [
+                game.get_resource_database_view().get_item("VariaSuit"),
+                game.get_resource_database_view().get_item("GravitySuit"),
+            ],
         )
 
     def _get_enabled_misc_resources(
         self, configuration: FusionConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
-        if configuration.dock_rando.is_enabled():
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("DoorLockRando")
+
+            door_db = configuration.game.game_description.dock_type_database
+            door_type = door_db.find_type("Door")
+            open_hatch_door = door_db.get_by_weakness("Door", "Open Hatch")
+            are_open_hatches_shuffled = (
+                open_hatch_door in configuration.dock_weakness_distributor.types_state[door_type].can_change_from
+            )
+            if are_open_hatches_shuffled:
+                enabled_resources.add("OpenHatchLockRando")
+
+        if configuration.adjusted_geron_weaknesses:
+            enabled_resources.add("NerfGerons")
         enabled_resources.add("BomblessPBs")
         enabled_resources.add("GeneratorHack")
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
-        num_suits = sum(
-            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
-            for suit in ("Varia Suit", "Gravity Suit")
-        )
+        num_suits = sum((1 if current_resources[db.get_item(suit)] else 0) for suit in ("VariaSuit", "GravitySuit"))
         dr = 1.0
         if num_suits == 1:
             dr = 0.9
@@ -77,7 +92,33 @@ class FusionBootstrap(Bootstrap[FusionConfiguration]):
         return dr
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: FusionConfiguration) -> ResourceDatabase:
-        return dataclasses.replace(db, base_damage_reduction=self._damage_reduction)
+        damage_reductions = copy.copy(db.damage_reductions)
+        default_lava_dmg = 20
+        default_acid_dmg = 60
+        default_heat_dmg = 6
+        default_cold_dmg = 15
+        damage_reductions[db.get_damage("LavaDamage")] = [
+            DamageReduction(None, 0, configuration.lava_damage / default_lava_dmg),
+            # FIXME the "/ 0.9" is required to offset the base_reduction until it can be ignored
+            DamageReduction(
+                db.get_item_by_display_name("Varia Suit"), 1, (configuration.lava_damage / default_lava_dmg) / 0.9
+            ),
+            DamageReduction(db.get_item_by_display_name("Both Suits"), 2, 0.0),
+        ]
+        damage_reductions[db.get_damage("AcidDamage")] = [
+            DamageReduction(None, 0, configuration.acid_damage / default_acid_dmg),
+        ]
+        damage_reductions[db.get_damage("HeatDamage")] = [
+            DamageReduction(None, 0, configuration.heat_damage / default_heat_dmg),
+            DamageReduction(db.get_item_by_display_name("Varia Suit"), 1, 0.0),
+        ]
+        damage_reductions[db.get_damage("ColdDamage")] = [
+            DamageReduction(None, 0, configuration.cold_damage / default_cold_dmg),
+            DamageReduction(db.get_item_by_display_name("Varia Suit"), 1, 0.0),
+        ]
+        return dataclasses.replace(
+            db, base_damage_reduction=self._damage_reduction, damage_reductions=damage_reductions
+        )
 
     def assign_pool_results(
         self, rng: Random, configuration: FusionConfiguration, patches: GamePatches, pool_results: PoolResults

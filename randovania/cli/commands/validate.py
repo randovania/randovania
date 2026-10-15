@@ -13,15 +13,11 @@ from randovania.resolver import debug, resolver
 if TYPE_CHECKING:
     from argparse import ArgumentParser, Namespace, _SubParsersAction
 
-    from randovania.layout.base.base_configuration import BaseConfiguration
-
 
 def validate_command_logic(args: Namespace) -> int:
     debug.set_level(args.debug)
 
     description = LayoutDescription.from_file(args.layout_file)
-    if description.world_count != 1:
-        raise ValueError("Validator does not support layouts with more than 1 player.")
 
     output_file = None
     write_to: Path | None = args.write_to
@@ -33,14 +29,20 @@ def validate_command_logic(args: Namespace) -> int:
 
         debug.print_function = write_to_log
 
-    configuration: BaseConfiguration = description.get_preset(0).configuration
-    patches = description.all_patches[0]
     total_times = []
 
     final_state_by_resolve = None
     for _ in range(args.repeat):
         before = time.perf_counter()
-        final_state_by_resolve = asyncio.run(resolver.resolve(configuration=configuration, patches=patches))
+        final_state_by_resolve = asyncio.run(
+            resolver.resolve(
+                [
+                    (preset.configuration, patches)
+                    for preset, patches in zip(description.all_presets, description.all_patches, strict=True)
+                ],
+                record_paths=debug.debug_level() > 0,
+            )
+        )
         after = time.perf_counter()
         total_times.append(after - before)
         print(
@@ -61,6 +63,13 @@ def validate_command_logic(args: Namespace) -> int:
 def add_validate_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("validate", help="Validate a rdvgame file.")
     add_debug_argument(parser)
+    parser.add_argument(
+        "--no-world-graph",
+        default=True,
+        dest="use_world_graph",
+        action="store_false",
+        help="Don't use WorldGraph for generator/resolver.",
+    )
     parser.add_argument("--repeat", default=1, type=int, help="Validate multiple times. Used for benchmarking.")
     parser.add_argument("layout_file", type=Path, help="The rdvgame file to validate.")
     parser.add_argument("--write-to", type=Path, help="Write debug output to")

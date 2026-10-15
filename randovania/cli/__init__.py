@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import asyncio
+import inspect
 import logging
 import os
 import sys
@@ -52,8 +54,14 @@ def _run_args(parser: ArgumentParser, args: Namespace) -> int:
         parser.print_help()
         raise SystemExit(1)
 
+    from randovania.lib import profiler
+
+    profiler.wait_for_profiler()
+
     logging.debug("Executing from args...")
     try:
+        if inspect.iscoroutinefunction(args.func):
+            return asyncio.run(args.func(args)) or 0
         return args.func(args) or 0
     except KeyboardInterrupt:
         print("Quitting due to requested interrupt.")
@@ -62,17 +70,8 @@ def _run_args(parser: ArgumentParser, args: Namespace) -> int:
 
 def run_pytest(argv: list[str]) -> None:
     import pytest
-    import pytest_asyncio.plugin
-    import pytest_codspeed.plugin
-    import pytest_localftpserver.plugin
-    import pytest_mock.plugin
 
-    sys.exit(
-        pytest.main(
-            argv[2:],
-            plugins=[pytest_asyncio.plugin, pytest_mock.plugin, pytest_localftpserver.plugin, pytest_codspeed.plugin],
-        )
-    )
+    sys.exit(pytest.main(argv[2:]))
 
 
 def run_cli(argv: list[str]) -> None:

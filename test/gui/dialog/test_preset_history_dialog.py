@@ -40,7 +40,7 @@ async def test_select_item(skip_qtbot, default_preset, tmp_path, mocker: pytest_
     if broken_original:
         preset_data = versioned_preset.as_json
         preset_data["schema_version"] = 1
-        versioned_preset = VersionedPreset(preset_data)
+        versioned_preset = VersionedPreset(preset_data, False)
 
     preset_manager = MagicMock()
     preset_manager.get_previous_versions.return_value = [

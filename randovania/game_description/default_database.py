@@ -20,7 +20,7 @@ def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
     return game_description_for(game).resource_database
 
 
-@functools.lru_cache
+@functools.cache
 def game_description_for(game: RandovaniaGame) -> GameDescription:
     result = data_reader.decode_data(default_data.read_json_then_binary(game)[1])
     if result.game != game:

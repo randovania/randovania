@@ -2,26 +2,24 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import game_migration
+from randovania.game_description import game_description_migration
 from randovania.game_description.db import event_pickup
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock import (
     DockLock,
     DockLockType,
-    DockRandoConfig,
-    DockRandoParams,
     DockType,
+    DockTypeDatabase,
     DockWeakness,
-    DockWeaknessDatabase,
+    WeaknessDistributorSettings,
 )
-from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import HintNodeKind
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -59,11 +57,11 @@ X = TypeVar("X")
 Y = TypeVar("Y")
 
 
-def read_dict(data: dict[str, Y], item_reader: Callable[[str, Y], X]) -> list[X]:
+def read_dict[Y, X](data: dict[str, Y], item_reader: Callable[[str, Y], X]) -> list[X]:
     return [item_reader(name, item) for name, item in data.items()]
 
 
-def read_array(data: list[Y], item_reader: Callable[[Y], X]) -> list[X]:
+def read_array[Y, X](data: list[Y], item_reader: Callable[[Y], X]) -> list[X]:
     return [item_reader(item) for item in data]
 
 
@@ -109,6 +107,7 @@ class ResourceReader:
 def read_damage_reduction(data: dict, items: list[ItemResourceInfo]) -> DamageReduction:
     return DamageReduction(
         find_resource_info_with_id(items, data["name"], ResourceType.ITEM) if data["name"] is not None else None,
+        data["quantity"],
         data["multiplier"],
     )
 
@@ -120,7 +119,7 @@ def read_damage_reductions(data: list[dict], items: list[ItemResourceInfo]) -> t
 def read_resource_reductions_dict(
     data: list[dict],
     db: ResourceDatabase,
-) -> dict[SimpleResourceInfo, list[DamageReduction]]:
+) -> dict[ResourceInfo, list[DamageReduction]]:
     return {db.get_damage(item["name"]): list(read_damage_reductions(item["reductions"], db.item)) for item in data}
 
 
@@ -218,6 +217,7 @@ def read_dock_weakness(index: int, name: str, item: dict, resource_database: Res
         frozen_lib.wrap(item["extra"]),
         read_requirement(item["requirement"], resource_database),
         read_dock_lock(item["lock"], resource_database),
+        unsafe_target_in_distributor_wtw=item["unsafe_target_in_distributor_wtw"],
     )
 
 
@@ -226,16 +226,16 @@ def read_dock_type(name: str, data: dict) -> DockType:
         short_name=name,
         long_name=data["name"],
         extra=frozen_lib.wrap(data["extra"]),
+        weakness_distributor=None,
     )
 
 
-def read_dock_weakness_database(
+def read_dock_type_database(
     data: dict,
     resource_database: ResourceDatabase,
-) -> DockWeaknessDatabase:
+) -> DockTypeDatabase:
     dock_types = read_dict(data["types"], read_dock_type)
     weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
-    dock_rando: dict[DockType, DockRandoParams] = {}
     next_index = 0
 
     def get_index() -> int:
@@ -250,32 +250,33 @@ def read_dock_weakness_database(
             for weak_name, weak_data in type_data["items"].items()
         }
 
-        dr = type_data["dock_rando"]
+        dr = type_data["weakness_distributor"]
         if dr is not None:
-            dock_rando[dock_type] = DockRandoParams(
-                unlocked=weaknesses[dock_type][dr["unlocked"]],
-                locked=weaknesses[dock_type][dr["locked"]],
-                change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
-                change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
+            object.__setattr__(
+                dock_type,
+                "weakness_distributor",
+                WeaknessDistributorSettings(
+                    unlocked=weaknesses[dock_type][dr["unlocked"]],
+                    locked=weaknesses[dock_type][dr["locked"]],
+                    change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
+                    change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
+                    indirect_change_from={weaknesses[dock_type][weak] for weak in dr["indirect_change_from"]},
+                    force_change_two_way=dr["force_change_two_way"],
+                    resolver_attempts=dr["resolver_attempts"],
+                    to_shuffle_proportion=dr["to_shuffle_proportion"],
+                    ui_label=dr["ui_label"],
+                ),
             )
 
-    default_dock_type = [
+    default_dock_type = next(
         dock_type for dock_type in dock_types if dock_type.short_name == data["default_weakness"]["type"]
-    ][0]
+    )
     default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
-    dock_rando_config = DockRandoConfig(
-        force_change_two_way=data["dock_rando"]["force_change_two_way"],
-        resolver_attempts=data["dock_rando"]["resolver_attempts"],
-        to_shuffle_proportion=data["dock_rando"]["to_shuffle_proportion"],
-    )
-
-    return DockWeaknessDatabase(
+    return DockTypeDatabase(
         dock_types=dock_types,
         weaknesses=weaknesses,
-        dock_rando_params=dock_rando,
         default_weakness=(default_dock_type, default_dock_weakness),
-        dock_rando_config=dock_rando_config,
     )
 
 
@@ -290,7 +291,7 @@ def read_hint_feature_database(data: dict[str, dict]) -> dict[str, HintFeature]:
 
 class RegionReader:
     resource_database: ResourceDatabase
-    dock_weakness_database: DockWeaknessDatabase
+    dock_type_database: DockTypeDatabase
     hint_feature_database: dict[str, HintFeature]
     current_region_name: str
     current_area_name: str
@@ -299,11 +300,11 @@ class RegionReader:
     def __init__(
         self,
         resource_database: ResourceDatabase,
-        dock_weakness_database: DockWeaknessDatabase,
+        dock_type_database: DockTypeDatabase,
         hint_feature_database: dict[str, HintFeature],
     ):
         self.resource_database = resource_database
-        self.dock_weakness_database = dock_weakness_database
+        self.dock_type_database = dock_type_database
         self.hint_feature_database = hint_feature_database
         self.next_node_index = 0
 
@@ -337,9 +338,9 @@ class RegionReader:
             elif node_type == "dock":
                 return DockNode(
                     **generic_args,
-                    dock_type=self.dock_weakness_database.find_type(data["dock_type"]),
+                    dock_type=self.dock_type_database.find_type(data["dock_type"]),
                     default_connection=NodeIdentifier.from_json(data["default_connection"]),
-                    default_dock_weakness=self.dock_weakness_database.get_by_weakness(
+                    default_dock_weakness=self.dock_type_database.get_by_weakness(
                         data["dock_type"],
                         data["default_dock_weakness"],
                     ),
@@ -352,7 +353,7 @@ class RegionReader:
                     exclude_from_dock_rando=data["exclude_from_dock_rando"],
                     incompatible_dock_weaknesses=tuple(
                         [
-                            self.dock_weakness_database.get_by_weakness(data["dock_type"], name)
+                            self.dock_type_database.get_by_weakness(data["dock_type"], name)
                             for name in data["incompatible_dock_weaknesses"]
                         ]
                     ),
@@ -366,10 +367,15 @@ class RegionReader:
                     location_category=LocationCategory(data["location_category"]),
                     custom_index_group=data["custom_index_group"],
                     hint_features=frozenset(self.hint_feature_database[feature] for feature in data["hint_features"]),
+                    grants_on_collect=read_resource_gain_tuple(data["grants_on_collect"], self.resource_database),
                 )
 
             elif node_type == "event":
-                return EventNode(**generic_args, event=self.resource_database.get_event(data["event_name"]))
+                return EventNode(
+                    **generic_args,
+                    event=self.resource_database.get_event(data["event_name"]),
+                    grants_on_collect=read_resource_gain_tuple(data["grants_on_collect"], self.resource_database),
+                )
 
             elif node_type == "configurable_node":
                 return ConfigurableNode(
@@ -377,12 +383,20 @@ class RegionReader:
                 )
 
             elif node_type == "hint":
-                lock_requirement = read_requirement(data["requirement_to_collect"], self.resource_database)
+                kind = HintNodeKind(data["kind"])
 
-                return HintNode(
+                hint_args: dict[str, Any] = {
+                    "requirement_to_collect": read_requirement(data["requirement_to_collect"], self.resource_database),
+                }
+
+                if kind == HintNodeKind.SPECIFIC_LOCATION:
+                    hint_args["target_index"] = PickupIndex(data["target_index"])
+                elif kind == HintNodeKind.SPECIFIC_PICKUP:
+                    hint_args["specific_pickup_hint_id"] = data["specific_pickup_hint_id"]
+
+                return kind.hint_node_class(
                     **generic_args,
-                    kind=HintNodeKind(data["kind"]),
-                    lock_requirement=lock_requirement,
+                    **hint_args,
                 )
 
             elif node_type == "teleporter_network":
@@ -419,13 +433,6 @@ class RegionReader:
                     connections[origin][nodes_by_name[target_name]] = the_set
                 except (MissingResource, KeyError) as e:
                     raise type(e)(f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
-
-        for node in list(nodes):
-            if isinstance(node, DockNode):
-                lock_node = DockLockNode.create_from_dock(node, self.next_node_index, self.resource_database)
-                nodes.append(lock_node)
-                connections[lock_node] = {}
-                self.next_node_index += 1
 
         for combo in event_pickup.find_nodes_to_combine(nodes, connections):
             combo_node = event_pickup.EventPickupNode.create_from(self.next_node_index, *combo)
@@ -517,14 +524,14 @@ def read_used_trick_levels(
 
 def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescription]:
     game = RandovaniaGame(data["game"])
-    data = game_migration.migrate_to_current(data, game)
+    data = game_description_migration.migrate_to_current(data, game)
 
     resource_database = read_resource_database(game, data["resource_database"])
-    dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
+    dock_type_database = read_dock_type_database(data["dock_type_database"], resource_database)
     hint_feature_database = read_hint_feature_database(data["hint_feature_database"])
 
     layers = frozen_lib.wrap(data["layers"])
-    region_reader = RegionReader(resource_database, dock_weakness_database, hint_feature_database)
+    region_reader = RegionReader(resource_database, dock_type_database, hint_feature_database)
     region_list = region_reader.read_region_list(data["regions"], data["flatten_to_set_on_patch"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
@@ -536,7 +543,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
         game=game,
         resource_database=resource_database,
         layers=layers,
-        dock_weakness_database=dock_weakness_database,
+        dock_type_database=dock_type_database,
         hint_feature_database=hint_feature_database,
         region_list=region_list,
         victory_condition=victory_condition,

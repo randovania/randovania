@@ -9,6 +9,7 @@ from PySide6.QtWidgets import QComboBox
 
 from randovania.games.prime2.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2_opr.layout.prime2_opr_configuration import EchoesOPRConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -27,8 +28,15 @@ _BEAMS = {
 }
 
 
-class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEchoesBeamConfiguration):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+class PresetEchoesBeamConfiguration(
+    PresetTab[EchoesConfiguration | EchoesOPRConfiguration], Ui_PresetEchoesBeamConfiguration
+):
+    def __init__(
+        self,
+        editor: PresetEditor[EchoesConfiguration | EchoesOPRConfiguration],
+        game_description: GameDescription,
+        window_manager: WindowManager,
+    ):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -53,7 +61,7 @@ class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEch
 
         def _create_ammo_combo() -> QComboBox:
             combo = QComboBox(self.beam_configuration_group)
-            combo.addItem("None", -1)
+            combo.addItem("None", None)
             combo.addItem("Power Bomb", 43)
             combo.addItem("Missile", 44)
             combo.addItem("Dark Ammo", 45)
@@ -138,7 +146,7 @@ class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEch
                 "beam_configuration", dataclasses.replace(beam_configuration, **{beam: new_config})
             )
 
-    def on_preset_changed(self, preset: Preset[EchoesConfiguration]) -> None:
+    def on_preset_changed(self, preset: Preset[EchoesConfiguration | EchoesOPRConfiguration]) -> None:
         beam_configuration = preset.configuration.beam_configuration
 
         for beam in _BEAMS:
@@ -146,7 +154,7 @@ class PresetEchoesBeamConfiguration(PresetTab[EchoesConfiguration], Ui_PresetEch
 
             set_combo_with_value(self._beam_ammo_a[beam], config.ammo_a)
             set_combo_with_value(self._beam_ammo_b[beam], config.ammo_b)
-            self._beam_ammo_b[beam].setEnabled(config.ammo_a != -1)
+            self._beam_ammo_b[beam].setEnabled(config.ammo_a is not None)
             self._beam_uncharged[beam].setValue(config.uncharged_cost)
             self._beam_charged[beam].setValue(config.charged_cost)
             self._beam_combo[beam].setValue(config.combo_ammo_cost)

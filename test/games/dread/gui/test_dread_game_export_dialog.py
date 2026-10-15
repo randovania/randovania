@@ -185,7 +185,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, dread_configuration,
 @pytest.mark.parametrize("mod_manager", [False, True])
 def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manager, dread_configuration, options):
     # Setup
-    mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.DreadGameExportDialog.get_path_to_ryujinx")
+    mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.windows_lib.get_appdata", return_value=tmp_path)
     mocker.patch("platform.system", return_value="Windows")
 
     mocker.patch(
@@ -237,14 +237,8 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
     )
 
 
-def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker, dread_configuration, options):
+def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, dread_configuration, options):
     # Setup
-    ryujinx_path = tmp_path.joinpath("ryujinx_mod")
-    mocker.patch(
-        "randovania.games.dread.gui.dialog.game_export_dialog.DreadGameExportDialog.get_path_to_ryujinx",
-        return_value=ryujinx_path,
-    )
-
     with options:
         options.auto_save_spoiler = True
         options.set_per_game_options(
@@ -256,6 +250,7 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker, dread_conf
             )
         )
     window = DreadGameExportDialog(options, dread_configuration, "MyHash", True, [])
+    ryujinx_path = window.get_path_to_ryujinx()
 
     # Run
     result = window.get_game_export_params()

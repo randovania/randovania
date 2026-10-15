@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import functools
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from PySide6 import QtGui, QtWidgets
 
@@ -12,10 +12,13 @@ from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatch
 from randovania.gui.lib import signal_handling, slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
+if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
+
 
 class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MSRCosmeticPatches], Ui_MSRCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: MSRCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: MSRCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         for room_gui_type in MSRRoomGuiType:
@@ -54,6 +57,9 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MSRCosmeticPatches], Ui
         self._persist_check_field(self.custom_energy_tank_color_check, "use_energy_tank_color")
         self._persist_check_field(self.custom_aeion_bar_color_check, "use_aeion_bar_color")
         self._persist_check_field(self.custom_ammo_hud_color_check, "use_ammo_hud_color")
+        self._persist_check_field(self.use_fusion_models_cb, "use_fusion_models")
+        self._persist_check_field(self.reveal_map_cb, "reveal_map")
+
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider.valueChanged.connect(functools.partial(self._on_slider_update, slider, field_name))
         self.custom_laser_locked_color_button.clicked.connect(
@@ -94,6 +100,8 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MSRCosmeticPatches], Ui
         self.custom_energy_tank_color_check.setChecked(patches.use_energy_tank_color)
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
+        self.use_fusion_models_cb.setChecked(patches.use_fusion_models)
+        self.reveal_map_cb.setChecked(patches.reveal_map)
         for field_name, slider in self.field_name_to_slider_mapping.items():
             slider = self.field_name_to_slider_mapping[field_name]
             slider.setValue(getattr(patches, f"{field_name}_volume"))

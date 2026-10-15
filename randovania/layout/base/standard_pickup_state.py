@@ -57,7 +57,7 @@ class StandardPickupState:
     def __post_init__(self) -> None:
         for ammo in self.included_ammo:
             if not isinstance(ammo, int):
-                raise ValueError(f"Expected int for ammo, got {ammo}")
+                raise TypeError(f"Expected int for ammo, got {ammo}")
 
     def check_consistency(self, pickup: StandardPickupDefinition) -> None:
         db = default_database.resource_database_for(pickup.game)

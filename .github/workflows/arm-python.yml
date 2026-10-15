@@ -10,7 +10,7 @@ on:
         options:
           - 'macos-latest'
           - 'macos-26'
-          - 'ubuntu-24.04-arm'
+          - 'ubuntu-26.04-arm'
           - 'windows-11-arm'
 
 jobs:
@@ -22,18 +22,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
-          version: "0.9.5"
+          resolution-strategy: "lowest"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server $(cat .github/linux_apt_dependencies.txt)
@@ -60,18 +60,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
-          version: "0.9.5"
+          resolution-strategy: "lowest"
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
 
       - name: Apt
         run: sudo apt-get -q update && sudo apt-get -y install xvfb xserver-xephyr tigervnc-standalone-server x11-utils gnumeric libxcb-cursor0 libxkbcommon-x11-0
@@ -95,7 +95,7 @@ jobs:
         run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server --ignore=test/discord_bot --ignore=test/cli/commands/test_website.py --ignore=test/cli/commands/test_export_videos.py
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: Executable
           if-no-files-found: error

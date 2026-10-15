@@ -6,8 +6,8 @@ from randovania.games.planets_zebeth.gui.planets_zebeth_game_tab import PlanetsZ
 from randovania.games.planets_zebeth.gui.preset_settings import preset_tabs
 
 __all__ = [
-    "PlanetsZebethGameTabWidget",
     "PlanetsZebethCosmeticPatchesDialog",
     "PlanetsZebethGameExportDialog",
+    "PlanetsZebethGameTabWidget",
     "preset_tabs",
 ]

@@ -103,7 +103,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     locations = []
     for region, area, node in game.region_list.all_regions_areas_nodes:
-        if node.is_resource_node and isinstance(node, PickupNode):
+        if node.is_resource_node() and isinstance(node, PickupNode):
             locations.append(
                 {
                     "node_identifier": node.identifier.as_json,
@@ -187,7 +187,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
     decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration, [game])
 
     # Assert
-    assert set(decoded.all_dock_connections()) == set(expected.all_dock_connections())
+    assert set(decoded.all_dock_connections_identifiers()) == set(expected.all_dock_connections_identifiers())
     assert decoded == expected
 
 
@@ -241,7 +241,7 @@ def test_bit_pack_pickup_entry(
     # Run
     encoded = bitpacking.pack_value(BitPackPickupEntry(pickup, echoes_resource_database))
     decoder = BitPackDecoder(encoded)
-    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, echoes_resource_database)
+    decoded = BitPackPickupEntry.bit_pack_unpack(decoder, {"database": echoes_resource_database}).value
 
     # Assert
     assert pickup == decoded
@@ -276,10 +276,10 @@ async def test_round_trip_generated_patches(default_preset):
 
     # Run
     encoded = game_patches_serializer.serialize(all_patches)
-    decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
-    decoded_with_original_game = {
-        i: dataclasses.replace(d, game=orig.game) for (i, d), orig in zip(decoded.items(), all_patches.values())
-    }
+    decoded = game_patches_serializer.decode(encoded, [preset.configuration])
+    decoded_with_original_game = [
+        dataclasses.replace(d, game=orig.game) for d, orig in zip(decoded, all_patches, strict=True)
+    ]
 
     # Assert
     assert all_patches == decoded_with_original_game

@@ -84,7 +84,7 @@ class ConstructTypedStruct[T](construct.Adapter):
                 obj = Container([
 """
         for field_name in self.field_types.keys():
-            block += f"                    ({repr(field_name)}, obj.{field_name}),\n"
+            block += f"                    ({field_name!r}, obj.{field_name}),\n"
         block += f"""
                 ])
                 return {construct_lib.compile_build_struct(self.subcon, code)}
@@ -176,6 +176,10 @@ def construct_for_type(type_: type) -> construct.Construct:
 
     type_origin = typing.get_origin(type_)
 
+    if isinstance(type_origin, typing.TypeAliasType):
+        type_ = type_origin.__value__
+        type_origin = typing.get_origin(type_)
+
     if type_ in _direct_mapping:
         return _direct_mapping[type_]
 
@@ -246,7 +250,7 @@ def compiled_construct_for_type(type_: type) -> construct.Construct:
     )
 
 
-def encode(obj: T, type_: type[T] | None = None) -> bytes:
+def encode[T](obj: T, type_: type[T] | None = None) -> bytes:
     if type_ is None:
         type_ = type(obj)
     t: type = type_  # workaround for mypy considering type[T] not hashable

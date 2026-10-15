@@ -32,7 +32,7 @@ from randovania.lib import http_lib
 
 def parse_wheel_filename(url: str) -> dict[str, str]:
     """Parse wheel filename from URL to extract components."""
-    filename = url.split("/")[-1]
+    filename = url.rsplit("/", maxsplit=1)[-1]
     if not filename.endswith(".whl"):
         raise ValueError(f"Invalid wheel filename: {filename}")
 
@@ -128,6 +128,10 @@ def select_best_wheels(matching_wheels: list[dict[str, Any]]) -> list[dict[str, 
 
     # Only return if we have both architectures
     if len(selected_wheels) == 2:
+        if selected_wheels[0]["wheel_info"]["abi_tag"] != selected_wheels[1]["wheel_info"]["abi_tag"]:
+            print("  ✗ Selected wheels have different ABI tags, cannot merge.")
+            return None
+
         return selected_wheels
 
     return None
@@ -143,7 +147,7 @@ def get_installed_packages() -> set[str]:
 
 async def download_wheel(session: aiohttp.ClientSession, url: str, dest_dir: Path) -> Path:
     """Download a wheel file to the specified directory using aiohttp."""
-    filename = url.split("/")[-1]
+    filename = url.rsplit("/", maxsplit=1)[-1]
     dest_path = dest_dir / filename
 
     async with session.get(url) as response:
@@ -193,7 +197,7 @@ def calculate_merged_wheel_name(matching_wheels: list[dict[str, Any]]) -> str:
     min_version = None
     for wheel_data in matching_wheels:
         wheel_info = wheel_data["wheel_info"]
-        arch, version = parse_macos_platform(wheel_info["platform_tag"])
+        _arch, version = parse_macos_platform(wheel_info["platform_tag"])
         if min_version is None or version < min_version:
             min_version = version
 
@@ -343,6 +347,9 @@ async def main() -> int:
                 wheel_info = wheel_data["wheel_info"]
                 arch, version = parse_macos_platform(wheel_info["platform_tag"])
                 print(f"    - {wheel_info['filename']} ({arch}, macOS {version[0]}.{version[1]})")
+
+            if pure_wheel:
+                print(f"    - {pure_wheel['wheel_info']['filename']} (pure python)")
 
             # Prefer universal2 wheel if available, especially when platform-specific wheels also exist
             if universal2_wheel:

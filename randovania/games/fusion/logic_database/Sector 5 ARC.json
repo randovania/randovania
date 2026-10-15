@@ -430,7 +430,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Main Deck": {
+                        "Door to Sector 5 (ARC) Entrance Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -446,7 +446,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Main Deck": {
+                "Door to Sector 5 (ARC) Entrance Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -467,7 +467,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 5 (ARC) Entrance Elevator",
                         "node": "Door to Entrance Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -499,7 +499,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "Sector5Entrance",
+                        "hint_name": "SECTOR_5_ENTRANCE",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -992,6 +992,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Training Grounds": {
                             "type": "and",
@@ -1026,6 +1027,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Training Grounds": {
                             "type": "and",
@@ -2744,7 +2746,7 @@
                     "heal": false,
                     "coordinates": {
                         "x": 152.0,
-                        "y": 64.83687943262413,
+                        "y": 64.84,
                         "z": 0.0
                     },
                     "description": "",
@@ -2754,7 +2756,7 @@
                     "extra": {
                         "area": 5,
                         "room": 10,
-                        "source": "Level3",
+                        "source": "LEVEL_3",
                         "infant_weight": 0.34
                     },
                     "valid_starting_location": false,
@@ -2762,6 +2764,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Security Shaft East": {
                             "type": "and",
@@ -3010,6 +3013,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Frozen Tower": {
                             "type": "or",
@@ -3865,6 +3869,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Flooded Tower": {
                             "type": "and",
@@ -4163,7 +4168,7 @@
                     "extra": {
                         "area": 5,
                         "room": 5,
-                        "source": "ArcData1",
+                        "source": "ARC_DATA_1",
                         "infant_weight": 0.34
                     },
                     "valid_starting_location": false,
@@ -4171,6 +4176,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Data Checkpoint": {
                             "type": "and",
@@ -4393,6 +4399,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Nightmare Recharge Room": {
                             "type": "and",
@@ -5597,6 +5604,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Nightmare",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Gravity Suit)": {
                             "type": "and",
@@ -5622,7 +5630,7 @@
                     "extra": {
                         "area": 5,
                         "room": 20,
-                        "source": "Nightmare",
+                        "source": "NIGHTMARE",
                         "boss_hint_name": "Nightmare",
                         "infant_weight": 3.5
                     },
@@ -5631,6 +5639,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -5703,6 +5712,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Subway": {
                             "type": "and",
@@ -6351,6 +6361,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Security Shaft East": {
                             "type": "and",
@@ -6710,7 +6721,7 @@
                 }
             }
         },
-        "Elevator to Main Deck": {
+        "Sector 5 (ARC) Entrance Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -6743,6 +6754,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "SECTOR_5_TO_MAIN_HUB",
                         "door_idx": [
                             0
                         ]
@@ -6751,7 +6764,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 5 (ARC)",
+                        "area": "Sector Hub Lift 5",
                         "node": "Elevator to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6792,7 +6805,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Entrance Navigation Room",
-                        "node": "Door to Elevator to Main Deck"
+                        "node": "Door to Sector 5 (ARC) Entrance Elevator"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6862,6 +6875,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Arctic Containment": {
                             "type": "and",
@@ -7621,6 +7635,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Entrance Lobby": {
                             "type": "and",
@@ -7669,7 +7684,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Glass Tube to Sector 6 (NOC)": {
+                        "Door to Sector 5 (ARC) Westbound Glass Tube": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7688,7 +7703,7 @@
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 6 (NOC)": {
+                "Door to Sector 5 (ARC) Westbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7709,7 +7724,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Glass Tube to Sector 6 (NOC)",
+                        "area": "Sector 5 (ARC) Westbound Glass Tube",
                         "node": "Door to Magic Box"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -7740,7 +7755,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 6 (NOC)": {
+        "Sector 5 (ARC) Westbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -7769,6 +7784,7 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "left",
                         "door_idx": [
                             2
                         ]
@@ -7777,7 +7793,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Glass Tube to Sector 5 (ARC)",
+                        "area": "Sector 6 (NOC) Eastbound Glass Tube",
                         "node": "Area Transition to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -7818,7 +7834,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Magic Box",
-                        "node": "Door to Glass Tube to Sector 6 (NOC)"
+                        "node": "Door to Sector 5 (ARC) Westbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8008,6 +8024,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Entrance Lobby": {
                             "type": "and",
@@ -8190,7 +8207,7 @@
                                                                                     {
                                                                                         "type": "or",
                                                                                         "data": {
-                                                                                            "comment": "To Kill or Save a Geruboss",
+                                                                                            "comment": "To Kill or Save a Gerubus",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -8413,6 +8430,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Nightmare Arena": {
                             "type": "and",
@@ -8769,8 +8787,9 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
-                        "Door to Glass Tube to Sector 3 (PYR)": {
+                        "Door to Sector 5 (ARC) Eastbound Glass Tube": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8784,7 +8803,7 @@
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 3 (PYR)": {
+                "Door to Sector 5 (ARC) Eastbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8805,7 +8824,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Glass Tube to Sector 3 (PYR)",
+                        "area": "Sector 5 (ARC) Eastbound Glass Tube",
                         "node": "Door to Crow's Nest"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -9171,7 +9190,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Glass Tube to Sector 3 (PYR)": {
+                        "Door to Sector 5 (ARC) Eastbound Glass Tube": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9260,7 +9279,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 3 (PYR)": {
+        "Sector 5 (ARC) Eastbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -9298,7 +9317,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Crow's Nest",
-                        "node": "Door to Glass Tube to Sector 3 (PYR)"
+                        "node": "Door to Sector 5 (ARC) Eastbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9329,6 +9348,7 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "right",
                         "door_idx": [
                             83
                         ]
@@ -9337,7 +9357,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Glass Tube to Sector 5 (ARC)",
+                        "area": "Sector 3 (PYR) Westbound Glass Tube",
                         "node": "Area Transition to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -10355,7 +10375,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Climb Skulltera NHJ https://youtu.be/kOtV9nNaPNQ",
+                                                                    "comment": "Climb Skultera NHJ https://youtu.be/kOtV9nNaPNQ",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -10613,7 +10633,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Flooded Airlock to Sector 4 (AQA)": {
+                        "Door to Flooded Airlock": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10798,7 +10818,7 @@
                         }
                     }
                 },
-                "Door to Flooded Airlock to Sector 4 (AQA)": {
+                "Door to Flooded Airlock": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10819,7 +10839,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Flooded Airlock to Sector 4 (AQA)",
+                        "area": "Flooded Airlock",
                         "node": "Door to Zebesian Waters"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -11100,7 +11120,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Flooded Airlock to Sector 4 (AQA)": {
+                        "Door to Flooded Airlock": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11199,6 +11219,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Nightmare Hub": {
                             "type": "and",
@@ -11425,7 +11446,7 @@
                 }
             }
         },
-        "Flooded Airlock to Sector 4 (AQA)": {
+        "Flooded Airlock": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11477,6 +11498,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Zebesian Waters": {
                             "type": "and",
@@ -11509,7 +11531,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Zebesian Waters",
-                        "node": "Door to Flooded Airlock to Sector 4 (AQA)"
+                        "node": "Door to Flooded Airlock"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11653,7 +11675,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Cargo Hold to Sector 5 (ARC)",
+                        "area": "Cargo Hold",
                         "node": "Area Transition to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -11752,6 +11774,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Frozen Tower": {
                             "type": "and",

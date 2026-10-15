@@ -600,7 +600,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Main Deck": {
+                        "Door to Sector 3 (PYR) Entrance Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -609,7 +609,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Main Deck": {
+                "Door to Sector 3 (PYR) Entrance Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -630,7 +630,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 3 (PYR) Entrance Elevator",
                         "node": "Door to Entrance Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -669,7 +669,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "Sector3Entrance",
+                        "hint_name": "SECTOR_3_ENTRANCE",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -693,7 +693,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Elevator to Main Deck": {
+                        "Door to Sector 3 (PYR) Entrance Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -772,6 +772,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Behind Wall": {
                             "type": "and",
@@ -1258,8 +1259,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 134.93144208037825,
-                        "y": 64.83687943262413,
+                        "x": 134.93,
+                        "y": 64.84,
                         "z": 0.0
                     },
                     "description": "",
@@ -1269,7 +1270,7 @@
                     "extra": {
                         "area": 3,
                         "room": 4,
-                        "source": "Level2",
+                        "source": "LEVEL_2",
                         "infant_weight": 0.3
                     },
                     "valid_starting_location": false,
@@ -1277,6 +1278,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Security Access": {
                             "type": "and",
@@ -1615,6 +1617,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to B.O.X. Arena Access": {
                             "type": "and",
@@ -2089,6 +2092,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Entrance Lobby": {
                             "type": "resource",
@@ -2137,6 +2141,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Above E-Tank": {
                             "type": "and",
@@ -2347,66 +2352,56 @@
                                 "comment": "Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "ShinesparkTrick",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Knowledge",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "L0Locks",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "This can safely not have Door Lock Rando check",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -3052,12 +3047,29 @@
                                                     "data": "Can Use Power Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -3075,44 +3087,40 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "template",
+                                                                            "data": "Can Use Springball"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "Break via Mid-Air Morph",
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": "Break via Mid-Air Morph",
+                                                                                            "type": "tricks",
+                                                                                            "name": "MidAirMorph",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "tricks",
                                                                                                         "name": "MidAirMorph",
-                                                                                                        "amount": 2,
+                                                                                                        "amount": 1,
                                                                                                         "negate": false
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "template",
-                                                                                                                "data": "Have Any Jump Upgrade"
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "MidAirMorph",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
+                                                                                                    "type": "template",
+                                                                                                    "data": "Have Any Jump Upgrade"
                                                                                                 }
                                                                                             ]
                                                                                         }
@@ -3123,12 +3131,8 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Use frozen dessgeega to reach and destroy bomb block",
+                                                                                "comment": "Use frozen Sidehopper to reach and destroy bomb block",
                                                                                 "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Freeze Enemies With Any Weapon"
-                                                                                    },
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
@@ -3137,13 +3141,13 @@
                                                                                             "amount": 2,
                                                                                             "negate": false
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies With Any Weapon"
                                                                                     }
                                                                                 ]
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Springball"
                                                                         }
                                                                     ]
                                                                 }
@@ -3157,7 +3161,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get through Sidehoppers",
+                                            "comment": "Get through Sidehopper",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -3275,6 +3279,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Alcove": {
                             "type": "and",
@@ -3426,7 +3431,7 @@
                                 ]
                             }
                         },
-                        "Door to Glass Tube to Sector 1 (SRX)": {
+                        "Door to Sector 3 (PYR) Eastbound Glass Tube": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3625,7 +3630,7 @@
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 1 (SRX)": {
+                "Door to Sector 3 (PYR) Eastbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3646,7 +3651,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Glass Tube to Sector 1 (SRX)",
+                        "area": "Sector 3 (PYR) Eastbound Glass Tube",
                         "node": "Door to Deserted Runway"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -4262,6 +4267,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Lava Reservoirs": {
                             "type": "and",
@@ -5839,6 +5845,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Pickups": {
                             "type": "and",
@@ -5873,6 +5880,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Lava": {
                             "type": "and",
@@ -6741,7 +6749,7 @@
                 }
             }
         },
-        "Elevator to Main Deck": {
+        "Sector 3 (PYR) Entrance Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -6774,6 +6782,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "SECTOR_3_TO_MAIN_HUB",
                         "door_idx": [
                             0
                         ]
@@ -6782,7 +6792,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 3 (PYR)",
+                        "area": "Sector Hub Lift 3",
                         "node": "Elevator to Sector 3 (PYR)"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6823,7 +6833,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Entrance Navigation Room",
-                        "node": "Door to Elevator to Main Deck"
+                        "node": "Door to Sector 3 (PYR) Entrance Elevator"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6916,7 +6926,7 @@
                     "extra": {
                         "area": 3,
                         "room": 21,
-                        "source": "PyrData",
+                        "source": "PYR_DATA",
                         "infant_weight": 0.3
                     },
                     "valid_starting_location": false,
@@ -6924,6 +6934,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to B.O.X. Arena": {
                             "type": "and",
@@ -7214,6 +7225,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "B.O.X.",
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -7876,7 +7888,7 @@
                     "extra": {
                         "area": 3,
                         "room": 25,
-                        "source": "Boiler",
+                        "source": "BOILER",
                         "infant_weight": 0.3
                     },
                     "valid_starting_location": false,
@@ -7886,6 +7898,7 @@
                     "hint_features": [
                         "systems_console"
                     ],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Main Boiler": {
                             "type": "and",
@@ -7911,6 +7924,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Wide X",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Wide Beam)": {
                             "type": "and",
@@ -7936,7 +7950,7 @@
                     "extra": {
                         "area": 3,
                         "room": 25,
-                        "source": "WideCoreX",
+                        "source": "WIDE_CORE_X",
                         "boss_hint_name": "Wide Core-X",
                         "infant_weight": 3.5
                     },
@@ -7947,6 +7961,7 @@
                     "hint_features": [
                         "boss"
                     ],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Main Boiler": {
                             "type": "and",
@@ -9176,6 +9191,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Behind Wall": {
                             "type": "and",
@@ -9210,6 +9226,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Monkey Bars of Fire": {
                             "type": "and",
@@ -9272,7 +9289,7 @@
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 5 (ARC)": {
+                "Door to Sector 3 (PYR) Westbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9293,7 +9310,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Glass Tube to Sector 5 (ARC)",
+                        "area": "Sector 3 (PYR) Westbound Glass Tube",
                         "node": "Door to Fiery Storage"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -9541,7 +9558,7 @@
                                 ]
                             }
                         },
-                        "Door to Glass Tube to Sector 5 (ARC)": {
+                        "Door to Sector 3 (PYR) Westbound Glass Tube": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9614,6 +9631,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Red Tower": {
                             "type": "and",
@@ -10317,6 +10335,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Data Recharge Room": {
                             "type": "and",
@@ -10426,6 +10445,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Red Tower": {
                             "type": "and",
@@ -10919,6 +10939,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Pickup": {
                             "type": "and",
@@ -10953,6 +10974,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Sova Processing": {
                             "type": "or",
@@ -11574,7 +11596,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 5 (ARC)": {
+        "Sector 3 (PYR) Westbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11614,6 +11636,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Fiery Storage": {
                             "type": "and",
@@ -11646,7 +11669,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Fiery Storage",
-                        "node": "Door to Glass Tube to Sector 5 (ARC)"
+                        "node": "Door to Sector 3 (PYR) Westbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11756,6 +11779,7 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "left",
                         "door_idx": [
                             89
                         ]
@@ -11764,7 +11788,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Glass Tube to Sector 3 (PYR)",
+                        "area": "Sector 5 (ARC) Eastbound Glass Tube",
                         "node": "Area Transition to Sector 3 (PYR)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -11785,7 +11809,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 1 (SRX)": {
+        "Sector 3 (PYR) Eastbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -11823,7 +11847,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Deserted Runway",
-                        "node": "Door to Glass Tube to Sector 1 (SRX)"
+                        "node": "Door to Sector 3 (PYR) Eastbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -11854,6 +11878,7 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "right",
                         "door_idx": [
                             86
                         ]
@@ -11862,7 +11887,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Glass Tube to Sector 3 (PYR)",
+                        "area": "Sector 1 (SRX) Westbound Glass Tube",
                         "node": "Area Transition to Sector 3 (PYR)"
                     },
                     "default_dock_weakness": "Open Passage",

@@ -60,6 +60,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Geron's Crossing": {
                             "type": "and",
@@ -108,7 +109,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Glass Tube to Sector 4 (AQA)": {
+                        "Door to Sector 6 (NOC) Westbound Glass Tube": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -281,7 +282,7 @@
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 4 (AQA)": {
+                "Door to Sector 6 (NOC) Westbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -302,7 +303,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Glass Tube to Sector 4 (AQA)",
+                        "area": "Sector 6 (NOC) Westbound Glass Tube",
                         "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -755,7 +756,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Elevator to Main Deck": {
+                        "Door to Sector 6 (NOC) Entrance Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -764,7 +765,7 @@
                         }
                     }
                 },
-                "Door to Elevator to Main Deck": {
+                "Door to Sector 6 (NOC) Entrance Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -785,7 +786,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Elevator to Main Deck",
+                        "area": "Sector 6 (NOC) Entrance Elevator",
                         "node": "Door to Entrance Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -824,7 +825,7 @@
                         "default"
                     ],
                     "extra": {
-                        "hint_name": "Sector6Entrance",
+                        "hint_name": "SECTOR_6_ENTRANCE",
                         "location_precision": "REGION_ONLY",
                         "item_precision": "PRECISE_CATEGORY"
                     },
@@ -848,7 +849,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Elevator to Main Deck": {
+                        "Door to Sector 6 (NOC) Entrance Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1652,7 +1653,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Glass Tube to Sector 5 (ARC)": {
+                        "Door to Sector 6 (NOC) Eastbound Glass Tube": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1664,58 +1665,6 @@
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 70,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -1804,7 +1753,7 @@
                         "Door to Pillar Highway": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1813,15 +1762,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -1838,6 +1778,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "ScrewAttack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S6ForbiddenEntrance",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1874,7 +1823,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "ColdDamage",
+                                                                    "name": "BlueXDamage",
                                                                     "amount": 414,
                                                                     "negate": false
                                                                 }
@@ -1900,7 +1849,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "ColdDamage",
+                                                                    "name": "BlueXDamage",
                                                                     "amount": 207,
                                                                     "negate": false
                                                                 }
@@ -1963,15 +1912,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "L0Locks",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
                             }
@@ -2010,38 +1950,15 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Nocturnal Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "Without Breaking Blocks: https://youtu.be/o43xM3s5YdE",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Have Any Jump Upgrade"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
                 },
-                "Door to Glass Tube to Sector 5 (ARC)": {
+                "Door to Sector 6 (NOC) Eastbound Glass Tube": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2062,7 +1979,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Glass Tube to Sector 5 (ARC)",
+                        "area": "Sector 6 (NOC) Eastbound Glass Tube",
                         "node": "Door to Nocturnal Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2127,8 +2044,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 70,
+                                                                    "name": "BlueXDamage",
+                                                                    "amount": 69,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2325,7 +2242,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 207,
                                                         "negate": false
                                                     }
@@ -2360,7 +2277,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 414,
                                                         "negate": false
                                                     }
@@ -2453,7 +2370,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 207,
                                                         "negate": false
                                                     }
@@ -2488,7 +2405,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 414,
                                                         "negate": false
                                                     }
@@ -2575,15 +2492,48 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Nocturnal Shaft": {
+                        "Right of Power Bomb Wall": {
+                            "type": "template",
+                            "data": "Can Use Power Bombs"
+                        }
+                    }
+                },
+                "Door to Nocturnal Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 744.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "door_idx": [
+                            33
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "Door",
+                    "default_connection": {
+                        "region": "Sector 6 (NOC)",
+                        "area": "Nocturnal Shaft",
+                        "node": "Door to Forbidden Entrance"
+                    },
+                    "default_dock_weakness": "L0 Hatch",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Right of Power Bomb Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
@@ -2616,7 +2566,184 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "ColdDamage",
+                                                                    "name": "BlueXDamage",
+                                                                    "amount": 414,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Minimum with plasma - 3 X: https://youtu.be/g_pKLsS1vos",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "BlueXDamage",
+                                                                    "amount": 207,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PlasmaBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Power Bomb also freezes X: https://youtu.be/Anr2464Uz0w",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBombs",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/cIdt2h_VvhQ",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PlasmaBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "WideBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Right of Power Bomb Wall": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 350.2000426530177,
+                        "y": 95.2800170612071,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to X-B.O.X. Arena Access": {
+                            "type": "template",
+                            "data": "Can Use Power Bombs"
+                        },
+                        "Door to Nocturnal Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Ice X logic",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Tank all the damage - 6 X",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "BlueXDamage",
                                                                     "amount": 414,
                                                                     "negate": false
                                                                 }
@@ -2642,7 +2769,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "ColdDamage",
+                                                                    "name": "BlueXDamage",
                                                                     "amount": 207,
                                                                     "negate": false
                                                                 }
@@ -2734,198 +2861,38 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Forbidden Entrance Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
-                "Door to Nocturnal Shaft": {
-                    "node_type": "dock",
+                "Event - Forbidden Entrance Visited": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 744.0,
-                        "y": 112.0,
+                        "x": 367.76,
+                        "y": 193.93,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {
-                        "door_idx": [
-                            33
-                        ]
-                    },
+                    "extra": {},
                     "valid_starting_location": false,
-                    "dock_type": "Door",
-                    "default_connection": {
-                        "region": "Sector 6 (NOC)",
-                        "area": "Nocturnal Shaft",
-                        "node": "Door to Forbidden Entrance"
-                    },
-                    "default_dock_weakness": "L0 Hatch",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "ui_custom_name": null,
+                    "event_name": "S6ForbiddenEntrance",
+                    "grants_on_collect": [],
                     "connections": {
-                        "Door to X-B.O.X. Arena Access": {
+                        "Right of Power Bomb Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Ice X logic",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Tank all the damage - 6 X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 414,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Minimum with plasma - 3 X: https://youtu.be/g_pKLsS1vos",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 207,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PlasmaBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Power Bomb also freezes X: https://youtu.be/Anr2464Uz0w",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PowerBombs",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/cIdt2h_VvhQ",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PlasmaBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "WideBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -3126,7 +3093,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 69,
                                                         "negate": false
                                                     }
@@ -3403,7 +3370,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "damage",
-                                                                                "name": "ColdDamage",
+                                                                                "name": "BlueXDamage",
                                                                                 "amount": 138,
                                                                                 "negate": false
                                                                             }
@@ -3519,41 +3486,6 @@
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Generator traps itself and doesn't dare killing Varia Core-X to get out",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ChargeBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3873,42 +3805,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Strategically cross the shot blocks: https://youtu.be/AiYGhtYXWGI",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4016,7 +3913,7 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "damage",
-                                                                                            "name": "ColdDamage",
+                                                                                            "name": "BlueXDamage",
                                                                                             "amount": 432,
                                                                                             "negate": false
                                                                                         }
@@ -4431,6 +4328,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "VariaCore-X",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Varia Suit)": {
                             "type": "and",
@@ -4456,7 +4354,7 @@
                     "extra": {
                         "area": 6,
                         "room": 13,
-                        "source": "MegaX",
+                        "source": "MEGA_X",
                         "boss_hint_name": "Varia Core-X",
                         "infant_weight": 3.5
                     },
@@ -4465,6 +4363,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -4827,7 +4726,7 @@
                         "Door to Spaceboost Alley": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4848,23 +4747,19 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S6ForbiddenEntrance",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -4909,7 +4804,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
+                                                                    "name": "BlueXDamage",
                                                                     "amount": 414,
                                                                     "negate": false
                                                                 }
@@ -4935,7 +4830,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "ColdDamage",
+                                                                    "name": "BlueXDamage",
                                                                     "amount": 207,
                                                                     "negate": false
                                                                 }
@@ -5014,15 +4909,6 @@
                                                     }
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "L4Locks",
-                                            "amount": 1,
-                                            "negate": false
                                         }
                                     }
                                 ]
@@ -5108,7 +4994,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from X-B.O.X. Arena: https://youtu.be/BHmNhsne3hw",
+                                            "comment": "Shinespark from X-B.O.X. Arena: https://youtu.be/BHmNhsne3hw - Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5144,15 +5030,6 @@
                                                         "name": "ScrewAttack",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 },
                                                 {
@@ -5215,7 +5092,7 @@
                         "Door to Forbidden Entrance": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Can safely not have DLR check.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5247,15 +5124,6 @@
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 },
                                                 {
@@ -5315,6 +5183,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Warehouse": {
                             "type": "or",
@@ -5378,60 +5247,19 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze Zozoro: https://youtu.be/wu8pKLvrAMw",
+                                                        "comment": "Freeze Zozoro: https://youtu.be/DI1CTMTanWY",
                                                         "items": [
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": "Freeze without Diffusion",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Freeze Enemies With Ice Beam"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Freeze Enemies With Ice Missiles"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "StandOnFrozenEnemies",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": "Freeze with Diffusion",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Freeze Enemies With Diffusion"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "StandOnFrozenEnemies",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "StandOnFrozenEnemies",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -5461,6 +5289,50 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Have Any Jump Upgrade"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Wall Jump Double Damage Boost: https://youtu.be/DHgzHgNwSso",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JumpExtends",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 96,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -5688,6 +5560,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "X-B.O.X.",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Wave Beam)": {
                             "type": "and",
@@ -5713,7 +5586,7 @@
                     "extra": {
                         "area": 0,
                         "room": 16,
-                        "source": "WaveCoreX",
+                        "source": "WAVE_CORE_X",
                         "boss_hint_name": "X-B.O.X.",
                         "infant_weight": 3.5
                     },
@@ -5722,6 +5595,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Event - B.O.X": {
                             "type": "and",
@@ -6461,6 +6335,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "B.O.X.",
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -6473,7 +6348,7 @@
                 }
             }
         },
-        "Elevator to Main Deck": {
+        "Sector 6 (NOC) Entrance Elevator": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -6506,6 +6381,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "SECTOR_6_TO_MAIN_HUB",
                         "door_idx": [
                             0
                         ]
@@ -6514,7 +6391,7 @@
                     "dock_type": "Elevator",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Elevator to Sector 6 (NOC)",
+                        "area": "Sector Hub Lift 6",
                         "node": "Elevator to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "Elevator",
@@ -6555,7 +6432,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Entrance Navigation Room",
-                        "node": "Door to Elevator to Main Deck"
+                        "node": "Door to Sector 6 (NOC) Entrance Elevator"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6626,6 +6503,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to X-B.O.X. Arena (Upper)": {
                             "type": "and",
@@ -6660,6 +6538,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to X-B.O.X. Arena (Lower)": {
                             "type": "and",
@@ -6785,44 +6664,111 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Vanilla Method - Freeze an Owtch on the Crumble Blocks and use regular Bombs to open the passage",
+                                                        "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "comment": "Freeze the owtch in the right spot: https://youtu.be/4y7ohyL0zkE&t=14s",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Freeze Enemies With Diffusion"
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
+                                                                            "type": "or",
                                                                             "data": {
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "WaveBeam",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": "Vanilla Method - Freeze an Owtch on the Crumble Blocks and use regular Bombs to open the passage: https://youtu.be/4y7ohyL0zkE&t=47",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Use Bombs"
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "Wait for an Owtch to get far enough away and then open the passage with a Power Bomb: https://youtu.be/6ESqvHw7Qyk",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Knowledge",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Movement",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "ScrewAttack",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Use Power Bombs"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Have Any Jump Upgrade"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "Freeze the Owtch in the right spot",
+                                                                                "items": [
+                                                                                    {
                                                                                         "type": "template",
-                                                                                        "data": "Can Freeze Enemies With Ice Beam"
+                                                                                        "data": "Can Freeze Enemies With Diffusion"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "WaveBeam",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Freeze Enemies With Ice Beam"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
                                                                         }
                                                                     ]
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Bombs"
                                                             }
                                                         ]
                                                     }
@@ -6830,7 +6776,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump off the Crumble Blocks morphed (frame perfect) https://youtu.be/4y7ohyL0zkE&t=14",
+                                                        "comment": "Jump off the Crumble Blocks morphed (frame perfect): https://youtu.be/4y7ohyL0zkE&t=14",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6851,7 +6797,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump off the Crumble Blocks without Springball by unmorphing first (also frame perfect) https://youtu.be/4y7ohyL0zkE&t=24",
+                                                        "comment": "Jump off the Crumble Blocks without Springball by unmorphing first (also frame perfect): https://youtu.be/4y7ohyL0zkE&t=24",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7207,7 +7153,7 @@
                                 ]
                             }
                         },
-                        "Door to Checkpoint to Restricted Zone": {
+                        "Door to Authorization Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7216,7 +7162,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint to Restricted Zone": {
+                "Door to Authorization Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7237,7 +7183,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Checkpoint to Restricted Zone",
+                        "area": "Authorization Checkpoint",
                         "node": "Door to Neglected Shaft"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -7480,7 +7426,7 @@
                 }
             }
         },
-        "Checkpoint to Restricted Zone": {
+        "Authorization Checkpoint": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -7526,7 +7472,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Neglected Shaft",
-                        "node": "Door to Checkpoint to Restricted Zone"
+                        "node": "Door to Authorization Checkpoint"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7535,7 +7481,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Back Door to Sector 6 (NOC)": {
+                        "Other to Restricted Back Door": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7563,7 +7509,7 @@
                         }
                     }
                 },
-                "Other to Back Door to Sector 6 (NOC)": {
+                "Other to Restricted Back Door": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7584,8 +7530,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Back Door to Sector 6 (NOC)",
-                        "node": "Other to Checkpoint to Restricted Zone"
+                        "area": "Restricted Back Door",
+                        "node": "Other to Authorization Checkpoint"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -7747,6 +7693,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Blue-X Blockade": {
                             "type": "or",
@@ -7951,6 +7898,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Clogged Cavern": {
                             "type": "and",
@@ -8570,6 +8518,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Twin Caverns East (Upper)": {
                             "type": "and",
@@ -8621,6 +8570,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Ledge": {
                             "type": "or",
@@ -9214,7 +9164,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 69,
                                                         "negate": false
                                                     }
@@ -9299,7 +9249,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 69,
                                                         "negate": false
                                                     }
@@ -9342,7 +9292,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 207,
                                                         "negate": false
                                                     }
@@ -9442,7 +9392,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 552,
                                                         "negate": false
                                                     }
@@ -9486,7 +9436,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "ColdDamage",
+                                                        "name": "BlueXDamage",
                                                         "amount": 276,
                                                         "negate": false
                                                     }
@@ -9678,6 +9628,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Geron's Crossing": {
                             "type": "or",
@@ -9826,7 +9777,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 4 (AQA)": {
+        "Sector 6 (NOC) Westbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -9864,7 +9815,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Entrance Lobby",
-                        "node": "Door to Glass Tube to Sector 4 (AQA)"
+                        "node": "Door to Sector 6 (NOC) Westbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9895,6 +9846,7 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "left",
                         "door_idx": [
                             81
                         ]
@@ -9903,7 +9855,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Glass Tube to Sector 6 (NOC)",
+                        "area": "Sector 4 (AQA) Eastbound Glass Tube",
                         "node": "Area Transition to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -9924,7 +9876,7 @@
                 }
             }
         },
-        "Glass Tube to Sector 5 (ARC)": {
+        "Sector 6 (NOC) Eastbound Glass Tube": {
             "default_node": null,
             "hint_features": [],
             "extra": {
@@ -9962,7 +9914,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Nocturnal Shaft",
-                        "node": "Door to Glass Tube to Sector 5 (ARC)"
+                        "node": "Door to Sector 6 (NOC) Eastbound Glass Tube"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9993,6 +9945,7 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "right",
                         "door_idx": [
                             84
                         ]
@@ -10001,7 +9954,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Glass Tube to Sector 6 (NOC)",
+                        "area": "Sector 5 (ARC) Westbound Glass Tube",
                         "node": "Area Transition to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -10072,6 +10025,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Nocturnal Shaft": {
                             "type": "and",
@@ -10296,6 +10250,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom of Room": {
                             "type": "and",
@@ -10330,6 +10285,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom of Room": {
                             "type": "and",
@@ -10492,7 +10448,7 @@
                         "Door to X-B.O.X. Arena Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "For Hijump/WJ, jump ontop of the building on the left, through the shot blocks and to the top",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -10512,10 +10468,6 @@
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Screw Single Walljump"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -10552,7 +10504,8 @@
                         "x": 10,
                         "y": 8
                     }
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Clogged Cavern": {

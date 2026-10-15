@@ -36,6 +36,9 @@ class RandovaniaGame(BitPackEnum, Enum):
     FACTORIO = "factorio"
     METROID_PLANETS_ZEBETH = "planets_zebeth"
     METROID_PRIME_HUNTERS = "prime_hunters"
+    METROID_ZERO_MISSION = "zero_mission"
+    METROID_PRIME_ECHOES_OPR = "prime2_opr"
+    YOKUS_ISLAND_EXPRESS = "yokus_island_express"
 
     @property
     def data(self) -> GameData:
@@ -61,6 +64,12 @@ class RandovaniaGame(BitPackEnum, Enum):
             import randovania.games.planets_zebeth.game_data as game_module
         elif self == RandovaniaGame.METROID_PRIME_HUNTERS:
             import randovania.games.prime_hunters.game_data as game_module
+        elif self == RandovaniaGame.METROID_ZERO_MISSION:
+            import randovania.games.zero_mission.game_data as game_module
+        elif self == RandovaniaGame.METROID_PRIME_ECHOES_OPR:
+            import randovania.games.prime2_opr.game_data as game_module
+        elif self == RandovaniaGame.YOKUS_ISLAND_EXPRESS:
+            import randovania.games.yokus_island_express.game_data as game_module
         else:
             raise ValueError(f"Missing import for game: {self.value}")
         return game_module.game_data
@@ -113,7 +122,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     def exporter(self) -> GameExporter:
         return self.data.exporter()
 
-    @cached_property
+    @property
     def game_description(self) -> GameDescription:
         from randovania.game_description import default_database
 

@@ -104,6 +104,10 @@ user to play the game.
 Since Randovania does not modify the game files, a separate Python package must be created which is responsible for
 these changes. This package is called the patcher for the game.
 
+Along with the `GameExporter` implementation, run `uv add --optional exporters <your-exporter-package>==<version>` to
+add a new dependency to Randovania's `exporters` block in `pyproject.toml`. Please also add a comment next to the new entry indicating which game it is.
+Always use an equality (`==`) version dependency, to ensure the version is only intentionally increased as that has changelog implications.
+
 You are free to implement this package however you want, but we recommend the following:
 
 ##### Input Data

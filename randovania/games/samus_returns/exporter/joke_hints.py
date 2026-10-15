@@ -2,14 +2,13 @@ from __future__ import annotations
 
 from randovania.exporter.hints.joke_hints import GENERIC_JOKE_HINTS
 
-MSR_JOKE_HINTS = GENERIC_JOKE_HINTS + [
+MSR_JOKE_HINTS = [
+    *GENERIC_JOKE_HINTS,
     "The Chozo have Sealed this hint away.",
     "You hear a voice in the distance...\n'March Stabilization Rejected'.",
     "Spider Boosting can quickly cover large distances.\nTake advantage whenever possible!",
-    (
-        "The Spider Boost can be used while in Spider Ball form.\n"
-        "It will launch you forward, damaging enemies you make contact with."
-    ),
+    "The Spider Boost can be used while in Spider Ball form.\n"
+    "It will launch you forward, damaging enemies you make contact with.",
     "Drag pins onto the map to mark points of interest.",
     "Samus, we cannot Return this hint to you.",
     "Rumor has it, that walls are only a suggestion.",
@@ -45,10 +44,8 @@ MSR_JOKE_HINTS = GENERIC_JOKE_HINTS + [
     "Metroids are not pets.\nMetroids are not for target practice.",
     "Bored? Solve this:\n(11! - (-5*cos(pi)*10!) + (-1/(-10^-6)) - (((26^4)*7-7)/5) - (1.962120E6))",
     "What does the Hornoad say?",
-    (
-        "Great!! You fulfiled your mission. It will revive peace in space.\n"
-        "But, it may be invaded by the X-Parasites. Pray for a true peace in space!"
-    ),
+    "Great!! You fulfiled your mission. It will revive peace in space.\n"
+    "But, it may be invaded by the X-Parasites. Pray for a true peace in space!",
     "Technically, SR-388 is a kingdom.",
     "The Chozo will keep an Aeion you.",
     "The Golden Temple is great for relaxation and contains many meditation rooms.",

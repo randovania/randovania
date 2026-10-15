@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.games.dread.layout.dread_damage_state import DreadDamageState
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -24,22 +24,22 @@ def is_dna_node(node: PickupNode, config: DreadConfiguration) -> bool:
         "boss_hint_name" in node.extra
         and (
             # must be an emmi with emmi option
-            node.extra["pickup_type"] == "emmi"
-            and artifact_config.prefer_emmi
+            (node.extra["pickup_type"] == "emmi" and artifact_config.prefer_emmi)
             or
             # or not an emmi but with major boss option
-            not node.extra["pickup_type"] == "emmi"
-            and artifact_config.prefer_major_bosses
+            (node.extra["pickup_type"] != "emmi" and artifact_config.prefer_major_bosses)
         )
     )
 
 
 class DreadBootstrap(Bootstrap[DreadConfiguration]):
     def create_damage_state(self, game: GameDatabaseView, configuration: DreadConfiguration) -> DamageState:
-        return EnergyTankDamageState(
+        return DreadDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("ETank"),
+            configuration.immediate_energy_parts,
+            game.get_resource_database_view().get_item("EFragment"),
         )
 
     def _get_enabled_misc_resources(
@@ -55,7 +55,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled():
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("DoorLocks")
 
         if not configuration.teleporters.is_vanilla:

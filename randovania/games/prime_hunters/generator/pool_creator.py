@@ -25,6 +25,9 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
     # Add Octoliths to the item pool
     results.extend_with(add_octoliths(game, configuration.octoliths))
 
+    # Add Shield Keys to the item pool
+    results.extend_with(add_shield_keys(game.get_resource_database_view(), game.get_pickup_database()))
+
 
 def add_alimbic_artifacts(
     resource_database: ResourceDatabaseView,
@@ -65,3 +68,54 @@ def add_octoliths(
     starting_octoliths = octoliths[config.placed_octoliths :]
 
     return PoolResults(octoliths_to_shuffle, {}, starting_octoliths)
+
+
+def add_shield_keys(resource_database: ResourceDatabaseView, pickup_database: PickupDatabase) -> PoolResults:
+    """
+    :param resource_database:
+    :param pickup_database::
+    :return:
+    """
+    item_pool: list[PickupEntry] = []
+    shield_key_list: dict[str, list[str]] = {
+        "Alinos": [
+            "EchoHall",
+            "ElderPassage",
+            "HighGround",
+            "CrashSite",
+            "CouncilChamber",
+            "PistonCave",
+        ],
+        "CelestialArchives": [
+            "DataShrine01",
+            "DataShrine03",
+            "SynergyCore",
+            "DockingBay",
+            "IncubationVault01",
+            "NewArrivalRegistration",
+        ],
+        "VDO": [
+            "WeaponsComplexSylux",
+            "WeaponsComplexPsychoBits",
+            "CompressionChamber",
+            "StasisBunkerPuzzle",
+            "StasisBunkerGuardians",
+            "FuelStack",
+        ],
+        "Arcterra": [
+            "SicTransit",
+            "IceHive",
+            "FrostLabyrinth",
+            "FaultLine",
+            "Sanctorus",
+            "Subterranean",
+        ],
+    }
+
+    for region, areas in shield_key_list.items():
+        for area in areas:
+            item_pool.append(
+                create_generated_pickup("Shield Key", resource_database, pickup_database, region=region, area=area)
+            )
+
+    return PoolResults(item_pool, {}, [])

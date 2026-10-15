@@ -1,10 +1,41 @@
 from __future__ import annotations
 
+import logging
+import os
 import shutil
+import sys
 from pathlib import Path
 
-from setuptools import Command, setup
+import setuptools_scm
+from Cython.Build import cythonize
+from setuptools import Command, Extension, setup
 from setuptools.command.build import build
+from setuptools_scm.version import (
+    SEMVER_LEN,
+    SEMVER_MINOR,
+    SEMVER_PATCH,
+    guess_next_simple_semver,
+)
+
+parent = Path(__file__).parent
+
+# Check if enable-cython file exists and read its content
+enable_cython_file = parent.joinpath("randovania", "enable-cython")
+if enable_cython_file.is_file():
+    enable_cython_content = enable_cython_file.read_text().strip()
+else:
+    enable_cython_content = ""
+
+should_compile_env = os.getenv("RANDOVANIA_COMPILE")
+if should_compile_env is None:
+    should_compile = enable_cython_file.is_file()
+else:
+    should_compile = should_compile_env != "0"
+
+# Enable coverage tracing only if enable-cython contains "linetrace"
+enable_coverage_tracing = "linetrace" in enable_cython_content
+if enable_coverage_tracing:
+    print("Cython coverage tracing enabled")
 
 
 class CopyReadmeCommand(Command):
@@ -17,21 +48,187 @@ class CopyReadmeCommand(Command):
         pass
 
     def run(self):
-        parent = Path(__file__).parent
-
         shutil.copy2(parent.joinpath("README.md"), parent.joinpath("randovania", "data", "README.md"))
 
 
+class DeleteUnknownNativeCommand(Command):
+    """Custom build command."""
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        root = parent.joinpath("randovania")
+
+        cython_files: list[Path] = []
+
+        for path, dirnames, filenames in root.walk():
+            relative = path.relative_to(parent)
+            if len(relative.parts) < 2 or relative.parts[1] != "data":
+                for file in filenames:
+                    if file.endswith((".pyd", ".cpp", ".so", ".pdb")):
+                        cython_files.append(relative.joinpath(file))
+
+        for file in cython_files:
+            associated_py_file = file.as_posix().split(".", 1)[0] + ".py"
+            if not should_compile or associated_py_file not in cythonize_files:
+                print("Deleting", file)
+                file.unlink()
+
+
 class CustomBuild(build):
-    sub_commands = [
+    sub_commands = (
         ("copy_readme", None),
+        ("delete_unknown_native", None),
         *build.sub_commands,
-    ]
+    )
+
+
+cythonize_files = [
+    "randovania/lib/bitmask.py",
+    "randovania/game_description/resources/resource_collection.py",
+    "randovania/graph/graph_requirement.py",
+    "randovania/graph/world_graph.py",
+    "randovania/graph/state_native.py",
+    "randovania/resolver/resolver_native.py",
+    "randovania/generator/generator_native.py",
+]
+
+ext_modules = None
+
+if should_compile:
+    debug_mode = os.getenv("RANDOVANIA_DEBUG", "0") != "0"
+    profiling_mode = os.getenv("RANDOVANIA_PROFILE", "0") != "0"
+
+    if sys.platform == "win32":
+        # MSVC
+        extra_compile_args = [
+            "/std:c++20",
+            "/Zi",  # Generate debug info (PDB)
+            # Cython boilerplate triggers warning "function call missing argument list", unrelated to our code
+            "/wd4551",
+        ]
+        # /Zi is discarded without /DEBUG, leaving profilers with raw addresses.
+        # /DEBUG also turns off /OPT:REF and /OPT:ICF, so ask for them back.
+        extra_link_args = ["/DEBUG", "/OPT:REF", "/OPT:ICF"]
+
+        if profiling_mode:
+            # Add profiling flags for MSVC
+            extra_compile_args.extend(
+                [
+                    "/O2",  # Optimize for speed (but keep symbols)
+                    "/Oy-",  # Disable frame pointer omission
+                ]
+            )
+            extra_link_args.append("/PROFILE")
+        elif debug_mode:
+            extra_compile_args.extend(["/Od"])  # Disable optimizations
+    else:
+        # GCC/Clang
+        extra_compile_args = [
+            "-std=c++20",
+            "-g",  # Debug symbols
+        ]
+        extra_link_args = ["-g"]
+
+        if profiling_mode:
+            # Add profiling flags for GCC/Clang
+            extra_compile_args.extend(
+                [
+                    "-O2",  # Optimize but keep symbols
+                    "-fno-omit-frame-pointer",  # Keep frame pointers
+                    "-fno-inline-functions",  # Don't inline (for clearer profiling)
+                ]
+            )
+        elif debug_mode:
+            extra_compile_args.extend(["-O0", "-fno-omit-frame-pointer"])  # no optimization
+
+    # Conditionally add coverage tracing macros
+    define_macros = (
+        [("CYTHON_TRACE", "1"), ("CYTHON_TRACE_NOGIL", "1"), ("CYTHON_USE_SYS_MONITORING", "0")]
+        if enable_coverage_tracing
+        else []
+    )
+
+    # Headers included by cython_helper.pxd's `cdef extern from "randovania/lib/native/..."` blocks.
+    # Listed as `depends` so a header-only change triggers a rebuild of every extension.
+    native_headers = [str(p) for p in parent.joinpath("randovania", "lib", "native").glob("*.hpp")]
+
+    def make_extension(file: str) -> Extension:
+        link_args = list(extra_link_args)
+        if sys.platform == "win32":
+            # Keep the PDB next to the imported .pyd; the default lands in a discarded build dir.
+            link_args.append("/PDB:{}".format(parent.joinpath(file).with_suffix(".pdb")))
+
+        return Extension(
+            file.replace("/", ".")[:-3],
+            sources=[file],
+            language="c++",
+            include_dirs=[str(parent)],
+            depends=native_headers,
+            extra_compile_args=extra_compile_args,
+            extra_link_args=link_args,
+            define_macros=define_macros,
+        )
+
+    ext_modules = cythonize(
+        [make_extension(file) for file in cythonize_files],
+        annotate=True,
+        compiler_directives={
+            "linetrace": enable_coverage_tracing,  # Enable line tracing only when needed for coverage
+            "profile": profiling_mode,  # Enable profiling hooks
+        },
+        gdb_debug=debug_mode,  # Add Cython debugging support
+        emit_linenums=True,
+    )
+
+
+def rdv_version_scheme(version: setuptools_scm.ScmVersion) -> str:
+    assert isinstance(version.config, setuptools_scm.Configuration)
+
+    # We want to save the git hash to a file, so we can easily access it in frozen runtime, where git is not available.
+    version_file = Path(version.config.absolute_root).joinpath(version.config.version_file)
+    try:
+        git_hash = repr(bytes.fromhex(version.node[1:9]))
+    except ValueError:
+        logging.exception("Unable to get git hash from version %s", str(version.node))
+        git_hash = None
+
+    version_file.with_name("version_hash.py").write_text(
+        f"""# coding: utf-8
+# file generated by setuptools_scm + setup.py
+# don't change, don't track in version control
+git_hash = {git_hash}
+full_git_hash = {version.node!r}
+git_branch = {version.branch!r}
+dirty = {version.dirty}
+"""
+    )
+
+    if version.exact:
+        result = guess_next_simple_semver(version, retain=SEMVER_LEN, increment=False)
+    else:
+        if version.branch != "stable":
+            retain = SEMVER_MINOR
+            fmt: str = "{guessed}.dev{distance}"
+        else:
+            retain = SEMVER_PATCH
+            fmt: str = "{guessed}rc{distance}"
+        result = version.format_next_version(guess_next_simple_semver, retain=retain, fmt=fmt)
+    return result
 
 
 setup(
+    ext_modules=ext_modules,
     cmdclass={
         "copy_readme": CopyReadmeCommand,
+        "delete_unknown_native": DeleteUnknownNativeCommand,
         "build": CustomBuild,
+    },
+    use_scm_version={
+        "version_scheme": rdv_version_scheme,
     },
 )

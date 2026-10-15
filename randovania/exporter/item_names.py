@@ -27,9 +27,11 @@ _ITEMS_TO_PLURALIZE = {
 }
 
 
-def add_quantity_to_resource(resource: str, quantity: int, always_add_quantity: bool = False) -> str:
+def add_quantity_to_resource[T: (float, int)](
+    resource: str, quantity: T, always_add_quantity: bool = False, use_percentage: bool = False
+) -> str:
     if always_add_quantity or quantity > 1:
-        first_part = f"{quantity} "
+        first_part = "{}{} ".format(quantity, "%" if use_percentage else "")
     else:
         first_part = ""
     return "{}{}{}".format(first_part, resource, "s" if quantity > 1 and resource in _ITEMS_TO_PLURALIZE else "")
@@ -71,7 +73,7 @@ def additional_starting_pickups(
 def additional_starting_items(
     layout_configuration: BaseConfiguration, game: GameDatabaseView, starting_items: ResourceCollection
 ) -> list[str]:
-    initial_items = game.create_resource_collection()
+    initial_items = game.get_resource_database_view().create_resource_collection()
     for pickup in calculate_pool_results(layout_configuration, game).starting:
         initial_items.add_resource_gain(pickup.resource_gain(initial_items))
 

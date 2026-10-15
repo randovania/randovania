@@ -9,8 +9,11 @@ if TYPE_CHECKING:
 
 
 def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
-    from randovania.games.prime1.gui.preset_settings.prime_dock_rando_tab import PresetPrimeDockRando
+    from randovania.games.prime1.gui.preset_settings.prime_dock_weakness_distributor_tab import (
+        PresetPrimeDockWeaknessDistributor,
+    )
     from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
+    from randovania.games.prime1.gui.preset_settings.prime_energy_tab import PresetPrimeEnergy
     from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
     from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
     from randovania.games.prime1.gui.preset_settings.prime_patches_chaos import PresetPrimeChaos
@@ -19,7 +22,6 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
     from randovania.gui.preset_settings.hints_tab import PresetHints
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_pickup_pool_tab import MetroidPresetPickupPool
-    from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
 
@@ -30,10 +32,10 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
         PresetHints,
         PresetLocationPool,
         MetroidPresetPickupPool,
-        PresetPatcherEnergy,
+        PresetPrimeEnergy,
         PresetTeleportersPrime1,
         PresetMetroidStartingArea,
-        PresetPrimeDockRando,
+        *PresetPrimeDockWeaknessDistributor.subclass_for_compatible_dock_types(editor.game),
         PresetPrimeQol,
         PresetEnemyAttributeRandomizer,
         PresetPrimeChaos,

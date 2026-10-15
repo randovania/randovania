@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'preset_dock_rando.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
-    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-    QMainWindow, QScrollArea, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGroupBox,
+    QHBoxLayout, QLabel, QMainWindow, QScrollArea,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 class Ui_PresetDockRando(object):
     def setupUi(self, PresetDockRando):
@@ -49,56 +48,54 @@ class Ui_PresetDockRando(object):
         self.scroll_area_layout.setContentsMargins(11, 11, 11, 11)
         self.scroll_area_layout.setObjectName(u"scroll_area_layout")
         self.scroll_area_layout.setContentsMargins(1, 1, 1, 0)
+        self.changes_box = QGroupBox(self.scroll_area_contents)
+        self.changes_box.setObjectName(u"changes_box")
+        self.changes_layout = QVBoxLayout(self.changes_box)
+        self.changes_layout.setSpacing(6)
+        self.changes_layout.setContentsMargins(11, 11, 11, 11)
+        self.changes_layout.setObjectName(u"changes_layout")
+
+        self.scroll_area_layout.addWidget(self.changes_box)
+
         self.settings_group = QGroupBox(self.scroll_area_contents)
         self.settings_group.setObjectName(u"settings_group")
-        self.gridLayout = QGridLayout(self.settings_group)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.multiworld_label = QLabel(self.settings_group)
-        self.multiworld_label.setObjectName(u"multiworld_label")
+        self.settings_layout = QVBoxLayout(self.settings_group)
+        self.settings_layout.setSpacing(6)
+        self.settings_layout.setContentsMargins(11, 11, 11, 11)
+        self.settings_layout.setObjectName(u"settings_layout")
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setSpacing(6)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.mode_label = QLabel(self.settings_group)
+        self.mode_label.setObjectName(u"mode_label")
 
-        self.gridLayout.addWidget(self.multiworld_label, 6, 0, 1, 2)
-
-        self.two_sided_door_search_check = QCheckBox(self.settings_group)
-        self.two_sided_door_search_check.setObjectName(u"two_sided_door_search_check")
-
-        self.gridLayout.addWidget(self.two_sided_door_search_check, 8, 0, 1, 1)
+        self.horizontalLayout.addWidget(self.mode_label)
 
         self.mode_combo = QComboBox(self.settings_group)
         self.mode_combo.setObjectName(u"mode_combo")
+        self.mode_combo.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
 
-        self.gridLayout.addWidget(self.mode_combo, 0, 1, 1, 1)
+        self.horizontalLayout.addWidget(self.mode_combo)
+
+
+        self.settings_layout.addLayout(self.horizontalLayout)
+
+        self.mode_description = QLabel(self.settings_group)
+        self.mode_description.setObjectName(u"mode_description")
+
+        self.settings_layout.addWidget(self.mode_description)
 
         self.line = QFrame(self.settings_group)
         self.line.setObjectName(u"line")
         self.line.setFrameShape(QFrame.Shape.HLine)
         self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.gridLayout.addWidget(self.line, 5, 0, 1, 2)
+        self.settings_layout.addWidget(self.line)
 
-        self.mode_label = QLabel(self.settings_group)
-        self.mode_label.setObjectName(u"mode_label")
+        self.multiworld_label = QLabel(self.settings_group)
+        self.multiworld_label.setObjectName(u"multiworld_label")
 
-        self.gridLayout.addWidget(self.mode_label, 0, 0, 1, 1)
-
-        self.mode_description = QLabel(self.settings_group)
-        self.mode_description.setObjectName(u"mode_description")
-
-        self.gridLayout.addWidget(self.mode_description, 2, 0, 1, 2)
-
-        self.two_sided_door_search_label = QLabel(self.settings_group)
-        self.two_sided_door_search_label.setObjectName(u"two_sided_door_search_label")
-        self.two_sided_door_search_label.setWordWrap(True)
-
-        self.gridLayout.addWidget(self.two_sided_door_search_label, 9, 0, 1, 2)
-
-        self.two_sided_door_search_line = QFrame(self.settings_group)
-        self.two_sided_door_search_line.setObjectName(u"two_sided_door_search_line")
-        self.two_sided_door_search_line.setFrameShape(QFrame.Shape.HLine)
-        self.two_sided_door_search_line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.gridLayout.addWidget(self.two_sided_door_search_line, 7, 0, 1, 2)
+        self.settings_layout.addWidget(self.multiworld_label)
 
 
         self.scroll_area_layout.addWidget(self.settings_group)
@@ -129,6 +126,30 @@ class Ui_PresetDockRando(object):
 
         self.verticalLayout.addLayout(self.desc_layouts)
 
+        self.type_layout = QHBoxLayout()
+        self.type_layout.setSpacing(6)
+        self.type_layout.setObjectName(u"type_layout")
+        self.can_change_from_group = QGroupBox(self.dock_types_group)
+        self.can_change_from_group.setObjectName(u"can_change_from_group")
+        self.can_change_from_layout = QVBoxLayout(self.can_change_from_group)
+        self.can_change_from_layout.setSpacing(6)
+        self.can_change_from_layout.setContentsMargins(11, 11, 11, 11)
+        self.can_change_from_layout.setObjectName(u"can_change_from_layout")
+
+        self.type_layout.addWidget(self.can_change_from_group)
+
+        self.can_change_to_group = QGroupBox(self.dock_types_group)
+        self.can_change_to_group.setObjectName(u"can_change_to_group")
+        self.can_change_to_layout = QVBoxLayout(self.can_change_to_group)
+        self.can_change_to_layout.setSpacing(6)
+        self.can_change_to_layout.setContentsMargins(11, 11, 11, 11)
+        self.can_change_to_layout.setObjectName(u"can_change_to_layout")
+
+        self.type_layout.addWidget(self.can_change_to_group)
+
+
+        self.verticalLayout.addLayout(self.type_layout)
+
 
         self.scroll_area_layout.addWidget(self.dock_types_group)
 
@@ -149,12 +170,11 @@ class Ui_PresetDockRando(object):
 
     def retranslateUi(self, PresetDockRando):
         PresetDockRando.setWindowTitle(QCoreApplication.translate("PresetDockRando", u"Door Locks", None))
+        self.changes_box.setTitle(QCoreApplication.translate("PresetDockRando", u"Door Changes", None))
         self.settings_group.setTitle(QCoreApplication.translate("PresetDockRando", u"Settings", None))
-        self.multiworld_label.setText(QCoreApplication.translate("PresetDockRando", u"<html><head/><body><p>The selected mode is <span style=\" font-weight:700;\">not</span> compatible with multiworld sessions.</p></body></html>", None))
-        self.two_sided_door_search_check.setText(QCoreApplication.translate("PresetDockRando", u"[Experimental] Revised door solver", None))
         self.mode_label.setText(QCoreApplication.translate("PresetDockRando", u"Randomization Mode", None))
         self.mode_description.setText(QCoreApplication.translate("PresetDockRando", u"Original door locks.", None))
-        self.two_sided_door_search_label.setText(QCoreApplication.translate("PresetDockRando", u"<html><head/><body><p>When using the Individual Doors Mode, enables the use of a revised algorithm for deciding what doors can be.</p></body></html>", None))
+        self.multiworld_label.setText(QCoreApplication.translate("PresetDockRando", u"<html><head/><body><p>The selected mode is <span style=\" font-weight:700;\">not</span> compatible with multiworld sessions.</p></body></html>", None))
         self.dock_types_group.setTitle(QCoreApplication.translate("PresetDockRando", u"Door Types", None))
         self.change_from_desc.setText(QCoreApplication.translate("PresetDockRando", u"**Doors to Change**\n"
 "\n"
@@ -162,5 +182,7 @@ class Ui_PresetDockRando(object):
         self.change_to_desc.setText(QCoreApplication.translate("PresetDockRando", u"**Change Doors To**\n"
 "\n"
 "Which locks a door can be changed to.", None))
+        self.can_change_from_group.setTitle("")
+        self.can_change_to_group.setTitle("")
     # retranslateUi
 

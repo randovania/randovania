@@ -54,7 +54,7 @@ def test_save_stations_not_unlocked(echoes_game_patches, default_echoes_configur
     )
 
     # Result
-    assert list(result.all_dock_weaknesses()) == []
+    assert list(result.all_dock_weaknesses(echoes_game_description)) == []
 
 
 def test_save_stations_unlocked(echoes_game_patches, default_echoes_configuration, echoes_game_description):
@@ -65,7 +65,7 @@ def test_save_stations_unlocked(echoes_game_patches, default_echoes_configuratio
     result = factory.assign_static_dock_weakness(config, echoes_game_description, echoes_game_patches)
 
     # Result
-    assert len(list(result.all_dock_weaknesses())) == 18 * 2
+    assert len(list(result.all_dock_weaknesses(echoes_game_description))) == 18 * 2
 
 
 def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, default_echoes_configuration):

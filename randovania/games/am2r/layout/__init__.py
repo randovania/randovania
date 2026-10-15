@@ -6,6 +6,6 @@ from randovania.games.am2r.layout.preset_describer import AM2RPresetDescriber
 
 __all__ = [
     "AM2RConfiguration",
-    "AM2RPresetDescriber",
     "AM2RCosmeticPatches",
+    "AM2RPresetDescriber",
 ]

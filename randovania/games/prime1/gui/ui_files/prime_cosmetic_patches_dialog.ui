@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>424</width>
-    <height>301</height>
+    <width>600</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,8 +48,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>390</width>
-        <height>897</height>
+        <width>566</width>
+        <height>1236</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -70,13 +70,6 @@
            <widget class="QCheckBox" name="open_map_check">
             <property name="text">
              <string>Open map from start</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="force_fusion_check">
-            <property name="text">
-             <string>Force Fusion Suit</string>
             </property>
            </widget>
           </item>
@@ -133,151 +126,757 @@
               </property>
              </widget>
             </item>
+            <item>
+             <spacer name="hud_color_spacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
           </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="Foldable" name="suit_colors_foldable" native="true">
+         <property name="title" stdset="0">
+          <string>Suit Colors</string>
+         </property>
+         <property name="folded" stdset="0">
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" name="suit_colors_foldable_layout">
           <item>
-           <layout class="QHBoxLayout" name="power_suit_color_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="power_suit_color_rotation">
+           <layout class="QGridLayout" name="suit_colors_layout">
+            <item row="0" column="0" rowspan="3" colspan="2">
+             <layout class="QVBoxLayout" name="suit_toggles_layout">
+              <item>
+               <widget class="QCheckBox" name="force_fusion_check">
+                <property name="text">
+                 <string>Fusion Suit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="rainbow_phazon_ball_check">
+                <property name="text">
+                 <string>Rainbow Ball (Phazon Suit)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="suit_toggles_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="2" colspan="2">
+             <layout class="QHBoxLayout" name="gunship_header_layout">
+              <item>
+               <spacer name="gunship_header_left_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="gunship_name_label">
+                <property name="text">
+                 <string>Gunship</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="gunship_header_separator_label">
+                <property name="text">
+                 <string>|</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="match_gunship_to_power_suit_check">
+                <property name="text">
+                 <string>Match Power Suit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="gunship_header_right_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="2" colspan="2">
+             <layout class="QHBoxLayout" name="gunship_slider_layout">
+              <item>
+               <spacer name="gunship_slider_left_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="ScrollProtectedSlider" name="gunship_rotation_slider">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>180</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>180</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="maximum">
+                 <number>360</number>
+                </property>
+                <property name="singleStep">
+                 <number>5</number>
+                </property>
+                <property name="pageStep">
+                 <number>30</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="tickPosition">
+                 <enum>QSlider::TickPosition::TicksBelow</enum>
+                </property>
+                <property name="tickInterval">
+                 <number>90</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="gunship_slider_right_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="2" colspan="2">
+             <widget class="QLabel" name="gunship_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>180</width>
+                <height>137</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
               <property name="text">
-               <string>Power Suit color rotation</string>
+               <string/>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QSpinBox" name="power_suit_rotation_field">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="3" column="0">
+             <widget class="QLabel" name="power_suit_name_label">
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
+              <property name="text">
+               <string>Power</string>
               </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="varia_suit_name_label">
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string>Varia</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLabel" name="gravity_suit_name_label">
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string>Gravity</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLabel" name="phazon_suit_name_label">
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string>Phazon</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="ScrollProtectedSlider" name="power_suit_rotation_slider">
               <property name="maximum">
                <number>360</number>
               </property>
               <property name="singleStep">
-               <number>10</number>
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TickPosition::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="ScrollProtectedSlider" name="varia_suit_rotation_slider">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TickPosition::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="ScrollProtectedSlider" name="gravity_suit_rotation_slider">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TickPosition::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="3">
+             <widget class="ScrollProtectedSlider" name="phazon_suit_rotation_slider">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TickPosition::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="power_suit_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>188</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QLabel" name="varia_suit_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>188</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QLabel" name="gravity_suit_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>188</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="3">
+             <widget class="QLabel" name="phazon_suit_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>188</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="power_ball_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>140</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="varia_ball_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>140</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLabel" name="gravity_ball_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>140</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="3">
+             <widget class="QLabel" name="phazon_ball_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>140</height>
+               </size>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="text">
+               <string/>
               </property>
              </widget>
             </item>
            </layout>
           </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="Foldable" name="options_foldable" native="true">
+         <property name="title" stdset="0">
+          <string>In-Game Options</string>
+         </property>
+         <property name="folded" stdset="0">
+          <bool>true</bool>
+         </property>
+         <layout class="QVBoxLayout" name="options_foldable_layout">
           <item>
-           <layout class="QHBoxLayout" name="varia_suit_color_layout">
-            <property name="spacing">
-             <number>6</number>
+           <widget class="QGroupBox" name="visor_box">
+            <property name="title">
+             <string>Visor</string>
             </property>
-            <item>
-             <widget class="QLabel" name="varia_suit_color_rotation">
-              <property name="text">
-               <string>Varia Suit color rotation</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="varia_suit_rotation_field">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>10</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <layout class="QGridLayout" name="visor_layout">
+             <item row="3" column="0" colspan="2">
+              <widget class="QCheckBox" name="hud_lag_check">
+               <property name="text">
+                <string>Hud Lag</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="hud_alpha_label">
+               <property name="text">
+                <string>Visor Opacity</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="ScrollProtectedSlider" name="helmet_alpha_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="hud_alpha_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="helmet_alpha_label">
+               <property name="text">
+                <string>Helmet Opacity</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="helmet_alpha_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="ScrollProtectedSlider" name="hud_alpha_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0" colspan="2">
+              <widget class="QCheckBox" name="checkBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The in-game Hint System has been removed. The option for it remains, but does nothing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="text">
+                <string>Hint System</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="gravity_suit_color_layout">
-            <property name="spacing">
-             <number>6</number>
+           <widget class="QGroupBox" name="controls_box">
+            <property name="title">
+             <string>Controls</string>
             </property>
-            <item>
-             <widget class="QLabel" name="gravity_suit_color_rotation">
-              <property name="text">
-               <string>Gravity Suit color rotation</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="gravity_suit_rotation_field">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>10</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <layout class="QGridLayout" name="controls_layout">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="invert_y_axis_check">
+               <property name="text">
+                <string>Invert Y Axis</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="rumble_check">
+               <property name="text">
+                <string>Rumble</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="swap_beam_controls_check">
+               <property name="text">
+                <string>Swap Beam Controls</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="phazon_suit_color_layout">
-            <property name="spacing">
-             <number>6</number>
+           <widget class="QGroupBox" name="audio_box">
+            <property name="title">
+             <string>Audio</string>
             </property>
-            <item>
-             <widget class="QLabel" name="phazon_suit_color_rotation">
-              <property name="text">
-               <string>Phazon Suit color rotation</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="phazon_suit_rotation_field">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>10</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <layout class="QGridLayout" name="audio_layout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="sound_mode_label">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Sound Mode</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="sfx_volume_label">
+               <property name="text">
+                <string>Sound Volume</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="music_volume_label">
+               <property name="text">
+                <string>Music Volume</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="sound_mode_combo"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="ScrollProtectedSlider" name="sfx_volume_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="ScrollProtectedSlider" name="music_volume_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="sfx_volume_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="music_volume_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="screen_box">
+            <property name="title">
+             <string>Screen</string>
+            </property>
+            <layout class="QGridLayout" name="screen_layout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="screen_brightness_label">
+               <property name="text">
+                <string>Screen Brightness</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="screen_x_offset_label">
+               <property name="text">
+                <string>Screen X Offset</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="ScrollProtectedSlider" name="screen_brightness_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="ScrollProtectedSlider" name="screen_y_offset_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="screen_stretch_label">
+               <property name="text">
+                <string>Screen Stretch</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="ScrollProtectedSlider" name="screen_x_offset_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="ScrollProtectedSlider" name="screen_stretch_slider">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TickPosition::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="screen_y_offset_label">
+               <property name="text">
+                <string>Screen Y Offset</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="screen_brightness_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="screen_x_offset_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="screen_y_offset_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="screen_stretch_value_label">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -295,291 +894,6 @@
          </property>
         </spacer>
        </item>
-       <item>
-        <widget class="QGroupBox" name="visor_box">
-         <property name="title">
-          <string>Visor</string>
-         </property>
-         <layout class="QGridLayout" name="visor_layout">
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="hud_lag_check">
-            <property name="text">
-             <string>Hud Lag</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="hud_alpha_label">
-            <property name="text">
-             <string>Visor Opacity</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="ScrollProtectedSlider" name="helmet_alpha_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="hud_alpha_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="helmet_alpha_label">
-            <property name="text">
-             <string>Helmet Opacity</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="helmet_alpha_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="ScrollProtectedSlider" name="hud_alpha_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkBox">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The in-game Hint System has been removed. The option for it remains, but does nothing.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>Hint System</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="controls_box">
-         <property name="title">
-          <string>Controls</string>
-         </property>
-         <layout class="QGridLayout" name="controls_layout">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="invert_y_axis_check">
-            <property name="text">
-             <string>Invert Y Axis</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="rumble_check">
-            <property name="text">
-             <string>Rumble</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="swap_beam_controls_check">
-            <property name="text">
-             <string>Swap Beam Controls</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="audio_box">
-         <property name="title">
-          <string>Audio</string>
-         </property>
-         <layout class="QGridLayout" name="audio_layout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="sound_mode_label">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Sound Mode</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="sfx_volume_label">
-            <property name="text">
-             <string>Sound Volume</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="music_volume_label">
-            <property name="text">
-             <string>Music Volume</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="sound_mode_combo"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="ScrollProtectedSlider" name="sfx_volume_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="ScrollProtectedSlider" name="music_volume_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="sfx_volume_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLabel" name="music_volume_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="screen_box">
-         <property name="title">
-          <string>Screen</string>
-         </property>
-         <layout class="QGridLayout" name="screen_layout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="screen_brightness_label">
-            <property name="text">
-             <string>Screen Brightness</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="screen_x_offset_label">
-            <property name="text">
-             <string>Screen X Offset</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="ScrollProtectedSlider" name="screen_brightness_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="ScrollProtectedSlider" name="screen_y_offset_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="screen_stretch_label">
-            <property name="text">
-             <string>Screen Stretch</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="ScrollProtectedSlider" name="screen_x_offset_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="ScrollProtectedSlider" name="screen_stretch_slider">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TickPosition::TicksBelow</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="screen_y_offset_label">
-            <property name="text">
-             <string>Screen Y Offset</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="screen_brightness_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="screen_x_offset_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLabel" name="screen_y_offset_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="screen_stretch_value_label">
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
       </layout>
      </widget>
     </widget>
@@ -592,6 +906,12 @@
    <class>ScrollProtectedSlider</class>
    <extends>QSlider</extends>
    <header>randovania/gui/widgets/scroll_protected.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Foldable</class>
+   <extends>QWidget</extends>
+   <header>randovania/gui/widgets/foldable.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

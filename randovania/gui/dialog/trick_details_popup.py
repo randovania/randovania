@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING
 from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import NodeContext
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.gui.generated.trick_details_popup_ui import Ui_TrickDetailsPopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.data_editor_links import data_editor_href, on_click_data_editor_link
@@ -19,6 +17,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.gui.lib.window_manager import WindowManager
@@ -26,8 +25,8 @@ if TYPE_CHECKING:
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 
 
-def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
-    def criteria(individual: ResourceRequirement):
+def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel) -> Callable[[ResourceRequirement], bool]:
+    def criteria(individual: ResourceRequirement) -> bool:
         return individual.resource == resource and individual.amount == level.as_number
 
     return criteria
@@ -36,7 +35,7 @@ def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
 def _area_uses_resource(
     area: Area,
     criteria: Callable[[ResourceRequirement], bool],
-    context: NodeContext,
+    database: ResourceDatabase,
 ) -> Iterable[str]:
     """
     Checks the area RequirementSet in the given Area uses the given trick at the given level.
@@ -47,9 +46,9 @@ def _area_uses_resource(
     """
 
     def _uses_trick(requirements: Requirement) -> bool:
-        return any(criteria(individual) for individual in requirements.iterate_resource_requirements(context))
+        return any(criteria(individual) for individual in requirements.iterate_resource_requirements(database))
 
-    def _dock_uses_trick(dock: DockNode):
+    def _dock_uses_trick(dock: DockNode) -> bool:
         if _uses_trick(dock.default_dock_weakness.requirement):
             return True
 
@@ -85,7 +84,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         game_description: GameDescription,
         areas_to_show: list[tuple[Region, Area, list[str]]],
         trick_levels: TrickLevelConfiguration | None = None,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
@@ -113,7 +112,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
         else:
             self.area_list_label.setText("This trick is not used in this level.")
 
-    def button_box_close(self):
+    def button_box_close(self) -> None:
         self.reject()
 
 
@@ -126,15 +125,16 @@ class TrickDetailsPopup(BaseResourceDetailsPopup):
         trick: TrickResourceInfo,
         level: LayoutTrickLevel,
         trick_levels: TrickLevelConfiguration | None = None,
-    ):
-        context = NodeContext(
-            None, ResourceCollection(), game_description.resource_database, game_description.region_list
-        )
+    ) -> None:
         areas_to_show = [
             (region, area, usages)
             for region in game_description.region_list.regions
             for area in region.areas
-            if (usages := list(_area_uses_resource(area, _requirement_at_value(trick, level), context)))
+            if (
+                usages := list(
+                    _area_uses_resource(area, _requirement_at_value(trick, level), game_description.resource_database)
+                )
+            )
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show, trick_levels)
 
@@ -155,18 +155,15 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
         window_manager: WindowManager,
         game_description: GameDescription,
         resource: ResourceInfo,
-    ):
-        def is_resource(individual: ResourceRequirement):
+    ) -> None:
+        def is_resource(individual: ResourceRequirement) -> bool:
             return individual.resource == resource
 
-        context = NodeContext(
-            None, ResourceCollection(), game_description.resource_database, game_description.region_list
-        )
         areas_to_show = [
             (region, area, usages)
             for region in game_description.region_list.regions
             for area in region.areas
-            if (usages := list(_area_uses_resource(area, is_resource, context)))
+            if (usages := list(_area_uses_resource(area, is_resource, game_description.resource_database)))
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show)
 

@@ -2,14 +2,13 @@ from __future__ import annotations
 
 import typing
 from random import Random
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING, ClassVar, override
 
 from randovania import monitoring
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import AM2R_JOKE_HINTS
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
@@ -112,7 +111,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
     _EASTER_EGG_SHINY = 1024
 
     # Effect, sprite, header => new_sprite, new_header
-    SHINIES = {
+    SHINIES: ClassVar[dict[tuple[str, str, str], tuple[str, str]]] = {
         ("Missile Tank", "sItemMissile", "Got Missile Tank"): ("sItemShinyMissile", "Got Shiny Missile Tank"),
         ("Hi-Jump Boots", "sItemHijump", "Hi-Jump Boots acquired"): (
             "sItemShinyHijump",
@@ -156,13 +155,13 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 "quantity": quantity,
                 "text": {
                     "header": (
-                        text_data[pickup.name]["text_header"] if not self.players_config.is_multiworld else pickup.name
+                        text_data[pickup.name]["text_header"] if not self.worlds_config.is_multiworld else pickup.name
                     ),
                     "description": pickup.collection_text[text_index],
                 },
             }
 
-            pickup_obj = pickup_map_dict[object_name]
+            pickup_obj: dict = pickup_map_dict[object_name]
             shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
             if (
@@ -178,7 +177,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         return pickup_map_dict
 
     def _create_room_dict(self) -> dict:
-        rng = Random(self.description.get_seed_for_world(self.players_config.player_index))
+        rng = Random(self.description.get_seed_for_world(self.worlds_config.world_index))
 
         return_dict = {}
         for region in self.game.region_list.regions:
@@ -273,7 +272,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             "contains_spoiler": not rdv_meta["in_race_setting"],
             "word_hash": self.description.shareable_word_hash,
             "hash": self.description.shareable_hash,
-            "session_uuid": str(self.players_config.get_own_uuid()),
+            "session_uuid": str(self.world_uuid),
             "starting_memo": self._create_starting_popup(self.patches),
         }
         return return_dict
@@ -349,22 +348,22 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 else node.extra["instance_id"]
             ): {
                 "lock": weakness.extra.get("door_name", weakness.long_name),
-                "is_dock": True if node.default_dock_weakness.extra.get("is_dock", None) is not None else False,
+                "is_dock": node.default_dock_weakness.extra.get("is_dock", None) is not None,
                 "facing_direction": node.extra["facing"] if node.extra.get("facing", None) is not None else "invalid",
             }
-            for node, weakness in self.patches.all_dock_weaknesses()
+            for node, weakness in self.patches.all_dock_weaknesses(self.game)
         }
 
     def _create_hints(self, rng: Random) -> dict:
-        artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
-        ice = [(self.game.resource_database.get_item("Ice Beam"))]
-        dna_hint_mapping = {}
+        artifacts = [self.resource_db.get_item(f"Metroid DNA {i + 1}") for i in range(46)]
+        ice = [(self.resource_db.get_item("Ice Beam"))]
+
         hint_config = self.configuration.hints
-        hint_namer = AM2RHintNamer(self.description.all_patches, self.players_config)
+        hint_namer = AM2RHintNamer(self.description.all_patches, self.worlds_config)
         if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 hint_namer,
                 hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
@@ -410,7 +409,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         if hint_config.specific_pickup_hints["ice_beam"] != SpecificPickupHintMode.DISABLED:
             temp_ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 hint_namer,
                 hint_config.specific_pickup_hints["ice_beam"] == SpecificPickupHintMode.HIDE_AREA,
                 ice,
@@ -474,8 +473,8 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
         spoiler_dict = credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            AM2RHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            AM2RHintNamer(self.description.all_patches, self.worlds_config),
             "{}",
             False,
         )
@@ -526,11 +525,8 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                     "map_name"
                 ],
             }
-            for node, connection in self.patches.all_dock_connections()
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
-            )
+            for node, connection in self.patches.all_dock_connections(self.game)
+            if (node.dock_type in self.game.dock_type_database.all_teleporter_dock_types)
         }
 
         return {
@@ -543,6 +539,6 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
             "pipes": pipes if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else {},
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
-            "cosmetics": self._create_cosmetics(self.description.get_seed_for_world(self.players_config.player_index)),
+            "cosmetics": self._create_cosmetics(self.description.get_seed_for_world(self.worlds_config.world_index)),
             "credits_spoiler": self._credits_spoiler(),
         }

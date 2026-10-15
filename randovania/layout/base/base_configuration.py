@@ -11,7 +11,10 @@ from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import (
+    DockWeaknessDistributorConfiguration,
+    DockWeaknessDistributorMode,
+)
 from randovania.layout.base.hint_configuration import HintConfiguration
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
@@ -56,13 +59,10 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
-    two_sided_door_lock_search: bool
-    dock_rando: DockRandoConfiguration
+    dock_weakness_distributor: DockWeaknessDistributorConfiguration
     single_set_for_pickups_that_solve: bool
-    staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
     logical_pickup_placement: LogicalPickupPlacementConfiguration
-    consider_possible_unsafe_resources: bool
     hints: HintConfiguration
 
     @classmethod
@@ -88,9 +88,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         if self.first_progression_must_be_local:
             result.append("Requiring first progression to be local causes increased generation failure.")
 
-        if self.consider_possible_unsafe_resources:
-            result.append("Considering possible unsafe resources will increase generation time.")
-
         if self.logical_pickup_placement == LogicalPickupPlacementConfiguration.ALL:
             result.append(
                 "Requiring every pickup in the preset to be obtainable causes increased chance of generation failures."
@@ -104,9 +101,13 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def unsupported_features(self) -> list[str]:
         return _collect_from_fields(self, "unsupported_features")
 
+    def settings_incompatible_with_map_tracker(self) -> list[str]:
+        """Certain settings make the map tracker useless."""
+        return _collect_from_fields(self, "settings_incompatible_with_map_tracker")
+
     def should_hide_generation_log(self) -> bool:
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
-        return self.dock_rando.mode == DockRandoMode.DOCKS
+        return self.dock_weakness_distributor.is_any_type_mode(DockWeaknessDistributorMode.INDIVIDUAL_DOCK)
 
 
 ConfigurationT_co = TypeVar("ConfigurationT_co", bound=BaseConfiguration, default=BaseConfiguration, covariant=True)

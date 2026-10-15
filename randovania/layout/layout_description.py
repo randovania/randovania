@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import base64
+import copy
+import dataclasses
 import hashlib
 import itertools
 import json
 import typing
+import uuid
 from dataclasses import dataclass
 from functools import lru_cache
 from random import Random
@@ -13,6 +16,7 @@ import construct
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
+from randovania.interface_common.worlds_configuration import SOLO_UUID_VERSION
 from randovania.layout import description_migration, game_patches_serializer
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
@@ -86,9 +90,10 @@ class LayoutDescription:
     randovania_version_text: str
     randovania_version_git: bytes
     generator_parameters: GeneratorParameters
-    all_patches: dict[int, GamePatches]
+    all_patches: list[GamePatches]
     item_order: tuple[str, ...]
     user_modified: bool
+    original_dict: dict | None = dataclasses.field(compare=False, default=None)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "__cached_serialized_patches", None)
@@ -101,7 +106,7 @@ class LayoutDescription:
     def create_new(
         cls,
         generator_parameters: GeneratorParameters,
-        all_patches: dict[int, GamePatches],
+        all_patches: list[GamePatches],
         item_order: tuple[str, ...],
     ) -> typing.Self:
         return cls(
@@ -130,11 +135,12 @@ class LayoutDescription:
         if "game_modifications" not in json_dict:
             raise InvalidLayoutDescription("Unable to read details of a race game file")
 
-        json_dict = description_migration.convert_to_current_version(json_dict)
+        original_dict = copy.deepcopy(json_dict)
+        json_dict = description_migration.convert_to_current_version(copy.deepcopy(json_dict))
 
         def get_preset(i: int, p: dict) -> Preset:
             try:
-                return VersionedPreset(p).get_preset()
+                return VersionedPreset(p, from_layout_description=True).get_preset()
             except InvalidPreset as e:
                 raise InvalidLayoutDescription(f"Invalid preset for world {i + 1}: {e}") from e.original_exception
 
@@ -152,7 +158,7 @@ class LayoutDescription:
         try:
             all_patches = game_patches_serializer.decode(
                 json_dict["game_modifications"],
-                {index: preset.configuration for index, preset in enumerate(generator_parameters.presets)},
+                [preset.configuration for preset in generator_parameters.presets],
             )
         except Exception as e:
             if expected_checksum == actual_checksum:
@@ -162,14 +168,19 @@ class LayoutDescription:
                     f"Unable to parse game modifications and the rdvgame has been modified.\n\nOriginal error: {e}"
                 ) from e
 
-        return cls(
+        result = cls(
             randovania_version_text=json_dict["info"]["randovania_version"],
             randovania_version_git=bytes.fromhex(json_dict["info"]["randovania_version_git"]),
             generator_parameters=generator_parameters,
             all_patches=all_patches,
             item_order=json_dict["item_order"],
             user_modified=expected_checksum != actual_checksum,
+            original_dict=original_dict,
         )
+
+        # Fill the cache so calling shareable_word_hash is not slow by needing to re-serialize
+        object.__setattr__(result, "__cached_serialized_patches", json_dict["game_modifications"])
+        return result
 
     @classmethod
     def from_file(cls, path: Path) -> typing.Self:
@@ -271,9 +282,25 @@ class LayoutDescription:
         return frozenset(preset.game for preset in self.all_presets)
 
     @property
+    def seed_uuid(self) -> uuid.UUID:
+        """A UUID deterministically derived from the seed. For games that need a stable
+        per-seed instance identifier even when not played as part of a multiworld session."""
+        fields = bytearray(
+            hashlib.blake2b(
+                json.dumps(self._serialized_patches).encode(),
+                digest_size=16,
+                salt=self.generator_parameters.seed_number.to_bytes(hashlib.blake2b.SALT_SIZE, "little"),
+            ).digest()
+        )
+
+        # uuid.UUID only accepts version= up to 5 before Python 3.14, so set the version and variant bits by hand.
+        fields[6] = (fields[6] & 0x0F) | (SOLO_UUID_VERSION << 4)
+        fields[8] = (fields[8] & 0x3F) | 0x80
+        return uuid.UUID(bytes=bytes(fields))
+
+    @property
     def shareable_hash_bytes(self) -> bytes:
-        bytes_representation = json.dumps(self._serialized_patches).encode()
-        return hashlib.blake2b(bytes_representation, digest_size=5).digest()
+        return self.seed_uuid.bytes[:5]
 
     @property
     def shareable_hash(self) -> str:

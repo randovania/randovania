@@ -1,20 +1,28 @@
 import datetime
-from typing import Any
+from typing import Annotated, Any
 
+import pydantic
+from fastapi import APIRouter
 from peewee import Case, fn
+from pydantic import StringConstraints
 
-from randovania.network_common import error
+from randovania.network_common import error, multiplayer_session
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
+    MultiplayerSessionEntry,
     MultiplayerSessionListEntry,
 )
+from randovania.network_common.signals import server_signals
+from randovania.network_common.signals.common import TypedJsonObject
 from randovania.server import database
 from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World
 from randovania.server.multiplayer import session_common
-from randovania.server.server_app import ServerApp
+from randovania.server.server_app import ServerApp, ServerAppDep, SidDep, UserDep
+
+router = APIRouter()
 
 
-async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict]:
+async def list_sessions(sa: ServerApp, sid: str, limit: int | None = None) -> list[dict]:
     # Note: this query fails to list any session that has no memberships
     # But that's fine, because these sessions should've been deleted!
     def construct_helper(**args: Any) -> MultiplayerSessionListEntry:
@@ -44,6 +52,7 @@ async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict
             MultiplayerMembership,
             on=MultiplayerMembership.session == MultiplayerSession.id,
         )
+        .where(MultiplayerSession.race_team.is_null())
         .group_by(MultiplayerSession.id)
         .order_by(MultiplayerSession.id.desc())  # type: ignore[attr-defined]
         .limit(limit)
@@ -53,31 +62,66 @@ async def list_sessions(sa: ServerApp, sid: str, limit: int | None) -> list[dict
     return [session.as_json for session in sessions]
 
 
-async def create_session(sa: ServerApp, sid: str, session_name: str) -> dict:
-    current_user = await sa.get_current_user(sid)
+class CreateSessionRequest(pydantic.BaseModel):
+    name: Annotated[str, StringConstraints(min_length=1, max_length=MAX_SESSION_NAME_LENGTH)]
 
-    if not (0 < len(session_name) <= MAX_SESSION_NAME_LENGTH):
-        raise error.InvalidActionError("Invalid session name length")
 
+@router.post("/session")
+async def create_session(
+    sa: ServerAppDep,
+    user: UserDep,
+    create_request: CreateSessionRequest,
+    sid: SidDep = None,
+) -> multiplayer_session.MultiplayerSessionEntry:
     with database.db.atomic():
         new_session: MultiplayerSession = MultiplayerSession.create(
-            name=session_name,
+            name=create_request.name,
             password=None,
-            creator=current_user,
+            creator=user,
         )
         MultiplayerMembership.create(
-            user=current_user,
+            user=user,
             session=new_session,
             admin=True,
         )
 
-    await session_common.join_room(sa, sid, new_session)
-    return new_session.create_session_entry().as_json
+    if sid is not None:
+        await session_common.join_room(sa, sid, new_session)
+
+    return new_session.create_session_entry()
 
 
-async def join_session(sa: ServerApp, sid: str, session_id: int, password: str | None) -> dict:
+def _may_join_race_session(session: MultiplayerSession, user: User) -> bool:
+    """
+    A session backing an async race team holds the item history of a seed every other team is still
+    racing, so it's limited to that team. The room's creator is let in as well: checking a team's
+    run is their job, and the item history is the only place that shows it.
+    """
+    if session.is_user_in_session(user):
+        return True
+
+    team = session.get_race_team()
+    return team is not None and bool(team.room.creator == user)
+
+
+async def join_session(
+    sa: ServerApp,
+    sid: str,
+    session_id: int,
+    password: str | None,
+) -> TypedJsonObject[MultiplayerSessionEntry]:
     session = MultiplayerSession.get_by_id(session_id)
     user = await sa.get_current_user(sid)
+
+    if session.is_race_session:
+        if not _may_join_race_session(session, user):
+            raise error.NotAuthorizedForActionError("This session belongs to an async race room")
+
+        team = session.get_race_team()
+        if team is not None and not session.is_user_in_session(user):
+            database.AsyncRaceAuditEntry.create(
+                room=team.room, user=user, message=f"Opened the session of team {team.name}."
+            )
 
     if not session.is_user_in_session(user):
         if session.password is not None:
@@ -112,8 +156,9 @@ async def request_session_update(sa: ServerApp, sid: str, session_id: int) -> No
 
 
 def setup_app(sa: ServerApp) -> None:
-    sa.on("multiplayer_list_sessions", list_sessions, with_header_check=True)
-    sa.on("multiplayer_create_session", create_session, with_header_check=True)
-    sa.on("multiplayer_join_session", join_session, with_header_check=True)
-    sa.on("multiplayer_listen_to_session", listen_to_session, with_header_check=True)
-    sa.on("multiplayer_request_session_update", request_session_update)
+    sa.app.include_router(router)
+
+    server_signals.Multiplayer.ListSessions.register(sa, list_sessions, with_header_check=True)
+    server_signals.Multiplayer.JoinSession.register(sa, join_session, with_header_check=True)
+    server_signals.Multiplayer.ListenToSession.register(sa, listen_to_session, with_header_check=True)
+    server_signals.Multiplayer.RequestSessionUpdate.register(sa, request_session_update)

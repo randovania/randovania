@@ -15,7 +15,7 @@ from randovania.game_description.hint import (
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 @pytest.mark.parametrize(
@@ -26,7 +26,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
     ],
 )
 def test_starting_resource(fusion_game_patches, default_fusion_configuration, color: bool):
-    players = PlayersConfiguration(0, {0: "Player1"})
+    players = WorldsConfiguration(0, {0: "Player1"})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     expected = (
         "[COLOR=3]Screw Attack[/COLOR] has no need to be located."
@@ -45,7 +45,7 @@ def test_starting_resource(fusion_game_patches, default_fusion_configuration, co
     ],
 )
 def test_guaranteed_resource(fusion_game_patches, default_fusion_configuration, color: bool):
-    players = PlayersConfiguration(0, {0: "Player1"})
+    players = WorldsConfiguration(0, {0: "Player1"})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     expected = (
         "[COLOR=3]Screw Attack[/COLOR] " if color else "Screw Attack ",
@@ -73,7 +73,7 @@ def test_guaranteed_resource(fusion_game_patches, default_fusion_configuration, 
     ],
 )
 def test_format_location_hint(fusion_game_patches, default_fusion_configuration, color: bool):
-    players = PlayersConfiguration(0, {0: "Player1"})
+    players = WorldsConfiguration(0, {0: "Player1"})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     expected = (
         "[COLOR=6]" if color else "",
@@ -108,7 +108,7 @@ def test_format_location_hint(fusion_game_patches, default_fusion_configuration,
     ],
 )
 def test_format_region(fusion_game_patches, default_fusion_configuration, color: bool):
-    players = PlayersConfiguration(0, {0: "Player1"})
+    players = WorldsConfiguration(0, {0: "Player1"})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     location = PickupLocation(RandovaniaGame.FUSION, PickupIndex(116))
     expected = ("[COLOR=2]" if color else "", "Sector 2 (TRO)", "[/COLOR]" if color else "")
@@ -124,7 +124,7 @@ def test_format_region(fusion_game_patches, default_fusion_configuration, color:
     ],
 )
 def test_format_area(fusion_game_patches, default_fusion_configuration, with_region: bool, color: bool):
-    players = PlayersConfiguration(0, {0: "Player1"})
+    players = WorldsConfiguration(0, {0: "Player1"})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     location = PickupLocation(RandovaniaGame.FUSION, PickupIndex(116))
     expected = (
@@ -146,7 +146,7 @@ def test_format_area(fusion_game_patches, default_fusion_configuration, with_reg
 )
 def test_format_player(fusion_game_patches, default_fusion_configuration, player: str, color: bool):
     expected = f"[COLOR=6]{player}[/COLOR]" if color else f"{player}"
-    players = PlayersConfiguration(0, {0: player})
+    players = WorldsConfiguration(0, {0: player})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     hint = namer.format_world(player, color)
     assert hint == expected
@@ -161,7 +161,7 @@ def test_format_player(fusion_game_patches, default_fusion_configuration, player
 )
 def test_format_joke(fusion_game_patches, default_fusion_configuration, color: bool):
     expected = "[COLOR=4]This is a joke.[/COLOR]" if color else "This is a joke."
-    players = PlayersConfiguration(0, {0: "Player1"})
+    players = WorldsConfiguration(0, {0: "Player1"})
     namer = FusionHintNamer({0: fusion_game_patches}, players)
     hint = namer.format_joke("This is a joke.", color)
     assert hint == expected

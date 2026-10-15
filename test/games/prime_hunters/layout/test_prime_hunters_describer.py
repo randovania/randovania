@@ -18,6 +18,9 @@ from randovania.interface_common.preset_manager import PresetManager
         HuntersOctolithConfig(True, 8),
         HuntersOctolithConfig(True, 4),
         HuntersOctolithConfig(True, 0),
+        HuntersOctolithConfig(False, 8),
+        HuntersOctolithConfig(False, 4),
+        HuntersOctolithConfig(False, 0),
     ],
 )
 def test_hunters_format_params(octoliths) -> None:
@@ -32,16 +35,25 @@ def test_hunters_format_params(octoliths) -> None:
     # Run
     result = RandovaniaGame.METROID_PRIME_HUNTERS.data.layout.preset_describer.format_params(configuration)
 
+    if octoliths.prefer_bosses:
+        octoliths_where = "Prefers Bosses"
+    else:
+        octoliths_where = "Place at any item location"
+
     # Assert
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
-        "Pickup Pool": [f"Size: {58 + octoliths.placed_octoliths} of 66", "Unmodified starting pickup"],
+        "Pickup Pool": [f"Size: {82 + octoliths.placed_octoliths} of 90", "Unmodified starting pickup"],
         "Gameplay": [
             "Starts at Celestial Archives - Celestial Gateway",
             "Force Fields: Vanilla",
         ],
         "Difficulty": [],
-        "Goal": ([f"{octoliths.placed_octoliths} Octoliths"] if octoliths.placed_octoliths else ["Defeat Gorea 1"]),
+        "Goal": (
+            [f"{octoliths.placed_octoliths} Octoliths", octoliths_where]
+            if octoliths.placed_octoliths
+            else ["Defeat Gorea 1"]
+        ),
         "Game Changes": [],
         "Hints": ["Octolith Hints: Region only"],
     }

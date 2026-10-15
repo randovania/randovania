@@ -84,6 +84,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -664,6 +665,7 @@
                     "hint_features": [
                         "baby"
                     ],
+                    "grants_on_collect": [],
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -689,6 +691,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Area 2 (Dam Entry) - Chozo Grapple Block",
+                    "grants_on_collect": [],
                     "connections": {
                         "Elevator to Area 3 Factory Exterior": {
                             "type": "and",
@@ -771,6 +774,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Below Teleporter": {
                             "type": "and",
@@ -1085,6 +1089,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Area 2 (Dam Entryway) Dam Entryway Teleporter",
+                    "grants_on_collect": [],
                     "connections": {
                         "Below Teleporter": {
                             "type": "and",
@@ -1230,6 +1235,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -1261,6 +1267,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Left Spawnpoint": {
                             "type": "and",
@@ -1310,6 +1317,13 @@
                     "ui_custom_name": "Lightning Armor Chamber Elevator",
                     "connections": {
                         "Door to Transport Access (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Unlock Door from Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1422,7 +1436,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Unlock Door": {
+                        "Event - Unlock Door from Lightning Armor": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1553,12 +1567,12 @@
                         }
                     }
                 },
-                "Event - Unlock Door": {
+                "Event - Unlock Door from Lightning Armor": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 8099.305059169248,
-                        "y": -342.47875466603136,
+                        "x": 8135.423325186439,
+                        "y": -575.3305759227924,
                         "z": 0.0
                     },
                     "description": "",
@@ -1568,6 +1582,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
+                    "grants_on_collect": [],
                     "connections": {
                         "Right Spawnpoint": {
                             "type": "resource",
@@ -1671,6 +1686,32 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Door from Elevator": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8131.04,
+                        "y": 556.46,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2463,6 +2504,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Transport Access": {
                             "type": "and",
@@ -2756,6 +2798,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Alpha 6",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (DNA)": {
                             "type": "and",
@@ -2864,6 +2907,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Inside Arena": {
                             "type": "and",

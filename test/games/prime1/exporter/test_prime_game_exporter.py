@@ -343,7 +343,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     exporter = PrimeGameExporter()
 
     # Run
-    with pytest.raises(ValueError, match="Couldn't find output file.\nAborting Enemy Stat Randomizer"):
+    with pytest.raises(ValueError, match=r"Couldn't find output file.\nAborting Enemy Stat Randomizer"):
         exporter.export_game(
             patch_data,
             PrimeGameExportParams(

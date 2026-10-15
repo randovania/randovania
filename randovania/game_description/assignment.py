@@ -12,10 +12,10 @@ if TYPE_CHECKING:
 
 class PickupTarget(NamedTuple):
     pickup: PickupEntry
-    player: int
+    world: int
 
     def __repr__(self) -> str:
-        return f"World {self.player}'s {self.pickup.name}"
+        return f"World {self.world}'s {self.pickup.name}"
 
 
 PickupAssignment = dict[PickupIndex, PickupTarget]

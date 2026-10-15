@@ -27,6 +27,11 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     checkboxes = window.findChildren(QtWidgets.QCheckBox)
     assert len(checkboxes) == len(_FIELDS)
 
+    assert window.lava_damage_spin_box.value() == 20
+    assert window.acid_damage_spin_box.value() == 60
+    assert window.heat_damage_spin_box.value() == 6
+    assert window.cold_damage_spin_box.value() == 15
+
     # Run enabling all checkboxes
     window.on_preset_changed(editor.create_custom_preset_with())
     for f in _FIELDS:
@@ -47,3 +52,15 @@ def test_on_preset_changed(skip_qtbot, preset_manager):
     assert isinstance(all_disabled_preset.configuration, FusionConfiguration)
     for f in _FIELDS:
         assert getattr(all_disabled_preset.configuration, f) is False
+
+    # Run changing all environmental damage spinboxes
+    window.lava_damage_spin_box.setValue(255)
+    window.acid_damage_spin_box.setValue(255)
+    window.heat_damage_spin_box.setValue(255)
+    window.cold_damage_spin_box.setValue(255)
+
+    # Assert
+    assert window.lava_damage_spin_box.value() == 255
+    assert window.acid_damage_spin_box.value() == 255
+    assert window.heat_damage_spin_box.value() == 255
+    assert window.cold_damage_spin_box.value() == 255

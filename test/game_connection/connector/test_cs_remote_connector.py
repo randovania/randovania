@@ -13,7 +13,7 @@ from randovania.game_connection.connector.remote_connector import PlayerLocation
 from randovania.game_connection.executor.cs_executor import CSExecutor, CSServerInfo, GameState, TSCError, WeaponData
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.network_common.remote_pickup import RemotePickup
 
 

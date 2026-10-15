@@ -1,14 +1,32 @@
 from __future__ import annotations
 
 import typing
+from collections.abc import Hashable, Iterable
 
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+import typing_extensions
 
-ResourceInfo = SimpleResourceInfo | ItemResourceInfo | TrickResourceInfo | NodeResourceInfo
+if typing.TYPE_CHECKING:
+    from randovania.game_description.resources.resource_type import ResourceType
 
-ResourceQuantity = tuple[ResourceInfo, int]
-ResourceGainTuple = tuple[ResourceQuantity, ...]
-ResourceGain = typing.Iterable[ResourceQuantity]
+
+class ResourceInfo(Hashable, typing.Protocol):
+    @property
+    def resource_index(self) -> int: ...
+
+    @property
+    def long_name(self) -> str: ...
+
+    @property
+    def short_name(self) -> str: ...
+
+    @property
+    def resource_type(self) -> ResourceType: ...
+
+
+ResourceInfoT = typing_extensions.TypeVar("ResourceInfoT", bound=ResourceInfo, default=ResourceInfo)
+
+
+if typing.TYPE_CHECKING:
+    ResourceQuantity: typing.TypeAlias = tuple[ResourceInfoT, int]
+    ResourceGainTuple: typing.TypeAlias = tuple[ResourceQuantity[ResourceInfoT], ...]
+    ResourceGain: typing.TypeAlias = Iterable[ResourceQuantity[ResourceInfoT]]

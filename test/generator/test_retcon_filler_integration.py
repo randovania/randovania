@@ -8,8 +8,8 @@ import pytest
 import randovania.generator.filler.player_state
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
-from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
 @pytest.mark.parametrize("single_group", [False, True])
@@ -22,18 +22,24 @@ def test_build_available_indices(has_exclusion: bool, default_filler_config, sin
     region_b = MagicMock(spec=Region)
     region_b.name = "B"
 
-    def make_pickup(i: int) -> MagicMock:
+    def make_pickup(region, i: int) -> MagicMock:
         result = MagicMock(spec=PickupNode)
         result.pickup_index = PickupIndex(i)
         result.custom_index_group = "G" if single_group else None
-        return result
 
-    region_list = MagicMock(spec=RegionList)
-    region_list.all_regions_areas_nodes = [
-        (region_a, MagicMock(), make_pickup(1)),
-        (region_a, MagicMock(), make_pickup(2)),
-        (region_b, MagicMock(), make_pickup(3)),
-        (region_b, MagicMock(), make_pickup(4)),
+        graph_node = MagicMock(spec=WorldGraphNode)
+        graph_node.region = region
+        graph_node.area = None
+        graph_node.database_node = result
+        graph_node.pickup_index = result.pickup_index
+        return graph_node
+
+    graph = MagicMock(spec=WorldGraph)
+    graph.nodes = [
+        make_pickup(region_a, 1),
+        make_pickup(region_a, 2),
+        make_pickup(region_b, 3),
+        make_pickup(region_b, 4),
     ]
 
     if has_exclusion:
@@ -44,7 +50,7 @@ def test_build_available_indices(has_exclusion: bool, default_filler_config, sin
 
     # Run
     indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(
-        region_list, configuration
+        graph, configuration
     )
 
     # Assert

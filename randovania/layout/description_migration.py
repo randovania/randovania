@@ -709,7 +709,7 @@ def _migrate_v35(data: dict) -> None:
                 if "Energy Transfer Module" in pickup:
                     # Formatted so because some older rdvgames append "for player X" to ETMs
                     # Bad migration perhaps? idk
-                    game_modifications[index]["locations"][region].update({location: "Nothing"})
+                    game["locations"][region].update({location: "Nothing"})
 
 
 def _migrate_v36(data: dict) -> None:
@@ -842,6 +842,66 @@ def _migrate_v39(data: dict) -> None:
                 hint["precision"]["item_feature"] = replacement_features[feature]
 
 
+def _migrate_v40(data: dict) -> None:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "fusion":
+            continue
+
+        doors_to_migrate = migration_data.get_raw_data(RandovaniaGame(game["game"]))["elevator_rename_doors"]
+        for target_door in list(game["dock_weakness"].items()):
+            if target_door[0] in doors_to_migrate:
+                game["dock_weakness"][doors_to_migrate[target_door[0]]] = game["dock_weakness"].pop(target_door[0])
+
+        item_locations = {
+            "Glass Tube to Sector 5 (ARC)": "Sector 3 (PYR) Westbound Glass Tube",
+            "Cargo Hold to Sector 5 (ARC)": "Cargo Hold",
+            "Flooded Airlock to Sector 4 (AQA)": "Flooded Airlock",
+            "Ridley Arena": "Neo-Ridley Arena",
+            "Zoro Zig-Zag": "Zig-Zag-Zone",
+        }
+        for location in game["locations"]:
+            node = location["node_identifier"]
+            area = node["area"]
+            node["area"] = item_locations.get(area, area)
+
+
+def _migrate_v41(data: dict) -> None:
+    for game in data["game_modifications"]:
+        if game["game"] != "samus_returns":
+            continue
+
+        game["game_specific"]["charge_door_burst_buff"] = False
+
+
+def _migrate_v42(data: dict) -> None:
+    for game in data["game_modifications"]:
+        if game["game"] != "dread":
+            continue
+
+        game["dock_weakness"].pop("Cataris/Central Unit/Door to Central Unit Access", None)
+        game["dock_weakness"].pop("Cataris/Central Unit Access/Door to Central Unit", None)
+        game["dock_weakness"].pop("Dairon/Central Unit/Door to Central Unit Access", None)
+        game["dock_weakness"].pop("Dairon/Central Unit Access/Door to Central Unit", None)
+
+
+def _migrate_v43(data: dict) -> None:
+    for game in data["game_modifications"]:
+        if game["game"] != "dread":
+            continue
+
+        dock_rename_mapping = migration_data.get_raw_data(RandovaniaGame.METROID_DREAD)[
+            "dock_renames_make_back_of_sensor_lock_door"
+        ]
+
+        for old_name, new_name in dock_rename_mapping.items():
+            old_value = game["dock_weakness"].pop(old_name, None)
+            if old_value:
+                game["dock_weakness"][new_name] = old_value
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -882,6 +942,10 @@ _MIGRATIONS = [
     _migrate_v37,  # Refactor how the "locations" field is saved.
     _migrate_v38,  # Redo am2r pickup features
     _migrate_v39,  # Redo msr pickup features
+    _migrate_v40,  # Renamed Fusion rooms that reference other sectors or unofficial enemy names
+    _migrate_v41,  # MSR: force charge_door_burst_buff off for old seeds via game_specific
+    _migrate_v42,  # Dread: Fixed dock type on door into Cataris and Dairon Central unit
+    _migrate_v43,  # Dread: Rename dock nodes to make back of sensor locks doors instead of docks
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

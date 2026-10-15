@@ -10,7 +10,9 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class BlankPerGameOptions(PerGameOptions):
-    """ """
+    """
+    Stores game-specific fields used by the GameExporter and Dialog.
+    """
 
     input_path: Path | None = None
     output_path: Path | None = None

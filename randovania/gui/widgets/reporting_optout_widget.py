@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class ReportingOptOutWidget(QtWidgets.QWidget, Ui_ReportingOptOutWidget):
     options: Options
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -31,15 +31,15 @@ class ReportingOptOutWidget(QtWidgets.QWidget, Ui_ReportingOptOutWidget):
             signal_handling.on_checked(self.allow_reports_check, self._on_allow_reports)
             signal_handling.on_checked(self.include_user_check, self._on_include_user)
 
-    def on_options_changed(self, options: Options):
+    def on_options_changed(self, options: Options) -> None:
         self.options = options
         self.allow_reports_check.setChecked(options.allow_crash_reporting or randovania.is_dev_version())
         self.include_user_check.setChecked(options.use_user_for_crash_reporting or randovania.is_dev_version())
 
-    def _on_allow_reports(self, value: bool):
+    def _on_allow_reports(self, value: bool) -> None:
         with self.options as opt:
             opt.allow_crash_reporting = value
 
-    def _on_include_user(self, value: bool):
+    def _on_include_user(self, value: bool) -> None:
         with self.options as opt:
             opt.use_user_for_crash_reporting = value

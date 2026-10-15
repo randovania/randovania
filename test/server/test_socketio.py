@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from contextlib import AbstractContextManager, nullcontext
 from typing import TYPE_CHECKING, Any
-from unittest.mock import ANY, AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
 import pytest
 import socketio.exceptions
 
-from randovania.network_common import error
+from randovania.network_common import connection_headers, error
+from randovania.network_common.signals.server_signals import server_signal
 from test.server.sio_test_client import SocketIOTestClient
 
 if TYPE_CHECKING:
@@ -18,9 +19,7 @@ if TYPE_CHECKING:
 async def sio_test_client_fixture(test_client):
     client = SocketIOTestClient(test_client.sa.sio)
 
-    headers = {
-        "HTTP_X_RANDOVANIA_VERSION": "0.0.0",
-    }
+    headers = {"HTTP_{}".format(k.upper().replace("-", "_")): v for k, v in connection_headers().items()}
     await client.connect(headers=headers)
     return client
 
@@ -32,11 +31,15 @@ async def sio_test_client_fixture(test_client):
         (True, nullcontext()),
     ],
 )
-async def test_sio_connect_version_header(test_client, has_headers: bool, context: AbstractContextManager):
+async def test_sio_connect_version_header(
+    test_client, has_headers: bool, context: AbstractContextManager, is_dev_version
+):
     client = SocketIOTestClient(test_client.sa.sio)
 
     headers = {}
     if has_headers:
+        if not is_dev_version:
+            headers = {"HTTP_{}".format(k.upper().replace("-", "_")): v for k, v in connection_headers().items()}
         headers["HTTP_X_RANDOVANIA_VERSION"] = "0.0.0"
 
     with context:
@@ -77,30 +80,12 @@ async def test_sio_connect_client_check_error(test_client, mocker: MockerFixture
 )
 async def test_on_success(side_effect: Any, rval: dict, test_client, sio_test_client):
     # Setup
-    custom = AsyncMock(side_effect=side_effect)
-    test_client.sa.on("custom", custom)
+    custom = server_signal("custom")(AsyncMock(side_effect=side_effect))
+    custom.register(test_client.sa, custom.fn)
 
     # Run
     result = await sio_test_client.emit("custom", callback=True)
 
     # Assert
-    custom.assert_awaited_once_with(test_client.sa, sio_test_client.sid)
+    custom.fn.assert_awaited_once_with(test_client.sa, sio_test_client.sid)
     assert result == rval
-
-
-async def test_on_with_wrapper(test_client):
-    async def my_function(sa, sid_: str, arg: bytes) -> list[int]:
-        return list(arg)
-
-    def on(message, handler, with_header_check):
-        return handler
-
-    test_client.sa.on = MagicMock(side_effect=on)
-
-    # Run
-    wrapped = test_client.sa.on_with_wrapper("my_func", my_function)
-
-    # Assert
-    result = await wrapped(test_client.sa, "TheSid", b"\x041234")
-    assert result == b"\x04bdfh"
-    test_client.sa.on.assert_called_once_with("my_func", ANY, with_header_check=True)

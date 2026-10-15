@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.gui.dialog.async_race_proof_popup import AsyncRaceProofPopup
+from randovania.gui.dialog.async_race.async_race_proof_popup import AsyncRaceProofPopup
 
 if TYPE_CHECKING:
     from pytestqt.qtbot import QtBot

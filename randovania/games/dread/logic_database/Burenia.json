@@ -413,6 +413,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Tunnel to Transport to Ghavoran": {
                             "type": "resource",
@@ -1038,6 +1039,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom-left Corner": {
                             "type": "resource",
@@ -1071,6 +1073,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Fan Platform": {
                             "type": "and",
@@ -1099,6 +1102,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Water Bottom": {
                             "type": "and",
@@ -1127,6 +1131,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_002",
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom-left Corner": {
                             "type": "and",
@@ -1155,6 +1160,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_007",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Lower Transport to Dairon": {
                             "type": "and",
@@ -1183,6 +1189,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:grapplepulloff1x2_000",
+                    "grants_on_collect": [],
                     "connections": {
                         "Fan Platform": {
                             "type": "and",
@@ -1770,6 +1777,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_007",
+                    "grants_on_collect": [],
                     "connections": {
                         "Raft - Top Water Level": {
                             "type": "and",
@@ -2126,6 +2134,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_002",
+                    "grants_on_collect": [],
                     "connections": {
                         "Water Bottom": {
                             "type": "and",
@@ -2151,6 +2160,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_007",
+                    "grants_on_collect": [],
                     "connections": {
                         "Water Bottom": {
                             "type": "and",
@@ -2176,6 +2186,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaDaironSpeedBlocks",
+                    "grants_on_collect": [],
                     "connections": {
                         "Fan Platform": {
                             "type": "and",
@@ -2988,6 +2999,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_008",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Save Station North": {
                             "type": "and",
@@ -3016,6 +3028,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_011",
+                    "grants_on_collect": [],
                     "connections": {
                         "Tunnel to Underneath Drogyga (Upper)": {
                             "type": "and",
@@ -3044,6 +3057,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:grapplepulloff1x2_004",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Underneath Drogyga": {
                             "type": "and",
@@ -3594,6 +3608,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_011",
+                    "grants_on_collect": [],
                     "connections": {
                         "Energy Recharge": {
                             "type": "and",
@@ -3701,6 +3716,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Water Bottom": {
                             "type": "resource",
@@ -3796,7 +3812,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Using Speed Booster is only possible before defeating Drogyga or with Gravity Suit. However, Grapple Beam is required for Drogyga, so there is no danger in this logic",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3805,49 +3821,6 @@
                                                         "name": "Speed",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Gravity",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "Drogyga",
-                                                                                "amount": 1,
-                                                                                "negate": true
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "HighDanger",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3907,6 +3880,27 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Horizontal Bomb Jump across the entire gap",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Normal Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBJ",
+                                                        "amount": 4,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4196,7 +4190,7 @@
                         "Left of Grapple Blocks": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "There is water after defeating Drogyga, however, Grapple Beam is needed for Drogaga, so this logic is always safe",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4208,89 +4202,30 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Gravity",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "The water only appears after defeating Drogyga",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "events",
-                                                                                "name": "Drogyga",
-                                                                                "amount": 1,
-                                                                                "negate": true
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "HighDanger",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Simple IBJ"
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Magnet",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Magnet",
+                                            "amount": 1,
+                                            "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
                                     },
                                     {
                                         "type": "and",
@@ -4298,90 +4233,20 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "WBJ",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "or",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Lay Cross Bomb"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "and",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Magnet",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Lay Normal Bomb"
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "WBJ",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Lay Normal Bomb"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "events",
-                                                        "name": "Drogyga",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -4909,6 +4774,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Drogyga Eyedoor": {
                             "type": "and",
@@ -4937,6 +4803,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_009",
+                    "grants_on_collect": [],
                     "connections": {
                         "Lower Left Ledge": {
                             "type": "and",
@@ -4965,6 +4832,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:grapplepulloff1x2_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Map Station": {
                             "type": "and",
@@ -5291,6 +5159,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaStormMissileGateTeleport",
+                    "grants_on_collect": [],
                     "connections": {
                         "Lower Left Ledge": {
                             "type": "and",
@@ -5655,7 +5524,78 @@
                     "default_dock_weakness": "Phase Shift Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
+                    "override_default_open_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Traverse Any Shutter Gate"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "items",
+                                                    "name": "Speed",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "tricks",
+                                                                "name": "Speedbooster",
+                                                                "amount": 2,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "and",
+                                                            "data": {
+                                                                "comment": null,
+                                                                "items": [
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "tricks",
+                                                                            "name": "Speedbooster",
+                                                                            "amount": 1,
+                                                                            "negate": false
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "resource",
+                                                                        "data": {
+                                                                            "type": "items",
+                                                                            "name": "Gravity",
+                                                                            "amount": 1,
+                                                                            "negate": false
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
@@ -6089,7 +6029,27 @@
                     "default_dock_weakness": "Phase Shift Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
+                    "override_default_open_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Traverse Any Shutter Gate"
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "Speed",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
@@ -6166,6 +6126,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Upper Left Magnet Wall": {
                             "type": "resource",
@@ -6199,6 +6160,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Teleport to Ferenia": {
                             "type": "resource",
@@ -6921,6 +6883,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Missile Tank Plus Platform": {
                             "type": "and",
@@ -7049,6 +7012,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Giant Water Bottom": {
                             "type": "and",
@@ -7077,6 +7041,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:grapplepulloff1x2_005",
+                    "grants_on_collect": [],
                     "connections": {
                         "Left of Central Grapple Block": {
                             "type": "and",
@@ -7957,6 +7922,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaHubMagnetPlatform",
+                    "grants_on_collect": [],
                     "connections": {
                         "Missile Tank Plus Platform": {
                             "type": "and",
@@ -8414,6 +8380,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:grapplepulloff1x2_005",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Teleport to Ghavoran (Plasma)": {
                             "type": "and",
@@ -9024,6 +8991,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_003",
+                    "grants_on_collect": [],
                     "connections": {
                         "Alcove Across Grapple Block": {
                             "type": "and",
@@ -9052,6 +9020,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:grapplepulloff1x2_003",
+                    "grants_on_collect": [],
                     "connections": {
                         "Alcove Across Grapple Block": {
                             "type": "and",
@@ -9991,6 +9960,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_003",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Energy Recharge South": {
                             "type": "and",
@@ -10016,6 +9986,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_003",
+                    "grants_on_collect": [],
                     "connections": {
                         "Ledge above Grapple Block": {
                             "type": "and",
@@ -10408,6 +10379,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaPrepareSpeedSave",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Save Station South Access (Upper)": {
                             "type": "and",
@@ -10861,6 +10833,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Main Hub Tower Bottom": {
                             "type": "template",
@@ -10960,7 +10933,56 @@
                     "default_dock_weakness": "Phase Shift Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
+                    "override_default_open_requirement": {
+                        "type": "or",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Traverse Any Shutter Gate"
+                                },
+                                {
+                                    "type": "and",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "resource",
+                                                "data": {
+                                                    "type": "tricks",
+                                                    "name": "FlashSkip",
+                                                    "amount": 1,
+                                                    "negate": false
+                                                }
+                                            },
+                                            {
+                                                "type": "or",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "template",
+                                                            "data": "Use Spin Boost"
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "tricks",
+                                                                "name": "Walljump",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
@@ -11044,6 +11066,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door from Main Hub Tower Top": {
                             "type": "and",
@@ -11516,6 +11539,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_012",
+                    "grants_on_collect": [],
                     "connections": {
                         "Upper Water Platform": {
                             "type": "and",
@@ -11647,6 +11671,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaGhavoranTeleportEnky",
+                    "grants_on_collect": [],
                     "connections": {
                         "Top of Enky Shaft": {
                             "type": "and",
@@ -11733,6 +11758,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_012",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Main Hub Tower Middle (Plasma)": {
                             "type": "and",
@@ -11950,6 +11976,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaGreenSpeedBlocks",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Early Gravity Speedboost Room 1 (Upper)": {
                             "type": "and",
@@ -12235,6 +12262,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Navigation Station South": {
                             "type": "resource",
@@ -12437,6 +12465,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Teleport to Ghavoran (Upper)": {
                             "type": "and",
@@ -12468,6 +12497,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Next to Exit Tunnel": {
                             "type": "and",
@@ -12823,6 +12853,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaEPart",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Teleport to Ghavoran (Upper)": {
                             "type": "and",
@@ -13210,6 +13241,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaEarlyGravSpeedBlocks",
+                    "grants_on_collect": [],
                     "connections": {
                         "Slope Top": {
                             "type": "and",
@@ -13295,7 +13327,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Ammo Recharge South (Lower)": {
+                        "Door to Ammo Recharge South (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13655,7 +13687,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Recharge South (Lower)": {
+                "Door to Ammo Recharge South (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13676,13 +13708,13 @@
                         "right_shield_def": null
                     },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Ammo Recharge South",
                         "node": "Door to Gravity Suit Tower (Lower)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "No Door Frame",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -13736,7 +13768,7 @@
                                 ]
                             }
                         },
-                        "Dock to Ammo Recharge South (Middle)": {
+                        "Dock to Ammo Recharge South": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -13768,6 +13800,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Next to Bottom Pickup": {
                             "type": "and",
@@ -13799,6 +13832,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Teleport to Ghavoran": {
                             "type": "and",
@@ -13847,7 +13881,7 @@
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
-                        "Dock to Ammo Recharge South (Lower)": {
+                        "Door to Ammo Recharge South (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14006,7 +14040,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Recharge South (Upper)": {
+                "Door to Ammo Recharge South (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14027,13 +14061,13 @@
                         "right_shield_def": null
                     },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Ammo Recharge South",
                         "node": "Door to Gravity Suit Tower (Upper)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "No Door Frame",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -14100,90 +14134,6 @@
                         }
                     }
                 },
-                "Event - Break Floor Blob 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5900.0,
-                        "y": -8800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "ev_demolition_db_001",
-                        "actor_def": "actordef:actors/props/ev_demolition_db_001/charclasses/ev_demolition_db_001.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "s040_aqua:default:ev_demolition_db_001",
-                    "connections": {
-                        "Blob Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Break Floor Blob 2": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6200.0,
-                        "y": -8800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "ev_demolition_db_002",
-                        "actor_def": "actordef:actors/props/ev_demolition_db_002/charclasses/ev_demolition_db_002.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "s040_aqua:default:ev_demolition_db_002",
-                    "connections": {
-                        "Blob Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Break Floor Blob 3": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6600.0,
-                        "y": -8700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "ev_demolition_db_003",
-                        "actor_def": "actordef:actors/props/ev_demolition_db_003/charclasses/ev_demolition_db_003.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "s040_aqua:default:ev_demolition_db_003",
-                    "connections": {
-                        "Blob Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Event - Early Gravity Blob": {
                     "node_type": "event",
                     "heal": false,
@@ -14202,6 +14152,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_005",
+                    "grants_on_collect": [],
                     "connections": {
                         "Breakable Floor": {
                             "type": "template",
@@ -14227,7 +14178,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Ammo Recharge South (Upper)": {
+                        "Door to Ammo Recharge South (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14600,7 +14551,23 @@
                                 ]
                             }
                         },
-                        "Dock to Ammo Recharge South (Middle)": {
+                        "Event - Early Gravity Blob": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Connection back to already collected node for generator safety reasons",
+                                "items": [
+                                    {
+                                        "type": "node",
+                                        "data": {
+                                            "region": "Burenia",
+                                            "area": "Gravity Suit Tower",
+                                            "node": "Event - Early Gravity Blob"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Ammo Recharge South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -14783,7 +14750,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Ammo Recharge South (Upper)": {
+                        "Door to Ammo Recharge South (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -14794,7 +14761,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Recharge South (Middle)": {
+                "Dock to Ammo Recharge South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14830,7 +14797,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Ammo Recharge South (Lower)": {
+                        "Door to Ammo Recharge South (Lower)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -14877,6 +14844,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaDestroyGravitySuitFloor",
+                    "grants_on_collect": [],
                     "connections": {
                         "Blob Alcove": {
                             "type": "and",
@@ -14975,64 +14943,6 @@
                                 ]
                             }
                         },
-                        "Event - Break Floor Blob 1": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Break Floor Blob 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:ev_demolition_db_001",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Break Floor Blob 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:ev_demolition_db_002",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Diffusion or Wave"
-                                    }
-                                ]
-                            }
-                        },
                         "Breakable Floor": {
                             "type": "resource",
                             "data": {
@@ -15048,13 +14958,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:ev_demolition_db_003",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
                                     },
                                     {
                                         "type": "resource",
@@ -15252,6 +15157,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_005",
+                    "grants_on_collect": [],
                     "connections": {
                         "Breakable Floor": {
                             "type": "and",
@@ -15277,6 +15183,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaRobots",
+                    "grants_on_collect": [],
                     "connections": {
                         "Start Point 3": {
                             "type": "and",
@@ -15387,7 +15294,7 @@
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Gravity Suit Tower",
-                        "node": "Dock to Ammo Recharge South (Lower)"
+                        "node": "Door to Ammo Recharge South (Lower)"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "exclude_from_dock_rando": false,
@@ -15437,7 +15344,7 @@
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Gravity Suit Tower",
-                        "node": "Dock to Ammo Recharge South (Upper)"
+                        "node": "Door to Ammo Recharge South (Upper)"
                     },
                     "default_dock_weakness": "Sensor Lock Door",
                     "exclude_from_dock_rando": false,
@@ -15540,7 +15447,7 @@
                     "default_connection": {
                         "region": "Burenia",
                         "area": "Gravity Suit Tower",
-                        "node": "Dock to Ammo Recharge South (Middle)"
+                        "node": "Dock to Ammo Recharge South"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -15707,6 +15614,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -15738,6 +15646,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Tunnel to Gravity Suit Room Access (Lower)": {
                             "type": "and",
@@ -15844,6 +15753,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_004",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Gravity Suit Tower (Upper)": {
                             "type": "and",
@@ -16016,6 +15926,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_004",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Gravity Suit Tower (Lower)": {
                             "type": "and",
@@ -16041,6 +15952,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:db_reg_aq_004",
+                    "grants_on_collect": [],
                     "connections": {
                         "Tunnel to Gravity Suit Room Access (Lower)": {
                             "type": "and",
@@ -16066,6 +15978,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaGravitySuitRoomStoreSpeed",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Gravity Suit Tower (Upper)": {
                             "type": "and",
@@ -16458,6 +16371,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Main Hub Tower Bottom": {
                             "type": "resource",
@@ -16518,6 +16432,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "BureniaStormMissileGateEtank",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Main Hub Tower Bottom": {
                             "type": "and",
@@ -17053,6 +16968,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Drogyga",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Drogyga)": {
                             "type": "and",
@@ -17113,6 +17029,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Underneath Drogyga": {
                             "type": "and",
@@ -17245,6 +17162,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s040_aqua:default:grapplepulloff1x2_006",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Drogyga Eyedoor": {
                             "type": "and",

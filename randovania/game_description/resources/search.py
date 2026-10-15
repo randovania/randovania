@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import typing
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 from randovania.game_description.resources.resource_info import ResourceInfo
 
@@ -11,9 +11,6 @@ if TYPE_CHECKING:
 
 class MissingResource(ValueError):
     pass
-
-
-T = TypeVar("T", bound=ResourceInfo)
 
 
 def find_resource_info_with_id[ResourceInfoT: ResourceInfo](

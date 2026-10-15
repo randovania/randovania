@@ -48,7 +48,7 @@ def generate_helper(parameter: GeneratorParameters) -> float | None:
             generator.generate_and_validate_description(
                 generator_params=parameter,
                 status_update=None,
-                validate_after_generation=True,
+                resolve_after_generation=True,
                 attempts=0,
             )
         )

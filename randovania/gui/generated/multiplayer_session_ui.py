@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'multiplayer_session.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -91,6 +91,7 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.seed_hash_label = QLabel(self.tab_worlds)
         self.seed_hash_label.setObjectName(u"seed_hash_label")
+        self.seed_hash_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
 
         self.user_and_worlds_bottom_layout.addWidget(self.seed_hash_label)
 
@@ -166,6 +167,12 @@ class Ui_MultiplayerSessionWindow(object):
         self.allow_coop_check.setObjectName(u"allow_coop_check")
 
         self.session_admin_layout.addWidget(self.allow_coop_check, 3, 0, 1, 1)
+
+        self.allow_abandon_worlds_check = QCheckBox(self.session_admin_group)
+        self.allow_abandon_worlds_check.setObjectName(u"allow_abandon_worlds_check")
+        self.allow_abandon_worlds_check.setChecked(True)
+
+        self.session_admin_layout.addWidget(self.allow_abandon_worlds_check, 2, 1, 1, 1)
 
 
         self.session_tab_layout.addWidget(self.session_admin_group, 0, 0, 1, 2)
@@ -261,7 +268,7 @@ class Ui_MultiplayerSessionWindow(object):
         font = QFont()
         font.setPointSize(10)
         self.background_process_button.setFont(font)
-        self.background_process_button.setText(u"\ud83d\udec7 Stop")
+        self.background_process_button.setText(u"\U0001f6c7 Stop")
 
         self.verticalLayout.addWidget(self.background_process_button)
 
@@ -300,7 +307,7 @@ class Ui_MultiplayerSessionWindow(object):
 
         self.retranslateUi(MultiplayerSessionWindow)
 
-        self.tab_widget.setCurrentIndex(0)
+        self.tab_widget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MultiplayerSessionWindow)
@@ -327,6 +334,7 @@ class Ui_MultiplayerSessionWindow(object):
         self.view_game_details_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"View Spoiler", None))
         self.everyone_can_claim_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Everyone can claim worlds", None))
         self.allow_coop_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Enable Co-Op", None))
+        self.allow_abandon_worlds_check.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Allow abandoning worlds", None))
         self.connectivity_group.setTitle(QCoreApplication.translate("MultiplayerSessionWindow", u"Connectivity", None))
         self.server_connection_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Connect to Server", None))
         self.edit_game_connections_button.setText(QCoreApplication.translate("MultiplayerSessionWindow", u"Edit Game Connections", None))

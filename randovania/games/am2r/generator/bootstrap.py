@@ -24,11 +24,8 @@ def is_dna_node(node: PickupNode, config: AM2RConfiguration) -> bool:
     artifact_config = config.artifacts
     name = node.extra["object_name"]
     _boss_items = ["oItemM_111", "oItemJumpBall", "oItemSpaceJump", "oItemPBeam", "oItemIBeam", "oItemETank_50"]
-    return (
-        artifact_config.prefer_metroids
-        and name.startswith("oItemDNA_")
-        or artifact_config.prefer_bosses
-        and name in _boss_items
+    return (artifact_config.prefer_metroids and name.startswith("oItemDNA_")) or (
+        artifact_config.prefer_bosses and name in _boss_items
     )
 
 
@@ -38,6 +35,10 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("Energy Tank"),
+            [
+                game.get_resource_database_view().get_item("Varia Suit"),
+                game.get_resource_database_view().get_item("Gravity Suit"),
+            ],
         )
 
     def _get_enabled_misc_resources(
@@ -61,14 +62,14 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled():
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("DoorLockRando")
 
-            door_db = configuration.dock_rando.weakness_database
+            door_db = configuration.game.game_description.dock_type_database
             door_type = door_db.find_type("door")
             open_transition_door = door_db.get_by_weakness("door", "Open Transition")
             are_transitions_shuffled = (
-                open_transition_door in configuration.dock_rando.types_state[door_type].can_change_from
+                open_transition_door in configuration.dock_weakness_distributor.types_state[door_type].can_change_from
             )
             if are_transitions_shuffled:
                 enabled_resources.add("ShuffledOpenHatches")

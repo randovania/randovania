@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
@@ -59,6 +59,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.get_resource_database_view().get_item("ETank"),
+            [game.get_resource_database_view().get_item(suit) for suit in ["Varia", "Gravity"]],
         )
 
     def _get_enabled_misc_resources(
@@ -80,10 +81,10 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
             if getattr(configuration, name):
                 enabled_resources.add(index)
 
-        if configuration.dock_rando.is_enabled():
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
             enabled_resources.add("DoorLocks")
 
-        if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
+        if configuration.dock_weakness_distributor.is_any_type_mode(DockWeaknessDistributorMode.WEAKNESS_TO_WEAKNESS):
             enabled_resources.add("DoorLockRandoTypes")
 
         if configuration.final_boss == FinalBossConfiguration.ARACHNUS:
@@ -130,10 +131,7 @@ class MSRBootstrap(Bootstrap[MSRConfiguration]):
                 yield resource_database.get_event(name), 1
 
     def _damage_reduction(self, db: ResourceDatabaseView, current_resources: ResourceCollection) -> float:
-        num_suits = sum(
-            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
-            for suit in ("Varia Suit", "Gravity Suit")
-        )
+        num_suits = sum((1 if current_resources[db.get_item(suit)] else 0) for suit in ("Varia", "Gravity"))
         dr = 1.0
         if num_suits == 1:
             dr = 0.50

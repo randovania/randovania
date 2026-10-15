@@ -119,8 +119,11 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
     show_enemy_life: bool = False
     show_enemy_damage: bool = False
     show_player_damage: bool = False
+    show_dna_in_hud: bool = False
     show_death_counter: bool = False
     enable_auto_tracker: bool = True
+    enable_debug_logging: bool = False
+    separate_save_slots: bool = False
     music_volume: int = 100
     sfx_volume: int = 100
     ambience_volume: int = 100
@@ -139,5 +142,5 @@ class DreadCosmeticPatches(BaseCosmeticPatches):
         return cls()
 
     @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD

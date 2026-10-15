@@ -65,4 +65,5 @@ class PresetDreadLights(PresetTab, Ui_PresetDreadLights):
         config = typing.cast("DreadConfiguration", preset.configuration)
 
         for region, is_checked in config.disabled_lights.as_json.items():
+            assert isinstance(is_checked, bool)
             typing.cast("QCheckBox", getattr(self, f"{region}_check")).setChecked(is_checked)

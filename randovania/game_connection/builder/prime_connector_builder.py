@@ -45,13 +45,13 @@ class PrimeConnectorBuilder(ConnectorBuilder):
 
         executor = self.create_executor()
 
-        self._status_message("Connecting...", log=False)
+        self._status_message("Connecting...")
         connect_error = await executor.connect()
         if connect_error is not None:
-            self._status_message(connect_error, log=False)
+            self._status_message(connect_error)
             return None
 
-        self._status_message("Identifying game...", log=False)
+        self._status_message("Identifying game...")
         all_connectors: list[PrimeRemoteConnector] = [
             Prime1RemoteConnector(version, executor) for version in prime1_dol_versions.ALL_VERSIONS
         ]

@@ -5,9 +5,9 @@ import datetime
 import json
 import typing
 
-import cryptography.fernet
 import jwt
 import oauthlib
+import oauthlib.oauth2.rfc6749.errors
 import peewee
 from fastapi import APIRouter, Form, Query, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -18,6 +18,8 @@ from starlette import status
 from starlette.responses import JSONResponse
 
 from randovania.network_common import error as network_error
+from randovania.network_common.authentication import AuthenticationMethod
+from randovania.network_common.signals import client_signals, server_signals
 from randovania.server import fastapi_discord
 from randovania.server.database import User, UserAccessToken
 from randovania.server.multiplayer import session_common
@@ -35,9 +37,8 @@ def _encrypt_session_for_user(sa: ServerApp, session: dict) -> str:
     return base64.b85encode(encrypted_session).decode("ascii")
 
 
-def _create_client_side_session_raw(sa: ServerApp, sid: str | None, user: User) -> dict:
-    if sid is not None:
-        sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
+def _create_client_side_session_raw(sa: ServerApp, sid: str, user: User) -> dict:
+    _log_session_info(sa, sid, user)
 
     return {
         "sid": sid,
@@ -45,16 +46,17 @@ def _create_client_side_session_raw(sa: ServerApp, sid: str | None, user: User) 
     }
 
 
-async def _create_client_side_session(
-    sa: ServerApp, sid: str | None, user: User | None, session: dict | None = None
-) -> dict:
+def _log_session_info(sa: ServerApp, sid: str, user: User) -> None:
+    sa.logger.info(f"Client at {sa.current_client_ip(sid)} is user {user.name} ({user.id}).")
+
+
+async def _create_client_side_session(sa: ServerApp, sid: str, user: User | None, session: dict | None = None) -> dict:
     """
 
     :param user: If the session's user was already retrieved, pass it along to avoid an extra query.
     :return:
     """
     if session is None:
-        assert sid is not None
         session = await sa.sio.get_session(sid)
 
     if user is None:
@@ -74,7 +76,7 @@ def _create_user_from_discord(discord_user: DiscordUser) -> User:
     if discord_name is None:
         discord_name = discord_user.username
 
-    user, created = User.get_or_create(discord_id=int(discord_user.id), defaults={"name": discord_name})
+    user, _created = User.get_or_create(discord_id=int(discord_user.id), defaults={"name": discord_name})
 
     if user.name != discord_name:
         user.name = discord_name
@@ -113,43 +115,12 @@ async def _create_session_with_discord_token(sa: ServerApp, sid: str | None, tok
     return user
 
 
-async def start_discord_login_flow(sa: ServerApp, sid: str) -> str:
-    return sid
-
-
-def _get_now() -> datetime.datetime:
-    # For mocking in tests
-    return datetime.datetime.now(datetime.UTC)
-
-
-async def login_with_guest(sa: ServerApp, sid: str, encrypted_login_request: bytes) -> dict:
-    if sa.guest_encrypt is None:
-        raise network_error.NotAuthorizedForActionError
-
-    try:
-        login_request_bytes = sa.guest_encrypt.decrypt(encrypted_login_request)
-    except cryptography.fernet.InvalidToken:
-        raise network_error.NotAuthorizedForActionError
-
-    try:
-        login_request = json.loads(login_request_bytes.decode("utf-8"))
-        name = login_request["name"]
-        date = datetime.datetime.fromisoformat(login_request["date"])
-    except (UnicodeDecodeError, json.JSONDecodeError, KeyError, ValueError) as e:
-        raise network_error.InvalidActionError(str(e))
-
-    if _get_now() - date > datetime.timedelta(days=1):
-        raise network_error.NotAuthorizedForActionError
-
-    user: User = User.get_or_create(name=f"Guest: {name}")[0]
-
-    async with sa.sio.session(sid) as session:
-        session["user-id"] = user.id
-
-    return await _create_client_side_session(sa, sid, user)
-
-
-async def restore_user_session(sa: ServerApp, sid: str, encrypted_session: bytes, _old_session_id: None = None) -> dict:
+async def restore_user_session(
+    sa: ServerApp,
+    sid: str,
+    encrypted_session: bytes,
+    _old_session_id: None = None,
+) -> dict:
     # _old_session_id exists to keep compatibility with old dev build clients that try to connect
     try:
         decrypted_session: bytes = sa.fernet_encrypt.decrypt(encrypted_session)
@@ -217,7 +188,12 @@ def unable_to_login(sa: ServerApp, request: Request, error_message: str, status_
 
 
 @router.get("/login")
-async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: str | None = None) -> Response:
+async def browser_login_with_discord(
+    sa: ServerAppDep,
+    request: Request,
+    sid: str | None = None,
+    next_url: typing.Annotated[str | None, Query(alias="next")] = None,
+) -> Response:
     request.state.sid = sid
 
     state = jwt.encode(
@@ -234,6 +210,12 @@ async def browser_login_with_discord(sa: ServerAppDep, request: Request, sid: st
         request.session["sid"] = sid
     else:
         request.session.pop("sid", None)
+
+    # Only accept paths relative to our own server, to avoid being used as an open redirect.
+    if next_url is not None and next_url.startswith("/") and not next_url.startswith("//"):
+        request.session["next_url"] = next_url
+    else:
+        request.session.pop("next_url", None)
 
     return RedirectResponse(sa.discord.get_oauth_login_url(request, state))
 
@@ -289,7 +271,8 @@ async def browser_discord_login_callback(
         user = await _create_session_with_discord_token(sa, sid, token)
 
         if sid is None:
-            return RedirectResponse(request.url_for("browser_me"))
+            next_url = request.session.pop("next_url", None)
+            return RedirectResponse(next_url or request.url_for("browser_me"))
         else:
             try:
                 session = await sa.sio.get_session(sid=sid)
@@ -297,7 +280,8 @@ async def browser_discord_login_callback(
                 return unable_to_login(sa, request, "Unable to find your Randovania client.", 401)
 
             result = await _create_client_side_session(sa, sid, user, session)
-            await sa.sio.emit("user_session_update", result, to=sid, namespace="/")
+
+            await client_signals.UserSessionUpdate.emit(sa, to=sid, namespace="/")(result)
 
             return sa.templates.TemplateResponse(
                 request,
@@ -365,7 +349,12 @@ async def guest_login(sa: ServerAppDep, request: Request) -> Response:
 
 
 @router.post("/guest_login")
-async def guest_login_post(sa: ServerAppDep, request: Request, name: typing.Annotated[str, Form()]) -> Response:
+async def guest_login_post(
+    sa: ServerAppDep,
+    request: Request,
+    name: typing.Annotated[str, Form()],
+    sid: typing.Annotated[str | None, Form()] = None,
+) -> Response:
     if not sa.app.debug:
         return unable_to_login(sa, request, "Unable to perform login", 400)
 
@@ -374,11 +363,16 @@ async def guest_login_post(sa: ServerAppDep, request: Request, name: typing.Anno
         discord_id=None,
     )
 
-    request.session["user_id"] = user.id
-
     if sa.is_api_request(request):
-        return JSONResponse(await _create_client_side_session(sa, None, user, {"user-id": user.id}))
+        if sid is None:
+            return unable_to_login(sa, request, "Missing sid", 400)
+
+        async with sa.sio.session(sid) as session:
+            session["user-id"] = user.id
+
+        return JSONResponse(await _create_client_side_session(sa, sid, user, session))
     else:
+        request.session["user_id"] = user.id
         return RedirectResponse(
             request.url_for("browser_me"),
             status_code=status.HTTP_303_SEE_OTHER,  # POST to GET
@@ -425,10 +419,13 @@ async def delete_token(request: Request, user: UserDep, token: str) -> RedirectR
     return RedirectResponse(request.url_for("browser_me"))
 
 
+@router.get("/authentication_methods")
+async def authentication_methods(sa: ServerAppDep, request: Request) -> list[AuthenticationMethod]:
+    return [method for method in AuthenticationMethod if sa.is_authentication_method_supported(method)]
+
+
 def setup_app(sa: ServerApp) -> None:
-    sa.on("start_discord_login_flow", start_discord_login_flow)
-    sa.on("login_with_guest", login_with_guest)
-    sa.on("restore_user_session", restore_user_session)
-    sa.on("logout", logout)
+    server_signals.RestoreUserSession.register(sa, restore_user_session)
+    server_signals.Logout.register(sa, logout)
 
     sa.app.include_router(router)

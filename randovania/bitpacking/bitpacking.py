@@ -26,7 +26,7 @@ ARBITRARY_INT_SIZE_LIMITS = (4, 16, 128, 1024)
 
 
 def _bits_for_number(value: int) -> int:
-    return int(math.ceil(math.log2(value)))
+    return math.ceil(math.log2(value))
 
 
 def single_byte_hash(data: bytes) -> int:
@@ -229,6 +229,8 @@ class BitPackDataclass(BitPackValue):
 
             field_meta = dict(**field.metadata)
             field_meta["reference"] = reference_item
+            field_meta["parent_object"] = self
+            field_meta["parent_metadata"] = metadata
 
             encoded_item = list(bit_pack_value.bit_pack_encode(field_meta))
             if any(not (0 <= a < b) for (a, b) in encoded_item):
@@ -286,6 +288,7 @@ class BitPackDataclass(BitPackValue):
             if should_decode:
                 field_meta = dict(**field.metadata)
                 field_meta["reference"] = reference_item
+                field_meta["parent_metadata"] = metadata
                 item = bit_pack_value.bit_pack_unpack(decoder, field_meta)
 
             args[field.name] = item
@@ -394,7 +397,7 @@ class BitPackJson(BitPackValue):
                 return BitPackJson.bit_pack_unpack(decoder, {})
 
 
-def pack_array_element(element: T, array: list[T]) -> Iterator[tuple[int, int]]:
+def pack_array_element[T](element: T, array: list[T]) -> Iterator[tuple[int, int]]:
     if len(array) > 1:
         yield array.index(element), len(array)
     else:
@@ -415,7 +418,7 @@ def _limits_for_size(remaining_size: int) -> tuple[int, ...]:
         return ()
 
 
-def _aux_pack_sorted_array_elements(elements: list[T], array: list[T]) -> Iterator[tuple[int, int]]:
+def _aux_pack_sorted_array_elements[T](elements: list[T], array: list[T]) -> Iterator[tuple[int, int]]:
     yield len(elements), len(array) + 1
 
     previous_index = 0
@@ -555,7 +558,7 @@ def decode_bool(decoder: BitPackDecoder) -> bool:
     return bool(decoder.decode_single(2))
 
 
-def encode_tuple(value: Sequence[T], encoder: Callable[[T], Iterator[tuple[int, int]]]) -> Iterator[tuple[int, int]]:
+def encode_tuple[T](value: Sequence[T], encoder: Callable[[T], Iterator[tuple[int, int]]]) -> Iterator[tuple[int, int]]:
     yield from encode_big_int(len(value))
     for it in value:
         yield from encoder(it)

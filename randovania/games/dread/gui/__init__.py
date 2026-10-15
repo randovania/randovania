@@ -10,6 +10,6 @@ __all__ = [
     "DreadCosmeticPatchesDialog",
     "DreadGameExportDialog",
     "DreadGameTabWidget",
-    "dread_preset_tabs",
     "DreadTeleporterDetailsTab",
+    "dread_preset_tabs",
 ]

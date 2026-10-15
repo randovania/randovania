@@ -156,12 +156,14 @@ def _msr_enable_remote_lua(options: dict) -> None:
 
 
 def _msr_citra_to_azahar(options: dict) -> None:
-    if "target_platform" in options.get("game_samus_returns", {}):
-        if options["game_samus_returns"]["target_platform"] == "citra":
-            options["game_samus_returns"]["target_platform"] = "azahar"
+    game_samus_returns = options.get("game_samus_returns", {})
 
-    if "output_preference" in options.get("game_samus_returns", {}):
-        as_dict: dict = json.loads(options["game_samus_returns"]["output_preference"])
+    if "target_platform" in game_samus_returns:
+        if game_samus_returns["target_platform"] == "citra":
+            game_samus_returns["target_platform"] = "azahar"
+
+    if game_samus_returns.get("output_preference") is not None:
+        as_dict: dict = json.loads(game_samus_returns["output_preference"])
         if as_dict.get("selected_tab", "") == "citra":
             as_dict["selected_tab"] = "azahar"
         # dirty replacement: replaces the platform and the field name for the always empty dict tab options
@@ -169,7 +171,17 @@ def _msr_citra_to_azahar(options: dict) -> None:
         if tab_options:
             tab_options["azahar"] = {}
             tab_options.pop("citra", None)
-        options["game_samus_returns"]["output_preference"] = json.dumps(as_dict, separators=(",", ":"))
+        game_samus_returns["output_preference"] = json.dumps(as_dict, separators=(",", ":"))
+
+
+def _prime1_fusion_suit_color_rotations(options: dict) -> None:
+    cosmetic_patches = options.get("game_prime1", {}).get("cosmetic_patches", {})
+    if cosmetic_patches.get("force_fusion") and "suit_color_rotations" in cosmetic_patches:
+        cosmetic_patches["fusion_suit_color_rotations"] = cosmetic_patches["suit_color_rotations"]
+
+
+def _split_tracker_theme(options: dict) -> None:
+    pass
 
 
 _CONVERTER_FOR_VERSION = [
@@ -213,6 +225,13 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added last_changelog_displayed_dev
     _msr_enable_remote_lua,  # removes enable_remote_lua as it'll always be enabled
     _msr_citra_to_azahar,  # migrate from citra to azahar
+    _only_new_fields,  # add advanced_use_world_graph
+    _only_new_fields,  # fusion: cosmetic option for alternative hud display
+    _only_new_fields,  # dread: show_dna_in_hud/enable_debug_logging
+    _only_new_fields,  # msr: option to use fusion models and reveal map
+    _only_new_fields,  # enabled field for builders
+    _only_new_fields,  # split trackers into structure+theme
+    _prime1_fusion_suit_color_rotations,  # prime1: suit colors are now remembered per Fusion Suit state
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
@@ -253,7 +272,7 @@ def find_config_files(data_path: Path) -> Iterator[str]:
         yield result
 
 
-def replace_config_file_with(data_path: Path, new_data: dict):
+def replace_config_file_with(data_path: Path, new_data: dict) -> None:
     # Write to a separate file, so we don't corrupt the existing one in case we unexpectedly
     # are unable to finish writing the file
     new_config_path = data_path.joinpath("config_new.json")

@@ -16,11 +16,13 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import (
 if TYPE_CHECKING:
     import pytestqt.qtbot
 
+    from randovania.interface_common.options import Options
 
-def test_change_mychar(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+
+def test_change_mychar(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = CSCosmeticPatches()
 
-    dialog = CSCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = CSCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(dialog.mychar_left_button, QtCore.Qt.MouseButton.LeftButton)
@@ -28,12 +30,12 @@ def test_change_mychar(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == CSCosmeticPatches(mychar=MyChar.CUSTOM)
 
 
-def test_change_music_rando(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_change_music_rando(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = CSCosmeticPatches(
         music_rando=CSMusic(randomization_type=MusicRandoType.CHAOS, song_status=CSSong.all_songs_enabled())
     )
 
-    dialog = CSCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = CSCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     assert dialog.song_beta_check.isChecked()

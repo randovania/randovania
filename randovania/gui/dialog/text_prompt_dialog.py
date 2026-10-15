@@ -20,7 +20,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         max_length: int | None,
         is_password: bool,
         check_re: typing.Pattern | None,
-    ):
+    ) -> None:
         super().__init__(parent)
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -51,7 +51,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
     def text_value(self) -> str:
         return self.prompt_edit.text().strip()
 
-    def _on_text_changed(self, value: str):
+    def _on_text_changed(self, value: str) -> None:
         error_message = None
 
         if self.check_re is not None:
@@ -76,6 +76,7 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
         initial_value: str | None = None,
         is_modal: bool = False,
         check_re: typing.Pattern | None = None,
+        read_only: bool = False,
     ) -> str | None:
         inst = cls(
             parent=parent,
@@ -87,6 +88,9 @@ class TextPromptDialog(QtWidgets.QDialog, Ui_TextPromptDialog):
             is_modal=is_modal,
             check_re=check_re,
         )
+        if read_only:
+            inst.accept_button.setVisible(False)
+            inst.prompt_edit.setReadOnly(True)
 
         if await async_dialog.execute_dialog(inst) == QtWidgets.QDialog.DialogCode.Accepted:
             return inst.text_value

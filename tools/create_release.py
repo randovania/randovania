@@ -24,7 +24,7 @@ from randovania.lib import http_lib, json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
-_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v7-multiworld/boot.dol"
+_NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v11-multiworld/boot.dol"
 zip_folder = f"randovania-{VERSION}"
 
 
@@ -102,6 +102,25 @@ async def download_dotnet() -> None:
     )
     print("Removing downloaded script")
     script_path.unlink()
+
+
+def remove_unnecessary_modules() -> None:
+    """Removes python modules that should not be included in the final build."""
+
+    # Remove Pillow's support for AVIF images. We currently do not use this format, and it's 7+ mb.
+    try:
+        avif_path = Path(
+            subprocess.run(
+                [sys.executable, "-c", "import PIL._avif; print(PIL._avif.__file__)"],
+                text=True,
+                capture_output=True,
+                check=True,
+            ).stdout
+        )
+        if avif_path.exists():
+            avif_path.unlink()
+    except subprocess.CalledProcessError:
+        pass
 
 
 def write_obfuscator_secret(path: Path, secret: bytes):
@@ -190,16 +209,13 @@ async def main():
         )
 
     if is_production():
-        server_suffix = "randovania"
-        client_id = 618134325921316864
+        server_prefix = "production"
     else:
-        server_suffix = "randovania-staging"
-        client_id = 887825192208969828
+        server_prefix = "staging"
 
     configuration = {
-        "discord_client_id": client_id,
-        "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
-        "socketio_path": f"/{server_suffix}/socket.io",
+        "server_address": f"https://{server_prefix}.randovania.org",
+        "socketio_path": "/socket.io",
         "sentry_urls": {"client": os.environ.get("SENTRY_CLIENT_URL")},
     }
     json_lib.write_path(_ROOT_FOLDER.joinpath("randovania", "data", "configuration.json"), configuration)
@@ -207,6 +223,8 @@ async def main():
     await download_nintendont()
 
     await download_dotnet()
+
+    remove_unnecessary_modules()
 
     # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
     # There's also timeouts on Windows so we're expanding this to everyone

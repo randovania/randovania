@@ -20,7 +20,7 @@ class ColorSpace(Enum):
 enum_lib.add_long_name(
     ColorSpace,
     {
-        ColorSpace.Oklab: "Oklab",
+        ColorSpace.Oklab: "OKLAB",
         ColorSpace.HSV: "HSV",
     },
 )
@@ -62,6 +62,7 @@ class FusionCosmeticPatches(BaseCosmeticPatches):
     # Misc Options
     starting_map: bool = True
     reveal_blocks: bool = True
+    alt_health_display: bool = False
 
     @classmethod
     def default(cls) -> FusionCosmeticPatches:

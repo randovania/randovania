@@ -8,12 +8,14 @@ from randovania.games.blank.layout import BlankCosmeticPatches
 if TYPE_CHECKING:
     import pytestqt.qtbot
 
+    from randovania.interface_common.options import Options
 
-def test_reset(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+
+def test_reset(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     # Setup
     patches = BlankCosmeticPatches()
 
-    dialog = BlankCosmeticPatchesDialog(None, patches)
+    dialog = BlankCosmeticPatchesDialog(None, patches, options)
     skip_qtbot.addWidget(dialog)
 
     # Run

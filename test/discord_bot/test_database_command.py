@@ -69,7 +69,7 @@ async def test_on_database_world_selected():
         ],
     )
 
-    ctx = AsyncMock()
+    ctx = AsyncMock(spec=discord.Interaction)
     ctx.response = MagicMock(spec=discord.InteractionResponse)
     ctx.data = {"values": [f"{RandovaniaGame.BLANK.value}_world_1"]}
 
@@ -108,7 +108,7 @@ async def test_on_database_area_selected(tmp_path, echoes_game_description, mock
 
     item = SelectAreaItem(RandovaniaGame.METROID_PRIME_ECHOES, split_world)
 
-    ctx = AsyncMock()
+    ctx = AsyncMock(spec=discord.Interaction)
     ctx.response = AsyncMock(spec=discord.InteractionResponse)
     ctx.data = {"values": ["area_1"]}
 
@@ -145,7 +145,7 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
 
     item = SelectNodesItem(RandovaniaGame.METROID_PRIME_ECHOES, area_widget)
 
-    ctx = AsyncMock()
+    ctx = AsyncMock(spec=discord.Interaction)
     ctx.response = AsyncMock(spec=discord.InteractionResponse)
     ctx.data = {"values": [area.nodes[0].name, area.nodes[2].name]}
 

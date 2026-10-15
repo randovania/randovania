@@ -17,10 +17,10 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
-  * Extra - door_idx: (1,)
+  * Extra - door_idx: [1]
   > Door to Geron's Crossing
       Trivial
-  > Door to Glass Tube to Sector 4 (AQA)
+  > Door to Sector 6 (NOC) Westbound Glass Tube
       All of the following:
           Screw Attack
           Any of the following:
@@ -31,21 +31,21 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
 > Door to Geron's Crossing; Heals? False
   * Layers: default
   * L0 Hatch to Geron's Crossing/Door to Entrance Lobby
-  * Extra - door_idx: (2,)
+  * Extra - door_idx: [2]
   > Door to Entrance Recharge Room
       Trivial
 
 > Other to Geron's Crossing; Heals? False
   * Layers: default
   * Tunnel to Geron's Crossing/Other to Entrance Lobby
-  * Extra - door_idx: (51,)
+  * Extra - door_idx: [51]
   > Pickup (Missile Tank)
       Trivial
 
-> Door to Glass Tube to Sector 4 (AQA); Heals? False
+> Door to Sector 6 (NOC) Westbound Glass Tube; Heals? False
   * Layers: default
-  * L0 Hatch to Glass Tube to Sector 4 (AQA)/Door to Entrance Lobby
-  * Extra - door_idx: (79,)
+  * L0 Hatch to Sector 6 (NOC) Westbound Glass Tube/Door to Entrance Lobby
+  * Extra - door_idx: [79]
   > Door to Entrance Recharge Room
       All of the following:
           Screw Attack
@@ -82,14 +82,14 @@ Extra - unlocked_save_recharge_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
-  * Extra - door_idx: (4,)
+  * Extra - door_idx: [4]
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
-  * Extra - door_idx: (5,)
+  * Extra - door_idx: [5]
   > Door to Entrance Recharge Room
       Trivial
   > Save Station
@@ -110,14 +110,14 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 2}]
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
-  * Extra - door_idx: (6,)
-  > Door to Elevator to Main Deck
+  * Extra - door_idx: [6]
+  > Door to Sector 6 (NOC) Entrance Elevator
       Trivial
 
-> Door to Elevator to Main Deck; Heals? False
+> Door to Sector 6 (NOC) Entrance Elevator; Heals? False
   * Layers: default
-  * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
-  * Extra - door_idx: (34,)
+  * Open Hatch to Sector 6 (NOC) Entrance Elevator/Door to Entrance Navigation Room
+  * Extra - door_idx: [34]
   > Door to Entrance Save Room
       Trivial
   > Navigation Terminal
@@ -125,11 +125,11 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 2}]
 
 > Navigation Terminal; Heals? False
   * Layers: default
-  * Hint
-  * Extra - hint_name: Sector6Entrance
+  * Generic Hint; Requirement? (Level 4 Keycard ≥ 1)
+  * Extra - hint_name: SECTOR_6_ENTRANCE
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
-  > Door to Elevator to Main Deck
+  > Door to Sector 6 (NOC) Entrance Elevator
       Trivial
 
 ----------------
@@ -140,7 +140,7 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 7, 'y': 
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Geron's Crossing
-  * Extra - door_idx: (7,)
+  * Extra - door_idx: [7]
   > Door to Nocturnal Access
       Screw Attack
   > Lower Left
@@ -149,7 +149,7 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 7, 'y': 
 > Door to Nocturnal Access; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Access/Door to Geron's Crossing
-  * Extra - door_idx: (8,)
+  * Extra - door_idx: [8]
   > Door to Entrance Lobby
       Screw Attack
   > Lower Right
@@ -158,14 +158,14 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 7, 'y': 
 > Other to Entrance Lobby; Heals? False
   * Layers: default
   * Tunnel to Entrance Lobby/Other to Geron's Crossing
-  * Extra - door_idx: (50,)
+  * Extra - door_idx: [50]
   > Lower Left
       Can Use Any Bombs
 
 > Other to Vault; Heals? False
   * Layers: default
   * Tunnel to Vault/Other to Geron's Crossing
-  * Extra - door_idx: (75,)
+  * Extra - door_idx: [75]
   > Lower Right
       Can Use Any Bombs
 
@@ -216,14 +216,14 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 2}, {'x': 9, 'y': 2}]
 > Door to Geron's Crossing; Heals? False
   * Layers: default
   * L0 Hatch to Geron's Crossing/Door to Nocturnal Access
-  * Extra - door_idx: (9,)
+  * Extra - door_idx: [9]
   > Door to Nocturnal Shaft
       Trivial
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Nocturnal Access
-  * Extra - door_idx: (10,)
+  * Extra - door_idx: [10]
   > Door to Geron's Crossing
       Trivial
 
@@ -235,69 +235,65 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 2}, {'x': 10, 'y': 3}, {'x': 10, 'y
 > Door to Nocturnal Access; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Access/Door to Nocturnal Shaft
-  * Extra - door_idx: (11,)
+  * Extra - door_idx: [11]
   > Door to Blue-X Blockade
       Trivial
   > Door to Forbidden Entrance
       Trivial
   > Door to Nocturnal Playground
       Trivial
-  > Door to Glass Tube to Sector 5 (ARC)
-      All of the following:
-          Screw Attack
-          Any of the following:
-              Varia Suit or Combat (Intermediate)
-              Damage Boosts (Beginner) and Cold Damage ≥ 70
+  > Door to Sector 6 (NOC) Eastbound Glass Tube
+      Screw Attack
 
 > Door to Blue-X Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Blue-X Blockade/Door to Nocturnal Shaft
-  * Extra - door_idx: (12,)
+  * Extra - door_idx: [12]
   > Door to Nocturnal Access
       Trivial
 
 > Door to Forbidden Entrance; Heals? False
   * Layers: default
   * L0 Hatch to Forbidden Entrance/Door to Nocturnal Shaft
-  * Extra - door_idx: (13,)
+  * Extra - door_idx: [13]
   > Door to Nocturnal Access
       Trivial
   > Door to Pillar Highway
       All of the following:
-          Level 0 Keycard and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space
+          Screw Attack and Speed Booster and After Sector 6 Forbidden Entrance Visited and Disabled Entrance Rando
           Any of the following:
               # Ice X logic
               Varia Suit
               # Tank all the damage - 6 X
-              Damage Boosts (Intermediate) and Cold Damage ≥ 414
+              Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
               # Minimum with plasma - 3 X: https://youtu.be/aeXRjizm9fU
-              Plasma Beam and Damage Boosts (Advanced) and Cold Damage ≥ 207
+              Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
               # Plasma and Wide can stun all the X and avoid all the damage: https://youtu.be/NWXuyjskVKk
               Morph Ball and Plasma Beam and Wide Beam and Combat (Advanced)
 
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Nocturnal Shaft
-  * Extra - door_idx: (14,)
+  * Extra - door_idx: [14]
   > Door to Nocturnal Access
-      # Without Breaking Blocks: https://youtu.be/o43xM3s5YdE
-      Movement (Beginner) or Wall Jump (Beginner) or Have Any Jump Upgrade
+      Trivial
 
-> Door to Glass Tube to Sector 5 (ARC); Heals? False
+> Door to Sector 6 (NOC) Eastbound Glass Tube; Heals? False
   * Layers: default
-  * L0 Hatch to Glass Tube to Sector 5 (ARC)/Door to Nocturnal Shaft
-  * Extra - door_idx: (82,)
+  * L0 Hatch to Sector 6 (NOC) Eastbound Glass Tube/Door to Nocturnal Shaft
+  * Extra - door_idx: [82]
   > Door to Nocturnal Access
       All of the following:
           Screw Attack
           Any of the following:
               Varia Suit or Combat (Intermediate)
-              Damage Boosts (Beginner) and Cold Damage ≥ 70
+              Damage Boosts (Beginner) and Blue-X Damage ≥ 69
 
 > Door to Pillar Highway; Heals? False
   * Layers: default
   * L0 Hatch to Pillar Highway/Door to Nocturnal Shaft
-  * Extra - door_idx: (85,)
+  * Extra - door_idx: [85]
   > Door to Forbidden Entrance
       All of the following:
           # This can safely not have Door Lock Rando check
@@ -315,28 +311,28 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 3}, {'x': 12, 'y': 3}]
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Blue-X Blockade
-  * Extra - door_idx: (32,)
+  * Extra - door_idx: [32]
   > Door to Missile Mimic Lodge
       Any of the following:
           Varia Suit
           # Wave beam can stop the last 3 X: https://youtu.be/DEvvMkPch0A
-          Wave Beam and Damage Boosts (Advanced) and Cold Damage ≥ 207
+          Wave Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
           # Tank all the X
-          Damage Boosts (Intermediate) and Cold Damage ≥ 414
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
           # Dodge all the X: https://youtu.be/4dmxLfHq0OM
           Combat (Ludicrous)
 
 > Door to Missile Mimic Lodge; Heals? False
   * Layers: default
   * L0 Hatch to Missile Mimic Lodge/Door to Blue-X Blockade
-  * Extra - door_idx: (48,)
+  * Extra - door_idx: [48]
   > Door to Nocturnal Shaft
       Any of the following:
           Varia Suit
           # Wave beam can stop the last 3 X: https://youtu.be/SfUb582mYF8
-          Wave Beam and Damage Boosts (Advanced) and Cold Damage ≥ 207
+          Wave Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
           # Tank all the X
-          Damage Boosts (Intermediate) and Cold Damage ≥ 414
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
           # Dodge all the X: https://youtu.be/xBAhWbWrlBs
           Combat (Ludicrous)
 
@@ -348,50 +344,70 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 4}, {'x': 8, 'y': 4}, {'x': 9, 'y': 
 > Door to X-B.O.X. Arena Access; Heals? False
   * Layers: default
   * L4 Hatch to X-B.O.X. Arena Access/Door to Forbidden Entrance
-  * Extra - door_idx: (3,)
-  > Door to Nocturnal Shaft
-      All of the following:
-          Can Use Power Bombs
-          Any of the following:
-              # Ice X logic
-              Varia Suit
-              # Tank all the damage - 6 X
-              Damage Boosts (Intermediate) and Cold Damage ≥ 414
-              # Minimum with plasma - 3 X: https://youtu.be/ZkMJi-sOhh8
-              Plasma Beam and Damage Boosts (Advanced) and Cold Damage ≥ 207
-              # Power Bomb also freezes X: https://youtu.be/XS5WZciqgOk
-              Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
-              # Plasma and Wide can freeze all X and avoid all damage: https://youtu.be/OB0sEEmjurc
-              Plasma Beam and Wide Beam and Combat (Advanced)
+  * Extra - door_idx: [3]
+  > Right of Power Bomb Wall
+      Can Use Power Bombs
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Forbidden Entrance
-  * Extra - door_idx: (33,)
+  * Extra - door_idx: [33]
+  > Right of Power Bomb Wall
+      Any of the following:
+          # Ice X logic
+          Varia Suit
+          # Tank all the damage - 6 X
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
+          # Minimum with plasma - 3 X: https://youtu.be/g_pKLsS1vos
+          Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
+          # Power Bomb also freezes X: https://youtu.be/Anr2464Uz0w
+          Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
+          # Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/cIdt2h_VvhQ
+          Plasma Beam and Wide Beam and Combat (Advanced)
+
+> Right of Power Bomb Wall; Heals? False
+  * Layers: default
   > Door to X-B.O.X. Arena Access
-      All of the following:
-          Can Use Power Bombs
-          Any of the following:
-              # Ice X logic
-              Varia Suit
-              # Tank all the damage - 6 X
-              Damage Boosts (Intermediate) and Cold Damage ≥ 414
-              # Minimum with plasma - 3 X: https://youtu.be/g_pKLsS1vos
-              Plasma Beam and Damage Boosts (Advanced) and Cold Damage ≥ 207
-              # Power Bomb also freezes X: https://youtu.be/Anr2464Uz0w
-              Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
-              # Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/cIdt2h_VvhQ
-              Plasma Beam and Wide Beam and Combat (Advanced)
+      Can Use Power Bombs
+  > Door to Nocturnal Shaft
+      Any of the following:
+          # Ice X logic
+          Varia Suit
+          # Tank all the damage - 6 X
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
+          # Minimum with plasma - 3 X: https://youtu.be/ZkMJi-sOhh8
+          Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
+          # Power Bomb also freezes X: https://youtu.be/XS5WZciqgOk
+          Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
+          # Plasma and Wide can freeze all X and avoid all damage: https://youtu.be/OB0sEEmjurc
+          Plasma Beam and Wide Beam and Combat (Advanced)
+  > Event - Forbidden Entrance Visited
+      Trivial
+
+> Event - Forbidden Entrance Visited; Heals? False
+  * Layers: default
+  * Event Sector 6 Forbidden Entrance Visited
+  > Right of Power Bomb Wall
+      Trivial
 
 ----------------
 Nocturnal Playground
 Extra - map_name: Sector 68
 Extra - room_id: [8]
-Extra - minimap_coordinates: [{'x': 11, 'y': 5}, {'x': 11, 'y': 6}, {'x': 11, 'y': 7}, {'x': 12, 'y': 5}, {'x': 12, 'y': 6}, {'x': 12, 'y': 7}, {'x': 13, 'y': 5}, {'x': 13, 'y': 6}, {'x': 13, 'y': 7}]
+Extra - minimap_coordinates:
+[{'x': 11, 'y': 5},
+ {'x': 11, 'y': 6},
+ {'x': 11, 'y': 7},
+ {'x': 12, 'y': 5},
+ {'x': 12, 'y': 6},
+ {'x': 12, 'y': 7},
+ {'x': 13, 'y': 5},
+ {'x': 13, 'y': 6},
+ {'x': 13, 'y': 7}]
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Nocturnal Playground
-  * Extra - door_idx: (15,)
+  * Extra - door_idx: [15]
   > Door to Clogged Cavern
       Trivial
   > Door to Maintenance Wing
@@ -400,19 +416,19 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 5}, {'x': 11, 'y': 6}, {'x': 11, 'y
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Nocturnal Playground
-  * Extra - door_idx: (16,)
+  * Extra - door_idx: [16]
   > Door to Nocturnal Shaft
       Any of the following:
           Varia Suit
           # Stun the Ice X: https://youtu.be/gWr0prPkpiI
           Combat (Intermediate)
           # Tank one Ice-X: https://youtu.be/OPhU8BH0FYU
-          Damage Boosts (Beginner) and Cold Damage ≥ 69
+          Damage Boosts (Beginner) and Blue-X Damage ≥ 69
 
 > Door to Maintenance Wing; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Wing/Door to Nocturnal Playground
-  * Extra - door_idx: (71,)
+  * Extra - door_idx: [71]
   > Door to Nocturnal Shaft
       All of the following:
           Morph Ball
@@ -445,7 +461,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 5}, {'x': 11, 'y': 6}, {'x': 11, 'y
                       # Wide lets you break the shoot blocks easier: https://youtu.be/JsdPO-DjDwE
                       Wide Beam and Combat (Intermediate)
                   # Tank them
-                  Damage Boosts (Beginner) and Cold Damage ≥ 138
+                  Damage Boosts (Beginner) and Blue-X Damage ≥ 138
 
 ----------------
 Clogged Cavern
@@ -455,20 +471,17 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 8, 'y': 
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Clogged Cavern
-  * Extra - door_idx: (17, 72)
+  * Extra - door_idx: [17, 72]
   > Door to Catacombs
       Any of the following:
-          All of the following:
-              Speed Booster and Enabled Generator Workaround
-              # Generator traps itself and doesn't dare killing Varia Core-X to get out
-              Charge Beam or Shinespark Tricks (Intermediate)
+          Speed Booster
           # These blocks disappear after defeating Mega Core
           After Boss Varia Core-X Defeated and Knowledge (Intermediate)
 
 > Door to Catacombs; Heals? False
   * Layers: default
   * L0 Hatch to Catacombs/Door to Clogged Cavern
-  * Extra - door_idx: (18, 73)
+  * Extra - door_idx: [18, 73]
   > Door to Nocturnal Playground
       Any of the following:
           # Shinespark: https://youtu.be/8j_pwpvapbw
@@ -481,7 +494,7 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 7}, {'x': 7, 'y': 8}, {'x': 8, 'y': 
 > Door to Cavern Save Access; Heals? False
   * Layers: default
   * L0 Hatch to Cavern Save Access/Door to Clogged Cavern
-  * Extra - door_idx: (46, 74)
+  * Extra - door_idx: [46, 74]
   > Door to Catacombs
       Trivial
 
@@ -493,26 +506,23 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 10}, {'x': 6, 'y': 11}]
 > Door to Data Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Data Save Room/Door to Warehouse
-  * Extra - door_idx: (20,)
+  * Extra - door_idx: [20]
   > Door to Warehouse Access
       Trivial
 
 > Door to Data Access; Heals? False
   * Layers: default
   * L0 Hatch to Data Access/Door to Warehouse
-  * Extra - door_idx: (21,)
+  * Extra - door_idx: [21]
   > Other to Zozoro Wine Cellar
       Morph Ball
   > Door to Warehouse Access
-      Any of the following:
-          Space Jump
-          # Strategically cross the shot blocks: https://youtu.be/AiYGhtYXWGI
-          Movement (Beginner)
+      Trivial
 
 > Other to Zozoro Wine Cellar; Heals? False
   * Layers: default
   * Tunnel to Zozoro Wine Cellar/Other to Warehouse
-  * Extra - door_idx: (27,)
+  * Extra - door_idx: [27]
   > Door to Data Access
       Any of the following:
           # Shot blocks will not respawn after they are broken
@@ -525,12 +535,12 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 10}, {'x': 6, 'y': 11}]
                   Can Use Power Bombs
                   Any of the following:
                       Varia Suit or Combat (Advanced)
-                      Damage Boosts (Intermediate) and Cold Damage ≥ 432
+                      Damage Boosts (Intermediate) and Blue-X Damage ≥ 432
 
 > Door to Warehouse Access; Heals? False
   * Layers: default
   * L0 Hatch to Warehouse Access/Door to Warehouse
-  * Extra - door_idx: (61,)
+  * Extra - door_idx: [61]
   > Door to Data Save Room
       Trivial
   > Door to Data Access
@@ -545,7 +555,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Warehouse; Heals? False
   * Layers: default
   * L0 Hatch to Warehouse/Door to Data Save Room
-  * Extra - door_idx: (22,)
+  * Extra - door_idx: [22]
   > Save Station
       Trivial
 
@@ -564,14 +574,14 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 11}, {'x': 8, 'y': 11}]
 > Door to Warehouse; Heals? False
   * Layers: default
   * L0 Hatch to Warehouse/Door to Data Access
-  * Extra - door_idx: (23,)
+  * Extra - door_idx: [23]
   > Door to Data Room
       Can Kill Gadora
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to Data Access
-  * Extra - door_idx: (24,)
+  * Extra - door_idx: [24]
   > Door to Warehouse
       Trivial
 
@@ -584,14 +594,14 @@ Hint Features - Core-X
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to Varia Core-X Arena
-  * Extra - door_idx: (25,)
+  * Extra - door_idx: [25]
   > Arena
       Trivial
 
 > Door to Twin Caverns West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Varia Core-X Arena
-  * Extra - door_idx: (52,)
+  * Extra - door_idx: [52]
   > Arena
       Trivial
 
@@ -606,7 +616,7 @@ Hint Features - Core-X
   * Pickup 108; Category? Major
   * Extra - area: 6
   * Extra - room: 13
-  * Extra - source: MegaX
+  * Extra - source: MEGA_X
   * Extra - boss_hint_name: Varia Core-X
   * Extra - infant_weight: 3.5
   > Arena
@@ -646,19 +656,20 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 4}, {'x': 5, 'y': 5}, {'x': 6, 'y': 
 > Door to Forbidden Entrance; Heals? False
   * Layers: default
   * L4 Hatch to Forbidden Entrance/Door to X-B.O.X. Arena Access
-  * Extra - door_idx: (26,)
+  * Extra - door_idx: [26]
   > Door to X-B.O.X. Arena
       Trivial
   > Door to Spaceboost Alley
       All of the following:
-          Level 4 Keycard and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Use Power Bombs
+          # Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space
+          Screw Attack and Speed Booster and After Sector 6 Forbidden Entrance Visited and Disabled Entrance Rando
           Any of the following:
               # Ice X logic
               Varia Suit
               # Tank all the damage - 6 X
-              Damage Boosts (Intermediate) and Normal Damage ≥ 414
+              Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
               # Minimum with plasma - 3 X: https://youtu.be/LX5JjYrUV7Y
-              Plasma Beam and Damage Boosts (Advanced) and Cold Damage ≥ 207
+              Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
               # Power Bomb also freezes X: https://youtu.be/XpAzo40ONxw
               Knowledge (Advanced) and Movement (Advanced)
               # Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/b0RHhbza3mk
@@ -667,25 +678,26 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 4}, {'x': 5, 'y': 5}, {'x': 6, 'y': 
 > Door to X-B.O.X. Arena; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Arena Access
-  * Extra - door_idx: (28,)
+  * Extra - door_idx: [28]
   > Door to Forbidden Entrance
       Any of the following:
           # Wall jump to the top: https://youtu.be/D8a57K7PwZ0
           Space Jump or Wall Jump (Beginner)
           # Freeze the Menus: https://youtu.be/_HmPed89A7E
           Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Any Weapon
-          # Shinespark from X-B.O.X. Arena: https://youtu.be/BHmNhsne3hw
-          Level 0 Keycard and Screw Attack and Speed Booster and After Boss X-B.O.X. Defeated and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark from X-B.O.X. Arena: https://youtu.be/BHmNhsne3hw - Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space
+          Level 0 Keycard and Screw Attack and Speed Booster and After Boss X-B.O.X. Defeated and Shinespark Tricks (Beginner) and Disabled Entrance Rando
 
 > Door to Spaceboost Alley; Heals? False
   * Layers: default
   * Open Hatch to Spaceboost Alley/Door to X-B.O.X. Arena Access
-  * Extra - door_idx: (89,)
+  * Extra - door_idx: [89]
   > Door to Forbidden Entrance
       Any of the following:
+          # Can safely not have DLR check.
           Morph Ball
           # Shinespark from Spaceboost Alley: https://youtu.be/r71Z7nR9eRY
-          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
 
 ----------------
 Zozoro Wine Cellar
@@ -704,21 +716,19 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 11}]
 > Other to Warehouse; Heals? False
   * Layers: default
   * Tunnel to Warehouse/Other to Zozoro Wine Cellar
-  * Extra - door_idx: (29,)
+  * Extra - door_idx: [29]
   > Pickup (Hidden Missile Tank)
       All of the following:
           Can Use Any Bombs
           Any of the following:
               # Get up to the ledge
               Have Any Jump Upgrade
-              All of the following:
-                  # Freeze Zozoro: https://youtu.be/wu8pKLvrAMw
-                  # Freeze without Diffusion
-                  Stand On Frozen Enemies (Intermediate) or Can Freeze Enemies With Ice Beam or Can Freeze Enemies With Ice Missiles
-                  # Freeze with Diffusion
-                  Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Diffusion
+              # Freeze Zozoro: https://youtu.be/DI1CTMTanWY
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
               # JBJ: https://youtu.be/oXu_rBiyO6E
               Jump Bombjump (Advanced) and Can Use Bombs
+              # Wall Jump Double Damage Boost: https://youtu.be/DHgzHgNwSso
+              Damage Boosts (Ludicrous) and Jump Extends (Ludicrous) and Wall Jump (Ludicrous) and Normal Damage ≥ 96
 
 ----------------
 X-B.O.X. Arena
@@ -729,28 +739,28 @@ Hint Features - Core-X, Climbable Surface
 > Door to X-B.O.X. Arena Access; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena Access/Door to X-B.O.X. Arena
-  * Extra - door_idx: (30,)
+  * Extra - door_idx: [30]
   > Beside Crumble Blocks
       Trivial
 
 > Door to Bull Bend; Heals? False
   * Layers: default
   * L0 Hatch to Bull Bend/Door to X-B.O.X. Arena
-  * Extra - door_idx: (31,)
+  * Extra - door_idx: [31]
   > Arena
       Trivial
 
 > Door to X-B.O.X. Garage (Lower); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Garage/Door to X-B.O.X. Arena (Lower)
-  * Extra - door_idx: (36,)
+  * Extra - door_idx: [36]
   > Arena
       Trivial
 
 > Door to X-B.O.X. Garage (Upper); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Garage/Door to X-B.O.X. Arena (Upper)
-  * Extra - door_idx: (87,)
+  * Extra - door_idx: [87]
   > Beside Crumble Blocks
       Screw Attack
 
@@ -765,7 +775,7 @@ Hint Features - Core-X, Climbable Surface
   * Pickup 111; Category? Major
   * Extra - area: 0
   * Extra - room: 16
-  * Extra - source: WaveCoreX
+  * Extra - source: WAVE_CORE_X
   * Extra - boss_hint_name: X-B.O.X.
   * Extra - infant_weight: 3.5
   > Event - B.O.X
@@ -840,21 +850,23 @@ Hint Features - Core-X, Climbable Surface
       Trivial
 
 ----------------
-Elevator to Main Deck
+Sector 6 (NOC) Entrance Elevator
 Extra - map_name: Sector 617
 Extra - room_id: [17]
 Extra - minimap_coordinates: [{'x': 0, 'y': 1}, {'x': 0, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
-  * Elevator to Elevator to Sector 6 (NOC)/Elevator to Sector 6 (NOC)
-  * Extra - door_idx: (0,)
+  * Elevator to Sector Hub Lift 6/Elevator to Sector 6 (NOC)
+  * Extra - direction: up
+  * Extra - name: SECTOR_6_TO_MAIN_HUB
+  * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
-  * Extra - door_idx: (35,)
+  * L0 Hatch to Entrance Navigation Room/Door to Sector 6 (NOC) Entrance Elevator
+  * Extra - door_idx: [35]
   > Elevator to Main Deck
       Trivial
 
@@ -889,7 +901,7 @@ Hint Features - Multiple Pickups, 1-way Shutter
 > Door to X-B.O.X. Arena (Lower); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Garage (Lower)
-  * Extra - door_idx: (37,)
+  * Extra - door_idx: [37]
   > Pickup (Missile Tank)
       Wave Beam
   > Door to X-B.O.X. Arena (Upper)
@@ -898,21 +910,24 @@ Hint Features - Multiple Pickups, 1-way Shutter
 > Door to X-B.O.X. Arena (Upper); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Garage (Upper)
-  * Extra - door_idx: (88,)
+  * Extra - door_idx: [88]
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
           Can Bounce in Ball and Can Use Any Bombs
           Any of the following:
               All of the following:
-                  # Vanilla Method - Freeze an Owtch on the Crumble Blocks and use regular Bombs to open the passage
-                  Can Use Bombs
                   Any of the following:
-                      # Freeze the owtch in the right spot: https://youtu.be/4y7ohyL0zkE&t=14s
+                      # Vanilla Method - Freeze an Owtch on the Crumble Blocks and use regular Bombs to open the passage: https://youtu.be/4y7ohyL0zkE&t=47
+                      Can Use Bombs
+                      # Wait for an Owtch to get far enough away and then open the passage with a Power Bomb: https://youtu.be/6ESqvHw7Qyk
+                      Screw Attack and Knowledge (Advanced) and Movement (Beginner) and Can Use Power Bombs and Have Any Jump Upgrade
+                  Any of the following:
+                      # Freeze the Owtch in the right spot
                       Can Freeze Enemies With Diffusion
                       Wave Beam and Can Freeze Enemies With Ice Beam
-              # Jump off the Crumble Blocks morphed (frame perfect) https://youtu.be/4y7ohyL0zkE&t=14
+              # Jump off the Crumble Blocks morphed (frame perfect): https://youtu.be/4y7ohyL0zkE&t=14
               Movement (Advanced) and Can Use Springball
-              # Jump off the Crumble Blocks without Springball by unmorphing first (also frame perfect) https://youtu.be/4y7ohyL0zkE&t=24
+              # Jump off the Crumble Blocks without Springball by unmorphing first (also frame perfect): https://youtu.be/4y7ohyL0zkE&t=24
               Movement (Expert)
               # Spam bombs to hover across: https://youtu.be/4y7ohyL0zkE&t=37
               Movement (Advanced) and Can Use Bombs
@@ -927,14 +942,14 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 6}, {'x': 5, 'y': 7}, {'x': 6, 'y': 
 > Door to X-B.O.X. Arena; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to Bull Bend
-  * Extra - door_idx: (38,)
+  * Extra - door_idx: [38]
   > Door to Neglected Shaft
       Trivial
 
 > Door to Neglected Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Shaft/Door to Bull Bend
-  * Extra - door_idx: (39,)
+  * Extra - door_idx: [39]
   > Door to X-B.O.X. Arena
       Trivial
 
@@ -946,14 +961,14 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 7}, {'x': 4, 'y': 8}, {'x': 4, 'y': 
 > Door to Bull Bend; Heals? False
   * Layers: default
   * L0 Hatch to Bull Bend/Door to Neglected Shaft
-  * Extra - door_idx: (40,)
+  * Extra - door_idx: [40]
   > Door to Neglected Save Room
       Trivial
 
 > Door to Neglected Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Save Room/Door to Neglected Shaft
-  * Extra - door_idx: (41,)
+  * Extra - door_idx: [41]
   > Door to Bull Bend
       Any of the following:
           Space Jump
@@ -963,16 +978,16 @@ Extra - minimap_coordinates: [{'x': 4, 'y': 7}, {'x': 4, 'y': 8}, {'x': 4, 'y': 
           Hi-Jump and Wall Jump (Beginner)
           # Wall Jump with No Upgrades: https://youtu.be/cB_xiz5mbr8?t=20
           Wall Jump (Advanced)
-  > Door to Checkpoint to Restricted Zone
+  > Door to Authorization Checkpoint
       Trivial
 
-> Door to Checkpoint to Restricted Zone; Heals? False
+> Door to Authorization Checkpoint; Heals? False
   * Layers: default
-  * L4 Hatch to Checkpoint to Restricted Zone/Door to Neglected Shaft
+  * L4 Hatch to Authorization Checkpoint/Door to Neglected Shaft
   * There is a possibility to model a full shinespark to the top door without a
 jump extend. However modelling that is not great because it requires
 duplicating all of the requirements. Thus, it isn't modelled.
-  * Extra - door_idx: (42,)
+  * Extra - door_idx: [42]
   > Door to Bull Bend
       # Shinespark from adjacent room: https://youtu.be/D3sd1AoU-q8
       Level 4 Keycard and Speed Booster and Jump Extends (Intermediate) and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -995,7 +1010,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Neglected Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Shaft/Door to Neglected Save Room
-  * Extra - door_idx: (43,)
+  * Extra - door_idx: [43]
   > Save Station
       Trivial
 
@@ -1007,21 +1022,21 @@ Extra - unlocked_save_recharge_station: True
       Trivial
 
 ----------------
-Checkpoint to Restricted Zone
+Authorization Checkpoint
 Extra - map_name: Sector 622
 Extra - room_id: [22]
 Extra - minimap_coordinates: [{'x': 1, 'y': 9}, {'x': 2, 'y': 9}, {'x': 3, 'y': 9}]
 > Door to Neglected Shaft; Heals? False
   * Layers: default
-  * L4 Hatch to Neglected Shaft/Door to Checkpoint to Restricted Zone
-  * Extra - door_idx: (44,)
-  > Other to Back Door to Sector 6 (NOC)
+  * L4 Hatch to Neglected Shaft/Door to Authorization Checkpoint
+  * Extra - door_idx: [44]
+  > Other to Restricted Back Door
       Morph Ball and Wave Beam
 
-> Other to Back Door to Sector 6 (NOC); Heals? False
+> Other to Restricted Back Door; Heals? False
   * Layers: default
-  * Tunnel to Back Door to Sector 6 (NOC)/Other to Checkpoint to Restricted Zone
-  * Extra - door_idx: (45,)
+  * Tunnel to Restricted Back Door/Other to Authorization Checkpoint
+  * Extra - door_idx: [45]
   > Door to Neglected Shaft
       Morph Ball
 
@@ -1034,7 +1049,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Cavern Save Access; Heals? False
   * Layers: default
   * L0 Hatch to Cavern Save Access/Door to Cavern Save Room
-  * Extra - door_idx: (92,)
+  * Extra - door_idx: [92]
   > Save Station
       Trivial
 
@@ -1065,7 +1080,7 @@ Hint Features - Mimic
 > Door to Blue-X Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Blue-X Blockade/Door to Missile Mimic Lodge
-  * Extra - door_idx: (49,)
+  * Extra - door_idx: [49]
   > Pickup (Missile Tank)
       Can Use Any Bombs
 
@@ -1077,14 +1092,14 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}]
 > Door to Data Access; Heals? False
   * Layers: default
   * L2 Hatch to Data Access/Door to Data Room
-  * Extra - door_idx: (53,)
+  * Extra - door_idx: [53]
   > Door to Varia Core-X Arena
       Trivial
 
 > Door to Varia Core-X Arena; Heals? False
   * Layers: default
   * L2 Hatch to Varia Core-X Arena/Door to Data Room
-  * Extra - door_idx: (62,)
+  * Extra - door_idx: [62]
   > Door to Data Access
       Trivial
 
@@ -1107,7 +1122,7 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 8}, {'x': 6, 'y': 9}]
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Catacombs
-  * Extra - door_idx: (19,)
+  * Extra - door_idx: [19]
   > Pickup (Energy Tank)
       Trivial
   > Door to Weapons Testing Grounds
@@ -1116,7 +1131,7 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 8}, {'x': 6, 'y': 9}]
 > Door to Weapons Testing Grounds; Heals? False
   * Layers: default
   * L0 Hatch to Weapons Testing Grounds/Door to Catacombs
-  * Extra - door_idx: (54,)
+  * Extra - door_idx: [54]
   > Door to Clogged Cavern
       Can Use Power Bombs
 
@@ -1128,14 +1143,14 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 9}, {'x': 8, 'y': 9}, {'x': 9, 'y': 
 > Door to Catacombs; Heals? False
   * Layers: default
   * L0 Hatch to Catacombs/Door to Weapons Testing Grounds
-  * Extra - door_idx: (55,)
+  * Extra - door_idx: [55]
   > Door to Warehouse Access
       Trivial
 
 > Door to Warehouse Access; Heals? False
   * Layers: default
   * L0 Hatch to Warehouse Access/Door to Weapons Testing Grounds
-  * Extra - door_idx: (56,)
+  * Extra - door_idx: [56]
   > Door to Catacombs
       Any of the following:
           Space Jump
@@ -1156,14 +1171,14 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 10}, {'x': 8, 'y': 10}]
 > Door to Weapons Testing Grounds; Heals? False
   * Layers: default
   * L0 Hatch to Weapons Testing Grounds/Door to Warehouse Access
-  * Extra - door_idx: (57,)
+  * Extra - door_idx: [57]
   > Door to Warehouse
       Morph Ball
 
 > Door to Warehouse; Heals? False
   * Layers: default
   * L0 Hatch to Warehouse/Door to Warehouse Access
-  * Extra - door_idx: (58,)
+  * Extra - door_idx: [58]
   > Door to Weapons Testing Grounds
       Morph Ball
 
@@ -1176,14 +1191,14 @@ Extra - unlocked_save_recharge_station: True
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
-  * Extra - door_idx: (59,)
+  * Extra - door_idx: [59]
   > Recharge Terminal
       Trivial
 
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
-  * Extra - door_idx: (60,)
+  * Extra - door_idx: [60]
   > Recharge Terminal
       Trivial
 
@@ -1228,14 +1243,14 @@ Hint Features - Multiple Pickups
 > Door to Varia Core-X Arena; Heals? False
   * Layers: default
   * L0 Hatch to Varia Core-X Arena/Door to Twin Caverns West
-  * Extra - door_idx: (63,)
+  * Extra - door_idx: [63]
   > Door to Twin Caverns East (Lower)
       Trivial
 
 > Door to Twin Caverns East (Lower); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Caverns West (Lower)
-  * Extra - door_idx: (64,)
+  * Extra - door_idx: [64]
   > Door to Varia Core-X Arena
       Trivial
   > Below Ledge
@@ -1249,7 +1264,7 @@ Hint Features - Multiple Pickups
 > Door to Twin Caverns East (Upper); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Caverns West (Upper)
-  * Extra - door_idx: (66,)
+  * Extra - door_idx: [66]
   > Pickup (Missile Tank)
       Trivial
   > Ledge
@@ -1291,48 +1306,48 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 8}, {'x': 13, 'y': 9}, {'x': 13, 'y
 > Door to Twin Caverns West (Lower); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Twin Caverns East (Lower)
-  * Extra - door_idx: (65,)
+  * Extra - door_idx: [65]
   > Door to Twin Cavern Save Room
       Trivial
 
 > Door to Twin Caverns West (Upper); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Twin Caverns East (Upper)
-  * Extra - door_idx: (67,)
+  * Extra - door_idx: [67]
   > Door to Maintenance Wing
       Any of the following:
           Varia Suit or Combat (Beginner)
-          Damage Boosts (Beginner) and Cold Damage ≥ 69
+          Damage Boosts (Beginner) and Blue-X Damage ≥ 69
 
 > Door to Maintenance Wing; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Wing/Door to Twin Caverns East
-  * Extra - door_idx: (68,)
+  * Extra - door_idx: [68]
   > Door to Twin Caverns West (Upper)
       Any of the following:
           Varia Suit or Combat (Beginner)
-          Damage Boosts (Beginner) and Cold Damage ≥ 69
+          Damage Boosts (Beginner) and Blue-X Damage ≥ 69
   > Door to Twin Cavern Save Room
       Any of the following:
           Varia Suit
           # Assume average of taking 3 X (due to movement pattern): https://youtu.be/7Y5HMk8jxS0
-          Damage Boosts (Intermediate) and Cold Damage ≥ 207
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 207
           # Pray to RNGesus and don't get hit: https://youtu.be/94GyTFcwIRM
           Combat (Expert)
 
 > Door to Twin Cavern Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Twin Cavern Save Room/Door to Twin Caverns East
-  * Extra - door_idx: (77,)
+  * Extra - door_idx: [77]
   > Door to Twin Caverns West (Lower)
       Trivial
   > Door to Maintenance Wing
       Any of the following:
           Varia Suit
           # Tank all 8 of the X
-          Damage Boosts (Intermediate) and Cold Damage ≥ 552
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 552
           # Adept movement could avoid some: https://youtu.be/U85aWphpi5s
-          Plasma Beam and Wide Beam and Damage Boosts (Expert) and Cold Damage ≥ 276
+          Plasma Beam and Wide Beam and Damage Boosts (Expert) and Blue-X Damage ≥ 276
           # Really adept movement could avoid them all: https://youtu.be/js56iAuSsV8
           Plasma Beam and Wide Beam and Combat (Ludicrous)
 
@@ -1344,14 +1359,14 @@ Extra - minimap_coordinates: [{'x': 14, 'y': 7}, {'x': 14, 'y': 8}]
 > Door to Twin Caverns East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Maintenance Wing
-  * Extra - door_idx: (69,)
+  * Extra - door_idx: [69]
   > Door to Nocturnal Playground
       Trivial
 
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Maintenance Wing
-  * Extra - door_idx: (70,)
+  * Extra - door_idx: [70]
   > Door to Twin Caverns East
       Trivial
 
@@ -1374,7 +1389,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 3}]
 > Other to Geron's Crossing; Heals? False
   * Layers: default
   * Tunnel to Geron's Crossing/Other to Vault
-  * Extra - door_idx: (76,)
+  * Extra - door_idx: [76]
   > Pickup (Energy Tank)
       Can Use Any Bombs
 
@@ -1387,7 +1402,7 @@ Extra - unlocked_save_recharge_station: True
 > Door to Twin Caverns East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Cavern Save Room
-  * Extra - door_idx: (78,)
+  * Extra - door_idx: [78]
   > Save Station
       Trivial
 
@@ -1399,40 +1414,42 @@ Extra - unlocked_save_recharge_station: True
       Trivial
 
 ----------------
-Glass Tube to Sector 4 (AQA)
+Sector 6 (NOC) Westbound Glass Tube
 Extra - map_name: Sector 636
 Extra - room_id: [36]
 Extra - minimap_coordinates: [{'x': 2, 'y': 3}]
 > Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Lobby/Door to Glass Tube to Sector 4 (AQA)
-  * Extra - door_idx: (80,)
+  * L0 Hatch to Entrance Lobby/Door to Sector 6 (NOC) Westbound Glass Tube
+  * Extra - door_idx: [80]
   > Area Transition to Sector 4 (AQA)
       Trivial
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
-  * Open Passage to Glass Tube to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
-  * Extra - door_idx: (81,)
+  * Open Passage to Sector 4 (AQA) Eastbound Glass Tube/Area Transition to Sector 6 (NOC)
+  * Extra - direction: left
+  * Extra - door_idx: [81]
   > Door to Entrance Lobby
       Trivial
 
 ----------------
-Glass Tube to Sector 5 (ARC)
+Sector 6 (NOC) Eastbound Glass Tube
 Extra - map_name: Sector 637
 Extra - room_id: [37]
 Extra - minimap_coordinates: [{'x': 12, 'y': 2}]
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Nocturnal Shaft/Door to Glass Tube to Sector 5 (ARC)
-  * Extra - door_idx: (83,)
+  * L0 Hatch to Nocturnal Shaft/Door to Sector 6 (NOC) Eastbound Glass Tube
+  * Extra - door_idx: [83]
   > Area Transition to Sector 5 (ARC)
       Trivial
 
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
-  * Open Passage to Glass Tube to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
-  * Extra - door_idx: (84,)
+  * Open Passage to Sector 5 (ARC) Westbound Glass Tube/Area Transition to Sector 6 (NOC)
+  * Extra - direction: right
+  * Extra - door_idx: [84]
   > Door to Nocturnal Shaft
       Trivial
 
@@ -1456,7 +1473,7 @@ Hint Features - Pillar
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Pillar Highway
-  * Extra - door_idx: (86,)
+  * Extra - door_idx: [86]
   > Pickup (Energy Tank)
       All of the following:
           Speed Booster
@@ -1474,7 +1491,19 @@ Hint Features - Pillar
 Spaceboost Alley
 Extra - map_name: Sector 639
 Extra - room_id: [39]
-Extra - minimap_coordinates: [{'x': 1, 'y': 4}, {'x': 1, 'y': 5}, {'x': 1, 'y': 6}, {'x': 2, 'y': 4}, {'x': 2, 'y': 5}, {'x': 2, 'y': 6}, {'x': 3, 'y': 4}, {'x': 3, 'y': 5}, {'x': 3, 'y': 6}, {'x': 4, 'y': 4}, {'x': 4, 'y': 5}, {'x': 4, 'y': 6}]
+Extra - minimap_coordinates:
+[{'x': 1, 'y': 4},
+ {'x': 1, 'y': 5},
+ {'x': 1, 'y': 6},
+ {'x': 2, 'y': 4},
+ {'x': 2, 'y': 5},
+ {'x': 2, 'y': 6},
+ {'x': 3, 'y': 4},
+ {'x': 3, 'y': 5},
+ {'x': 3, 'y': 6},
+ {'x': 4, 'y': 4},
+ {'x': 4, 'y': 5},
+ {'x': 4, 'y': 6}]
 Hint Features - Multiple Pickups
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -1501,7 +1530,7 @@ Hint Features - Multiple Pickups
 > Door to X-B.O.X. Arena Access; Heals? False
   * Layers: default
   * Open Hatch to X-B.O.X. Arena Access/Door to Spaceboost Alley
-  * Extra - door_idx: (90,)
+  * Extra - door_idx: [90]
   > Bottom of Room
       Trivial
 
@@ -1518,26 +1547,26 @@ Hint Features - Multiple Pickups
               # No High Jump: https://youtu.be/lcOsHzfPVDI
               Space Jump and Movement (Intermediate)
   > Door to X-B.O.X. Arena Access
-      Any of the following:
-          Speed Booster or Have Any Jump Upgrade
-          Wall Jump (Intermediate) and Can Single Walljump
+      # For Hijump/WJ, jump ontop of the building on the left, through the shot blocks and to the top
+      Speed Booster or Wall Jump (Intermediate) or Have Any Jump Upgrade
 
 ----------------
 Cavern Save Access
 Extra - map_name: Sector 640
 Extra - room_id: [40]
 Extra - minimap_coordinates: [{'x': 9, 'y': 8}, {'x': 10, 'y': 8}]
+Extra - unlocked_save_recharge_station: True
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Cavern Save Access
-  * Extra - door_idx: (47,)
+  * Extra - door_idx: [47]
   > Door to Cavern Save Room
       Trivial
 
 > Door to Cavern Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Cavern Save Room/Door to Cavern Save Access
-  * Extra - door_idx: (91,)
+  * Extra - door_idx: [91]
   > Door to Clogged Cavern
       Trivial
 

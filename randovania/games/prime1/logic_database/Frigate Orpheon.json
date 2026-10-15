@@ -51,37 +51,21 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Ship Save": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": true
                             }
                         },
                         "Teleporter to Tallon Overworld": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -185,6 +169,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -275,20 +260,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Deck Alpha Access Hall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Scan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -352,6 +329,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -470,6 +448,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -580,6 +559,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -698,6 +678,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -749,20 +730,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Dock to Deck Alpha Mech Shaft": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Scan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -818,6 +791,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -888,12 +862,22 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Power Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Ice Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -953,12 +937,22 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Power Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Ice Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -988,6 +982,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1044,8 +1039,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Use Grapple Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -1154,6 +1154,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1212,20 +1213,12 @@
                             }
                         },
                         "Map Station": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1268,20 +1261,12 @@
                             }
                         },
                         "Map Station": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1302,37 +1287,21 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Deck Alpha Umbilical Hall": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Connection Elevator to Deck Beta": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1357,6 +1326,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1467,6 +1437,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1518,20 +1489,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Deck Beta Conduit Hall": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Scan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1595,6 +1558,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1705,6 +1669,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1756,20 +1721,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Connection Elevator to Deck Beta": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1805,20 +1762,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Biotech Research Area 1": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1843,6 +1792,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1953,6 +1903,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2004,37 +1955,21 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Deck Beta Conduit Hall": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": true
                             }
                         },
                         "Door to Subventilation Shaft Section A": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2077,20 +2012,12 @@
                             }
                         },
                         "Door to Subventilation Shaft Section A": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2266,20 +2193,12 @@
                             }
                         },
                         "Door to Subventilation Shaft Section A": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2322,20 +2241,12 @@
                             }
                         },
                         "Door to Deck Beta Conduit Hall": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event33",
+                                "amount": 1,
+                                "negate": true
                             }
                         }
                     }
@@ -2360,6 +2271,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2470,6 +2382,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2588,6 +2501,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2670,20 +2584,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Biotech Research Area 1": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Scan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2708,6 +2614,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2818,6 +2725,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2871,28 +2779,39 @@
                         "Door to Main Ventilation Shaft Section C": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Kill Turrets",
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Power Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Wave Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Plasma Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Plasma",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "or",
@@ -2939,6 +2858,10 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Fight (Trivial)"
                                     }
                                 ]
                             }
@@ -2996,6 +2919,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3086,20 +3010,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Deck Beta Transit Hall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Scan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3124,6 +3040,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3234,6 +3151,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3344,6 +3262,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3454,6 +3373,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3572,6 +3492,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3629,22 +3550,13 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Shoot Any Beam"
+                                        "data": "Fight (Trivial)"
                                     },
                                     {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -3771,6 +3683,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Event33",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Deck Gamma Monitor Hall": {
                             "type": "and",
@@ -3801,6 +3714,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -4000,6 +3914,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -4168,6 +4083,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }

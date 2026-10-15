@@ -305,6 +305,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Ship": {
                             "type": "and",
@@ -419,6 +420,10 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Visor"
                                                 }
                                             ]
                                         }
@@ -606,6 +611,10 @@
                                                                                 "amount": 1,
                                                                                 "negate": true
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Have Any Visor"
                                                                         }
                                                                     ]
                                                                 }
@@ -805,6 +814,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -943,6 +953,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1081,6 +1092,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1127,7 +1139,7 @@
                             -89.50709
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tallon Overworld",
@@ -1142,6 +1154,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Space Jump Boots)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Spawn Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1176,6 +1195,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Landing Site": {
                             "type": "or",
@@ -1220,8 +1240,53 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Boost Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallBoost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3.566060946308639,
+                        "y": -36.49039892952004,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Landing Site": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1285,20 +1350,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Frigate Crash Site": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1344,20 +1401,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Landing Site": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1382,6 +1431,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -1779,16 +1829,8 @@
                                             "comment": "Way to top of half-pipe",
                                             "items": [
                                                 {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Boost Ball"
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Use Boost Ball"
                                                 },
                                                 {
                                                     "type": "and",
@@ -1839,6 +1881,10 @@
                                                                                             "amount": 2,
                                                                                             "negate": false
                                                                                         }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Have Any Visor"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -2038,6 +2084,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2176,6 +2223,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -2242,16 +2290,30 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Use Grapple Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
@@ -2259,136 +2321,111 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "SpaceJump",
+                                                                    "name": "MorphBall",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "MorphBall",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "items",
+                                                                                "name": "Scan",
+                                                                                "amount": 1,
+                                                                                "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Scan",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Standable",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Dash",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "tricks",
+                                                                                "name": "Standable",
+                                                                                "amount": 2,
+                                                                                "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "GravitySuit",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Standable",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "tricks",
+                                                                                "name": "Dash",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "GravitySuit",
+                                                                                "amount": 1,
+                                                                                "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/Wl0L20SepgM",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "SJump",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Standable",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "LJump",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "UnderwaterMovement",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "tricks",
+                                                                                "name": "Standable",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/Wl0L20SepgM",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Standable",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "LJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnderwaterMovement",
+                                                                                "amount": 1,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -2614,24 +2651,6 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "misc",
-                                                        "name": "NoGravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
                                                         "type": "tricks",
                                                         "name": "UnderwaterMovement",
                                                         "amount": 3,
@@ -2647,8 +2666,13 @@
                                             "comment": "https://youtu.be/X1rAc0AROx8?t=8",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Grapple Beam"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -3013,6 +3037,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Waterfall Cavern": {
                             "type": "and",
@@ -3159,6 +3184,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3297,6 +3323,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3435,6 +3462,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3573,6 +3601,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -3634,20 +3663,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Expansion)": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3693,20 +3714,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Expansion)": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3737,39 +3750,24 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Frigate Crash Site": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Transport Tunnel C": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3905,6 +3903,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -4022,12 +4021,21 @@
                             }
                         },
                         "Pickup (Missile Expansion)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -4035,71 +4043,28 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SpaceJump",
+                                                        "name": "Grapple",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/x2zjlvSy0Og",
                                                         "items": [
                                                             {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dash",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
                                                                 "type": "template",
-                                                                "data": "Use Grapple Beam"
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "https://youtu.be/x2zjlvSy0Og",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Dash",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "https://youtu.be/i2J6z6wrLGw",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "LJump",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SJump",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Standable",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "data": "Have Any Visor"
                                                             }
                                                         ]
                                                     }
@@ -4107,35 +4072,62 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "https://youtu.be/i2J6z6wrLGw",
                                                         "items": [
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "X-Ray",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "InvisibleObjects",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "LJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 2,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "X-Ray",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "InvisibleObjects",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4354,12 +4346,24 @@
                                             "comment": "https://youtu.be/UVXjHNV3dWU",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Dash",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dash",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Have Any Visor"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4396,6 +4400,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Transport Tunnel B": {
                             "type": "and",
@@ -4462,12 +4467,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dash",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Dash",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Have Any Visor"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -4477,12 +4494,24 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Dash",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dash",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Visor"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4512,20 +4541,12 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Root Tunnel": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Arbor Chamber": {
@@ -4810,13 +4831,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Fight (Intermediate)"
                                                 }
                                             ]
                                         }
@@ -4827,12 +4843,24 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 400,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 400,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Fight (Trivial)"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -4841,13 +4869,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Fight (Beginner)"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4867,13 +4890,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Fight (Intermediate)"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4893,13 +4911,8 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Fight (Advanced)"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4914,20 +4927,11 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Fight (Expert)"
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
                                     }
                                 ]
                             }
@@ -4969,6 +4973,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Temple Lobby": {
                             "type": "and",
@@ -5000,6 +5005,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event2",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Temple Lobby": {
                             "type": "and",
@@ -5240,6 +5246,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -5301,20 +5308,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Transport to Chozo Ruins East": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5360,20 +5359,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Overgrown Cavern": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5398,6 +5389,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -5542,6 +5534,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Transport to Magmoor Caverns East": {
                             "type": "and",
@@ -5603,7 +5596,7 @@
                             0.0
                         ]
                     },
-                    "valid_starting_location": true,
+                    "valid_starting_location": false,
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Tallon Overworld",
@@ -5618,6 +5611,13 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Expansion)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Spawn Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5652,6 +5652,31 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Door to Root Cave": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 23.35961199500005,
+                        "y": 0.13294505201068443,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Root Cave": {
                             "type": "and",
@@ -5756,8 +5781,13 @@
                                         "data": "Can Use Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -5846,8 +5876,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -5901,6 +5936,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event36",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Main Ventilation Shaft Section C": {
                             "type": "and",
@@ -5931,6 +5967,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -6064,6 +6101,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -6197,6 +6235,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -6335,6 +6374,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -6605,8 +6645,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -6658,20 +6703,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SJump",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "SJump",
+                                                        "amount": 3,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -6703,6 +6740,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event37",
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Bottom": {
                             "type": "and",
@@ -6733,6 +6771,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -6862,20 +6901,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Cargo Freight Lift to Deck Gamma": {
-                            "type": "or",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event38",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event38",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Savestation": {
@@ -6891,8 +6922,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -6997,6 +7033,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event38",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Reactor Core": {
                             "type": "and",
@@ -7027,6 +7064,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -7140,8 +7178,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -7234,15 +7277,6 @@
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "or",
                                                                 "data": {
@@ -7373,15 +7407,6 @@
                                                                                                 }
                                                                                             ]
                                                                                         }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "misc",
-                                                                                            "name": "NoGravity",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
@@ -7494,6 +7519,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Reactor Access": {
                             "type": "and",
@@ -7525,6 +7551,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event40",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Reactor Access": {
                             "type": "and",
@@ -7655,6 +7682,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -7812,6 +7840,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -7878,8 +7907,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -7996,6 +8030,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Bottom": {
                             "type": "and",
@@ -8027,6 +8062,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event41",
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Bottom": {
                             "type": "and",
@@ -8154,74 +8190,66 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SpaceJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Standable",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SJump",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Standable",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "UnderwaterMovement",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SJump",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnderwaterMovement",
+                                                                    "amount": 3,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -8234,33 +8262,17 @@
                             }
                         },
                         "Door to Deck Beta Security Hall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event41",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event41",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Pickup (Missile Expansion)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Super Missile"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Shoot Super Missile"
                         }
                     }
                 }
@@ -8423,6 +8435,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -8812,20 +8825,12 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "resource",
                                                                             "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "UnderwaterMovement",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
+                                                                                "type": "tricks",
+                                                                                "name": "UnderwaterMovement",
+                                                                                "amount": 1,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -8846,8 +8851,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Wave Beam"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -8901,6 +8911,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event42",
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -8931,6 +8942,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -9092,6 +9104,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -9416,6 +9429,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -9741,24 +9755,6 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "NoGravity",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "tricks",
                                                                     "name": "UnderwaterMovement",
                                                                     "amount": 1,
@@ -9802,6 +9798,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Connection Elevator to Deck Beta": {
                             "type": "and",
@@ -10385,6 +10382,10 @@
                                                                                 "amount": 4,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Have Any Visor"
                                                                         }
                                                                     ]
                                                                 }
@@ -10779,6 +10780,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "Event1",
+                    "grants_on_collect": [],
                     "connections": {
                         "Next to Spinner": {
                             "type": "and",
@@ -10865,16 +10867,8 @@
                             }
                         },
                         "Event - Open gate": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Boost Ball"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Use Boost Ball"
                         }
                     }
                 },
@@ -10898,6 +10892,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -10993,6 +10988,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Great Tree Hall": {
                             "type": "and",
@@ -11139,6 +11135,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -11393,6 +11390,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Great Tree Hall": {
                             "type": "and",
@@ -11587,20 +11585,12 @@
                             }
                         },
                         "Morph Ball Door to Life Grove": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Pickup (Missile Expansion)": {
@@ -11791,6 +11781,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -11924,6 +11915,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }
@@ -11985,20 +11977,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Front of PB Wall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -12029,6 +12013,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Front of PB Wall": {
                             "type": "and",
@@ -12064,6 +12049,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Behind PB Wall": {
                             "type": "and",
@@ -12102,7 +12088,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Shoot Power Beam"
+                                        "data": "Kill Chozo Ghosts"
                                     },
                                     {
                                         "type": "or",
@@ -12155,12 +12141,24 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Dash",
-                                                                                "amount": 4,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Dash",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Have Any Visor"
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -12516,16 +12514,8 @@
                             }
                         },
                         "Front of PB Wall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Use Power Bombs"
                         }
                     }
                 },
@@ -12602,16 +12592,8 @@
                             }
                         },
                         "Behind PB Wall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Use Power Bombs"
                         }
                     }
                 }
@@ -12746,6 +12728,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {}
                 }
             }

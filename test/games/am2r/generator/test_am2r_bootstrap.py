@@ -90,15 +90,16 @@ def test_assign_pool_results_prefer_anywhere(am2r_game_description, am2r_configu
 )
 def test_configurable_damage_reduction(am2r_game_description, am2r_configuration, expected, suits):
     # Setup
+    db = am2r_game_description.resource_database
     current_resources = ResourceCollection.from_dict(
-        am2r_game_description,
-        {am2r_game_description.resource_database.get_item_by_display_name(suit): 1 for suit in suits},
+        db,
+        {db.get_item_by_display_name(suit): 1 for suit in suits},
     )
     bootstrap = RandovaniaGame.AM2R.generator.bootstrap
     assert isinstance(bootstrap, AM2RBootstrap)
 
     # Run
-    result = bootstrap._damage_reduction(am2r_configuration, am2r_game_description.resource_database, current_resources)
+    result = bootstrap._damage_reduction(am2r_configuration, db, current_resources)
 
     # Assert
     assert result == expected

@@ -92,8 +92,8 @@ def test_generate_logic(
             call(
                 generator_params=generator_params,
                 status_update=ANY,
-                validate_after_generation=args.validate,
-                timeout=None,
+                resolve_after_generation=args.validate,
+                resolver_timeout=None,
                 attempts=attempts,
             )
         ]

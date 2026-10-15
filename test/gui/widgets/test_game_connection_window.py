@@ -13,11 +13,12 @@ from randovania.game_connection.builder.debug_connector_builder import DebugConn
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.dread_connector_builder import DreadConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
+from randovania.game_connection.builder.yoku_connector_builder import YokuConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.game_connection_window import GameConnectionWindow
-from randovania.interface_common.players_configuration import INVALID_UUID
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.network_common import error
 
 if TYPE_CHECKING:
@@ -142,6 +143,19 @@ async def test_add_connector_builder_dread(window: GameConnectionWindow, abort, 
         assert window.game_connection.add_connection_builder.call_args[0][0].ip == "my_ip"
 
 
+async def test_add_connector_builder_yoku(window: GameConnectionWindow):
+    # Setup
+    window.game_connection.add_connection_builder = MagicMock()
+
+    # Run
+    await window._add_connector_builder(ConnectorBuilderChoice.YOKU)
+
+    # Assert
+    window.game_connection.add_connection_builder.assert_called_once_with(ANY)
+    assert isinstance(window.game_connection.add_connection_builder.call_args[0][0], YokuConnectorBuilder)
+    assert window.game_connection.add_connection_builder.call_args[0][0].ip == "127.0.0.1"
+
+
 @pytest.mark.parametrize("system", ["darwin", "win32"])
 def test_setup_builder_ui_all_builders(skip_qtbot, system, mocker: MockerFixture, is_dev_version, is_frozen):
     # Setup
@@ -189,6 +203,7 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
         builder_a := MagicMock(spec=ConnectorBuilder),
         builder_b := MagicMock(spec=ConnectorBuilder),
         builder_c := MagicMock(spec=ConnectorBuilder),
+        builder_d := MagicMock(spec=ConnectorBuilder),
     ]
     builder_a.pretty_text = "ConnectorBuilder A"
     builder_a.get_status_message.return_value = None
@@ -196,6 +211,9 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
     builder_b.get_status_message.return_value = "Connecting!"
     builder_c.pretty_text = "ConnectorBuilder C"
     builder_c.get_status_message.return_value = None
+    builder_d.pretty_text = "ConnectorBuilder D"
+    builder_d.get_status_message.return_value = None
+    builder_d.enabled = False
 
     connector_a = MagicMock()
     connector_a.description.return_value = "Game A"
@@ -214,12 +232,14 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
     assert window.ui_for_builder[builder_b].description.text() == "ConnectorBuilder B"
     assert window.ui_for_builder[builder_a].status.text() == "Not Connected."
     assert window.ui_for_builder[builder_b].status.text() == "Not Connected. Connecting!"
+    assert window.ui_for_builder[builder_d].status.text() == "Disabled."
 
     game_connection.get_connector_for_builder = MagicMock(
         side_effect=lambda builder: {
             builder_a: connector_a,
             builder_b: connector_b,
             builder_c: connector_c,
+            builder_d: None,
         }[builder]
     )
 
@@ -240,11 +260,11 @@ def test_update_builder_ui(skip_qtbot, mocker: MockerFixture):
         }[uid]
     )
     window_manager.multiworld_client.get_world_sync_error = MagicMock(
-        side_effect=lambda uid: (
+        side_effect=(
             {
                 connector_c.layout_uuid: error.ServerError(),
             }
-        ).get(uid)
+        ).get
     )
 
     window.update_builder_ui()

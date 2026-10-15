@@ -16,6 +16,7 @@ from randovania.games.samus_returns.exporter.joke_hints import MSR_JOKE_HINTS
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration, MSRConfiguration
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import random_lib
@@ -342,7 +343,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         if hint_config.specific_pickup_hints["artifacts"] != SpecificPickupHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 exporter.namer,
                 hint_config.specific_pickup_hints["artifacts"] == SpecificPickupHintMode.HIDE_AREA,
                 artifacts,
@@ -374,7 +375,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = [rng.choice(MSR_JOKE_HINTS + [dud_hint])]
+                shuffled_hints = [rng.choice([*MSR_JOKE_HINTS, dud_hint])]
             hints.append(
                 {"accesspoint_actor": {"scenario": scenario, "actor": actor}, "text": "\n".join(shuffled_hints) + "\n"}
             )
@@ -382,7 +383,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return hints
 
     def _create_final_boss_hint(self) -> str:
-        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        hint_namer = MSRHintNamer(self.description.all_patches, self.worlds_config)
         hint_config = self.configuration.hints
 
         if self.configuration.final_boss == FinalBossConfiguration.RIDLEY:
@@ -404,7 +405,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         if hint_config.specific_pickup_hints["final_boss_item"] != SpecificPickupHintMode.DISABLED:
             temp_final_boss_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
-                self.players_config,
+                self.worlds_config,
                 hint_namer,
                 hint_config.specific_pickup_hints["final_boss_item"] == SpecificPickupHintMode.HIDE_AREA,
                 final_boss_resource,
@@ -513,8 +514,8 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         return credits_spoiler.generic_string_credits(
             self.configuration.standard_pickup_configuration,
             self.description.all_patches,
-            self.players_config,
-            MSRHintNamer(self.description.all_patches, self.players_config),
+            self.worlds_config,
+            MSRHintNamer(self.description.all_patches, self.worlds_config),
         )
 
     def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
@@ -576,16 +577,15 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             "music": c.music_volume / 100,
             "environment_sfx": c.ambience_volume / 100,
         }
+        cosmetic_patches["use_fusion_models"] = c.use_fusion_models
 
         return cosmetic_patches
 
     def _build_elevator_dict(self) -> dict[str, dict[str, dict[str, str]]]:
         # generate a 2D dictionary of source (scenario, actor) => target (scenario, actor)
         elevator_dict: dict = {}
-        for node, connection in self.patches.all_dock_connections():
-            if not isinstance(node, DockNode):
-                continue
-            if node.dock_type not in self.game.dock_weakness_database.all_teleporter_dock_types:
+        for node, connection in self.patches.all_dock_connections(self.game):
+            if node.dock_type not in self.game.dock_type_database.all_teleporter_dock_types:
                 continue
 
             scenario = self._level_name_for(node)
@@ -599,7 +599,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
     def _add_custom_doors(self) -> list[dict]:
         custom_doors: list = []
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             assert node.location is not None
             if not isinstance(node, DockNode):
                 continue
@@ -644,7 +644,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         result: list = []
         used_actors: dict[str, str] = {}
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses(self.game):
             if "type" not in weakness.extra:
                 raise ValueError(
                     f"Unable to change door {node.full_name()} into {weakness.name}: incompatible door weakness"
@@ -721,6 +721,9 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             },
             "game_patches": {
                 "charge_door_buff": self.configuration.charge_door_buff,
+                "charge_door_burst_buff": self.patches.game_specific.get(
+                    "charge_door_burst_buff", self.configuration.charge_door_buff
+                ),
                 "beam_door_buff": self.configuration.beam_door_buff,
                 "beam_burst_buff": self.configuration.beam_burst_buff,
                 "nerf_super_missiles": self.configuration.nerf_super_missiles,
@@ -729,13 +732,14 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "patch_surface_crumbles": self.configuration.surface_crumbles,
                 "patch_area1_crumbles": self.configuration.area1_crumbles,
                 "reverse_area8": self.configuration.reverse_area8,
+                "skip_opening": self.configuration.skip_opening,
             },
             "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if not randovania_meta["in_race_setting"] else {},
             "hints": self._encode_hints(self.rng),
             "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(
-                self.description.get_seed_for_world(self.players_config.player_index)
+                self.description.get_seed_for_world(self.worlds_config.world_index)
             ),
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),
@@ -745,8 +749,9 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
                 "lava": self.configuration.constant_lava_damage,
             },
             "objective": self._objective(self.configuration),
-            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "layout_uuid": str(self.world_uuid) if self.worlds_config.is_multiworld else str(INVALID_UUID),
             "enable_remote_lua": True,
+            "reveal_map_on_start": self.cosmetic_patches.reveal_map,
         }
 
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime1.gui.generated.preset_teleporters_prime1_ui import (
@@ -18,9 +18,6 @@ from randovania.layout.lib.teleporters import (
 )
 
 if TYPE_CHECKING:
-    from PySide6 import QtWidgets
-
-    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
@@ -29,7 +26,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersPrime1(PresetTeleporterTab[PrimeConfiguration], Ui_PresetTeleportersPrime1, NodeListHelper):
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All elevators are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were. "
@@ -72,12 +69,8 @@ class PresetTeleportersPrime1(PresetTeleporterTab[PrimeConfiguration], Ui_Preset
         region_list = self.game_description.region_list
 
         locations = TeleporterList.nodes_list(self.game_enum)
-        node_identifiers: dict[NodeIdentifier, Area] = {
-            loc: region_list.area_by_area_location(loc.area_identifier) for loc in locations
-        }
-        checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
-            loc: self._create_check_for_source_teleporters(loc) for loc in locations
-        }
+        node_identifiers = {loc: region_list.area_by_area_location(loc.area_identifier) for loc in locations}
+        checks = {loc: self._create_check_for_source_teleporters(loc) for loc in locations}
         self._teleporters_source_for_location = copy.copy(checks)
         self._teleporters_source_destination: dict[NodeIdentifier, NodeIdentifier | None] = {}
 

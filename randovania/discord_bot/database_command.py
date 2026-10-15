@@ -82,54 +82,55 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
     if not image_path.exists():
         return None
 
-    with PIL.Image.open(image_path) as im:
-        assert isinstance(im, PIL.Image.Image)
+    with PIL.Image.open(image_path) as raw_im:
+        assert isinstance(raw_im, PIL.Image.Image)
+        im = raw_im.convert("RGBA")
 
-        def location_to_pos(loc: NodeLocation):
-            return loc.x, im.height - loc.y
+    def location_to_pos(loc: NodeLocation):
+        return loc.x, im.height - loc.y
 
-        draw = ImageDraw.Draw(im)
+    draw = ImageDraw.Draw(im)
 
-        def draw_connections_from(source_node: Node):
-            for target_node, requirement in area.connections[source_node].items():
-                if target_node.is_derived_node:
-                    continue
-
-                source = location_to_pos(source_node.location)
-                target = location_to_pos(target_node.location)
-
-                if sum((a - b) ** 2 for a, b in zip(source, target)) < 4:
-                    continue
-
-                draw.line(source + target, width=2, fill=(255, 255, 255, 255))
-                draw.line(source + target, width=1, fill=(0, 0, 0, 255))
-
-        for node in area.nodes:
-            if not node.is_derived_node:
-                draw_connections_from(node)
-
-        for node in area.nodes:
-            if node.location is None or node.is_derived_node:
+    def draw_connections_from(source_node: Node):
+        for target_node, requirement in area.connections[source_node].items():
+            if target_node.is_derived_node:
                 continue
 
-            p = location_to_pos(node.location)
-            draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(255, 255, 255, 255), width=5)
-            draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(0, 0, 0, 255), width=4)
-            draw.text(
-                (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
-                node.name,
-                stroke_width=2,
-                stroke_fill=(255, 255, 255, 255),
-            )
-            draw.text(
-                (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
-                node.name,
-                stroke_width=1,
-                stroke_fill=(0, 0, 0, 255),
-            )
+            source = location_to_pos(source_node.location)
+            target = location_to_pos(target_node.location)
 
-        result = io.BytesIO()
-        im.save(result, "PNG")
+            if sum((a - b) ** 2 for a, b in zip(source, target)) < 4:
+                continue
+
+            draw.line(source + target, width=2, fill=(255, 255, 255, 255))
+            draw.line(source + target, width=1, fill=(0, 0, 0, 255))
+
+    for node in area.nodes:
+        if not node.is_derived_node:
+            draw_connections_from(node)
+
+    for node in area.nodes:
+        if node.location is None or node.is_derived_node:
+            continue
+
+        p = location_to_pos(node.location)
+        draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(255, 255, 255, 255), width=5)
+        draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(0, 0, 0, 255), width=4)
+        draw.text(
+            (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
+            node.name,
+            stroke_width=2,
+            stroke_fill=(255, 255, 255, 255),
+        )
+        draw.text(
+            (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
+            node.name,
+            stroke_width=1,
+            stroke_fill=(0, 0, 0, 255),
+        )
+
+    result = io.BytesIO()
+    im.save(result, "PNG")
 
     result.seek(0)
     return result
@@ -182,7 +183,7 @@ _GameChoices = discord.Option(
     description="The game's database to check.",
     choices=[
         discord.OptionChoice(name=game.long_name, value=game.value)
-        for game in enum_lib.iterate_enum(RandovaniaGame)
+        for game in RandovaniaGame.sorted_all_games()
         if game.data.development_state.can_view(from_bot=True)
     ],
 )
@@ -226,7 +227,7 @@ class SelectNodesItem(discord.ui.Select):
             if self.area.area.default_node == node.name:
                 name += "; Default Node"
 
-            body = pretty_print.pretty_print_node_type(node, db.region_list, db.resource_database) + "\n"
+            body = pretty_print.pretty_print_node_type(node, db, db.get_resource_database_view()) + "\n"
 
             node_bodies = []
 
@@ -235,7 +236,9 @@ class SelectNodesItem(discord.ui.Select):
                     continue
 
                 extra_lines = []
-                for level, text in pretty_print.pretty_format_requirement(requirement.simplify(), db.resource_database):
+                for level, text in pretty_print.pretty_format_requirement(
+                    requirement.simplify(), db.get_resource_database_view()
+                ):
                     extra_lines.append("{}{}".format("  " * level, text))
 
                 inner = "\n".join(extra_lines)
@@ -328,11 +331,15 @@ class SelectAreaItem(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         r = interaction.response
         assert isinstance(r, discord.InteractionResponse)
+        logging.info(f"Entered SelectAreaItem callback for {self.game} with split region {self.split_region}.")
         option_selected = self.values[0]
 
         valid_items = [area for area in self.split_region.areas if area.command_id == option_selected]
         if not valid_items:
             await r.defer()
+            logging.info(
+                f"Responding with invalid selected option '{option_selected}' for {self.game}'s SelectAreaItem."
+            )
             return await interaction.edit_original_response(
                 view=None,
                 embeds=[],
@@ -380,11 +387,15 @@ class SelectSplitRegionItem(discord.ui.Select):
     async def callback(self, interaction: discord.Interaction):
         r = interaction.response
         assert isinstance(r, discord.InteractionResponse)
+        logging.info(f"Entered SelectSplitRegionItem callback for {self.game}.")
 
         option_selected = self.values[0]
 
         valid_items = [it for it in self.split_regions if it.command_id == option_selected]
         if not valid_items:
+            logging.info(
+                f"Responding with invalid selected option '{option_selected}' for {self.game}'s SelectSplitRegionItem."
+            )
             return await r.send_message(
                 view=None,
                 embeds=[],

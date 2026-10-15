@@ -116,7 +116,7 @@ class MercuryConnector(RemoteConnector):
             self.logger.error("Unknown response: %s (got %s)", json_string, e)
             return
 
-        items = [r for r in self.game.resource_database.item if "item_id" in r.extra]
+        items = [r for r in self.game.get_resource_database_view().get_all_items() if "item_id" in r.extra]
 
         inventory = Inventory(
             {item: InventoryItem(quantity, quantity) for item, quantity in zip(items, inventory_ints)}
@@ -170,7 +170,9 @@ class MercuryConnector(RemoteConnector):
         raise NotImplementedError
 
     async def display_arbitrary_message(self, message: str) -> None:
-        raise NotImplementedError
+        escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
+        execute_string = f"Game.AddSF(0, 'Scenario.QueueAsyncPopup', 'si', '{escaped_message}', 10.0)"
+        await self.executor.run_lua_code(execute_string)
 
     def format_received_item(self, item_name: str, player_name: str) -> str:
         generic = "Received {item_name} from {provider_name}."
@@ -187,7 +189,7 @@ class MercuryConnector(RemoteConnector):
         pickup: PickupEntry,
         inventory: Inventory,
     ) -> tuple[str, list[list[dict]]]:
-        inventory_resources = view.create_resource_collection()
+        inventory_resources = view.get_resource_database_view().create_resource_collection()
         inventory_resources.add_resource_gain(inventory.as_resource_gain())
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:

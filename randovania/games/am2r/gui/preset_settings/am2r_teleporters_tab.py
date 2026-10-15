@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from randovania.games.am2r.gui.generated.preset_teleporters_am2r_ui import Ui_PresetTeleportersAM2R
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
@@ -16,8 +16,6 @@ from randovania.layout.lib.teleporters import (
 )
 
 if TYPE_CHECKING:
-    from PySide6 import QtWidgets
-
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
@@ -27,7 +25,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeListHelper):
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All transport pipes are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
             "After taking a transport pipe, the transport pipe in the room you are in"
@@ -69,9 +67,7 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         if not am2r_config.nest_pipes:
             locations = [loc for loc in locations if region_list.does_node_identifier_exist(loc)]
 
-        checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
-            loc: self._create_check_for_source_teleporters(loc) for loc in locations
-        }
+        checks = {loc: self._create_check_for_source_teleporters(loc) for loc in locations}
 
         self._teleporters_source_for_location = copy.copy(checks)
         self._teleporters_source_destination: dict[NodeIdentifier, NodeIdentifier | None] = {}

@@ -8,12 +8,32 @@
         "seed_identifier": {
             "word_hash": "Some Words",
             "hash": "XXXXXXXX",
-            "session_uuid": "00000000-0000-1111-0000-000000000000"
+            "session_uuid": "8ed54195-dbe1-8770-9a74-86e9076fd450"
+        },
+        "required_messages": {
+            "Missile Tank": {
+                "header": "Locked Missile Tank acquired",
+                "description": [
+                    "Missile capacity increased by 5",
+                    "Launcher still required"
+                ]
+            },
+            "Big Missile Tank": {
+                "header": "Locked Big Missile Tank acquired",
+                "description": [
+                    "Missile capacity increased by 75",
+                    "Launcher still required"
+                ]
+            }
         },
         "starting_items": {
             "Tourian Key": 7
         },
         "starting_memo": null,
+        "warp_to_start": true,
+        "open_missile_doors_with_one_missile": false,
+        "allow_downward_shots": false,
+        "allow_screw_attack_to_break_blocks": false,
         "credits_string": [
             {
                 "header": "Bombs",
@@ -82,11 +102,15 @@
                     "Ridley - Ridley Arena"
                 ]
             }
-        ]
+        ],
+        "required_amount_of_keys": 2
     },
     "preferences": {
+        "disable_low_health_beeping": false,
+        "room_names_on_hud": "WITH_FADE",
         "show_unexplored_map": true,
-        "room_names_on_hud": "WITH_FADE"
+        "use_alternative_escape_theme": false,
+        "use_sm_boss_theme": false
     },
     "level_data": {
         "room": "rm_Zebeth",
@@ -562,7 +586,7 @@
         }
     },
     "_randovania_meta": {
-        "layout_was_user_modified": false,
+        "layout_was_user_modified": true,
         "in_race_setting": false
     }
 }

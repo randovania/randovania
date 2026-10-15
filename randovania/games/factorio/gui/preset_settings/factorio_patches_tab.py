@@ -19,12 +19,10 @@ class PresetFactorioPatches(PresetTab[FactorioConfiguration], Ui_PresetFactorioP
         self.setupUi(self)
 
         # Signals
-        self.full_tech_tree_check.stateChanged.connect(self._persist_option_then_notify("full_tech_tree"))
-        self.allow_productivity_check.stateChanged.connect(self._persist_option_then_notify("productivity_everywhere"))
-        self.stronger_solar_check.stateChanged.connect(self._persist_option_then_notify("stronger_solar"))
-        self.strict_multiplayer_freebie_check.stateChanged.connect(
-            self._persist_option_then_notify("strict_multiplayer_freebie")
-        )
+        self.full_tech_tree_check.stateChanged.connect(self._persist_bool("full_tech_tree"))
+        self.allow_productivity_check.stateChanged.connect(self._persist_bool("productivity_everywhere"))
+        self.stronger_solar_check.stateChanged.connect(self._persist_bool("stronger_solar"))
+        self.strict_multiplayer_freebie_check.stateChanged.connect(self._persist_bool("strict_multiplayer_freebie"))
 
     @classmethod
     def tab_title(cls) -> str:

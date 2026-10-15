@@ -25,7 +25,7 @@ def unpack_iso(
     except OSError as e:
         raise RuntimeError(f"Unable to create files dir {game_files_path}:\n{e}")
 
-    disc, is_wii = nod.open_disc_from_image(iso)
+    disc, _is_wii = nod.open_disc_from_image(iso)
     data_partition = disc.get_data_partition()
     if not data_partition:
         raise RuntimeError(f"Could not find a data partition in '{iso}'.\nIs it a valid Metroid Prime 2 ISO?")

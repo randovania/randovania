@@ -7,9 +7,9 @@ from randovania.games.samus_returns.gui.msr_teleporter_details_tab import MSRTel
 from randovania.games.samus_returns.gui.preset_settings import msr_preset_tabs
 
 __all__ = [
-    "MSRGameTabWidget",
     "MSRCosmeticPatchesDialog",
     "MSRGameExportDialog",
-    "msr_preset_tabs",
+    "MSRGameTabWidget",
     "MSRTeleporterDetailsTab",
+    "msr_preset_tabs",
 ]

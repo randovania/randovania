@@ -233,7 +233,7 @@ def test_apply_patcher_file_newer_version(tmp_path):
     # Run
     with pytest.raises(
         UnableToExportError,
-        match="The internal game copy was outdated and has been deleted. Please export again and select an ISO.",
+        match=r"The internal game copy was outdated and has been deleted. Please export again and select an ISO.",
     ):
         claris_randomizer.apply_patcher_file(game_root, patcher_data, randomizer_data, progress_update)
 

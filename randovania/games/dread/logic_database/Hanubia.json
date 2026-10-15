@@ -406,6 +406,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Missile Tank Alcove": {
                             "type": "and",
@@ -444,8 +445,37 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Missile Tank Alcove": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Shortcut Room": {
                             "type": "resource",
@@ -476,6 +506,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s080_shipyard:default:grapplepulloff1x2_000",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Transport to Ferenia": {
                             "type": "and",
@@ -538,7 +569,7 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "PBAmmo",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -581,7 +612,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "PBAmmo",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -715,6 +746,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "s080_shipyard:default:grapplepulloff1x2_000",
+                    "grants_on_collect": [],
                     "connections": {
                         "Shortcut Room": {
                             "type": "and",
@@ -1148,6 +1180,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s080_shipyard:default:block_pbtube",
+                    "grants_on_collect": [],
                     "connections": {
                         "Inside breakable tube": {
                             "type": "and",
@@ -1549,6 +1582,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "GoldChozoFight",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Transport to Itorash": {
                             "type": "and",
@@ -1727,6 +1761,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Start Point": {
                             "type": "resource",
@@ -1757,6 +1792,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s080_shipyard:default:grapplepulloff1x2_001",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Entrance Tall Room": {
                             "type": "and",
@@ -2231,6 +2267,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door from Tank Room": {
                             "type": "or",
@@ -2449,6 +2486,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s080_shipyard:default:grapplepulloff1x2",
+                    "grants_on_collect": [],
                     "connections": {
                         "Start Point 1": {
                             "type": "and",
@@ -2478,8 +2516,37 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Navigation Station (Bottom)": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Require enough ammo to cover the trip to and from the pickup in Ferenia Shortcut.",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PBAmmo",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Door to Tank Room": {
                             "type": "and",
@@ -3506,6 +3573,7 @@
                     },
                     "valid_starting_location": false,
                     "event_name": "s080_shipyard:default:block_pbtube_2",
+                    "grants_on_collect": [],
                     "connections": {
                         "Dock to Total Recharge Station East (Upper)": {
                             "type": "and",
@@ -3621,6 +3689,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "HanubiaEMMISpeed",
+                    "grants_on_collect": [],
                     "connections": {
                         "Tunnel to Central Unit": {
                             "type": "and",
@@ -3758,6 +3827,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "HanubiaRedChozo",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Power Bomb)": {
                             "type": "and",
@@ -3792,6 +3862,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Start Point": {
                             "type": "and",

@@ -20,11 +20,11 @@ if TYPE_CHECKING:
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceGainTuple
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
 
 
 def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalResources]:
@@ -271,9 +271,9 @@ class PickupExporterSolo(PickupExporter):
 
 
 class PickupExporterMulti(PickupExporter):
-    def __init__(self, solo_creator: PickupExporter, players_config: PlayersConfiguration):
+    def __init__(self, solo_creator: PickupExporter, worlds_config: WorldsConfiguration):
         self.solo_creator = solo_creator
-        self.players_config = players_config
+        self.worlds_config = worlds_config
         super().__init__(self.solo_creator.game)
 
     def create_details(
@@ -293,11 +293,11 @@ class PickupExporterMulti(PickupExporter):
         If for yourself but coop, use the solo creator, but adjust name, all resources to give 0 and collection text.
         For offworld, create custom details.
         """
-        other_name = self.players_config.player_names[pickup_target.player]
+        other_name = self.worlds_config.world_names[pickup_target.world]
         remote_name = f"{other_name}'s {name}"
         remote_collection_text = [f"Sent {name} to {other_name}!"]
 
-        if pickup_target.player == self.players_config.player_index:
+        if pickup_target.world == self.worlds_config.world_index:
             details = self.solo_creator.create_details(
                 original_index,
                 pickup_target,
@@ -309,7 +309,7 @@ class PickupExporterMulti(PickupExporter):
                 description,
             )
             if (
-                self.players_config.should_target_local_player(pickup_target.player)
+                self.worlds_config.should_target_local_world(pickup_target.world)
                 or pickup_target.pickup == useless_pickup
             ):
                 # For own world in normal multi
@@ -372,7 +372,7 @@ def _get_visual_model(
 def export_all_indices(
     patches: GamePatches,
     useless_target: PickupTarget,
-    region_list: RegionList,
+    game_view: GameDatabaseView,
     rng: Random,
     model_style: PickupModelStyle,
     data_source: PickupModelDataSource,
@@ -383,7 +383,7 @@ def export_all_indices(
     Creates the patcher data for all pickups in the game
     :param patches:
     :param useless_target:
-    :param region_list:
+    :param game_view:
     :param rng:
     :param model_style:
     :param data_source:
@@ -396,7 +396,7 @@ def export_all_indices(
     pickup_list = list(pickup_assignment.values())
     rng.shuffle(pickup_list)
 
-    indices = sorted(node.pickup_index for node in region_list.iterate_nodes_of_type(PickupNode))
+    indices = sorted(node.pickup_index for _, _, node in game_view.iterate_nodes_of_type(PickupNode))
 
     pickups = [
         exporter.export(
@@ -417,10 +417,8 @@ class GenericAcquiredMemo(dict[str, str]):
         return f"{key} acquired!"
 
 
-def create_pickup_exporter(
-    memo_data: dict, players_config: PlayersConfiguration, game: RandovaniaGame
-) -> PickupExporter:
+def create_pickup_exporter(memo_data: dict, worlds_config: WorldsConfiguration, game: RandovaniaGame) -> PickupExporter:
     exporter: PickupExporter = PickupExporterSolo(memo_data, game)
-    if players_config.is_multiworld:
-        exporter = PickupExporterMulti(exporter, players_config)
+    if worlds_config.is_multiworld:
+        exporter = PickupExporterMulti(exporter, worlds_config)
     return exporter

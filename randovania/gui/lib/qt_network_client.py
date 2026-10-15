@@ -1,20 +1,21 @@
 from __future__ import annotations
 
+import abc
 import asyncio
-import datetime
 import functools
-import json
-from typing import TYPE_CHECKING
+import uuid
+from typing import TYPE_CHECKING, Concatenate
 
-import PySide6
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import Signal
 
 import randovania
+from randovania.game_connection.connector.remote_connector import ImportantStatusMessage
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.lib import async_dialog, wait_dialog
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect
 from randovania.network_common import error
+from randovania.network_common.async_race_room import AsyncRaceRoomEntry
 from randovania.network_common.multiplayer_session import (
     MultiplayerSessionActions,
     MultiplayerSessionAuditLog,
@@ -23,37 +24,60 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerWorldPickups,
     WorldUserInventory,
 )
+from randovania.network_common.signals import server_signals
 from randovania.network_common.user import CurrentUser
 
 if TYPE_CHECKING:
     from pathlib import Path
 
+    from randovania.lib.type_lib import AsyncCallable
+
 AnyNetworkError = (error.BaseNetworkError, UnableToConnect)
 
 
-def handle_network_errors(fn):
+class NetworkErrorDelegator:
+    """
+    Classes which want to use `handle_network_errors` but are not themselves a
+    `QWidget` can implement this interface to delegate the error popup.
+    """
+
+    @property
+    @abc.abstractmethod
+    def network_error_widget(self) -> QtWidgets.QWidget:
+        """The widget to use as a parent for the network error popup."""
+        raise NotImplementedError
+
+
+def handle_network_errors[SelfT: QtWidgets.QWidget | NetworkErrorDelegator, **P, RetT](
+    fn: AsyncCallable[Concatenate[SelfT, P], RetT],
+) -> AsyncCallable[Concatenate[SelfT, P], RetT | None]:
     @functools.wraps(fn)
-    async def wrapper(self, *args, **kwargs):
+    async def wrapper(self: SelfT, *args: P.args, **kwargs: P.kwargs) -> RetT | None:
+        if not isinstance(self, QtWidgets.QWidget):
+            widget = self.network_error_widget
+        else:
+            widget = self
+
         try:
             return await fn(self, *args, **kwargs)
 
         except error.InvalidActionError as e:
-            await async_dialog.warning(self, "Invalid action", f"{e}")
+            await async_dialog.warning(widget, "Invalid action", f"{e}")
 
         except error.ServerError:
             await async_dialog.warning(
-                self, "Server error", "An error occurred on the server while processing your request."
+                widget, "Server error", "An error occurred on the server while processing your request."
             )
 
         except error.NotLoggedInError:
-            await async_dialog.warning(self, "Unauthenticated", "You must be logged in.")
+            await async_dialog.warning(widget, "Unauthenticated", "You must be logged in.")
 
         except error.NotAuthorizedForActionError:
-            await async_dialog.warning(self, "Unauthorized", "You're not authorized to perform that action.")
+            await async_dialog.warning(widget, "Unauthorized", "You're not authorized to perform that action.")
 
         except error.UserNotAuthorizedToUseServerError:
             await async_dialog.warning(
-                self,
+                widget,
                 "Unauthorized",
                 "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
             )
@@ -61,7 +85,7 @@ def handle_network_errors(fn):
         except error.UnsupportedClientError as e:
             s = e.detail.replace("\n", "<br />")
             await async_dialog.warning(
-                self,
+                widget,
                 "Unsupported client",
                 s,
             )
@@ -69,15 +93,23 @@ def handle_network_errors(fn):
         except UnableToConnect as e:
             s = e.reason.replace("\n", "<br />")
             await async_dialog.warning(
-                self, "Connection Error", f"<b>Unable to connect to the server:</b><br /><br />{s}"
+                widget, "Connection Error", f"<b>Unable to connect to the server:</b><br /><br />{s}"
             )
 
         except error.RequestTimeoutError as e:
             await async_dialog.warning(
-                self,
+                widget,
                 "Connection Error",
                 f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
                 f"<br />Further attempts will wait for longer.",
+            )
+
+        except error.WorldDoesNotExistError:
+            await async_dialog.warning(
+                widget,
+                "World does not exist",
+                "The world you tried to change does not exist. "
+                "If this error keeps happening, please reopen the Window and/or Randovania.",
             )
 
         return None
@@ -98,95 +130,75 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
 
     WorldPickupsUpdated = Signal(MultiplayerWorldPickups)
     WorldUserInventoryUpdated = Signal(WorldUserInventory)
+    WorldImportantStatusMessageRequested = Signal(uuid.UUID, ImportantStatusMessage)
 
-    def __init__(self, user_data_dir: Path):
+    AsyncRaceRoomUpdated = Signal(AsyncRaceRoomEntry)
+
+    def __init__(self, user_data_dir: Path) -> None:
         configuration = randovania.get_configuration()
         user_data_dir = user_data_dir.joinpath("network_client")
 
-        if PySide6.__version_info__ >= (6, 5):
-            super().__init__(None, user_data_dir=user_data_dir, configuration=configuration)
-        else:
-            super().__init__(None)
-            NetworkClient.__init__(self, user_data_dir=user_data_dir, configuration=configuration)
+        # QObject.__init__ calls super() with any additional args/kwargs, but the stubs don't say so
+        super().__init__(None, user_data_dir=user_data_dir, configuration=configuration)  # type: ignore[call-arg]
 
-    @NetworkClient.connection_state.setter
-    def connection_state(self, value: ConnectionState):
-        NetworkClient.connection_state.fset(self, value)
+    # https://github.com/python/mypy/issues/5936
+    @NetworkClient.connection_state.setter  # type: ignore[attr-defined]
+    def connection_state(self, value: ConnectionState) -> None:
+        NetworkClient.connection_state.fset(self, value)  # type: ignore[attr-defined]
         self.ConnectionStateUpdated.emit(value)
 
-    async def on_connect(self):
+    async def on_connect(self) -> None:
         await super().on_connect()
         self.Connect.emit()
 
-    async def on_connect_error(self, error_message: str):
+    async def on_connect_error(self, error_message: str) -> None:
         await super().on_connect_error(error_message)
         self.ConnectError.emit()
 
-    async def on_disconnect(self):
+    async def on_disconnect(self) -> None:
         await super().on_disconnect()
         self.Disconnect.emit()
 
-    async def on_user_session_updated(self, new_session: dict):
+    async def on_user_session_updated(self, new_session: dict) -> None:
         await super().on_user_session_updated(new_session)
         self.UserChanged.emit(self.current_user)
 
-    async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry):
+    async def on_multiplayer_session_meta_update(self, entry: MultiplayerSessionEntry) -> None:
         await super().on_multiplayer_session_meta_update(entry)
         self.MultiplayerSessionMetaUpdated.emit(entry)
 
-    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions):
+    async def on_multiplayer_session_actions_update(self, actions: MultiplayerSessionActions) -> None:
         await super().on_multiplayer_session_actions_update(actions)
         self.MultiplayerSessionActionsUpdated.emit(actions)
 
-    async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog):
+    async def on_multiplayer_session_audit_update(self, audit_log: MultiplayerSessionAuditLog) -> None:
         await super().on_multiplayer_session_audit_update(audit_log)
         self.MultiplayerAuditLogUpdated.emit(audit_log)
 
-    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups):
+    async def on_world_pickups_update(self, pickups: MultiplayerWorldPickups) -> None:
         await super().on_world_pickups_update(pickups)
         self.WorldPickupsUpdated.emit(pickups)
 
-    async def on_world_user_inventory(self, inventory: WorldUserInventory):
+    async def on_world_user_inventory(self, inventory: WorldUserInventory) -> None:
         await super().on_world_user_inventory(inventory)
         self.WorldUserInventoryUpdated.emit(inventory)
 
-    async def login_with_discord(self) -> str:
-        if "discord_client_id" not in self.configuration:
-            raise RuntimeError("Missing Discord configuration for Randovania")
+    async def on_world_important_status_message(self, world_uuid: uuid.UUID, message: ImportantStatusMessage) -> None:
+        await super().on_world_important_status_message(world_uuid, message)
+        self.WorldImportantStatusMessageRequested.emit(world_uuid, message)
 
-        sid = await self.server_call("start_discord_login_flow")
+    async def on_async_race_room_update(self, room: AsyncRaceRoomEntry) -> None:
+        await super().on_async_race_room_update(room)
+        self.AsyncRaceRoomUpdated.emit(room)
+
+    async def login_with_discord(self) -> str:
+        sid = await server_signals.GetSid.call_server(self)()
         url = self.configuration["server_address"] + f"/login?sid={sid}"
         return url
 
-    async def login_as_guest(self, name: str = "Unknown"):
-        if "guest_secret" not in self.configuration:
-            raise RuntimeError("Missing guest configuration for Randovania")
-
-        from cryptography.fernet import Fernet
-
-        fernet = Fernet(self.configuration["guest_secret"].encode("ascii"))
-        login_request = fernet.encrypt(
-            json.dumps(
-                {
-                    "name": name,
-                    "date": datetime.datetime.now(datetime.UTC).isoformat(),
-                }
-            ).encode("utf-8")
-        )
-
-        new_session = await self.server_call("login_with_guest", login_request)
-        await self.on_user_session_updated(new_session)
-
-    @property
-    def available_login_methods(self) -> set[str]:
-        methods = []
-        if "guest_secret" in self.configuration:
-            methods.append("guest")
-        if "discord_client_id" in self.configuration:
-            methods.append("discord")
-        return set(methods)
-
-    async def attempt_join_with_password_check(self, session: MultiplayerSessionListEntry):
+    async def attempt_join_with_password_check(
+        self, session: MultiplayerSessionListEntry
+    ) -> MultiplayerSessionEntry | None:
         if session.has_password and not session.is_user_in_session:
             password = await TextPromptDialog.prompt(
                 title="Enter password",
@@ -194,13 +206,13 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
                 is_password=True,
             )
             if password is None:
-                return
+                return None
         else:
             password = None
 
         return await self.join_multiplayer_session(session.id, password)
 
-    async def ensure_logged_in(self, parent: QtWidgets.QWidget | None):
+    async def ensure_logged_in(self, parent: QtWidgets.QWidget | None) -> bool:
         if self.connection_state == ConnectionState.Connected:
             return True
 
@@ -226,6 +238,6 @@ class QtNetworkClient(QtCore.QObject, NetworkClient):
         if self.current_user is None:
             from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 
-            await async_dialog.execute_dialog(LoginPromptDialog(self))
+            await async_dialog.execute_dialog(LoginPromptDialog(self, await self.query_authentication_methods()))
 
         return self.current_user is not None

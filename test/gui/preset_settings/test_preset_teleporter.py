@@ -15,7 +15,7 @@ from randovania.games.prime1.gui.preset_settings.prime_teleporters_tab import Pr
 from randovania.games.prime1.layout import prime_configuration
 from randovania.games.prime2.gui.preset_settings.echoes_teleporters_tab import PresetTeleportersPrime2
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
 @pytest.mark.parametrize(
@@ -37,7 +37,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
     window.on_preset_changed(editor.create_custom_preset_with())
 
     # Assert
-    num_areas = len(TeleporterTargetList.nodes_list(preset.game))
+    num_areas = len(editor.layout_configuration_teleporters.excluded_targets.nodes_list(preset.game))
     assert len(window._teleporters_target_for_area) == num_areas
 
 

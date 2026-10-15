@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pytest
 from PySide6 import QtCore
 
 from randovania.games.fusion.gui.dialog.cosmetic_patches_dialog import FusionCosmeticPatchesDialog
 from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches
+
+if TYPE_CHECKING:
+    from randovania.interface_common.options import Options
 
 
 @pytest.mark.parametrize(
@@ -20,10 +25,10 @@ from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, F
         ("enable_symmetric", "symmetric_check"),
     ],
 )
-def test_enable_checkboxes(skip_qtbot, field_name: str, widget_field: str) -> None:
+def test_enable_checkboxes(skip_qtbot, field_name: str, widget_field: str, options: Options) -> None:
     cosmetic_patches = FusionCosmeticPatches(**{field_name: False})  # type: ignore[arg-type]
 
-    dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
     # Run
     skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
@@ -31,10 +36,10 @@ def test_enable_checkboxes(skip_qtbot, field_name: str, widget_field: str) -> No
     assert dialog.cosmetic_patches == FusionCosmeticPatches(**{field_name: True})  # type: ignore[arg-type]
 
 
-def test_color_space(skip_qtbot):
+def test_color_space(skip_qtbot, options: Options):
     cosmetic_patches = FusionCosmeticPatches(color_space=ColorSpace.Oklab)
 
-    dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
     # Run
     dialog.color_space_combo.setCurrentIndex(1)
@@ -54,10 +59,12 @@ def test_color_space(skip_qtbot):
         (True, "mono_option", False),
     ],
 )
-def test_change_music_option(skip_qtbot, music_start_value: bool, option_to_click: str, music_end_value: bool) -> None:
+def test_change_music_option(
+    skip_qtbot, music_start_value: bool, option_to_click: str, music_end_value: bool, options: Options
+) -> None:
     cosmetic_patches = FusionCosmeticPatches(stereo_default=music_start_value)
 
-    dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = FusionCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     radio_button = getattr(dialog, option_to_click)

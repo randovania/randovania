@@ -8,4 +8,5 @@ if TYPE_CHECKING:
 
 class DamageReduction(NamedTuple):
     inventory_item: ItemResourceInfo | None
+    item_quantity: int
     damage_multiplier: float

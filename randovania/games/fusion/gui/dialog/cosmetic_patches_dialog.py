@@ -12,10 +12,12 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
+    from randovania.interface_common.options import Options
+
 
 class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatches], Ui_FusionCosmeticPatchesDialog):
-    def __init__(self, parent: QtWidgets.QWidget | None, current: FusionCosmeticPatches):
-        super().__init__(parent, current)
+    def __init__(self, parent: QtWidgets.QWidget | None, current: FusionCosmeticPatches, options: Options):
+        super().__init__(parent, current, options)
         self.setupUi(self)
 
         for color_space in ColorSpace:
@@ -40,6 +42,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         # Checkboxes for enabling Gameplay Options
         self._persist_check_field(self.map_check, "starting_map")
         self._persist_check_field(self.reveal_blocks_check, "reveal_blocks")
+        self._persist_check_field(self.alt_health_display_check, "alt_health_display")
         # Checkboxes and Spinners for enabling Palette Rando
         self._persist_check_field(self.suit_rando_shift_check, "enable_suit_palette")
         self._persist_check_field(self.suit_override_shift_check, "enable_suit_palette_override")
@@ -115,6 +118,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
         self.map_check.setChecked(patches.starting_map)
         self.reveal_blocks_check.setChecked(patches.reveal_blocks)
+        self.alt_health_display_check.setChecked(patches.alt_health_display)
         self.suit_rando_shift_check.setChecked(patches.enable_suit_palette)
         self.suit_override_shift_check.setChecked(patches.enable_suit_palette_override)
         self.suit_override_shift_check.setEnabled(self.suit_rando_shift_check.isChecked())

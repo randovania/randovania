@@ -11,8 +11,8 @@ from randovania.game_connection.game_connection import ConnectedGameState
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.multiworld_client import MultiworldClient
-from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.interface_common.world_database import WorldData, WorldDatabase, WorldServerData
+from randovania.interface_common.worlds_configuration import INVALID_UUID
 from randovania.network_common import error
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import MultiplayerUser, MultiplayerWorld
@@ -76,7 +76,7 @@ async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists,
     the_id = INVALID_UUID if exists == "invalid" else uuid.UUID("00000000-0000-0000-1111-000000000000")
     data = WorldData(
         collected_locations=(10, 15) if exists else (10,),
-        was_game_beaten=True if game_beaten else False,
+        was_game_beaten=bool(game_beaten),
     )
     if exists == "invalid":
         client._all_data = {}
@@ -325,6 +325,48 @@ async def test_server_sync(client, mocker: MockerFixture):
     assert client._world_sync_errors == {
         uid_3: error.WorldDoesNotExistError(),
     }
+
+
+async def test_server_sync_reports_error_to_connector(client, mocker: MockerFixture):
+    mocker.patch("asyncio.sleep", new_callable=AsyncMock)
+    uid = uuid.UUID("11111111-0000-0000-0000-000000000000")
+    other_uid = uuid.UUID("00000000-0000-1111-0000-000000000000")
+
+    request = ServerSyncRequest(
+        worlds=frozendict(
+            {
+                uid: ServerWorldSync(
+                    status=GameConnectionStatus.InGame,
+                    collected_locations=(5,),
+                    inventory=None,
+                    request_details=False,
+                    has_been_beaten=False,
+                ),
+            }
+        )
+    )
+    client._create_new_sync_request = MagicMock(side_effect=[request, ServerSyncRequest(worlds=frozendict({}))])
+    err = error.WorldNotAssociatedError()
+    client.network_client.perform_world_sync = AsyncMock(
+        return_value=ServerSyncResponse(worlds=frozendict({}), errors=frozendict({uid: err}))
+    )
+
+    connector = MagicMock()
+    connector.on_world_sync_error = AsyncMock()
+    other_connector = MagicMock()
+    other_connector.on_world_sync_error = AsyncMock()
+    client.game_connection.connected_states = {
+        connector: ConnectedGameState(id=uid, source=connector, status=GameConnectionStatus.InGame),
+        other_connector: ConnectedGameState(id=other_uid, source=other_connector, status=GameConnectionStatus.InGame),
+    }
+
+    # Run
+    await client._server_sync()
+
+    # Assert
+    connector.on_world_sync_error.assert_awaited_once_with(err)
+    other_connector.on_world_sync_error.assert_not_awaited()
+    assert client._world_sync_errors == {uid: err}
 
 
 async def test_on_session_meta_update_not_logged_in(client: MultiworldClient):

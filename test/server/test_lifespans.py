@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
@@ -25,7 +26,6 @@ def config_fixture(db_path) -> NetworkConfiguration:
         "socketio_path": "/prefix/somewhere_evil",
         "discord_client_id": 1234,
         "server_address": "https://somewhere.nice",
-        "guest_secret": "s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=",
         "server_config": {
             "secret_key": "key",
             "discord_client_secret": "5678",
@@ -129,12 +129,13 @@ async def test_socketio_lifespan(
 
 
 async def test_database_lifespan(
-    mocker: pytest_mock.MockerFixture,
     lifespan_sa,
-    db_path,
+    tmp_path: Path,
 ):
+    db_path = tmp_path.joinpath("db.db")
+    lifespan_sa.configuration["server_config"]["database_path"] = str(db_path)
     async with database_lifespan(lifespan_sa.app):
-        assert db_path.exists()
+        assert Path(db_path).exists()
 
 
 async def test_server_lifespan(
@@ -148,6 +149,8 @@ async def test_server_lifespan(
     mock_enforce_lifespan = mocker.patch("randovania.server.server_app.EnforceDiscordRole.lifespan")
     mock_socketio_lifespan = mocker.patch("randovania.server.server_app.fastapi_socketio_lifespan")
     mock_database_lifespan = mocker.patch("randovania.server.server_app.database_lifespan")
+    socket_manager = mock_socketio_lifespan.return_value.__aenter__.return_value
+    socket_manager.sio.on = MagicMock()
 
     # routing
     mock_multiplayer = mocker.patch("randovania.server.multiplayer.setup_app")

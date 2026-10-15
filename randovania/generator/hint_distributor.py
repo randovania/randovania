@@ -11,7 +11,7 @@ from enum import Enum, IntEnum
 from random import Random
 from typing import TYPE_CHECKING, Any, final, override
 
-from randovania.game_description.db.hint_node import HintNode, HintNodeKind
+from randovania.game_description.db.hint_node import GenericHintNode, HintNode, HintNodeKind, SpecificLocationHintNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
@@ -29,7 +29,7 @@ from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import HintState, PlayerState
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorMode
 from randovania.resolver import debug, resolver
 
 if TYPE_CHECKING:
@@ -133,13 +133,13 @@ class FeatureChooser[PrecisionT: Enum]:
 
     def debug_precisions(self, header: str) -> None:
         """Debug print `feature_precisions()`"""
-        if debug.debug_level() <= 0:
+        if debug.debug_level() <= debug.LogLevel.SILENT:
             return
 
         print(f"> {header}:")
         for feature, precision in sorted(self.feature_precisions().items(), key=lambda item: item[1]):
             print(f"   {self._debug_precision_text(feature, precision)}")
-        print("")
+        print()
 
     def choose_feature(
         self,
@@ -168,7 +168,7 @@ class FeatureChooser[PrecisionT: Enum]:
         possible_features: list[HintFeature | PrecisionT] = []
         possible_features.extend(sorted(feature for feature in element_features if feature in feature_precisions))
         possible_features.extend(additional_precision_features)
-        if debug.debug_level() > 0:
+        if debug.debug_level() > debug.LogLevel.SILENT:
             possible_precisions = "\n".join(
                 f"     {self._debug_precision_text(feature, feature_precisions[feature])}"
                 for feature in sorted(possible_features, key=lambda f: feature_precisions[f])
@@ -214,13 +214,6 @@ class HintDistributor(ABC):
     def num_joke_hints(self) -> int:
         return 0
 
-    def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
-        return [
-            node.identifier
-            for _, _, node in prefill.game.iterate_nodes_of_type(HintNode)
-            if node.kind == HintNodeKind.GENERIC
-        ]
-
     async def get_specific_location_precision_pairs(self) -> dict[NodeIdentifier, PrecisionPair]:
         """Assigns a PrecisionPair to each HintNode with kind SPECIFIC_LOCATION in the game's database."""
         return {}
@@ -228,18 +221,17 @@ class HintDistributor(ABC):
     async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
         specific_location_precisions = await self.get_specific_location_precision_pairs()
 
-        for _, _, node in prefill.game.iterate_nodes_of_type(HintNode):
-            if node.kind == HintNodeKind.SPECIFIC_LOCATION:
-                identifier = node.identifier
-                patches = patches.assign_hint(
-                    identifier,
-                    LocationHint(
-                        specific_location_precisions[identifier],
-                        PickupIndex(node.extra["hint_index"]),
-                    )
-                    if patches.configuration.hints.enable_specific_location_hints
-                    else JokeHint(),
+        for _, _, node in prefill.game.iterate_nodes_of_type(SpecificLocationHintNode):
+            identifier = node.identifier
+            patches = patches.assign_hint(
+                identifier,
+                LocationHint(
+                    specific_location_precisions[identifier],
+                    node.target_index,
                 )
+                if patches.configuration.hints.enable_specific_location_hints
+                else JokeHint(),
+            )
 
         return patches
 
@@ -293,7 +285,7 @@ class HintDistributor(ABC):
         patches = await self.assign_specific_location_hints(patches, prefill)
 
         if patches.configuration.hints.enable_random_hints:
-            hint_identifiers = self.get_generic_hint_nodes(prefill)
+            hint_identifiers = [node.identifier for _, _, node in prefill.game.iterate_nodes_of_type(GenericHintNode)]
             if rng_required or prefill.rng is not None:
                 prefill.rng.shuffle(hint_identifiers)
                 patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
@@ -376,7 +368,7 @@ class HintDistributor(ABC):
         `MORE_INTERESTING` pickups are a subset of `INTERESTING` pickups,
         which are a subset of `LEAST_INTERESTING` pickups.
         """
-        hint_distributor = player_pools[target.player].game.game.hints.hint_distributor
+        hint_distributor = player_pools[target.world].game.game.hints.hint_distributor
 
         if not hint_distributor.is_pickup_interesting(target, player_id, hint_node):
             return HintSuitability.LEAST_INTERESTING
@@ -388,7 +380,7 @@ class HintDistributor(ABC):
         """Pickups which don't satisfy this check are lower priority for hinting than those that do."""
         return target.pickup.show_in_credits_spoiler
 
-    def is_pickup_interesting(self, target: PickupTarget, player_id: int, hint_node: HintNode) -> bool:
+    def is_pickup_interesting(self, target: PickupTarget, world_id: int, hint_node: HintNode) -> bool:
         """Pickups which don't satisfy this check are only hinted as a last resort."""
         return True
 
@@ -414,8 +406,8 @@ class HintDistributor(ABC):
                 # hint has already been assigned
                 continue
 
-            node = region_list.typed_node_by_identifier(hint_node, HintNode)
-            if node.kind != HintNodeKind.GENERIC:
+            node = region_list.node_by_identifier(hint_node)
+            if not isinstance(node, GenericHintNode):
                 continue
 
             debug.debug_print(f"> Choosing hint target for {hint_node.as_string}:")
@@ -670,7 +662,7 @@ class HintDistributor(ABC):
                 mean, std_dev = _get_gauss_params(precision.item, self.item_feature_distribution())
 
                 if precision.include_owner:
-                    specific_owner = item.player
+                    specific_owner = item.world
                 else:
                     specific_owner = None
 
@@ -764,22 +756,25 @@ class AllJokesHintDistributor(HintDistributor):
 def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
     return (
         config.hints.enable_random_hints  # don't waste time running the resolver!
-        and (config.hints.use_resolver_hints or config.dock_rando.mode == DockRandoMode.DOCKS)
+        and (
+            config.hints.use_resolver_hints
+            or config.dock_weakness_distributor.is_any_type_mode(DockWeaknessDistributorMode.INDIVIDUAL_DOCK)
+        )
     )
 
 
-async def get_resolver_hint_state(player: int, patches: GamePatches) -> ResolverHintState | None:
-    with debug.with_level(0):
-        new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
+async def get_resolver_hint_state(world: int, patches: GamePatches) -> ResolverHintState | None:
+    with debug.with_level(debug.LogLevel.SILENT):
+        new_state = await resolver.resolve([(patches.configuration, patches)], collect_hint_data=True)
 
     if new_state is None:
         logger.warning(
-            f"Unable to solve game for player {player + 1} after placing doors. Hints will be based on generator state."
+            f"Unable to solve game for world {world + 1} after placing doors. Hints will be based on generator state."
         )
         return None
     else:
-        debug.debug_print(f">> Player {player + 1} is solve-able after door placement. Beginning hint placement.")
-        return new_state.hint_state
+        debug.debug_print(f">> World {world + 1} is solve-able after door placement. Beginning hint placement.")
+        return new_state[0].hint_state
 
 
 async def distribute_generic_hints(
@@ -787,21 +782,19 @@ async def distribute_generic_hints(
     filler_results: FillerResults,
 ) -> FillerResults:
     """Distribute HintNodeKind.GENERIC hints after all pickups are placed."""
-    new_patches: dict[int, GamePatches] = {
-        player: result.patches for player, result in filler_results.player_results.items()
-    }
+    new_patches: list[GamePatches] = [result.patches for result in filler_results.player_results]
 
-    for player_index, result in filler_results.player_results.items():
+    for world_index, result in enumerate(filler_results.player_results):
         patches = result.patches
 
         hint_state: HintState = result.hint_state
         if _should_use_resolver_hints(patches.configuration):
-            resolver_hint_state = await get_resolver_hint_state(player_index, patches)
+            resolver_hint_state = await get_resolver_hint_state(world_index, patches)
             if resolver_hint_state is not None:
                 hint_state = resolver_hint_state
 
         hint_distributor = patches.game.game.hints.hint_distributor
-        new_patches[player_index] = await hint_distributor.assign_post_filler_hints(
+        new_patches[world_index] = await hint_distributor.assign_post_filler_hints(
             patches,
             rng,
             result.pool,
@@ -812,10 +805,10 @@ async def distribute_generic_hints(
 
     return dataclasses.replace(
         filler_results,
-        player_results={
-            player: dataclasses.replace(result, patches=new_patches[player])
-            for player, result in filler_results.player_results.items()
-        },
+        player_results=[
+            dataclasses.replace(result, patches=patches)
+            for result, patches in zip(filler_results.player_results, new_patches, strict=True)
+        ],
     )
 
 
@@ -824,25 +817,23 @@ async def distribute_specific_location_hints(
     filler_results: FillerResults,
 ) -> FillerResults:
     """Distribute HintNodeKind.SPECIFIC_LOCATION hints after all pickups are placed."""
-    old_patches: dict[int, GamePatches] = {
-        player: result.patches for player, result in filler_results.player_results.items()
-    }
-    new_patches: dict[int, GamePatches] = {}
+    old_patches: list[GamePatches] = [result.patches for result in filler_results.player_results]
+    new_patches: list[GamePatches] = []
 
     player_pools = filler_results.player_pools
 
-    for player_index, patches in old_patches.items():
-        player_pool = player_pools[player_index]
-
-        hint_distributor = player_pool.game.game.hints.hint_distributor
-        new_patches[player_index] = await hint_distributor.assign_precision_to_hints(
-            patches, rng, player_pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
+    for patches, player_pool in zip(old_patches, filler_results.player_results, strict=True):
+        hint_distributor = player_pool.game.game_enum.hints.hint_distributor
+        new_patches.append(
+            await hint_distributor.assign_precision_to_hints(
+                patches, rng, player_pool.pool, player_pools, HintNodeKind.SPECIFIC_LOCATION
+            )
         )
 
     return dataclasses.replace(
         filler_results,
-        player_results={
-            player: dataclasses.replace(result, patches=new_patches[player])
-            for player, result in filler_results.player_results.items()
-        },
+        player_results=[
+            dataclasses.replace(result, patches=patches)
+            for result, patches in zip(filler_results.player_results, new_patches, strict=True)
+        ],
     )

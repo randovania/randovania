@@ -10,6 +10,7 @@ from qasync import asyncSlot
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.generated.debug_connector_window_ui import Ui_DebugConnectorWindow
@@ -17,28 +18,27 @@ from randovania.gui.lib import common_qt_lib, signal_handling
 
 if TYPE_CHECKING:
     from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
-    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 class RangeSpinBoxItemEditorCreator(QtWidgets.QItemEditorCreatorBase):
-    def __init__(self, minimum: int, maximum: int):
+    def __init__(self, minimum: int, maximum: int) -> None:
         super().__init__()
         self.minimum = minimum
         self.maximum = maximum
 
-    def createWidget(self, parent):
+    def createWidget(self, parent: QtWidgets.QWidget) -> QtWidgets.QSpinBox:
         spin = QtWidgets.QSpinBox(parent)
         spin.setMinimum(self.minimum)
         spin.setMaximum(self.maximum)
         return spin
 
-    def valuePropertyName(self):
-        return "value"
+    def valuePropertyName(self) -> QtCore.QByteArray:
+        return QtCore.QByteArray.fromStdString("value")
 
 
-def _create_delegate_for(item: ItemResourceInfo):
+def _create_delegate_for(item: ItemResourceInfo) -> QtWidgets.QStyledItemDelegate:
     factory = QtWidgets.QItemEditorFactory()
-    factory.registerEditor(QtCore.QMetaType.Int.value, RangeSpinBoxItemEditorCreator(0, item.max_capacity))
+    factory.registerEditor(QtCore.QMetaType.Type.Int.value, RangeSpinBoxItemEditorCreator(0, item.max_capacity))
 
     delegate = QtWidgets.QStyledItemDelegate()
     delegate.setItemEditorFactory(factory)
@@ -48,9 +48,9 @@ def _create_delegate_for(item: ItemResourceInfo):
 class DebugConnectorWindow(Ui_DebugConnectorWindow):
     _connected: bool = False
     _timer: QtCore.QTimer
-    _resource_to_item: dict[ResourceInfo, QtGui.QStandardItem]
+    _resource_to_item: dict[ItemResourceInfo, QtGui.QStandardItem]
 
-    def __init__(self, connector: DebugRemoteConnector):
+    def __init__(self, connector: DebugRemoteConnector) -> None:
         super().__init__()
         self.window = QMainWindow()
         self.setupUi(self.window)
@@ -98,16 +98,16 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         self._timer.setInterval(10000)
 
         self._setup_locations_combo()
-        self.update_inventory_table()
+        self.update_inventory_table(Inventory.from_collection(self.connector.item_collection))
         self.update_message_list()
 
-    def _on_collect_randomly_toggle(self, value: int):
+    def _on_collect_randomly_toggle(self, value: int) -> None:
         if bool(value):
             self._timer.start()
         else:
             self._timer.stop()
 
-    def _on_current_region_changed(self, _):
+    def _on_current_region_changed(self, index: int) -> None:
         self.connector.PlayerLocationChanged.emit(
             PlayerLocationEvent(
                 self.current_region_combo.currentData(),
@@ -115,20 +115,20 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
             )
         )
 
-    def _collect_randomly(self):
+    def _collect_randomly(self) -> None:
         row = random.randint(0, self.collect_location_combo.count())
         self._collect_location(self.collect_location_combo.itemData(row))
 
-    def show(self):
+    def show(self) -> None:
         self.window.show()
 
-    def _emit_collection(self):
+    def _emit_collection(self) -> None:
         self._collect_location(self.collect_location_combo.currentData())
 
-    def _collect_location(self, location: int):
+    def _collect_location(self, location: int) -> None:
         self.connector.PickupIndexCollected.emit(PickupIndex(location))
 
-    def _setup_locations_combo(self):
+    def _setup_locations_combo(self) -> None:
         game = default_database.game_description_for(self.connector.game_enum)
         index_to_name = {
             node.pickup_index.index: game.region_list.area_name(area)
@@ -150,30 +150,30 @@ class DebugConnectorWindow(Ui_DebugConnectorWindow):
         self.collect_location_combo.setVisible(True)
 
     @asyncSlot()
-    async def finish(self):
+    async def finish(self) -> None:
         await self.connector.force_finish()
         self.window.close()
 
-    def on_beat_game_clicked(self):
+    def on_beat_game_clicked(self) -> None:
         self.connector.GameHasBeenBeaten.emit()
 
-    def update_message_list(self):
+    def update_message_list(self) -> None:
         self.messages_item_model.setRowCount(len(self.connector.messages))
         for i, message in enumerate(self.connector.messages):
             self.messages_item_model.setItem(i, QtGui.QStandardItem(message))
 
-    def update_inventory_table(self):
-        for resource, quantity in self.connector.item_collection.as_resource_gain():
+    def update_inventory_table(self, inventory: Inventory) -> None:
+        for resource, quantity in inventory.as_resource_gain():
             if resource in self._resource_to_item:
                 self._update_item_amount(resource, quantity)
 
-    def _update_item_amount(self, item: ItemResourceInfo, amount: int):
+    def _update_item_amount(self, item: ItemResourceInfo, amount: int) -> None:
         if item.max_capacity > 1:
             self._resource_to_item[item].setData(amount, QtCore.Qt.ItemDataRole.DisplayRole)
         else:
             self._resource_to_item[item].setData(amount > 0, QtCore.Qt.ItemDataRole.DisplayRole)
 
-    def _on_item_changed(self, widget: QtGui.QStandardItem):
+    def _on_item_changed(self, widget: QtGui.QStandardItem) -> None:
         item = widget.data(QtCore.Qt.ItemDataRole.UserRole)
         if not isinstance(item, ItemResourceInfo):
             return

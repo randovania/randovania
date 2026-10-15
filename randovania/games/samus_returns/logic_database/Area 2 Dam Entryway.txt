@@ -1,7 +1,16 @@
 ----------------
 Transport to Areas 1 and 3
 Extra - total_boundings: {'x1': 19000.0, 'x2': 25000.0, 'y1': -9600.0, 'y2': -900.0}
-Extra - polygon: [[20400.0, -900.0], [20400.0, -1900.0], [19000.0, -2000.0], [19000.0, -4600.0], [20100.0, -4600.0], [20300.0, -5200.0], [20300.0, -9600.0], [25000.0, -9600.0], [25000.0, -900.0]]
+Extra - polygon:
+[[20400.0, -900.0],
+ [20400.0, -1900.0],
+ [19000.0, -2000.0],
+ [19000.0, -4600.0],
+ [20100.0, -4600.0],
+ [20300.0, -5200.0],
+ [20300.0, -9600.0],
+ [25000.0, -9600.0],
+ [25000.0, -900.0]]
 Extra - asset_id: collision_camera
 Hint Features - Chozo Seal, Elevator
 > Pickup (Missile Tank); Heals? False
@@ -46,7 +55,7 @@ Hint Features - Chozo Seal, Elevator
 
 > Chozo Seal; Heals? False; Spawn Point
   * Layers: default
-  * Hint
+  * Generic Hint
   * Extra - actor_name: LE_ChozoUnlockAreaDNA
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
@@ -114,7 +123,15 @@ Hint Features - Chozo Seal, Elevator
 ----------------
 Entryway Teleporter
 Extra - total_boundings: {'x1': 13600.0, 'x2': 19100.0, 'y1': -5400.0, 'y2': -200.0}
-Extra - polygon: [[13800.0, -200.0], [13800.0, -1500.0], [14050.0, -1500.0], [14050.0, -2650.0], [14150.0, -2650.0], [14150.0, -5400.0], [19100.0, -5400.0], [19100.0, -200.0]]
+Extra - polygon:
+[[13800.0, -200.0],
+ [13800.0, -1500.0],
+ [14050.0, -1500.0],
+ [14050.0, -2650.0],
+ [14150.0, -2650.0],
+ [14150.0, -5400.0],
+ [19100.0, -5400.0],
+ [19100.0, -200.0]]
 Extra - asset_id: collision_camera_003
 Hint Features - Teleporter
 > Pickup (Missile Tank); Heals? False
@@ -225,6 +242,8 @@ Hint Features - Elevator
   * Extra - start_point_actor_name: ST_FromArea02A
   > Door to Transport Access (Top)
       Trivial
+  > Event - Unlock Door from Elevator
+      Trivial
 
 > Door to Transport Access (Bottom); Heals? False
   * Layers: default
@@ -247,7 +266,7 @@ Hint Features - Elevator
   * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (Lightning Armor)
       Morph Ball
-  > Event - Unlock Door
+  > Event - Unlock Door from Lightning Armor
       Morph Ball
   > Next to Pickup
       All of the following:
@@ -267,7 +286,7 @@ Hint Features - Elevator
   > Door to Transport Access (Bottom)
       Trivial
 
-> Event - Unlock Door; Heals? False
+> Event - Unlock Door from Lightning Armor; Heals? False
   * Layers: default
   * Event Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
   > Right Spawnpoint
@@ -282,6 +301,12 @@ Hint Features - Elevator
       Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Advanced) and Melee Clip (Advanced) and Out of Bounds Movement (Advanced)
   > Right Spawnpoint
       Morph Ball
+
+> Event - Unlock Door from Elevator; Heals? False
+  * Layers: default
+  * Event Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
+  > Elevator to Area 2 Dam Exterior
+      Trivial
 
 ----------------
 Transport Access

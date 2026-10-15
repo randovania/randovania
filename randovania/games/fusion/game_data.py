@@ -87,6 +87,12 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
+def _test_data() -> randovania.game.game_test_data.GameTestData:
+    return randovania.game.game_test_data.GameTestData(
+        expected_seed_hash="SM3L32IN",
+    )
+
+
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Fusion",
     long_name="Metroid Fusion",
@@ -153,7 +159,10 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ],
         need_to_play=[
             "A ROM of Metroid Fusion (USA)",
-            "A Gameboy Advance Emulator (recommended mGBA or Bizhawk)",
+            (
+                "A Gameboy Advance Emulator (recommended mGBA or Bizhawk) or something that can run "
+                "ROMs natively (flashcard, open_agb_firm, Game Boy Interface, etc.)"
+            ),
         ],
     ),
     hash_words=_hash_words(),
@@ -168,6 +177,9 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     multiple_start_nodes_per_area=True,
+    racetime_url="https://racetime.gg/mfr-rdv/data",
     logic_db_integrity=find_fusion_db_errors,
 )

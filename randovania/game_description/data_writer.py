@@ -2,13 +2,17 @@ from __future__ import annotations
 
 import copy
 import re
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
-from randovania.game_description import game_migration
+from randovania.game_description import game_description_migration
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.hint_node import HintNode
+from randovania.game_description.db.hint_node import (
+    HintNode,
+    SpecificLocationHintNode,
+    SpecificPickupHintNode,
+)
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
@@ -24,7 +28,12 @@ if TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.dock import DockLock, DockRandoParams, DockWeakness, DockWeaknessDatabase
+    from randovania.game_description.db.dock import (
+        DockLock,
+        DockTypeDatabase,
+        DockWeakness,
+        WeaknessDistributorSettings,
+    )
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription, MinimalLogicData
@@ -37,8 +46,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_type import ResourceType
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-
-    _Resource = TypeVar("_Resource", SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)
 
 REGION_NAME_TO_FILE_NAME_RE = re.compile(r"[^a-zA-Z0-9\- ]")
 
@@ -87,7 +94,7 @@ def write_requirement(requirement: Requirement) -> dict:
         return write_node_requirement(requirement)
 
     else:
-        raise ValueError(f"Unknown requirement type: {type(requirement)}")
+        raise TypeError(f"Unknown requirement type: {type(requirement)}")
 
 
 def write_optional_requirement(requirement: Requirement | None) -> dict | None:
@@ -138,7 +145,9 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     }
 
 
-def write_array(array: list[_Resource], writer: Callable[[_Resource], dict]) -> dict:
+def write_array[Resource: (SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo)](
+    array: list[Resource], writer: Callable[[Resource], dict]
+) -> dict:
     return {item.short_name: writer(item) for item in array}
 
 
@@ -188,6 +197,7 @@ def write_resource_database(resource_database: ResourceDatabase) -> dict:
                 "reductions": [
                     {
                         "name": reduction.inventory_item.short_name if reduction.inventory_item is not None else None,
+                        "quantity": reduction.item_quantity,
                         "multiplier": reduction.damage_multiplier,
                     }
                     for reduction in reductions
@@ -214,19 +224,25 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "extra": frozen_lib.unwrap(dock_weakness.extra),
         "requirement": write_requirement(dock_weakness.requirement),
         "lock": write_dock_lock(dock_weakness.lock),
+        "unsafe_target_in_distributor_wtw": dock_weakness.unsafe_target_in_distributor_wtw,
     }
 
 
-def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
+def write_dock_weakness_distributor_settings(settings: WeaknessDistributorSettings) -> dict:
     return {
-        "unlocked": dock_rando.unlocked.name,
-        "locked": dock_rando.locked.name,
-        "change_from": sorted(weakness.name for weakness in dock_rando.change_from),
-        "change_to": sorted(weakness.name for weakness in dock_rando.change_to),
+        "unlocked": settings.unlocked.name,
+        "locked": settings.locked.name,
+        "change_from": sorted(weakness.name for weakness in settings.change_from),
+        "change_to": sorted(weakness.name for weakness in settings.change_to),
+        "indirect_change_from": sorted(weakness.name for weakness in settings.indirect_change_from),
+        "force_change_two_way": settings.force_change_two_way,
+        "resolver_attempts": settings.resolver_attempts,
+        "to_shuffle_proportion": settings.to_shuffle_proportion,
+        "ui_label": settings.ui_label,
     }
 
 
-def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
+def write_dock_type_database(database: DockTypeDatabase) -> dict:
     return {
         "types": {
             dock_type.short_name: {
@@ -235,9 +251,9 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                 "items": {
                     name: write_dock_weakness(weakness) for name, weakness in database.weaknesses[dock_type].items()
                 },
-                "dock_rando": (
-                    write_dock_rando_params(database.dock_rando_params[dock_type])
-                    if dock_type in database.dock_rando_params
+                "weakness_distributor": (
+                    write_dock_weakness_distributor_settings(dock_type.weakness_distributor)
+                    if dock_type.weakness_distributor is not None
                     else None
                 ),
             }
@@ -246,11 +262,6 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
         "default_weakness": {
             "type": database.default_weakness[0].short_name,
             "name": database.default_weakness[1].name,
-        },
-        "dock_rando": {
-            "force_change_two_way": database.dock_rando_config.force_change_two_way,
-            "resolver_attempts": database.dock_rando_config.resolver_attempts,
-            "to_shuffle_proportion": database.dock_rando_config.to_shuffle_proportion,
         },
     }
 
@@ -302,11 +313,13 @@ def write_node(node: Node) -> dict:
         data["location_category"] = node.location_category.value
         data["custom_index_group"] = node.custom_index_group
         data["hint_features"] = [ft.name for ft in sorted(node.hint_features)]
+        data["grants_on_collect"] = write_resource_gain(node.grants_on_collect)
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data.update(common_fields)
         data["event_name"] = node.event.short_name
+        data["grants_on_collect"] = write_resource_gain(node.grants_on_collect)
 
     elif isinstance(node, ConfigurableNode):
         data["node_type"] = "configurable_node"
@@ -316,7 +329,12 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "hint"
         data.update(common_fields)
         data["kind"] = node.kind.value
-        data["requirement_to_collect"] = write_requirement(node.lock_requirement)
+        data["requirement_to_collect"] = write_requirement(node.requirement_to_collect)
+
+        if isinstance(node, SpecificLocationHintNode):
+            data["target_index"] = node.target_index.index
+        elif isinstance(node, SpecificPickupHintNode):
+            data["specific_pickup_hint_id"] = node.specific_pickup_hint_id
 
     elif isinstance(node, TeleporterNetworkNode):
         data["node_type"] = "teleporter_network"
@@ -326,7 +344,7 @@ def write_node(node: Node) -> dict:
         data["requirement_to_activate"] = write_requirement(node.requirement_to_activate)
 
     else:
-        raise ValueError(f"Unknown node class: {node}")
+        raise TypeError(f"Unknown node class: {node}")
 
     return data
 
@@ -427,14 +445,14 @@ def write_used_trick_levels(game: GameDescription) -> dict[str, list[int]] | Non
 
 def write_game_description(game: GameDescription) -> dict:
     return {
-        "schema_version": game_migration.CURRENT_VERSION,
+        "schema_version": game_description_migration.CURRENT_VERSION,
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
         "layers": frozen_lib.unwrap(game.layers),
         "starting_location": game.starting_location.as_json,
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
-        "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
+        "dock_type_database": write_dock_type_database(game.dock_type_database),
         "hint_feature_database": write_hint_feature_database(game.hint_feature_database),
         "used_trick_levels": write_used_trick_levels(game),
         "flatten_to_set_on_patch": game.region_list.flatten_to_set_on_patch,

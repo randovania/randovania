@@ -10,17 +10,15 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
-    PrimeTrilogyTeleporterConfiguration,
-)
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.echoes_teleporters import EchoesTeleporterConfiguration
 from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
+from randovania.layout.base.dock_weakness_distributor_configuration import DockWeaknessDistributorConfiguration
 from randovania.layout.base.hint_configuration import HintConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
@@ -57,25 +55,25 @@ def make_dummy[T](cls: type[T]) -> T:
 @pytest.fixture(
     params=[
         {
-            "encoded": b"@0\xb1\x8f\xe2\xe1\x80\x96\x00\x7f\xc0",
+            "encoded": b"@E\x8c\x7f\x17\x0c\x04\xb0\x03\xfe",
             "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
         },
         {
-            "encoded": b"@0\x01\x8f\xe2\xe1\x80\x96\x00\x7f\xc0",
+            "encoded": b"@@\x0c\x7f\x17\x0c\x04\xb0\x03\xfe",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
         },
         {
-            "encoded": b"@0D_\xe2\xe1\x80\x96\x00\x7f\xc0",
+            "encoded": b'@B"\xff\x17\x0c\x04\xb0\x03\xfe',
             "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
             "energy_per_tank": 280,
         },
         {
-            "encoded": b"@0\x11\x8f\xe8\xbd\x80\x96\x00\x7f\xc0",
+            "encoded": b"@@\x8c\x7fE\xec\x04\xb0\x03\xfe",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "varia_suit_damage": 18.0,
         },
         {
-            "encoded": b"\x100\x11\x8f\xe2\xe1\x80\x96\x00\x7f\xc0",
+            "encoded": b"\x10@\x8c\x7f\x17\x0c\x04\xb0\x03\xfe",
             "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "damage_strictness": LayoutDamageStrictness.STRICT.value,
@@ -95,11 +93,11 @@ def layout_config_with_data(request, default_echoes_configuration):
         "available_locations": AvailableLocationsConfiguration,
         "standard_pickup_configuration": StandardPickupConfiguration,
         "ammo_pickup_configuration": AmmoPickupConfiguration,
-        "teleporters": PrimeTrilogyTeleporterConfiguration,
+        "teleporters": EchoesTeleporterConfiguration,
         "translator_configuration": TranslatorConfiguration,
         "hints": HintConfiguration,
         "beam_configuration": BeamConfiguration,
-        "dock_rando": DockRandoConfiguration,
+        "dock_weakness_distributor": DockWeaknessDistributorConfiguration,
     }
 
     with contextlib.ExitStack() as stack:

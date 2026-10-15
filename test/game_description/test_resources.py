@@ -1,50 +1,16 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import TYPE_CHECKING
-from unittest.mock import MagicMock
 
-import pytest
-
-from randovania.game_description.db.node import NodeContext
 from randovania.game_description.game_description import calculate_interesting_resources
-from randovania.game_description.pickup.pickup_entry import ResourceLock
-from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph.graph_requirement import create_requirement_list
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
-
-
-def wrap(db: ResourceDatabase, data):
-    if isinstance(data, dict):
-        return {db.get_item(key): value for key, value in data.items()}
-    else:
-        return [(db.get_item(key), value) for key, value in data]
-
-
-@pytest.mark.parametrize(
-    ("a", "b", "result"),
-    [
-        ({"Ammo": 5}, {"Health": 6}, {"Ammo": 5, "Health": 6}),
-        ({"Ammo": 5}, {"Ammo": 6}, {"Ammo": 11}),
-    ],
-)
-def test_add_resources_into_another(blank_game_description, a, b, result):
-    blank_resource_db = blank_game_description.resource_database
-    a = wrap(blank_resource_db, a)
-    b = wrap(blank_resource_db, b)
-    result = wrap(blank_resource_db, result)
-
-    ac = ResourceCollection.from_dict(blank_game_description, a)
-    bc = ResourceCollection.from_dict(blank_game_description, b)
-
-    ac.add_resource_gain(bc.as_resource_gain())
-
-    assert dict(ac.as_resource_gain()) == result
 
 
 def test_pickup_index_equality():
@@ -56,48 +22,6 @@ def test_pickup_index_has():
     assert PickupIndex(1) in d
 
 
-def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank_pickup):
-    # Setup
-    resource_a = blank_resource_db.get_item("Ammo")
-    resource_b = blank_resource_db.item[0]
-
-    pickup = dataclasses.replace(
-        blank_pickup,
-        progression=(),
-        resource_lock=ResourceLock(resource_b, resource_b, resource_a),
-        unlocks_resource=True,
-    )
-    current_resources = ResourceCollection()
-    current_resources.add_resource_gain([(resource_a, 5)])
-
-    # Run
-    current_resources.add_resource_gain(pickup.resource_gain(current_resources))
-
-    # Assert
-    assert dict(current_resources.as_resource_gain()) == {resource_a: 0, resource_b: 5}
-
-
-@pytest.mark.parametrize(
-    ("resource_gain", "expected"),
-    [
-        ([], {}),
-        ([("Ammo", 5), ("Health", 6)], {"Ammo": 5, "Health": 6}),
-        ([("Ammo", 5), ("Ammo", 6)], {"Ammo": 11}),
-        ([("Ammo", 5), ("Ammo", -5)], {"Ammo": 0}),
-    ],
-)
-def test_convert_resource_gain_to_current_resources(blank_game_description, resource_gain, expected):
-    # Setup
-    resource_gain = wrap(blank_game_description.resource_database, resource_gain)
-    expected = wrap(blank_game_description.resource_database, expected)
-
-    # Run
-    result = ResourceCollection.from_resource_gain(blank_game_description, resource_gain)
-
-    # Assert
-    assert dict(result.as_resource_gain()) == expected
-
-
 def test_resource_type_from_index():
     # Run
     result = ResourceType.from_index(0)
@@ -106,20 +30,24 @@ def test_resource_type_from_index():
     assert result == ResourceType.ITEM
 
 
-def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_database):
+def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_database: ResourceDatabase):
     db = echoes_resource_database
     req = ResourceRequirement.create(
         db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1"),
         100,
         False,
     )
-    context = NodeContext(
-        MagicMock(),
-        ResourceCollection(),
-        db,
-        MagicMock(),
+
+    damage_state = EnergyTankDamageState(
+        99,
+        100,
+        db.energy_tank,
+        [],
     )
-    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
+
+    interesting_resources = calculate_interesting_resources(
+        frozenset([create_requirement_list(db, [req])]), db.create_resource_collection(), db, damage_state
+    )
     d_suit = db.get_item_by_display_name("Dark Suit")
     l_suit = db.get_item_by_display_name("Light Suit")
     e_tank = db.get_item_by_display_name("Energy Tank")
@@ -137,13 +65,15 @@ def test_resources_for_satisfied_damage_as_interesting(echoes_resource_database)
         False,
     )
 
-    context = NodeContext(
-        MagicMock(),
-        ResourceCollection(),
-        db,
-        MagicMock(),
+    damage_state = EnergyTankDamageState(
+        99,
+        100,
+        db.energy_tank,
+        [],
     )
-    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
+    interesting_resources = calculate_interesting_resources(
+        frozenset([create_requirement_list(db, [req])]), db.create_resource_collection(), db, damage_state
+    )
     d_suit = db.get_item_by_display_name("Dark Suit")
     l_suit = db.get_item_by_display_name("Light Suit")
     e_tank = db.get_item_by_display_name("Energy Tank")

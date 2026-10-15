@@ -318,8 +318,7 @@ def main() -> None:
         node_order = list(area["nodes"])
         for node in area["nodes"].values():
             node["connections"] = {
-                target: node["connections"][target]
-                for target in sorted(node["connections"], key=lambda n: node_order.index(n))
+                target: node["connections"][target] for target in sorted(node["connections"], key=node_order.index)
             }
 
     with region_path.open("w") as f:

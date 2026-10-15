@@ -22,7 +22,7 @@ def discover_game(game_files_path: Path) -> tuple[str, str] | None:
         return None
 
 
-def validate_game_files_path(game_files_path: Path):
+def validate_game_files_path(game_files_path: Path) -> None:
     if not game_files_path.is_dir():
         raise ValueError("Not a directory")
 

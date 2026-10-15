@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main_window.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.0
+## Created by: tools/uic_wrapper.py
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -41,6 +41,8 @@ class Ui_MainWindow(object):
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(True)
         self.menu_action_open_auto_tracker = QAction(MainWindow)
         self.menu_action_open_auto_tracker.setObjectName(u"menu_action_open_auto_tracker")
+        self.menu_action_open_map_tracker = QAction(MainWindow)
+        self.menu_action_open_map_tracker.setObjectName(u"menu_action_open_map_tracker")
         self.menu_action_login_window = QAction(MainWindow)
         self.menu_action_login_window.setObjectName(u"menu_action_login_window")
         self.menu_action_dark_mode = QAction(MainWindow)
@@ -161,7 +163,7 @@ class Ui_MainWindow(object):
         self.tab_game_list.setWidgetResizable(True)
         self.game_list_contents = QWidget()
         self.game_list_contents.setObjectName(u"game_list_contents")
-        self.game_list_contents.setGeometry(QRect(0, 0, 682, 400))
+        self.game_list_contents.setGeometry(QRect(0, 0, 682, 450))
         self.tab_game_list.setWidget(self.game_list_contents)
         self.main_tab_widget.addTab(self.tab_game_list, "")
         self.tab_game_details = GamesHelpWidget()
@@ -302,7 +304,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.stop_background_process_button.sizePolicy().hasHeightForWidth())
         self.stop_background_process_button.setSizePolicy(sizePolicy1)
         self.stop_background_process_button.setMaximumSize(QSize(75, 16777215))
-        self.stop_background_process_button.setText(u"\ud83d\udec7 Stop")
+        self.stop_background_process_button.setText(u"\U0001f6c7 Stop")
         self.stop_background_process_button.setCheckable(False)
         self.stop_background_process_button.setFlat(False)
 
@@ -330,7 +332,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.status_bar)
         self.menu_bar = QMenuBar(MainWindow)
         self.menu_bar.setObjectName(u"menu_bar")
-        self.menu_bar.setGeometry(QRect(0, 0, 688, 23))
+        self.menu_bar.setGeometry(QRect(0, 0, 688, 17))
         self.menu_open = QMenu(self.menu_bar)
         self.menu_open.setObjectName(u"menu_open")
         self.menu_edit = QMenu(self.menu_bar)
@@ -362,6 +364,7 @@ class Ui_MainWindow(object):
         self.menu_open.addSeparator()
         self.menu_open.addAction(self.menu_action_login_window)
         self.menu_open.addAction(self.menu_action_open_auto_tracker)
+        self.menu_open.addAction(self.menu_action_open_map_tracker)
         self.menu_open.addSeparator()
         self.menu_open.addSeparator()
         self.menu_edit.addAction(self.menu_database.menuAction())
@@ -402,6 +405,7 @@ class Ui_MainWindow(object):
         self.menu_action_validate_seed_after.setText(QCoreApplication.translate("MainWindow", u"Validate if a game is possible after generation", None))
         self.menu_action_timeout_generation_after_a_time_limit.setText(QCoreApplication.translate("MainWindow", u"Timeout generation after a time limit", None))
         self.menu_action_open_auto_tracker.setText(QCoreApplication.translate("MainWindow", u"Automatic Item Tracker", None))
+        self.menu_action_open_map_tracker.setText(QCoreApplication.translate("MainWindow", u"Map Tracker", None))
         self.menu_action_login_window.setText(QCoreApplication.translate("MainWindow", u"Login", None))
         self.menu_action_dark_mode.setText(QCoreApplication.translate("MainWindow", u"Dark Mode", None))
         self.menu_action_show_multiworld_banner.setText(QCoreApplication.translate("MainWindow", u"Show Multiworld Banner", None))
@@ -441,7 +445,7 @@ class Ui_MainWindow(object):
         self.browse_sessions_button.setText(QCoreApplication.translate("MainWindow", u"Browse for a multiworld session", None))
         self.host_new_game_label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Want to play multiworld?</p><p>Host a new online session and invite people!</p></body></html>", None))
         self.host_new_game_button.setText(QCoreApplication.translate("MainWindow", u"Host new multiworld session", None))
-        self.game_connection_label.setText(QCoreApplication.translate("MainWindow", u"Connect Randovania to the many games it support, enabling multiworld or maybe just an automatic tracker.", None))
+        self.game_connection_label.setText(QCoreApplication.translate("MainWindow", u"Connect Randovania to the many games it supports, enabling multiworld, or maybe just an automatic tracker!", None))
         self.game_connection_button.setText(QCoreApplication.translate("MainWindow", u"Connect to games", None))
         self.main_tab_widget.setTabText(self.main_tab_widget.indexOf(self.tab_multiworld), QCoreApplication.translate("MainWindow", u"Multiworld", None))
         self.progress_label.setText("")

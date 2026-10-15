@@ -1,0 +1,22 @@
+# Inherits everything from the repository configuration; only the additions below differ.
+extend = "../../pyproject.toml"
+
+# `src` defaults to this file's own directory, which would make isort treat `randovania` as
+# third-party. Point it back at the repository root.
+src = ["../.."]
+
+[lint.flake8-type-checking]
+# FastAPI resolves endpoint annotations at runtime, and pydantic's `try_eval_type` swallows the
+# resulting NameError. A name hidden behind TYPE_CHECKING therefore does not fail loudly: FastAPI
+# reclassifies the parameter as a required query param and the endpoint answers HTTP 422. These
+# modules must never be moved into a type-checking block.
+#
+# `exempt-modules` replaces ruff's default rather than extending it, so `typing` and
+# `typing_extensions` have to be repeated.
+exempt-modules = [
+    "typing",
+    "typing_extensions",
+    "fastapi",
+    "starlette",
+    "randovania.server.server_app",  # ServerAppDep/UserDep/AdminDep/UserOrRedirectDep/SidDep
+]

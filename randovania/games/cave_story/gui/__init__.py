@@ -6,8 +6,8 @@ from randovania.games.cave_story.gui.dialog.game_export_dialog import CSGameExpo
 from randovania.games.cave_story.gui.preset_settings import cs_preset_tabs
 
 __all__ = [
-    "CSGameTabWidget",
     "CSCosmeticPatchesDialog",
     "CSGameExportDialog",
+    "CSGameTabWidget",
     "cs_preset_tabs",
 ]

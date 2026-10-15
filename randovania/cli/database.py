@@ -8,11 +8,11 @@ from pathlib import Path
 from typing import Any
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description import default_database, trick_documentation
+from randovania.game_description import binary_data, default_database, trick_documentation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.trick_documentation import TrickUsageState
-from randovania.games import binary_data, default_data
+from randovania.games import default_data
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
@@ -261,18 +261,15 @@ def refresh_pickup_database_command(sub_parsers: _SubParsersAction) -> None:
 def _list_paths_with_resource(
     game: GameDescription, print_only_area: bool, resource: ResourceInfo, needed_quantity: int | None
 ) -> None:
-    from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.resources.resource_collection import ResourceCollection
-
     count = 0
-    context = NodeContext(None, ResourceCollection(), game.resource_database, game.region_list)
+    database = game.resource_database
 
     for area in game.region_list.all_areas:
         area_had_resource = False
 
         for source, connection in area.connections.items():
             for target, requirement in connection.items():
-                for individual in requirement.iterate_resource_requirements(context):
+                for individual in requirement.iterate_resource_requirements(database):
                     if needed_quantity is None or needed_quantity == individual.amount:
                         area_had_resource = True
                         if not print_only_area:
@@ -283,7 +280,7 @@ def _list_paths_with_resource(
                                     target.name,
                                     sorted(
                                         individual
-                                        for individual in requirement.iterate_resource_requirements(context)
+                                        for individual in requirement.iterate_resource_requirements(database)
                                         if individual.resource != resource
                                     ),
                                 )
@@ -301,22 +298,19 @@ def list_paths_with_dangerous_logic(args: Namespace) -> None:
     print_only_area = args.print_only_area
     count = 0
 
-    from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.resources.resource_collection import ResourceCollection
-
-    context = NodeContext(None, ResourceCollection(), game.resource_database, game.region_list)
+    database = game.resource_database
 
     for area in game.region_list.all_areas:
         area_had_resource = False
 
         for source, connection in area.connections.items():
             for target, requirement in connection.items():
-                for individual in requirement.iterate_resource_requirements(context):
+                for individual in requirement.iterate_resource_requirements(database):
                     if individual.negate:
                         area_had_resource = True
                         if not print_only_area:
                             sorted_resources = sorted(
-                                individual for individual in requirement.iterate_resource_requirements(context)
+                                individual for individual in requirement.iterate_resource_requirements(database)
                             )
                             print(
                                 f"At {game.region_list.area_name(area)}, from {area} to {source.name}:\n"

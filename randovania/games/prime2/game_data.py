@@ -41,10 +41,10 @@ def _gui() -> randovania.game.gui.GameGui:
         spoiler_visualizer=(
             PrimeTrilogyTeleporterDetailsTab,
             gui.TranslatorGateDetailsTab,
-            gui.PortalDetailsTab,
             HintDetailsTab,
         ),
         game_tab=gui.EchoesGameTabWidget,
+        hide_database_map_view=True,
     )
 
 
@@ -94,8 +94,14 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-# ruff: noqa: E501
+def _test_data() -> randovania.game.game_test_data.GameTestData:
+    return randovania.game.game_test_data.GameTestData(
+        expected_seed_hash="OD5QHGGB",
+        database_collectable_ignore_events=("Event91", "Event92", "Event97"),
+    )
 
+
+# ruff: noqa: E501
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Echoes",
     long_name="Metroid Prime 2: Echoes",
@@ -188,5 +194,8 @@ Taking the transport hologram at the center of this room.""",
     hints=_hints,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    test_data=_test_data,
+    reject_undocumented_tricks_in_database=False,
     defaults_available_in_game_sessions=True,
+    racetime_url="https://racetime.gg/mp2r/data",
 )

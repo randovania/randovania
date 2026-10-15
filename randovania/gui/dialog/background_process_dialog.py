@@ -6,11 +6,11 @@ from PySide6.QtWidgets import QDialog
 
 from randovania.gui.generated.background_process_dialog_ui import Ui_BackgroundProcessDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
-from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.gui.lib.background_task_mixin import BackgroundTask, BackgroundTaskMixin
 
 
 class BackgroundProcessDialog(QDialog, BackgroundTaskMixin, Ui_BackgroundProcessDialog):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)
@@ -19,16 +19,16 @@ class BackgroundProcessDialog(QDialog, BackgroundTaskMixin, Ui_BackgroundProcess
         self.progress_update_signal.connect(self.update_progress)
         self.update_button.clicked.connect(self.on_button_press)
 
-    def on_button_press(self):
+    def on_button_press(self) -> None:
         if self.has_background_process:
             self.stop_background_process()
         else:
             self.accept()
 
-    def update_button_label(self, value: bool):
+    def update_button_label(self, value: bool) -> None:
         self.update_button.setText("Close" if value else "Cancel")
 
-    def update_progress(self, message: str, percentage: int):
+    def update_progress(self, message: str, percentage: int) -> None:
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0
@@ -38,9 +38,9 @@ class BackgroundProcessDialog(QDialog, BackgroundTaskMixin, Ui_BackgroundProcess
         else:
             self.progress_bar.setRange(0, 0)
 
-    async def run_in_background_async_then_close(self, *args, **kwargs):
+    async def run_in_background_async_then_close[T](self, target: BackgroundTask[T], starting_message: str) -> T:
         try:
-            result = await self.run_in_background_async(*args, **kwargs)
+            result = await self.run_in_background_async(target, starting_message)
             self.accept()
             return result
 
@@ -49,7 +49,7 @@ class BackgroundProcessDialog(QDialog, BackgroundTaskMixin, Ui_BackgroundProcess
             raise
 
     @classmethod
-    async def open_for_background_task(cls, target, starting_message: str):
+    async def open_for_background_task[T](cls, target: BackgroundTask[T], starting_message: str) -> T:
         dialog = cls()
         dialog.setWindowTitle(starting_message)
         result = await asyncio.gather(

@@ -18,14 +18,14 @@ if TYPE_CHECKING:
 
 
 class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
-    _CHECKBOX_FIELDS = [
+    _CHECKBOX_FIELDS = (
         "skip_cutscenes",
         "skip_save_cutscene",
         "skip_item_cutscenes",
         "fusion_mode",
         "vertically_flip_gameplay",
         "horizontally_flip_gameplay",
-    ]
+    )
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)

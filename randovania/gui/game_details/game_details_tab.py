@@ -1,18 +1,29 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+import typing
+from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_patches import GamePatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class GameDetailsTab:
-    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
+class CreateWhenRelevantMethod(typing.Protocol):
+    def __call__(
+        self,
+        parent: QtWidgets.QWidget,
+        configuration: BaseConfiguration,
+        all_patches: list[GamePatches],
+        players: WorldsConfiguration,
+    ) -> GameDetailsTab | None: ...
+
+
+class GameDetailsTab[ConfigurationT: BaseConfiguration]:
+    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame) -> None:
         self.game_enum = game
 
     def widget(self) -> QtWidgets.QWidget:
@@ -22,12 +33,25 @@ class GameDetailsTab:
         raise NotImplementedError
 
     def update_content(
-        self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+        self, configuration: ConfigurationT, all_patches: list[GamePatches], players: WorldsConfiguration
+    ) -> None:
         raise NotImplementedError
 
     @classmethod
     def should_appear_for(
-        cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
+        cls, configuration: ConfigurationT, all_patches: list[GamePatches], players: WorldsConfiguration
     ) -> bool:
         return True
+
+    @classmethod
+    def create_when_relevant(
+        cls,
+        parent: QtWidgets.QWidget,
+        configuration: ConfigurationT,
+        all_patches: list[GamePatches],
+        players: WorldsConfiguration,
+    ) -> Self | None:
+        """Creates an instance of this class when `should_appear_for` returns True, None otherwise."""
+        if cls.should_appear_for(configuration, all_patches, players):
+            return cls(parent, configuration.game)
+        return None

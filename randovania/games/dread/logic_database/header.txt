@@ -77,7 +77,7 @@ Templates
 * Destroy Enky:
       Any of the following:
           Shoot Ice Missile
-          Knowledge (Beginner) and Disabled Power Bomb Limitations and Lay Power Bomb
+          Disabled Power Bomb Limitations and Lay Power Bomb
 
 * Horizontal Water Movement:
       Any of the following:
@@ -219,7 +219,7 @@ Templates
 * Open Charge Door:
       Any of the following:
           Shoot Charge Beam
-          Knowledge (Beginner) and Disabled Power Bomb Limitations and Lay Power Bomb
+          Disabled Power Bomb Limitations and Lay Power Bomb
 
 * Fight Silver Robot:
       Any of the following:
@@ -228,16 +228,16 @@ Templates
               Any of the following:
                   # Requirements for health and dodging
                   Combat (Advanced)
-                  Combat (Intermediate) and Normal Damage ≥ 199
+                  Combat (Intermediate) and Normal Damage ≥ 140
                   All of the following:
                       Combat (Beginner)
                       Any of the following:
-                          Normal Damage ≥ 399
+                          Normal Damage ≥ 340
                           All of the following:
-                              Normal Damage ≥ 299
+                              Normal Damage ≥ 240
                               Flash Shift or Use Spin Boost
                   All of the following:
-                      Normal Damage ≥ 499
+                      Normal Damage ≥ 440
                       Flash Shift or Use Spin Boost
               Any of the following:
                   # Methods of fighting
@@ -289,16 +289,16 @@ Templates
               Any of the following:
                   # Requirements for health and dodging
                   Combat (Advanced)
-                  Combat (Intermediate) and Normal Damage ≥ 299
+                  Combat (Intermediate) and Normal Damage ≥ 230
                   All of the following:
                       Combat (Beginner)
                       Any of the following:
-                          Normal Damage ≥ 499
+                          Normal Damage ≥ 430
                           All of the following:
-                              Normal Damage ≥ 399
+                              Normal Damage ≥ 330
                               Flash Shift or Use Spin Boost
                   All of the following:
-                      Normal Damage ≥ 599
+                      Normal Damage ≥ 530
                       Flash Shift or Use Spin Boost
               Any of the following:
                   # Methods of fighting
@@ -435,8 +435,8 @@ Templates
                   Combat (Intermediate) and Beam Damage 75
               Any of the following:
                   # Energy Requirements
-                  Combat (Intermediate) or Normal Damage ≥ 499
-                  Combat (Beginner) and Normal Damage ≥ 299
+                  Combat (Intermediate) or Normal Damage ≥ 530
+                  Combat (Beginner) and Normal Damage ≥ 330
 
 * Fight Red Chozo-X:
       Any of the following:
@@ -554,12 +554,24 @@ Templates
               Bomb or Cross Bomb
               Main Power Bomb and Power Bombs
 
+* Traverse Any Shutter Gate:
+      Any of the following:
+          Flash Shift
+          Flash Shift Skip (Beginner) and Lay Cross Bomb
+          Flash Shift Skip (Intermediate) and Lay Normal Bomb
+
 ====================
 Dock Weaknesses
 
 > Door
   * Access Open
       Extra - type: frame
+      Open:
+          Trivial
+      No lock
+
+
+  * No Door Frame
       Open:
           Trivial
       No lock
@@ -580,6 +592,7 @@ Dock Weaknesses
 
   * Access Permanently Closed
       Extra - type: closed
+      Considered unsafe as target for "By Type"
       Open:
           Impossible
       No lock
@@ -657,10 +670,7 @@ Dock Weaknesses
   * Phase Shift Door
       Extra - type: phase_shift
       Open:
-          Any of the following:
-              Flash Shift
-              Flash Shift Skip (Beginner) and Lay Cross Bomb
-              Flash Shift Skip (Intermediate) and Lay Small Bomb
+          Traverse Any Shutter Gate
       No lock
 
 
@@ -765,6 +775,10 @@ Dock Weaknesses
           Super Missile Door
           Wave Beam Door
           Wide Beam Door
+      Indirect Change from:
+          Access Closed
+          Access Locked
+          No Door Frame
 
 
 > Tunnel

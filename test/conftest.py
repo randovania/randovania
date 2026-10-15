@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 import functools
 import uuid
+from collections.abc import Callable
 from importlib.util import find_spec
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -36,6 +37,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.graph.world_graph import WorldGraph
 
 
 class TestFilesDir:
@@ -52,6 +54,40 @@ class TestFilesDir:
 @pytest.fixture(scope="session")
 def test_files_dir() -> TestFilesDir:
     return TestFilesDir(Path(__file__).parent.joinpath("test_files"))
+
+
+AcceptanceCheck = Callable[[Path, "dict | list | bytes"], None]
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
+    """Applies the `acceptance` mark to every test requesting `acceptance_check`."""
+    for item in items:
+        if "acceptance_check" in getattr(item, "fixturenames", ()):
+            item.add_marker(pytest.mark.acceptance)
+
+
+@pytest.fixture
+def acceptance_check(request: pytest.FixtureRequest) -> AcceptanceCheck:
+    """Asserts that a value still matches the committed file it is expected to equal.
+
+    Given --update-committed, the committed file is rewritten to match the value first, so that a
+    deliberate change is reviewed as a git diff rather than pasted into the repository by hand.
+    """
+    rewrite_committed_file = request.config.option.update_committed
+
+    def check(committed_path: Path, value: dict | list | bytes) -> None:
+        if isinstance(value, bytes):
+            if rewrite_committed_file:
+                committed_path.write_bytes(value)
+            assert value == committed_path.read_bytes()
+            return
+
+        if rewrite_committed_file:
+            json_lib.write_path(committed_path, value)
+        assert value == json_lib.read_path(committed_path)
+
+    return check
 
 
 @pytest.fixture(scope="session")
@@ -506,6 +542,20 @@ def empty_patches(default_blank_configuration, blank_game_description) -> GamePa
 
 
 @pytest.fixture
+def blank_world_graph(blank_game_description, empty_patches) -> WorldGraph:
+    from randovania.graph.world_graph_factory import create_graph
+
+    return create_graph(
+        database_view=blank_game_description,
+        patches=empty_patches,
+        static_resources=blank_game_description.resource_database.create_resource_collection(),
+        damage_multiplier=1.0,
+        victory_condition=blank_game_description.victory_condition,
+        flatten_to_set_on_patch=False,
+    )
+
+
+@pytest.fixture
 def _mock_seed_hash(mocker: pytest_mock.MockerFixture) -> None:
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
@@ -556,6 +606,11 @@ def world_database(tmp_path: Path):
     return WorldDatabase(tmp_path.joinpath("world_database"))
 
 
+@pytest.fixture
+def resource_collection(blank_resource_db):
+    return blank_resource_db.create_resource_collection()
+
+
 def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         "--skip-generation-tests",
@@ -580,6 +635,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         dest="skip_echo_tool",
         default=False,
         help="Skips running tests that uses the echo tool",
+    )
+    parser.addoption(
+        "--update-committed",
+        action="store_true",
+        dest="update_committed",
+        default=False,
+        help="Makes acceptance tests rewrite the git-tracked reference files instead of only asserting against them",
     )
 
 
@@ -610,13 +672,16 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
         return qtbot
 
     @pytest.fixture
-    def event_loop(request: pytest.FixtureRequest) -> asyncio.EventLoop:
+    def event_loop_policy(request: pytest.FixtureRequest) -> asyncio.AbstractEventLoopPolicy:
         if "skip_qtbot" in request.fixturenames:
-            loop = get_event_loop_class()(request.getfixturevalue("qapp"), set_running_loop=False)
-        else:
-            loop = asyncio.get_event_loop_policy().new_event_loop()
-        yield loop
-        loop.close()
+            qapp = request.getfixturevalue("qapp")
+
+            class _QEventLoopPolicy(asyncio.DefaultEventLoopPolicy):
+                def new_event_loop(self) -> asyncio.AbstractEventLoop:
+                    return get_event_loop_class()(qapp, set_running_loop=False)
+
+            return _QEventLoopPolicy()
+        return asyncio.DefaultEventLoopPolicy()
 
     @pytest.fixture(scope="session")
     def qapp_cls(request: pytest.FixtureRequest):
@@ -634,7 +699,7 @@ else:
     @pytest.fixture
     def skip_qtbot(request: pytest.FixtureRequest) -> QtBot:
         pytest.skip()
-        return "no qtbot"  # noqa
+        return "no qtbot"
 
     @pytest.fixture(scope="session")
     def qapp_cls(request: pytest.FixtureRequest) -> None:
@@ -642,7 +707,7 @@ else:
 
 
 def pytest_configure(config: pytest.Config) -> None:
-    markers = []
+    markers = [config.option.markexpr] if config.option.markexpr else []
 
     if config.option.skip_generation_tests:
         markers.append("not skip_generation_tests")
@@ -665,6 +730,7 @@ SOLO_RDVGAMES = [
     ("multi-cs+dread+prime1+prime2.rdvgame", None),
     ("multi-am2r+cs+dread+prime1+prime2.rdvgame", None),
     ("multi-am2r+cs+dread+prime1+prime2+msr.rdvgame", None),
+    ("multi-dread+msr+yoku.rdvgame", None),
     ("prime1_and_2_multi.rdvgame", None),
     ("cs_echoes_multi_1.rdvgame", None),
     ("dread_prime1_multiworld.rdvgame", None),  # dread-prime1 multi
@@ -687,6 +753,8 @@ SOLO_RDVGAMES = [
     ("fusion/all_hidden_with_nothing.rdvgame", True),
     ("fusion/all_hidden_with_random.rdvgame", True),
     ("fusion/starting_items.rdvgame", True),
+    ("fusion/lots_of_random_starting_items.rdvgame", True),
+    ("fusion/high_lava_dmg.rdvgame", False),  # expected configured lava dmg too high for solver
     # Dread
     ("dread/vanilla.rdvgame", True),  # vanilla
     ("dread/starter_preset.rdvgame", False),  # starter preset
@@ -700,25 +768,36 @@ SOLO_RDVGAMES = [
     # Planets (Zebeth)
     ("planets_zebeth/starter_preset.rdvgame", True),  # starter preset (vanilla keys)
     ("planets_zebeth/starter_preset_shuffle_keys.rdvgame", True),  # starter preset (shuffled keys)
+    ("planets_zebeth/starter_preset_with_nothing.rdvgame", True),  # starter preset with nothing
     # Prime Hunters
     ("prime_hunters/starter_preset.rdvgame", True),  # starter preset
     ("prime_hunters/shuffled_force_fields.rdvgame", True),  # starter preset with shuffled force fields
     (
-        "prime_hunters/starting_items_with_nothings.rdvgame",
+        "prime_hunters/starting_items_and_energy_with_nothings.rdvgame",
         True,
-    ),  # starter preset + random starting item + nothing items
+    ),  # starter preset + random starting items + nothing items + starting energy
     ("prime_hunters/two_way_unchecked_portal_shuffle.rdvgame", True),  # starter preset + two-way portal shuffle
+    (
+        "prime_hunters/shuffled_extra_locations_and_skip_planet_intros.rdvgame",
+        True,
+    ),  # starter preset with shuffled item refills and shield keys, added extra locations, skip planet intros
+    ("prime_hunters/no_shuffled_octoliths.rdvgame", True),  # starter preset without any shuffled octoliths
+    ("prime_hunters/octoliths_anywhere.rdvgame", True),  # starter preset with octoliths placed anyhere
     # Prime 1
     ("prime1-vanilla.rdvgame", True),  # vanilla
     ("prime1_crazy_seed.rdvgame", False),  # chaos features
     ("prime1_crazy_seed_one_way_door.rdvgame", True),  # same as above but 1-way doors
     ("prime1_refills.rdvgame", True),  # Refill items + custom artifact count
+    ("prime1/damage-check.rdvgame", False),
     # Prime 2
     ("seed_a.rdvgame", True),  # extremely old rdvgame
     ("prime2_seed_b.rdvgame", True),
     ("prime2/starts_with_cannon_ball.rdvgame", True),
     ("prime2/door_lock_rando.rdvgame", True),
     ("prime2/launcher_and_negative_expansions.rdvgame", True),
+    # Prime 2 (OPR)
+    ("prime2_opr/opr-starter-preset.rdvgame", True),
+    ("prime2_opr/dlr-elevator-portal-rando.rdvgame", True),
     # Samus Returns
     (
         "samus_returns/arachnus_boss_start_inventory.rdvgame",
@@ -731,6 +810,11 @@ SOLO_RDVGAMES = [
     ("samus_returns/starter_preset.rdvgame", True),  # starter preset
     ("samus_returns/progressive_beams_and_suits.rdvgame", False),  # starter preset + progressive beam and suit
     ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
+    # Zero Mission
+    ("zero_mission/starter_preset.rdvgame", True),  # starter preset
+    # Yoku's Island Express
+    ("yokus_island_express/starter_preset.rdvgame", True),  # starter preset (starting trackers)
+    ("yokus_island_express/shuffled_trackers_fruit_beacons.rdvgame", True),  # shuffled trackers + 50 fruit + 2 beacons
 ]
 
 COOP_RDVGAMES = [

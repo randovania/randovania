@@ -55,7 +55,7 @@
         <x>0</x>
         <y>0</y>
         <width>448</width>
-        <height>2361</height>
+        <height>2424</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -65,6 +65,57 @@
           <string>Game Changes</string>
          </property>
          <layout class="QVBoxLayout" name="game_changes_layout">
+          <item>
+           <widget class="QCheckBox" name="faster_credits_check">
+            <property name="text">
+             <string>Faster Credits</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="remove_hud_popup_check">
+            <property name="text">
+             <string>Skip Item Acquisition Popups</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="pickup_markers_check">
+            <property name="text">
+             <string>Replace Translator icons on map with item icons</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="open_map_check">
+            <property name="text">
+             <string>Open map from start</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="unvisited_room_names_check">
+            <property name="text">
+             <string>Always display room names on map</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="unvisited_map_icons_check">
+            <property name="text">
+             <string>Always display non-door map icons on map</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="hud_color_group_box">
+         <property name="title">
+          <string>HUD Color</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
            <layout class="QHBoxLayout" name="hud_color_layout">
             <property name="spacing">
@@ -121,37 +172,16 @@
            </layout>
           </item>
           <item>
-           <widget class="QCheckBox" name="faster_credits_check">
+           <widget class="QCheckBox" name="hud_color_text_check">
             <property name="text">
-             <string>Faster Credits</string>
+             <string>Apply custom HUD color to basic text</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="remove_hud_popup_check">
+           <widget class="QCheckBox" name="hud_color_beam_visor_check">
             <property name="text">
-             <string>Skip Item Acquisition Popups</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="pickup_markers_check">
-            <property name="text">
-             <string>Replace Translator icons on map with item icons</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="open_map_check">
-            <property name="text">
-             <string>Open map from start</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="unvisited_room_names_check">
-            <property name="text">
-             <string>Always display room names on map</string>
+             <string>Apply custom HUD color to beam and visor selection icons</string>
             </property>
            </widget>
           </item>

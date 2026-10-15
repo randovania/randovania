@@ -11,13 +11,17 @@ _FOLDER = Path(__file__).parent
 
 
 def main():
-    with _FOLDER.joinpath("dev-server-configuration.json").open("w") as f:
+    target = _FOLDER.joinpath("dev-server-configuration.json")
+    if target.is_file():
+        print(f"{target} already exists, not updated")
+        return
+
+    with target.open("w") as f:
         json.dump(
             {
                 "server_address": "http://127.0.0.1:5000",
                 "socketio_path": "/socket.io",
-                "guest_secret": Fernet.generate_key().decode("ascii"),
-                "discord_client_id": "",
+                "discord_client_id": 0,
                 "server_config": {
                     "secret_key": f"dev-server-{random.randint(1000, 9999)}",
                     "fernet_key": Fernet.generate_key().decode("ascii"),

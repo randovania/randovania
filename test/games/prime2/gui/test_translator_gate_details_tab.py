@@ -4,7 +4,7 @@ from PySide6 import QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.gui import TranslatorGateDetailsTab
-from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
 
@@ -20,7 +20,7 @@ def test_update_content(skip_qtbot, test_files_dir):
     tab.update_content(
         description.get_preset(0).configuration,
         description.all_patches,
-        PlayersConfiguration(0, {0: "You"}),
+        WorldsConfiguration(0, {0: "You"}),
     )
 
     # Assert

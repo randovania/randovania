@@ -1,0 +1,138 @@
+====================
+Templates
+
+* Can Use Any Bombs:
+      # This template is used when any requirement requires either Bombs or Power Bombs
+      Can Use Bombs or Can Use Power Bombs
+
+* Can Use Bombs:
+      # This template is used when any requirement requires using Bombs
+      Bombs and Morph Ball
+
+* Can Use Power Bombs:
+      # This template is used when any requirement requires using Power Bombs
+      Morph Ball and Power Bombs
+
+* Use Space Jump:
+      Space Jump (Unknown Item 2) and After Ruins Test Completed
+
+* Defeat Metroid:
+      All of the following:
+          # This template is used when any requirement requires defeating a Metroid
+          Ice Beam and Can Use Bombs
+          Missiles ≥ 5 or Super Missiles
+
+* Have Any Jump Upgrade:
+      # This template is used when any requirement requires increased jump height
+      Hi-Jump Boots or Use Space Jump
+
+* Can Bounce in Ball:
+      # This template is used when any requirement requires being able to gain height in Morph Ball
+      Can Use Bombs or Can Use Springball
+
+* Can Use Springball:
+      # This template is used when any requirement requires Springball
+      Hi-Jump Boots and Morph Ball
+
+* Tunnel Climb:
+      # This template is used when any requirement requires climbing into a tunnel
+      Morph Ball and Power Grip
+
+* Can Ballspark:
+      # This template is used when any requirement requires Ballsparking
+      Speed Booster and Can Use Springball
+
+* Climb Ledges:
+      # This template is used when any requirement requires climbing ledges needing at least Power Grip
+      Power Grip or Have Any Jump Upgrade
+
+* Climb High Ledges:
+      Any of the following:
+          # This template is used when any requirement requires climbing ledges needing at least Hi-Jump and Power Grip
+          Use Space Jump
+          Hi-Jump Boots and Power Grip
+
+* Can Use Ball Launcher:
+      # This template is used when any requirements requires using a Ball Launcher
+      Can Use Bombs
+
+* Can Break Single Bomb Blocks:
+      Any of the following:
+          # Breaking single bomb blocks in a space where Screw Attack can be used to destroy them
+          Can Use Any Bombs
+          Screw Attack and Knowledge (Beginner)
+
+* Can Kill Tough Enemy:
+      Any of the following:
+          Missiles ≥ 10 or Power Bombs ≥ 4 or Screw Attack or Super Missiles ≥ 2
+          All of the following:
+              Plasma Beam (Unknown Item 1)
+              Ice Beam or Long Beam or Wave Beam
+
+====================
+Dock Weaknesses
+
+> Door
+  * Blue Door
+      Open:
+          Trivial
+      No lock
+
+
+  * Missile Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Missiles ≥ 5 or Super Missiles
+
+
+  * Super Missile Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Super Missiles
+
+
+  * Power Bomb Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Power Bombs
+
+  > Dock Rando: Disabled
+
+
+> Open Passage
+  * Horizontal Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Vertical Passage
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Tunnel
+  * Tunnel
+      Open:
+          Morph Ball
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Teleporter
+* Extra - is_teleporter: True
+* Extra - ignore_for_hints: True
+  * Teleporter
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+

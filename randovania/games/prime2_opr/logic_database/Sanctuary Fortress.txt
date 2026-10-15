@@ -1,0 +1,2328 @@
+----------------
+Transport to Temple Grounds
+Extra - asset_id: 3528156989
+> Door to Temple Transport Access; Heals? False
+  * Layers: default
+  * Normal Door to Temple Transport Access/Door to Transport to Temple Grounds
+  * Extra - dock_name: North
+  > Elevator to Temple Grounds
+      Scan Visor
+
+> Elevator to Temple Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress; Custom name: Sanctuary Entrance
+  * Extra - scan_asset_id: 585469310
+  * Extra - teleporter_instance_id: 38
+  * Extra - keep_name_when_vanilla: False
+  > Door to Temple Transport Access
+      Trivial
+
+----------------
+Temple Transport Access
+Extra - asset_id: 1650075282
+> Door to Transport to Temple Grounds; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Transport to Temple Grounds/Door to Temple Transport Access
+  * Extra - dock_name: South1
+  > Door to Sanctuary Entrance
+      After [Sanctuary] Temple Transport Access Rings
+  > Event - [Sanctuary] Temple Transport Access Rings
+      Boost Ball and Morph Ball and Scan Visor
+  > Event - Sanctuary Entrance Reloaded
+      After Sanctuary Entrance Fight Cleared
+
+> Door to Sanctuary Entrance; Heals? False
+  * Layers: default
+  * Normal Door to Sanctuary Entrance/Door to Temple Transport Access
+  * Extra - dock_name: North1
+  > Door to Transport to Temple Grounds
+      After [Sanctuary] Temple Transport Access Rings
+
+> Event - [Sanctuary] Temple Transport Access Rings; Heals? False
+  * Layers: default
+  * Event [Sanctuary] Temple Transport Access Rings
+  > Door to Transport to Temple Grounds
+      Trivial
+  > Door to Sanctuary Entrance
+      Trivial
+
+> Event - Sanctuary Entrance Reloaded; Heals? False
+  * Layers: default
+  * Event Sanctuary Entrance Reloaded for Cannon
+  > Door to Transport to Temple Grounds
+      Trivial
+
+----------------
+Sanctuary Entrance
+Extra - asset_id: 1193696267
+Hint Features - Abyss, Elevator, Keybearer Corpse, Luminoth Lore, Luminoth Corpse, Kinetic Orb Cannon, Spider Track
+> Door to Power Junction; Heals? False
+  * Layers: default
+  * Light Door to Power Junction/Door to Sanctuary Entrance
+  * Extra - dock_name: North
+  > Door to Temple Transport Access
+      Any of the following:
+          Before Spider Guardian
+          Boost Ball and Morph Ball and Spider Ball
+  > Lore Scan
+      After Sanctuary Entrance Debris
+  > Cannon to Pickup
+      All of the following:
+          Morph Ball and After Sanctuary Entrance Debris
+          Any of the following:
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=wW_QjW48jwM
+                      Morph Ball Bomb and Bomb Jump (Beginner)
+                      All of the following:
+                          Boost Ball
+                          Any of the following:
+                              Morph Ball Bomb
+                              # https://www.youtube.com/watch?v=wW_QjW48jwM&t=22s
+                              Movement (Beginner)
+                      All of the following:
+                          # https://www.youtube.com/watch?v=wW_QjW48jwM&t=37s
+                          Instant Morph (Intermediate) and Standable Terrain (Intermediate)
+                          Space Jump Boots or Movement (Advanced)
+              # https://clips.twitch.tv/RoughTriangularSheepPermaSmug-lBZ81dzbFIH6a89O
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Advanced)
+  > Turret
+      All of the following:
+          Scan Visor and After Sanctuary Entrance Reloaded for Cannon
+          Any of the following:
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      Morph Ball and Power Bomb
+                      # https://www.youtube.com/watch?v=2brsOGq0P7Y
+                      Movement (Intermediate) and Use Screw Attack (Space Jump)
+              # https://www.youtube.com/watch?v=2brsOGq0P7Y&t=72s
+              Standable Terrain (Advanced) and Use Screw Attack (Space Jump)
+              # https://www.youtube.com/watch?v=2brsOGq0P7Y&t=55s
+              Morph Ball and Power Bomb and Space Jump Boots and Before Spider Guardian and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+  > Event - Sanctuary Entrance Fight
+      Trivial
+
+> Door to Temple Transport Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Temple Transport Access/Door to Sanctuary Entrance
+  * Extra - dock_name: South
+  > Door to Power Junction
+      Any of the following:
+          Before Spider Guardian
+          Boost Ball and Morph Ball and Spider Ball
+
+> Pickup (Power Bomb); Heals? False
+  * Layers: default
+  * Pickup 94; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'PowerBombExpansion',
+ 'connections': [],
+ 'removals': [131355],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+ 'instances': {'pickup': 131298, 'hud_memo': 131301, 'streamed_audio': 131299, 'sound': 131295, 'audio_fade': 131306}}
+  > Door to Temple Transport Access
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Generic Hint; Requirement? (Cobalt Translator ≥ 1 and Scan Visor ≥ 1)
+  * Extra - translator: Cobalt
+  * Extra - string_asset_id: 4072633400
+  > Door to Power Junction
+      Trivial
+
+> Cannon to Pickup; Heals? False
+  * Layers: default
+  > Door to Power Junction
+      Trivial
+  > Pickup (Power Bomb)
+      Morph Ball
+  > Keybearer Corpse (S-Jrs)
+      After Spider Guardian
+
+> Keybearer Corpse (S-Jrs); Heals? False
+  * Layers: default
+  * Specific Location Hint; Requirement? (Scan Visor ≥ 1); Target? PickupIndex 117
+  * Extra - string_asset_id: 1657556419
+  > Cannon to Pickup
+      Trivial
+
+> Turret; Heals? False
+  * Layers: default
+  > Door to Power Junction
+      Trivial
+  > Cannon to Pickup
+      # https://www.youtube.com/watch?v=942ZSFVhzF8
+      After Sanctuary Entrance Debris and Movement (Advanced) and Use Screw Attack (Space Jump)
+  > Event - Sanctuary Entrance Debris
+      Trivial
+
+> Event - Sanctuary Entrance Debris; Heals? False
+  * Layers: default
+  * Event Sanctuary Entrance Debris
+  > Turret
+      Trivial
+
+> Event - Sanctuary Entrance Fight; Heals? False
+  * Layers: default
+  * Event Sanctuary Entrance Fight Cleared
+  > Door to Power Junction
+      Trivial
+
+----------------
+Power Junction
+Extra - asset_id: 834698518
+> Door to Reactor Access; Heals? False
+  * Layers: default
+  * Normal Door to Reactor Access/Door to Power Junction
+  * Extra - dock_name: North2
+  > Door to Sanctuary Entrance
+      Trivial
+  > Event - Sancturay Entrance Reloaded
+      After Sanctuary Entrance Fight Cleared
+
+> Door to Sanctuary Entrance; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Sanctuary Entrance/Door to Power Junction
+  * Extra - dock_name: South
+  > Door to Reactor Access
+      Trivial
+
+> Event - Sancturay Entrance Reloaded; Heals? False
+  * Layers: default
+  * Event Sanctuary Entrance Reloaded for Cannon
+  > Door to Reactor Access
+      Trivial
+
+----------------
+Reactor Access
+Extra - asset_id: 3060184661
+> Door to Power Junction; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Power Junction/Door to Reactor Access
+  * Extra - dock_name: South
+  > Door to Reactor Core
+      All of the following:
+          After Reactor Access Gate
+          Any of the following:
+              Space Jump Boots
+              # Rezbit: https://www.youtube.com/watch?v=3gajyISsN9k Ingsmasher: https://www.youtube.com/watch?v=VHA04YzG684 Ingsmasher
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Jump Off Enemy (Advanced)
+  > Event - Reactor Access Gate
+      Dark Visor and Missile ≥ 5 and Seeker Launcher
+
+> Door to Reactor Core; Heals? False
+  * Layers: default
+  * Normal Door to Reactor Core/Door to Reactor Access
+  * Extra - dock_name: North
+  > Door to Power Junction
+      After Reactor Access Gate
+
+> Event - Reactor Access Gate; Heals? False
+  * Layers: default
+  * Event Reactor Access Gate
+  > Door to Power Junction
+      Trivial
+
+----------------
+Reactor Core
+Extra - asset_id: 1248653973
+Hint Features - Kinetic Orb Cannon, Spider Track, Translator Gate
+> Door to Minigyro Chamber; Heals? False
+  * Layers: default
+  * Normal Door to Minigyro Chamber/Door to Reactor Core
+  * Extra - dock_name: East
+  > Room Top
+      Trivial
+
+> Door to Save Station A; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station A/Door to Reactor Core
+  * Extra - dock_name: North
+  > Room Bottom
+      Trivial
+
+> Door to Sanctuary Map Station; Heals? False
+  * Layers: default
+  * Normal Door to Sanctuary Map Station/Door to Reactor Core
+  * Extra - dock_name: North2
+  > Translator Gate
+      Trivial
+
+> Door to Reactor Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Reactor Access/Door to Reactor Core
+  * Extra - dock_name: South
+  > Room Bottom
+      Trivial
+
+> Door to Transit Station; Heals? False
+  * Layers: default
+  * Power Bomb Blast Shield to Transit Station/Door to Reactor Core
+  * Extra - dock_name: West
+  > Room Top
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 95; Category? Major
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'EnergyTank',
+ 'connections': [],
+ 'removals': [327833],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+ 'instances': {'pickup': 327779, 'hud_memo': 327826, 'streamed_audio': 327834, 'sound': 327824, 'audio_fade': 327835}}
+  > Room Top
+      Trivial
+
+> Event - Reactor Core Quad; Heals? False
+  * Layers: default
+  * Event Reactor Core Quad
+  > Room Bottom
+      Trivial
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Save Station A
+      After Reactor Core Quad
+  > Door to Reactor Access
+      After Reactor Core Quad
+  > Event - Reactor Core Quad
+      Kill Quad MB
+  > Room Top
+      All of the following:
+          After Reactor Core Quad
+          Any of the following:
+              Space Jump Boots
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      All of the following:
+                          Spider Ball
+                          Boost Ball or Movement (Advanced)
+                      # https://www.youtube.com/watch?v=3JCa2JxsH7U
+                      Morph Ball Bomb and Bomb Space Jump (Advanced)
+  > Translator Gate
+      Trivial
+
+> Room Top; Heals? False
+  * Layers: default
+  > Door to Minigyro Chamber
+      Trivial
+  > Door to Transit Station
+      Trivial
+  > Pickup (Energy Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      Boost Ball
+                      Screw Attack and Space Jump Boots and Screw Attack into Tunnels/Openings (Intermediate)
+                      # https://www.youtube.com/watch?v=vguGiUrLkUA
+                      Morph Ball Bomb and Bomb Jump (Intermediate) and Standable Terrain (Intermediate)
+              All of the following:
+                  Standable Terrain (Intermediate)
+                  Any of the following:
+                      Screw Attack into Tunnels/Openings (Intermediate) and Use Screw Attack (Space Jump)
+                      All of the following:
+                          Space Jump Boots
+                          Any of the following:
+                              Morph Ball Bomb and Bomb Space Jump (Intermediate)
+                              # https://www.youtube.com/watch?v=LyIhjAc4pqM
+                              After Reactor Core Quad and Jump Off Enemy (Advanced)
+                              # https://clips.twitch.tv/GenerousComfortablePassionfruitDerp
+                              Movement (Expert)
+              # https://www.twitch.tv/dyceron/clip/TemperedScrumptiousCucumberFloof-JUhNr_ZvHlc_ppZL
+              Morph Ball Bomb and After Reactor Core Quad and Bomb Space Jump (Advanced) and Jump Off Enemy (Expert) and Movement (Advanced) and Standable Terrain (Advanced)
+  > Room Bottom
+      Trivial
+
+> Translator Gate; Heals? False
+  * Layers: default
+  * Configurable Node
+  * Extra - gate_index: 15
+  * Extra - vanilla_actual: Cobalt
+  * Extra - vanilla_color: Cobalt
+  > Door to Sanctuary Map Station
+      Trivial
+  > Room Bottom
+      Trivial
+
+----------------
+Save Station A
+Extra - asset_id: 1706557902
+Extra - unlocked_save_station: True
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Reactor Core
+      Trivial
+
+> Door to Reactor Core; Heals? False
+  * Layers: default
+  * Normal Door to Reactor Core/Door to Save Station A
+  * Extra - dock_name: South
+  > Save Station
+      Trivial
+
+----------------
+Minigyro Chamber
+Extra - asset_id: 2532624926
+> Door to Hall of Combat Mastery; Heals? False
+  * Layers: default
+  * Normal Door to Hall of Combat Mastery/Door to Minigyro Chamber
+  * Extra - dock_name: East
+  > Door to Reactor Core
+      Morph Ball and After Minigyro Chamber Puzzle
+
+> Door to Reactor Core; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Reactor Core/Door to Minigyro Chamber
+  * Extra - dock_name: West
+  > Door to Hall of Combat Mastery
+      Morph Ball and After Minigyro Chamber Puzzle
+  > Event - Minigyro Chamber Puzzle
+      Morph Ball Bomb and Morph Ball
+
+> Event - Minigyro Chamber Puzzle; Heals? False
+  * Layers: default
+  * Event Minigyro Chamber Puzzle
+  > Door to Hall of Combat Mastery
+      Trivial
+  > Door to Reactor Core
+      Trivial
+
+----------------
+Transit Station
+Extra - asset_id: 4148317891
+Hint Features - Portal, Spider Track
+> Door to Reactor Core; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Power Bomb Blast Shield to Reactor Core/Door to Transit Station
+  * Extra - dock_name: East
+  > Room Center
+      Trivial
+
+> Portal to Hive Portal Chamber (Second); Heals? False
+  * Layers: default
+  * Dark Portal to Hive Portal Chamber/Portal from Transit Station (Second)
+  * Extra - dock_name: VirtualDock_North_Right
+
+> Portal from Hive Portal Chamber (Second); Heals? False
+  * Layers: default
+  * No Return Portal to Hive Portal Chamber/Portal to Transit Station (Second)
+  * Extra - dock_name: VirtualDock_North_Middle
+  > Pickup (Power Bomb)
+      Any of the following:
+          Morph Ball and Spider Ball
+          # https://www.youtube.com/watch?v=XbJsYZe8rd0
+          Screw Attack into Tunnels/Openings (Intermediate) and Use Screw Attack (Space Jump)
+  > Room Center
+      Trivial
+
+> Door to Main Research; Heals? False
+  * Layers: default
+  * Normal Door to Main Research/Door to Transit Station
+  * Extra - dock_name: West
+  > Room Center
+      Trivial
+
+> Portal from Hive Portal Chamber (First); Heals? False
+  * Layers: default
+  * No Return Portal to Hive Portal Chamber/Portal to Transit Station (First)
+  * Extra - dock_name: VirtualDock_North_Left
+  > Portal to Hive Portal Chamber (Second)
+      Morph Ball
+
+> Portal to Hive Portal Chamber (First); Heals? False
+  * Layers: default
+  * Dark Portal to Hive Portal Chamber/Portal from Transit Station (First)
+  * Extra - dock_name: VirtualDock_South
+
+> Pickup (Power Bomb); Heals? False
+  * Layers: default
+  * Pickup 96; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'PowerBombExpansion',
+ 'connections': [],
+ 'removals': [524613],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+ 'instances': {'pickup': 524643, 'hud_memo': 524639, 'streamed_audio': 524636, 'sound': 524640, 'audio_fade': 524638}}
+  > Room Center
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball
+              # https://youtu.be/XbJsYZe8rd0?list=PLx6vT1x-80zuA1vUepQUSqYOQeHiRNbt5&t=13
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Reactor Core
+      Trivial
+  > Portal from Hive Portal Chamber (Second)
+      Any of the following:
+          # https://www.youtube.com/watch?v=4aYwB8NJnbM
+          Slope Jump (Beginner) and Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=5xM-JJK94PY
+          Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Advanced)
+  > Door to Main Research
+      Trivial
+  > Portal to Hive Portal Chamber (First)
+      Morph Ball and Power Bomb
+
+----------------
+Sanctuary Map Station
+Extra - asset_id: 1388284403
+Hint Features - Light Energy Transport
+> Door to Reactor Core; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Reactor Core/Door to Sanctuary Map Station
+  * Extra - dock_name: South
+  > Pickup (Missile)
+      Light Suit
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 97; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'MissileExpansion',
+ 'connections': [],
+ 'removals': [590022],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 590026, 'hud_memo': 590017, 'streamed_audio': 590020, 'sound': 590015, 'audio_fade': 590019}}
+  > Door to Reactor Core
+      Light Suit
+
+----------------
+Hall of Combat Mastery
+Extra - asset_id: 1433528478
+Hint Features - Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Phazon, Portal, Spider Track
+> Door to Central Area Transport East; Heals? False
+  * Layers: default
+  * Normal Door to Central Area Transport East/Door to Hall of Combat Mastery
+  * Extra - dock_name: EastElevator
+  > Door to Minigyro Chamber
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball
+              All of the following:
+                  Space Jump Boots and Instant Morph (Advanced)
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=9M2mgcDrb24
+                      Slope Jump (Advanced)
+                      # https://www.youtube.com/watch?v=1v1vgt6R-wI
+                      Standable Terrain (Intermediate)
+              All of the following:
+                  Screw Attack into Tunnels/Openings (Intermediate) and Use Screw Attack (Space Jump)
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=BnCRXrOvPGs&t=6s
+                      Slope Jump (Intermediate)
+                      # https://www.youtube.com/watch?v=FtylAcZbKFA&t=8s
+                      Standable Terrain (Intermediate)
+  > Lore Scan
+      Trivial
+
+> Door to Agon Transport Access; Heals? False
+  * Layers: default
+  * Normal Door to Agon Transport Access/Door to Hall of Combat Mastery
+  * Extra - dock_name: EastHall
+  > Portal to Culling Chamber
+      After Hall of Combat Mastery Glass Tunnel
+  > Event - Hall of Combat Mastery Glass Tunnel
+      Morph Ball and Power Bomb
+
+> Portal to Culling Chamber; Heals? False
+  * Layers: default
+  * Scan Portal to Culling Chamber/Portal to Hall of Combat Mastery
+  * Extra - dock_name: VirtualNorth
+  > Door to Agon Transport Access
+      After Hall of Combat Mastery Glass Tunnel
+  > Door to Minigyro Chamber
+      Any of the following:
+          Space Jump Boots or Before Hall of Combat Mastery Glass Tunnel
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          Scan Visor and Combat/Scan Dash (Advanced)
+          # https://youtu.be/hfFI_kNqoYg
+          Movement (Beginner) and Use Screw Attack (No Space Jump)
+  > Event - Hall of Combat Mastery Glass Tunnel
+      Morph Ball and Power Bomb
+
+> Door to Minigyro Chamber; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Minigyro Chamber/Door to Hall of Combat Mastery
+  * Extra - dock_name: West
+  > Door to Central Area Transport East
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Spider Ball
+              # https://www.youtube.com/watch?v=ycwAO4nX0dE
+              Space Jump Boots and Instant Morph (Advanced) and Slope Jump (Advanced)
+              All of the following:
+                  Screw Attack into Tunnels/Openings (Intermediate) and Use Screw Attack (Space Jump)
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=BnCRXrOvPGs
+                      Slope Jump (Intermediate)
+                      # https://www.youtube.com/watch?v=FtylAcZbKFA
+                      Standable Terrain (Intermediate)
+              # https://www.youtube.com/watch?v=PO2iuLTh2iw
+              Morph Ball Bomb and Bomb Space Jump (Ludicrous) and Instant Morph (Ludicrous)
+  > Portal to Culling Chamber
+      Trivial
+  > Next to Pickup
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Morph Ball Bomb and Spider Ball
+                  After Spider Guardian or Kill Quad MB
+              All of the following:
+                  Standable Terrain (Intermediate)
+                  Any of the following:
+                      Screw Attack into Tunnels/Openings (Intermediate) and Use Screw Attack (Space Jump)
+                      # https://www.youtube.com/watch?v=nVzQ88rAXTQ
+                      Space Jump Boots and Instant Morph (Advanced)
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 98; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'MissileExpansion',
+ 'connections': [],
+ 'removals': [655434],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 655429, 'hud_memo': 655433, 'streamed_audio': 655435, 'sound': 655430, 'audio_fade': 655432}}
+  > Door to Minigyro Chamber
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              Boost Ball and Wall Boost (Expert)
+
+> Event - Hall of Combat Mastery Glass Tunnel; Heals? False
+  * Layers: default
+  * Event Hall of Combat Mastery Glass Tunnel
+  > Portal to Culling Chamber
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Generic Hint; Requirement? (Cobalt Translator ≥ 1 and Scan Visor ≥ 1)
+  * Extra - translator: Cobalt
+  * Extra - string_asset_id: 67497535
+  > Door to Central Area Transport East
+      Trivial
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              Boost Ball and Knowledge (Beginner) and Wall Boost (Expert)
+
+----------------
+Main Research
+Extra - asset_id: 2437878657
+Extra - low_memory_mode: True
+Hint Features - Echo Visor Lock, Luminoth Lore, Portal, Spider Track
+> Portal from Staging Area; Heals? False
+  * Layers: default
+  * No Return Portal to Staging Area/Portal to Main Research (Lower)
+  * Extra - dock_name: VirtualNorth
+  > Event - Caretaker Drone
+      All of the following:
+          Boost Ball and Morph Ball and Spider Ball
+          Any of the following:
+              Morph Ball Bomb
+              Instant Morph (Expert) and Movement (Expert) and Wall Boost (Expert)
+
+> Door to Central Area Transport West; Heals? False
+  * Layers: default
+  * Normal Door to Central Area Transport West/Door to Main Research; Excluded from Dock Lock Rando
+  * Extra - dock_name: West to 0l_cliff_hall
+  > Next to Door to Central Area Transport West
+      Trivial
+
+> Door to Transit Station; Heals? False
+  * Layers: default
+  * Normal Door to Transit Station/Door to Main Research; Dock Lock Rando incompatible with: Seeker Launcher Blast Shield (patched)
+  * Extra - dock_name: East2 to 0m_cliff_hall
+  > Door to Torvus Transport Access
+      Trivial
+  > Pickup (Missile)
+      # https://www.youtube.com/watch?v=gPxjNeg4ItE
+      Space Jump Boots and Standable Terrain (Expert)
+  > Next to Door to Central Area Transport West
+      Use Screw Attack (Space Jump)
+
+> Portal to Staging Area; Heals? False
+  * Layers: default
+  * Dark Portal to Staging Area/Portal to Main Research (Upper)
+  * Extra - dock_name: VirtualNorth1
+  > Door to Torvus Transport Access
+      Trivial
+
+> Door to Torvus Transport Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Power Bomb Blast Shield to Torvus Transport Access/Door to Main Research; Dock Lock Rando incompatible with: Seeker Launcher Blast Shield (patched)
+  * Extra - dock_name: West1 to 0p_cliff_hall
+  > Door to Transit Station
+      Any of the following:
+          Morph Ball and Spider Ball
+          # https://www.youtube.com/watch?v=56Zl76nNi9k&t=20s
+          Space Jump Boots and Standable Terrain (Advanced)
+          # https://www.youtube.com/watch?v=56Zl76nNi9k
+          Standable Terrain (Intermediate) and Use Screw Attack (Space Jump)
+  > Portal to Staging Area
+      Echo Visor
+  > Pickup (Missile)
+      Morph Ball Bomb and Morph Ball and Spider Ball
+  > Lore Scan
+      Trivial
+  > Next to Door to Central Area Transport West
+      Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced) and Standable Terrain (Advanced)
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 99; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'MissileExpansion',
+ 'connections': [],
+ 'removals': [721483],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 721311, 'hud_memo': 721300, 'streamed_audio': 721306, 'sound': 721309, 'audio_fade': 721303}}
+  > Door to Torvus Transport Access
+      Trivial
+
+> Event - Caretaker Drone; Heals? False
+  * Layers: default
+  * Event Caretaker Drone
+  > Door to Torvus Transport Access
+      Trivial
+  > Next to Door to Central Area Transport West
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Generic Hint; Requirement? (Cobalt Translator ≥ 1 and Scan Visor ≥ 1)
+  * Extra - translator: Cobalt
+  * Extra - string_asset_id: 3212301619
+  > Door to Torvus Transport Access
+      Trivial
+
+> Next to Door to Central Area Transport West; Heals? False
+  * Layers: default
+  > Door to Central Area Transport West
+      After Caretaker Drone
+  > Door to Transit Station
+      Use Screw Attack (Space Jump)
+  > Door to Torvus Transport Access
+      Trivial
+  > Pickup (Missile)
+      # https://www.youtube.com/watch?v=UOhW8IGOGVU
+      Movement (Advanced) and Use Screw Attack (Space Jump)
+
+----------------
+Agon Transport Access
+Extra - asset_id: 1963704303
+> Door to Hall of Combat Mastery; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Hall of Combat Mastery/Door to Agon Transport Access
+  * Extra - dock_name: West
+  > Door to Transport to Agon Wastes
+      Trivial
+
+> Door to Transport to Agon Wastes; Heals? False
+  * Layers: default
+  * Normal Door to Transport to Agon Wastes/Door to Agon Transport Access
+  * Extra - dock_name: East
+  > Door to Hall of Combat Mastery
+      Trivial
+
+----------------
+Central Area Transport East
+Extra - asset_id: 290586973
+> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dynamo Works/Door to Central Area Transport East
+  * Extra - dock_name: group1_West_04 (Top)
+  > Door to Hall of Combat Mastery
+      Scan Visor
+
+> Door to Hall of Combat Mastery; Heals? False
+  * Layers: default
+  * Normal Door to Hall of Combat Mastery/Door to Central Area Transport East
+  * Extra - dock_name: group1_West_07 (Bottom)
+  > Door to Dynamo Works
+      Scan Visor
+
+----------------
+Central Area Transport West
+Extra - asset_id: 1894024576
+Hint Features - Morph Ball Tunnel, Kinetic Orb Cannon
+> Door to Main Research; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Main Research/Door to Central Area Transport West; Excluded from Dock Lock Rando
+  * Extra - dock_name: East_Bottom
+  > Door to Watch Station
+      Echo Visor and Morph Ball
+
+> Door to Watch Station; Heals? False
+  * Layers: default
+  * Normal Door to Watch Station/Door to Central Area Transport West; Excluded from Dock Lock Rando
+  * Extra - dock_name: East_Top
+  > Door to Main Research
+      Morph Ball
+  > Pickup (Missile)
+      Morph Ball
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 101; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'MissileExpansion',
+ 'connections': [],
+ 'removals': [1048751],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 1048745,
+               'hud_memo': 1048752,
+               'streamed_audio': 1048755,
+               'sound': 1048744,
+               'audio_fade': 1048753}}
+  > Door to Main Research
+      Morph Ball
+  > Door to Watch Station
+      Morph Ball
+
+----------------
+Torvus Transport Access
+Extra - asset_id: 4071453868
+> Door to Transport to Torvus Bog; Heals? False
+  * Layers: default
+  * Normal Door to Transport to Torvus Bog/Door to Torvus Transport Access
+  * Extra - dock_name: West
+  > Door to Main Research
+      Trivial
+
+> Door to Main Research; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Power Bomb Blast Shield to Main Research/Door to Torvus Transport Access
+  * Extra - dock_name: East
+  > Door to Transport to Torvus Bog
+      Trivial
+
+----------------
+Transport to Agon Wastes
+Extra - asset_id: 900285955
+> Door to Agon Transport Access; Heals? False
+  * Layers: default
+  * Normal Door to Agon Transport Access/Door to Transport to Agon Wastes
+  * Extra - dock_name: West
+  > Elevator to Agon Wastes
+      Scan Visor
+
+> Elevator to Agon Wastes; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress; Custom name: Sanctuary Spider side
+  * Extra - scan_asset_id: 3282119661
+  * Extra - teleporter_instance_id: 1245332
+  * Extra - keep_name_when_vanilla: False
+  > Door to Agon Transport Access
+      Trivial
+
+----------------
+Dynamo Works
+Extra - asset_id: 3222355176
+Extra - low_memory_mode: True
+Hint Features - Bomb Slot, Half-Pipe, Keybearer Corpse, Luminoth Corpse, Portal, Spider Track
+> Door to Workers Path; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Workers Path/Door to Dynamo Works
+  * Extra - dock_name: South2 0H
+  > Door to Dynamo Storage
+      All of the following:
+          Morph Ball Bomb and Morph Ball and After Spider Guardian
+          Boost Ball or Spider Ball
+  > Event - Spider Guardian
+      All of the following:
+          Morph Ball Bomb and Boost Ball and Morph Ball
+          # Spider Guardian is a Difficult Boss.
+          Energy Tank or Combat (Intermediate)
+
+> Portal to Hive Dynamo Works; Heals? False
+  * Layers: default
+  * Dark Portal to Hive Dynamo Works/Portal to Dynamo Works
+  * Extra - dock_name: VirtualNorth
+  > Event - Dynamo Works Quads Gone
+      Trivial
+
+> Door to Dynamo Storage; Heals? False
+  * Layers: default
+  * Power Bomb Blast Shield to Dynamo Storage/Door to Dynamo Works
+  * Extra - dock_name: East2 00_Pickup C
+  > Door to Workers Path
+      Morph Ball Bomb and Morph Ball and Spider Ball and After Spider Guardian
+  > Pickup 2 (Missile)
+      Morph Ball Bomb and Morph Ball and Spider Ball and After Spider Guardian
+
+> Door to Central Area Transport East; Heals? False
+  * Layers: default
+  * Normal Door to Central Area Transport East/Door to Dynamo Works
+  * Extra - dock_name: East 0E
+  > Pickup 2 (Missile)
+      # https://www.youtube.com/watch?v=NoLi_i4zwuM
+      Morph Ball and Space Jump Boots and Instant Morph (Expert) and Roll Jump (Expert)
+  > Event - Dynamo Works Quads Gone
+      Trivial
+  > Keybearer Corpse (C-Rch)
+      Trivial
+
+> Door to Dynamo Access; Heals? False
+  * Layers: default
+  * Dark Door to Dynamo Access/Door to Dynamo Works
+  * Extra - dock_name: West1 0F
+  > Event - Dynamo Works Quads Gone
+      Trivial
+
+> Pickup (Spider Ball); Heals? False
+  * Layers: default
+  * Pickup 102; Category? Major
+  * Hint Features - Boss
+  * Extra - boss: sub-guardian
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'SpiderBall',
+ 'connections': [{'target': 739509342, 'message': 'ACTV'}, {'target': 739509342, 'message': 'ZERO'}],
+ 'removals': [1310856, 739509371],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+ 'instances': {'pickup': 1311406,
+               'hud_memo': 1311403,
+               'streamed_audio': 1311404,
+               'sound': 1310797,
+               'audio_fade': 1311402}}
+  > Door to Dynamo Storage
+      Trivial
+
+> Pickup 2 (Missile); Heals? False
+  * Layers: default
+  * Pickup 103; Category? Minor
+  * Hint Features - Morph Ball Tunnel
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'MissileExpansion',
+ 'connections': [],
+ 'removals': [1311917],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 1311926,
+               'hud_memo': 1311918,
+               'streamed_audio': 1311916,
+               'sound': 1311915,
+               'audio_fade': 1311923}}
+  > Door to Dynamo Storage
+      Morph Ball Bomb and Morph Ball and After Spider Guardian
+  > Event - Dynamo Works Quads Gone
+      Trivial
+
+> Event - Dynamo Works Quads Gone; Heals? False
+  * Layers: default
+  * Event Dynamo Works Quads Gone
+  > Portal to Hive Dynamo Works
+      Trivial
+  > Door to Central Area Transport East
+      Any of the following:
+          Morph Ball and Spider Ball
+          # https://www.youtube.com/watch?v=yrXFvJcN308
+          Morph Ball Bomb and Bomb Space Jump (Expert) and Screw Attack at Z-Axis (Expert) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  # https://www.youtube.com/watch?v=12HEtxdV0b0
+                  Slope Jump (Intermediate)
+                  # https://www.youtube.com/watch?v=12HEtxdV0b0&t=12s
+                  Morph Ball Bomb and Morph Ball and Bomb Space Jump (Intermediate)
+  > Door to Dynamo Access
+      Trivial
+  > Pickup 2 (Missile)
+      All of the following:
+          Morph Ball and Space Jump Boots
+          Any of the following:
+              Instant Morph (Expert) and Slope Jump (Expert)
+              Screw Attack and Movement (Advanced)
+
+> Event - Spider Guardian; Heals? False
+  * Layers: default
+  * Event Spider Guardian
+  > Pickup (Spider Ball)
+      Spider Ball or Enabled Allow Vanilla Spider Ball
+
+> Keybearer Corpse (C-Rch); Heals? False
+  * Layers: default
+  * Specific Location Hint; Requirement? (Scan Visor ≥ 1); Target? PickupIndex 106
+  * Extra - string_asset_id: 2844827238
+  > Door to Central Area Transport East
+      Trivial
+
+----------------
+Watch Station
+Extra - asset_id: 2722128775
+Hint Features - Abyss, Bomb Slot, Luminoth Lore, Morph Ball Tunnel, Kinetic Orb Cannon, Portal, Spider Track
+> Door to Watch Station Access; Heals? False
+  * Layers: default
+  * Light Door to Watch Station Access/Door to Watch Station
+  * Extra - dock_name: East
+  > Door to Sentinel's Path
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          All of the following:
+              Morph Ball and Spider Ball
+              Any of the following:
+                  # Instant Morph -> https://www.youtube.com/watch?v=2zk_smeEbm8&t=19s
+                  Morph Ball Bomb or Instant Morph (Intermediate)
+                  # Wall Boost -> https://www.youtube.com/watch?v=2zk_smeEbm8
+                  Boost Ball and Wall Boost (Advanced)
+          # Standable Terrain -> https://www.youtube.com/watch?v=2zk_smeEbm8&t=36s
+          Space Jump Boots and Standable Terrain (Intermediate)
+          # Z-Axis -> https://www.youtube.com/watch?v=2zk_smeEbm8&t=50s
+          Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Pickup (Dark Ammo)
+      Morph Ball Bomb and Morph Ball and Spider Ball
+  > Event - Watch Station Portal Gate
+      Morph Ball Bomb and Morph Ball and Spider Ball
+  > Room Center
+      Trivial
+
+> Door to Central Area Transport West; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Central Area Transport West/Door to Watch Station
+  * Extra - dock_name: WestDown
+  > Pickup (Dark Ammo)
+      All of the following:
+          Morph Ball and Disabled Room Randomizer
+          Any of the following:
+              Morph Ball Bomb
+              Boost Ball and Movement (Beginner)
+          Any of the following:
+              # https://www.youtube.com/watch?v=nvDCHnonMM0
+              Single Room Out of Bounds (Expert) and Screw Attack into Tunnels/Openings (Expert) and Standable Terrain (Expert) and Use Screw Attack (Space Jump)
+              Space Jump Boots and Combat/Scan Dash (Advanced) and Single Room Out of Bounds (Ludicrous) and Standable Terrain (Ludicrous)
+  > Room Center
+      Trivial
+
+> Portal to Aerial Training Site; Heals? False
+  * Layers: default
+  * Dark Portal to Aerial Training Site/Portal to Watch Station
+  * Extra - dock_name: VirtualNorth1
+  > Room Center
+      After Watch Station Portal Gate
+
+> Door to Grand Abyss; Heals? False
+  * Layers: default
+  * Normal Door to Grand Abyss/Door to Watch Station
+  * Extra - dock_name: WestUp
+  > Event - Watch Station Portal Gate
+      All of the following:
+          Morph Ball and Space Jump Boots
+          Any of the following:
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=09eqchpgKXQ&t=34s
+                      Bomb Space Jump (Advanced) and Instant Morph (Advanced) and Standable Terrain (Advanced)
+                      # https://www.youtube.com/watch?v=09eqchpgKXQ
+                      Instant Morph (Advanced) and Slope Jump (Advanced) and Standable Terrain (Advanced)
+              # https://youtu.be/-jzu_Phf0lA?si=czd6_MNYjINbEBOV
+              Bomb Slot without Bombs (Ludicrous) and Instant Morph (Ludicrous) and Slope Jump (Advanced) and Activate Bomb Slot without Bombs (Instant Morph)
+  > Room Center
+      Trivial
+
+> Door to Sentinel's Path; Heals? False
+  * Layers: default
+  * Normal Door to Sentinel's Path/Door to Watch Station
+  * Extra - dock_name: South
+  > Door to Watch Station Access
+      All of the following:
+          Morph Ball and Spider Ball
+          Any of the following:
+              # https://www.youtube.com/watch?v=2zk_smeEbm8&t=19s
+              Morph Ball Bomb or Instant Morph (Intermediate)
+              # https://www.youtube.com/watch?v=2zk_smeEbm8
+              Boost Ball and Wall Boost (Advanced)
+  > Room Center
+      Trivial
+
+> Pickup (Dark Ammo); Heals? False
+  * Layers: default
+  * Pickup 105; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'BeamAmmoExpansion',
+ 'connections': [],
+ 'removals': [1573249, 1573238],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 1573246,
+               'hud_memo': 1573253,
+               'streamed_audio': 1573250,
+               'sound': 1573425,
+               'audio_fade': 1573408}}
+  > Room Center
+      Trivial
+
+> Event - Watch Station Portal Gate; Heals? False
+  * Layers: default
+  * Event Watch Station Portal Gate
+  > Pickup (Dark Ammo)
+      # https://www.youtube.com/watch?v=09eqchpgKXQ&t=51s
+      Morph Ball Bomb and Morph Ball and Spider Ball and Standable Terrain (Beginner)
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Watch Station Access
+      # No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc
+      Space Jump Boots or Movement (Beginner)
+  > Door to Central Area Transport West
+      Trivial
+  > Portal to Aerial Training Site
+      After Watch Station Portal Gate
+  > Door to Grand Abyss
+      # No Space Jump https://www.youtube.com/watch?v=z2zCtuLRRvc&t=8s
+      Space Jump Boots or Movement (Beginner)
+  > Lore Scan
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Generic Hint; Requirement? (Cobalt Translator ≥ 1 and Scan Visor ≥ 1)
+  * Extra - translator: Cobalt
+  * Extra - string_asset_id: 1948976790
+  > Room Center
+      Trivial
+
+----------------
+Transport to Torvus Bog
+Extra - asset_id: 3145160350
+> Door to Torvus Transport Access; Heals? False
+  * Layers: default
+  * Normal Door to Torvus Transport Access/Door to Transport to Torvus Bog
+  * Extra - dock_name: East
+  > Elevator to Torvus Bog
+      Scan Visor
+
+> Elevator to Torvus Bog; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Sanctuary Fortress/Elevator to Sanctuary Fortress; Custom name: Sanctuary Vault side
+  * Extra - scan_asset_id: 158293345
+  * Extra - teleporter_instance_id: 1638535
+  * Extra - keep_name_when_vanilla: False
+  > Door to Torvus Transport Access
+      Trivial
+
+----------------
+Dynamo Access
+Extra - asset_id: 1120426713
+> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Dark Door to Dynamo Works/Door to Dynamo Access
+  * Extra - dock_name: East
+  > Door to Main Gyro Chamber
+      Any of the following:
+          Morph Ball
+          All of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=w6OEyFUTUyw
+              Slope Jump (Beginner) or Standable Terrain (Beginner)
+
+> Door to Main Gyro Chamber; Heals? False
+  * Layers: default
+  * Dark Door to Main Gyro Chamber/Door to Dynamo Access
+  * Extra - dock_name: West
+  > Door to Dynamo Works
+      Any of the following:
+          Morph Ball
+          All of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=w6OEyFUTUyw
+              Slope Jump (Beginner) or Standable Terrain (Beginner)
+
+----------------
+Workers Path
+Extra - asset_id: 65839695
+> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dynamo Works/Door to Workers Path
+  * Extra - dock_name: North
+  > Door to Sanctuary Temple
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          All of the following:
+              # NSJ with cannons
+              Morph Ball and Scan Visor
+              Any of the following:
+                  Space Jump Boots or Movement (Intermediate)
+                  # https://youtu.be/5zsYbZsSTPA
+                  Morph Ball Bomb and Bomb Jump (Advanced)
+          # NSJ with Screw Attack at Z-Axis https://youtu.be/_OKEYHWQQr0?t=14
+          Morph Ball Bomb and Bomb Space Jump (Intermediate) and Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Sanctuary Temple; Heals? False
+  * Layers: default
+  * Normal Door to Sanctuary Temple/Door to Workers Path
+  * Extra - dock_name: West
+  > Door to Dynamo Works
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          All of the following:
+              # NSJ using Cannon
+              Morph Ball and Scan Visor
+              Any of the following:
+                  Space Jump Boots or Movement (Intermediate)
+                  Morph Ball Bomb and Bomb Jump (Advanced)
+          # NSJ with Screw Attack at Z-Axis https://youtu.be/_OKEYHWQQr0
+          Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          # Boost Jump https://youtu.be/s2bGJML2QGo
+          Boost Ball and Morph Ball and Space Jump Boots and Boost Jump (Advanced)
+
+----------------
+Dynamo Storage
+Extra - asset_id: 527902968
+> Door to Dynamo Works; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Dynamo Works/Door to Dynamo Storage
+  * Extra - dock_name: group1_West
+  > Portal to Hive Cache 3
+      Trivial
+
+> Portal to Hive Cache 3; Heals? False
+  * Layers: default
+  * Dark Portal to Hive Cache 3/Portal to Dynamo Storage
+  * Extra - dock_name: VirtualWest
+  > Door to Dynamo Works
+      Trivial
+
+----------------
+Sentinel's Path
+Extra - asset_id: 2765624647
+Hint Features - Echo Visor Lock
+> Door to Watch Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Watch Station/Door to Sentinel's Path
+  * Extra - dock_name: North
+  > Front of Echo Gate
+      Trivial
+
+> Door to Sanctuary Temple; Heals? False
+  * Layers: default
+  * Annihilator Door to Sanctuary Temple/Door to Sentinel's Path
+  * Extra - dock_name: East
+  > Front of Echo Gate
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 107; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'MissileExpansion',
+ 'connections': [],
+ 'removals': [2097357],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 2097363,
+               'hud_memo': 2097355,
+               'streamed_audio': 2097354,
+               'sound': 2097352,
+               'audio_fade': 2097356}}
+  > Front of Echo Gate
+      Trivial
+
+> Front of Echo Gate; Heals? False
+  * Layers: default
+  > Door to Watch Station
+      Trivial
+  > Door to Sanctuary Temple
+      Trivial
+  > Pickup (Missile)
+      All of the following:
+          Annihilator Beam and Echo Visor
+          Any of the following:
+              Charge Beam
+              Dark Ammo ≥ 4 and Light Ammo ≥ 4
+
+----------------
+Watch Station Access
+Extra - asset_id: 1349974475
+Hint Features - Abyss, Grapple Point
+> Door to Watch Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Light Door to Watch Station/Door to Watch Station Access
+  * Extra - dock_name: West
+  > Door to Main Gyro Chamber
+      # https://www.youtube.com/watch?v=L92JqO2ZUtk
+      Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Next to Scan Post
+      Trivial
+
+> Door to Main Gyro Chamber; Heals? False
+  * Layers: default
+  * Light Door to Main Gyro Chamber/Door to Watch Station Access
+  * Extra - dock_name: East
+  > Next to Scan Post
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          Grapple Beam and After Watch Station Access Grapple Points
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  # https://www.youtube.com/watch?v=RZF84ZLzefI&t=43s
+                  Space Jump Boots and Roll Jump (Advanced) and Terminal Fall Abuse (Advanced) and Normal Damage ≥ 10
+                  All of the following:
+                      # https://www.youtube.com/watch?v=yEyxa-yLVFM
+                      Boost Ball and Boost Jump (Advanced)
+                      Any of the following:
+                          Space Jump Boots
+                          Terminal Fall Abuse (Advanced) and Normal Damage ≥ 10
+          # https://www.youtube.com/watch?v=RZF84ZLzefI&t=54s
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced) and Terminal Fall Abuse (Advanced) and Normal Damage ≥ 10
+          # https://www.youtube.com/watch?v=x2Uf8ipyjKA
+          Morph Ball Bomb and Bomb Space Jump (Advanced) and Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          # https://www.youtube.com/watch?v=RZF84ZLzefI&t=73s
+          Scan Visor and Space Jump Boots and Extended Dash (Expert) and Terminal Fall Abuse (Advanced) and Normal Damage ≥ 10
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 108; Category? Major
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'EnergyTank',
+ 'connections': [],
+ 'removals': [2162721],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+ 'instances': {'pickup': 2162719,
+               'hud_memo': 2162722,
+               'streamed_audio': 2162726,
+               'sound': 2162729,
+               'audio_fade': 2162725}}
+  > Next to Scan Post
+      Trivial
+
+> Event - Watch Station Access Grapple Points; Heals? False
+  * Layers: default
+  * Event Watch Station Access Grapple Points
+  > Next to Scan Post
+      Trivial
+
+> Next to Scan Post; Heals? False
+  * Layers: default
+  > Door to Watch Station
+      Any of the following:
+          Space Jump Boots
+          # https://www.youtube.com/watch?v=L92JqO2ZUtk&t=54s
+          Scan Visor and After Watch Station Access Grapple Points and Combat/Scan Dash (Intermediate)
+          # https://www.youtube.com/watch?v=L92JqO2ZUtk&t=76s
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          # https://www.youtube.com/watch?v=L92JqO2ZUtk&t=44s
+          Movement (Beginner) and Use Screw Attack (No Space Jump)
+  > Door to Main Gyro Chamber
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          Grapple Beam and After Watch Station Access Grapple Points
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  # https://www.youtube.com/watch?v=RZF84ZLzefI
+                  Space Jump Boots and Roll Jump (Advanced) and Terminal Fall Abuse (Advanced) and Normal Damage ≥ 10
+                  All of the following:
+                      # https://youtu.be/yEyxa-yLVFM?list=PLevfta9o_QKWuQNXAnmBXtzW4nmU5VLyN&t=11
+                      Boost Ball and Boost Jump (Advanced)
+                      Any of the following:
+                          Space Jump Boots
+                          Terminal Fall Abuse (Advanced) and Normal Damage ≥ 10
+          # https://www.youtube.com/watch?v=RZF84ZLzefI&t=11s
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced) and Terminal Fall Abuse (Advanced) and Normal Damage ≥ 10
+          # https://www.youtube.com/watch?v=RZF84ZLzefI&t=25s
+          Scan Visor and Space Jump Boots and Extended Dash (Expert) and Terminal Fall Abuse (Advanced) and Dark World Damage ≥ 10
+  > Pickup (Energy Tank)
+      Trivial
+  > Event - Watch Station Access Grapple Points
+      Scan Visor
+
+----------------
+Grand Abyss
+Extra - asset_id: 595516932
+> Door to Vault; Heals? False
+  * Layers: default
+  * Normal Door to Vault/Door to Grand Abyss
+  * Extra - dock_name: Ceiling
+  > Event - Grand Abyss (Vault Side)
+      Trivial
+
+> Door to Watch Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Watch Station/Door to Grand Abyss
+  * Extra - dock_name: East
+  > Event - Grand Abyss (Watch Station Side)
+      Before Grand Abyss
+  > Event - Grand Abyss (Vault Side)
+      Any of the following:
+          After Grand Abyss and Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=KSEnyKhKPfs
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  # https://www.youtube.com/watch?v=tyWptkkVeaM
+                  Boost Ball and Morph Ball and Boost Jump (Advanced)
+                  # https://www.youtube.com/watch?v=U9s1qZJqnl4
+                  Scan Visor and Extended Dash (Expert)
+
+> Portal from Judgment Drop; Heals? False
+  * Layers: default
+  * No Return Portal to Judgment Drop/Portal to Grand Abyss
+  * Extra - dock_name: VirtualNorth
+  > Event - Grand Abyss (Vault Side)
+      Any of the following:
+          Space Jump Boots
+          # https://www.youtube.com/watch?v=GK3YgiXGNFk
+          Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+
+> Event - Grand Abyss (Watch Station Side); Heals? False
+  * Layers: default
+  * Event Grand Abyss
+  > Door to Watch Station
+      Trivial
+  > Event - Grand Abyss (Vault Side)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=KSEnyKhKPfs
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          All of the following:
+              Space Jump Boots
+              Any of the following:
+                  # https://www.youtube.com/watch?v=tyWptkkVeaM
+                  Boost Ball and Morph Ball and Boost Jump (Advanced)
+                  All of the following:
+                      Scan Visor
+                      Any of the following:
+                          # https://www.youtube.com/watch?v=HFPeu4D8Yo0
+                          Before Grand Abyss (Vault Side) and Combat/Scan Dash (Expert)
+                          # https://www.youtube.com/watch?v=U9s1qZJqnl4
+                          Extended Dash (Expert)
+
+> Event - Grand Abyss (Vault Side); Heals? False
+  * Layers: default
+  * Event Grand Abyss (Vault Side)
+  > Door to Vault
+      Trivial
+  > Event - Grand Abyss (Watch Station Side)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=KSEnyKhKPfs&t=13s
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          # https://www.youtube.com/watch?v=j4zqFghBcfM
+          Scan Visor and Space Jump Boots and Extended Dash (Ludicrous)
+          # https://youtu.be/4mjY6vPZHyE
+          Morph Ball Bomb and Morph Ball and Scan Visor and Space Jump Boots and Bomb Space Jump (Advanced) and Combat/Scan Dash (Expert) and Extended Dash (Expert) and Standable Terrain (Expert)
+
+----------------
+Main Gyro Chamber
+Extra - asset_id: 1932798548
+Hint Features - Bomb Slot, Boost Spinner, Echo Visor Lock, Elevator, Luminoth Lore, Kinetic Orb Cannon, Spider Track
+> Door to Dynamo Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Dark Door to Dynamo Access/Door to Main Gyro Chamber
+  * Extra - dock_name: East1
+  > Door to Watch Station Access
+      After Main Gyro Chamber Spinner Gate
+  > Room Bottom
+      Scan Visor
+  > Reactor - Save Station Side
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              # https://www.youtube.com/watch?v=qYFQpPuZhI4
+              Screw Attack into Tunnels/Openings (Advanced) and Use Screw Attack (Space Jump)
+              Boost Ball and Wall Boost (Expert)
+
+> Door to Save Station B; Heals? False
+  * Layers: default
+  * Missile Blast Shield to Save Station B/Door to Main Gyro Chamber
+  * Extra - dock_name: West_Save
+  > Event - Main Gyro Chamber Puzzle 1
+      All of the following:
+          Any of the following:
+              Missile ≥ 4 or Power Beam
+              Knowledge (Advanced) and Use Screw Attack (Space Jump)
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              All of the following:
+                  # https://www.youtube.com/watch?v=u1EZwK9MrpU
+                  Charge Beam and Dark Ammo ≥ 60 and Missile ≥ 10 and Space Jump Boots and Bomb Slot without Bombs (Advanced)
+                  Any of the following:
+                      Dark Beam and Darkburst
+                      Annihilator Beam and Light Ammo ≥ 60 and Sonic Boom
+  > Reactor - Save Station Side
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              Boost Ball and Wall Boost (Expert)
+              # https://www.youtube.com/watch?v=qYFQpPuZhI4
+              Screw Attack into Tunnels/Openings (Advanced) and Use Screw Attack (Space Jump)
+
+> Door to Watch Station Access; Heals? False
+  * Layers: default
+  * Light Door to Watch Station Access/Door to Main Gyro Chamber
+  * Extra - dock_name: West21
+  > Door to Dynamo Access
+      After Main Gyro Chamber Spinner Gate
+  > Door to Temple Access
+      Any of the following:
+          Scan Visor
+          Morph Ball Bomb and Bomb Space Jump (Advanced) and Use Screw Attack (Space Jump)
+  > Event - Main Gyro Chamber Spinner Gate
+      Boost Ball and Morph Ball
+  > Reactor - Watch Station Side
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Morph Ball Bomb
+              Boost Ball and Wall Boost (Expert)
+              # Works the same from all sides https://www.youtube.com/watch?v=qYFQpPuZhI4
+              Screw Attack into Tunnels/Openings (Advanced) and Use Screw Attack (Space Jump)
+
+> Door to Temple Access; Heals? False
+  * Layers: default
+  * Normal Door to Temple Access/Door to Main Gyro Chamber
+  * Extra - dock_name: South
+  > Door to Watch Station Access
+      Scan Visor
+  > Puzzle 2 Debris
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Power Bomb
+              Screw Attack and Knowledge (Beginner)
+
+> Door to Checkpoint Station; Heals? False
+  * Layers: default
+  * Power Bomb Blast Shield to Checkpoint Station/Door to Main Gyro Chamber
+  * Extra - dock_name: North1
+  > Room Bottom
+      All of the following:
+          Boost Ball and Morph Ball
+          Any of the following:
+              After Main Gyro Chamber Puzzle 1
+              Movement (Intermediate) and Use Screw Attack (Space Jump)
+  > Reactor - Save Station Side
+      All of the following:
+          Boost Ball and Morph Ball
+          After Main Gyro Chamber Puzzle 2 or Movement (Advanced)
+  > Reactor - Watch Station Side
+      All of the following:
+          Boost Ball and Morph Ball
+          After Main Gyro Chamber Puzzle 2 or Movement (Advanced)
+
+> Pickup (Power Bomb); Heals? False
+  * Layers: default
+  * Pickup 111; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'PowerBombExpansion',
+ 'connections': [],
+ 'removals': [136577154],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 0.0},
+ 'instances': {'pickup': 136577160,
+               'hud_memo': 136577150,
+               'streamed_audio': 136577155,
+               'sound': 136577159,
+               'audio_fade': 136577153,
+               'cutscene_model': {'instance': 2359569, 'layer': 'Cannon'}}}
+  > Room Bottom
+      Trivial
+
+> Event - Main Gyro Chamber Puzzle 1; Heals? False
+  * Layers: default
+  * Event Main Gyro Chamber Puzzle 1
+  > Door to Save Station B
+      Trivial
+
+> Event - Main Gyro Chamber Puzzle 2; Heals? False
+  * Layers: default
+  * Event Main Gyro Chamber Puzzle 2
+  > Door to Temple Access
+      Trivial
+
+> Event - Main Gyro Chamber Echo Gate; Heals? False
+  * Layers: default
+  * Event Main Gyro Chamber Echo Gate
+  > Room Bottom
+      Trivial
+
+> Event - Main Gyro Chamber Spinner Gate; Heals? False
+  * Layers: default
+  * Event Main Gyro Chamber Spinner Gate
+  > Door to Watch Station Access
+      Trivial
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Door to Dynamo Access
+      Scan Visor
+  > Door to Temple Access
+      Morph Ball and After Main Gyro Chamber Echo Gate
+  > Pickup (Power Bomb)
+      Morph Ball and After Main Gyro Chamber Echo Gate
+  > Event - Main Gyro Chamber Echo Gate
+      All of the following:
+          Annihilator Beam and Echo Visor and After Main Gyro Chamber Puzzle 2
+          Any of the following:
+              Charge Beam
+              Dark Ammo ≥ 4 and Light Ammo ≥ 4
+  > Lore Scan
+      Trivial
+
+> Puzzle 2 Debris; Heals? False
+  * Layers: default
+  > Event - Main Gyro Chamber Puzzle 2
+      All of the following:
+          After Main Gyro Chamber Puzzle 1
+          Any of the following:
+              Missile ≥ 7 or Power Beam
+              Knowledge (Advanced) and Use Screw Attack (Space Jump)
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              All of the following:
+                  # https://www.youtube.com/watch?v=ZAXCWoJlxfM
+                  Charge Beam and Dark Ammo ≥ 60 and Missile ≥ 10 and Space Jump Boots and Bomb Slot without Bombs (Advanced)
+                  Any of the following:
+                      Dark Beam and Darkburst
+                      Annihilator Beam and Light Ammo ≥ 60 and Sonic Boom
+
+> Reactor - Save Station Side; Heals? False
+  * Layers: default
+  > Door to Dynamo Access
+      Morph Ball
+  > Door to Save Station B
+      Morph Ball
+  > Room Bottom
+      Any of the following:
+          After Main Gyro Chamber Puzzle 1
+          Movement (Intermediate) and Use Screw Attack (No Space Jump)
+  > Reactor - Watch Station Side
+      Any of the following:
+          After Main Gyro Chamber Puzzle 1
+          Movement (Ludicrous) and Use Screw Attack (Space Jump)
+
+> Reactor - Watch Station Side; Heals? False
+  * Layers: default
+  > Door to Watch Station Access
+      Morph Ball
+  > Door to Checkpoint Station
+      All of the following:
+          Boost Ball and Morph Ball and After Main Gyro Chamber Puzzle 2
+          Any of the following:
+              Spider Ball
+              # Instant Morph -> https://youtu.be/d-yq4nqriDo?si=pCKZzyH7Q8yg6MUH
+              Space Jump Boots and Instant Morph (Ludicrous) and Standable Terrain (Advanced)
+  > Room Bottom
+      Movement (Intermediate) and Use Screw Attack (No Space Jump)
+  > Reactor - Save Station Side
+      Any of the following:
+          After Main Gyro Chamber Puzzle 1
+          Movement (Ludicrous) and Use Screw Attack (Space Jump)
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Generic Hint; Requirement? (Cobalt Translator ≥ 1 and Scan Visor ≥ 1)
+  * Extra - translator: Cobalt
+  * Extra - string_asset_id: 4115881194
+  > Room Bottom
+      Trivial
+
+----------------
+Sanctuary Temple
+Extra - asset_id: 1815493844
+Hint Features - Spider Track, Temple, Translator Gate
+> Door to Controller Access; Heals? False
+  * Layers: default
+  * Normal Door to Controller Access/Door to Sanctuary Temple
+  * Extra - dock_name: South
+  > Room Center (Bottom)
+      Trivial
+  > Room Center (Top)
+      Any of the following:
+          Grapple Beam or Use Screw Attack (Space Jump)
+          # Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Workers Path; Heals? False
+  * Layers: default
+  * Normal Door to Workers Path/Door to Sanctuary Temple
+  * Extra - dock_name: East
+  > Translator Gate
+      Trivial
+
+> Door to Temple Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Temple Access/Door to Sanctuary Temple
+  * Extra - dock_name: North
+  > Room Center (Bottom)
+      Trivial
+  > Room Center (Top)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=FsMEbSXfSx0
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+          # https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Door to Sentinel's Path; Heals? False
+  * Layers: default
+  * Annihilator Door to Sentinel's Path/Door to Sanctuary Temple
+  * Extra - dock_name: West
+  > Room Center (Bottom)
+      Trivial
+  > Room Center (Top)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          # Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          # https://www.youtube.com/watch?v=O3RgTYbAnZo&t=6s
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+
+> Room Center (Bottom); Heals? False
+  * Layers: default
+  > Door to Temple Access
+      All of the following:
+          Morph Ball and Spider Ball
+          Any of the following:
+              Boost Ball
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+  > Room Center (Top)
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          All of the following:
+              Grapple Beam
+              Space Jump Boots or Movement (Beginner)
+          All of the following:
+              Space Jump Boots
+              Combat/Scan Dash (Intermediate) or Standable Terrain (Intermediate)
+          Morph Ball Bomb and Morph Ball and Spider Ball and Bomb Jump (Intermediate)
+  > Out of Bounds
+      # https://www.youtube.com/watch?v=qvdJAfS-ano
+      Single Room Out of Bounds (Expert) and Use Screw Attack (No Space Jump)
+  > Event - Temple Access Reloaded (Bottom)
+      After Temple Access (Sanctuary) Quad
+
+> Room Center (Top); Heals? False
+  * Layers: default
+  > Door to Controller Access
+      Any of the following:
+          Grapple Beam or Use Screw Attack (Space Jump)
+          All of the following:
+              Scan Visor and Space Jump Boots
+              Any of the following:
+                  # https://www.youtube.com/watch?v=0MYrEDFJ9iY
+                  Combat/Scan Dash (Expert) and Standable Terrain (Expert)
+                  # https://www.youtube.com/watch?v=kvfZxoNy004
+                  Extended Dash (Expert)
+          # https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Door to Temple Access
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=FsMEbSXfSx0
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+          # Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Door to Sentinel's Path
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=O3RgTYbAnZo
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+          # Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Room Center (Bottom)
+      Trivial
+  > Translator Gate
+      Any of the following:
+          Grapple Beam or Use Screw Attack (Space Jump)
+          # https://www.youtube.com/watch?v=0MYrEDFJ9iY
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+          # Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          Scan Visor and Extended Dash (Expert)
+  > Event - Temple Access Reloaded (Top)
+      After Temple Access (Sanctuary) Quad
+
+> Translator Gate; Heals? False
+  * Layers: default
+  * Configurable Node
+  * Extra - gate_index: 16
+  * Extra - vanilla_actual: Cobalt
+  * Extra - vanilla_color: Cobalt
+  > Door to Workers Path
+      Trivial
+  > Room Center (Bottom)
+      Trivial
+  > Room Center (Top)
+      Any of the following:
+          Grapple Beam or Use Screw Attack (Space Jump)
+          # Works the same as: https://www.youtube.com/watch?v=l5vF1J2hO-Q
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+          # https://www.youtube.com/watch?v=RWg9H4wuGWc
+          Scan Visor and Space Jump Boots and Combat/Scan Dash (Advanced)
+
+> Out of Bounds; Heals? False
+  * Layers: default
+  > Door to Controller Access
+      Trivial
+  > Door to Temple Access
+      Trivial
+  > Door to Sentinel's Path
+      Trivial
+  > Room Center (Top)
+      Trivial
+  > Translator Gate
+      Trivial
+
+> Event - Temple Access Reloaded (Top); Heals? False
+  * Layers: default
+  * Event Temple Access (Sanctuary) Reloaded after Quad
+  > Room Center (Top)
+      Trivial
+
+> Event - Temple Access Reloaded (Bottom); Heals? False
+  * Layers: default
+  * Event Temple Access (Sanctuary) Reloaded after Quad
+  > Room Center (Bottom)
+      Trivial
+
+----------------
+Vault
+Extra - asset_id: 1378173793
+Hint Features - Abyss, Bomb Slot, Boost Spinner, Portal
+> Door to Grand Abyss; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Grand Abyss/Door to Vault
+  * Extra - dock_name: East
+  > Portal to Vault Attack Portal (Dark)
+      After Vault Bridge
+  > Event - Vault Bridge
+      Scan Visor
+  > Event - Vault Spinners
+      All of the following:
+          Boost Ball and Morph Ball
+          Any of the following:
+              Use Screw Attack (Space Jump)
+              All of the following:
+                  # Scan Dash -> https://www.youtube.com/watch?v=1uWwpO7IHtk
+                  Scan Visor and Space Jump Boots
+                  # Extended Dash -> https://www.youtube.com/watch?v=WU-uQkzCycA
+                  Combat/Scan Dash (Advanced) or Extended Dash (Advanced)
+              Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+              # Boost Jump -> https://youtu.be/slAxhRMksBk
+              Boost Jump (Expert) and Terminal Fall Abuse (Ludicrous)
+  > Above Bomb Slot
+      Before Vault Bridge
+
+> Portal to Vault Attack Portal (Dark); Heals? False
+  * Layers: default
+  * Dark Portal to Vault Attack Portal/Portal to Vault (Light)
+  * Extra - dock_name: VirtualWest
+  > Door to Grand Abyss
+      All of the following:
+          After Vault Bridge
+          Any of the following:
+              Morph Ball Bomb and Morph Ball and Space Jump Boots and Bomb Space Jump (Intermediate)
+              All of the following:
+                  Terminal Fall Abuse (Beginner) and Normal Damage ≥ 10
+                  Any of the following:
+                      Space Jump Boots
+                      Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+  > Front of Bomb Slot
+      All of the following:
+          After Vault Bridge
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              Movement (Beginner) and Use Screw Attack (No Space Jump)
+
+> Portal to Vault Attack Portal (Scan); Heals? False
+  * Layers: default
+  * Scan Portal to Vault Attack Portal/Portal to Vault (Scan)
+  * Extra - dock_name: VirtualEast
+  > Event - Vault Spinners
+      All of the following:
+          Boost Ball and Morph Ball
+          Any of the following:
+              Space Jump Boots
+              All of the following:
+                  Terminal Fall Abuse (Advanced) and Normal Damage ≥ 20
+                  Any of the following:
+                      Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+                      All of the following:
+                          Scan Visor
+                          Any of the following:
+                              Extended Dash (Advanced)
+                              # https://www.youtube.com/watch?v=OaKQNlqWlNA
+                              Combat/Scan Dash (Expert) and Terminal Fall Abuse (Ludicrous) and Normal Damage ≥ 40
+  > Above Bomb Slot
+      Space Jump Boots and After Vault Bomb Slot
+
+> Pickup (Screw Attack); Heals? False
+  * Layers: default
+  * Pickup 112; Category? Major
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'ScrewAttack',
+ 'connections': [{'target': 137101695, 'message': 'ACTV'},
+                 {'target': 137101695, 'message': 'ZERO'},
+                 {'target': 2884059, 'message': 'ZERO'}],
+ 'removals': [2883693, 137101675],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 2883687,
+               'hud_memo': 2883697,
+               'streamed_audio': 2883698,
+               'sound': 2883688,
+               'audio_fade': 2883694}}
+  > Above Bomb Slot
+      Trivial
+
+> Event - Vault Bridge; Heals? False
+  * Layers: default
+  * Event Vault Bridge
+  > Portal to Vault Attack Portal (Dark)
+      Trivial
+
+> Event - Vault Spinners; Heals? False
+  * Layers: default
+  * Event Vault Puzzle
+  > Portal to Vault Attack Portal (Scan)
+      Any of the following:
+          Space Jump Boots
+          Scan Visor and Combat/Scan Dash (Expert) and Terminal Fall Abuse (Expert) and Normal Damage ≥ 10
+          Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Above Bomb Slot
+      Any of the following:
+          Use Screw Attack (Space Jump)
+          All of the following:
+              Scan Visor and Space Jump Boots
+              Any of the following:
+                  Extended Dash (Advanced)
+                  Combat/Scan Dash (Intermediate) and Terminal Fall Abuse (Intermediate) and Normal Damage ≥ 10
+          Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Use Screw Attack (Space Jump)
+
+> Event - Vault Bomb Slot; Heals? False
+  * Layers: default
+  * Event Vault Bomb Slot
+  > Pickup (Screw Attack)
+      Any of the following:
+          Enabled Allow Vanilla Screw Attack or Use Screw Attack (Space Jump)
+          Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+
+> Front of Bomb Slot; Heals? False
+  * Layers: default
+  > Event - Vault Bomb Slot
+      All of the following:
+          After Vault Puzzle
+          Any of the following:
+              Morph Ball Bomb and Morph Ball
+              # https://www.youtube.com/watch?v=rZOFeOuPkRA
+              Bomb Slot without Bombs (Advanced) and Instant Morph (Advanced) and Activate Bomb Slot without Bombs (Instant Morph)
+
+> Above Bomb Slot; Heals? False
+  * Layers: default
+  > Door to Grand Abyss
+      Any of the following:
+          Before Vault Bridge or Use Screw Attack (Space Jump)
+          Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Portal to Vault Attack Portal (Dark)
+      After Vault Bridge
+  > Portal to Vault Attack Portal (Scan)
+      All of the following:
+          After Vault Bomb Slot
+          Space Jump Boots or Movement (Intermediate)
+  > Pickup (Screw Attack)
+      All of the following:
+          After Vault Bomb Slot
+          Any of the following:
+              Enabled Allow Vanilla Screw Attack or Use Screw Attack (Space Jump)
+              Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Event - Vault Bridge
+      Scan Visor
+  > Front of Bomb Slot
+      After Vault Puzzle
+
+----------------
+Temple Access
+Extra - asset_id: 3312357786
+Hint Features - Boost Spinner, Dark Visor Lock, Echo Visor Lock, Morph Ball Tunnel, Kinetic Orb Cannon
+> Door to Main Gyro Chamber; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Main Gyro Chamber/Door to Temple Access
+  * Extra - dock_name: North
+  > Pickup (Missile)
+      All of the following:
+          Morph Ball and Space Jump Boots
+          Any of the following:
+              All of the following:
+                  Morph Ball Bomb
+                  Any of the following:
+                      # https://www.youtube.com/watch?v=apnuLwmVQZ8&t=12s
+                      Bomb Space Jump (Advanced)
+                      # https://www.youtube.com/watch?v=apnuLwmVQZ8
+                      Screw Attack and Bomb Space Jump (Intermediate)
+              # https://www.youtube.com/watch?v=y5GgfLSG2lQ
+              Screw Attack and Standable Terrain (Intermediate)
+  > Room Center
+      Trivial
+
+> Door to Sanctuary Temple; Heals? False
+  * Layers: default
+  * Normal Door to Sanctuary Temple/Door to Temple Access
+  * Extra - dock_name: South
+  > Room Center
+      Trivial
+
+> Pickup (Missile); Heals? False
+  * Layers: default
+  * Pickup 113; Category? Minor
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'MissileExpansion',
+ 'connections': [],
+ 'removals': [3014809],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 3014807,
+               'hud_memo': 3014813,
+               'streamed_audio': 3014960,
+               'sound': 3014805,
+               'audio_fade': 3014958}}
+  > Room Center
+      Boost Ball and Morph Ball
+
+> Room Center; Heals? False
+  * Layers: default
+  > Door to Main Gyro Chamber
+      All of the following:
+          After Temple Access (Sanctuary) Quad
+          Any of the following:
+              # https://www.youtube.com/watch?v=OwfkdD8Eq5Y
+              Slope Jump (Intermediate) and Use Screw Attack (Space Jump)
+              # https://www.youtube.com/watch?v=_F2o-m4I9mg
+              No Space Jump Boots and Screw Attack at Z-Axis (Beginner) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+              All of the following:
+                  Morph Ball
+                  Any of the following:
+                      After Temple Access (Sanctuary) Activate Cannon
+                      # https://www.youtube.com/watch?v=BDpZiXoh7To
+                      Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced)
+              # https://www.youtube.com/watch?v=QoXSNfUE7c0
+              Space Jump Boots and After Temple Access (Sanctuary) Reloaded after Quad and Combat/Scan Dash (Expert) and Jump Off Enemy (Expert)
+  > Door to Sanctuary Temple
+      After Temple Access (Sanctuary) Quad
+  > Pickup (Missile)
+      Echo Visor and Morph Ball and After Temple Access (Sanctuary) Activate Cannon
+  > Event - Quad
+      Any of the following:
+          Kill Quad MB
+          All of the following:
+              Knowledge (Beginner)
+              Any of the following:
+                  Morph Ball and After Temple Access (Sanctuary) Activate Cannon
+                  Screw Attack at Z-Axis (Intermediate) and Disabled Room Randomizer and Use Screw Attack (No Space Jump)
+  > Event - Activate Cannon
+      Dark Visor and Missile ≥ 4 and Seeker Launcher
+
+> Event - Quad; Heals? False
+  * Layers: default
+  * Event Temple Access (Sanctuary) Quad
+  > Room Center
+      Trivial
+
+> Event - Activate Cannon; Heals? False
+  * Layers: default
+  * Event Temple Access (Sanctuary) Activate Cannon
+  > Room Center
+      Trivial
+
+----------------
+Checkpoint Station
+Extra - asset_id: 2219469068
+> Door to Main Gyro Chamber; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Main Gyro Chamber/Door to Checkpoint Station
+  * Extra - dock_name: South
+  > Door to Aerie Transport Station
+      Trivial
+
+> Door to Aerie Transport Station; Heals? False
+  * Layers: default
+  * Normal Door to Aerie Transport Station/Door to Checkpoint Station
+  * Extra - dock_name: North
+  > Door to Main Gyro Chamber
+      Trivial
+
+----------------
+Save Station B
+Extra - asset_id: 3811341152
+Extra - unlocked_save_station: True
+> Save Station; Heals? True; Spawn Point; Default Node
+  * Layers: default
+  > Door to Main Gyro Chamber
+      Trivial
+
+> Door to Main Gyro Chamber; Heals? False
+  * Layers: default
+  * Normal Door to Main Gyro Chamber/Door to Save Station B
+  * Extra - dock_name: East
+  > Save Station
+      Trivial
+
+----------------
+Controller Access
+Extra - asset_id: 3902528658
+> Door to Sanctuary Temple; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Sanctuary Temple/Door to Controller Access
+  * Extra - dock_name: North
+  > Door to Sanctuary Energy Controller
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+          Screw Attack and Bomb Slot without Bombs (Expert) and Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Activate Bomb Slot without Bombs (No Space Jump)
+
+> Door to Sanctuary Energy Controller; Heals? False
+  * Layers: default
+  * Normal Door to Sanctuary Energy Controller/Door to Controller Access
+  * Extra - dock_name: South1
+  > Door to Sanctuary Temple
+      Any of the following:
+          Morph Ball Bomb and Morph Ball
+          # https://www.youtube.com/watch?v=-oxfsO9wVzs
+          Bomb Slot without Bombs (Advanced) and Activate Bomb Slot without Bombs (Space Jump)
+          # https://www.youtube.com/watch?v=3oJFz3WQH3Y
+          Screw Attack and Bomb Slot without Bombs (Expert) and Screw Attack at Z-Axis (Advanced) and Disabled Room Randomizer and Activate Bomb Slot without Bombs (No Space Jump)
+
+----------------
+Aerie Transport Station
+Extra - asset_id: 3136899603
+> Door to Checkpoint Station; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Checkpoint Station/Door to Aerie Transport Station
+  * Extra - dock_name: South
+  > Dock to Aerie Access
+      Before Dark Samus 2
+  > Elevator to Aerie
+      After Dark Samus 2
+
+> Dock to Aerie Access; Heals? False
+  * Layers: default
+  * Open Passage to Aerie Access/Dock to Aerie Transport Station
+  * Extra - dock_name: Ceiling
+
+> Elevator to Aerie; Heals? False
+  * Layers: default
+  * Elevator to Aerie/Elevator to Aerie Transport Station
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 204865660
+  * Extra - keep_name_when_vanilla: True
+  > Door to Checkpoint Station
+      Trivial
+
+----------------
+Sanctuary Energy Controller
+Extra - asset_id: 218311274
+Hint Features - Abyss, Energy Controller, Light Energy Transport, Luminoth Lore, Luminoth Corpse
+> Door to Controller Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Normal Door to Controller Access/Door to Sanctuary Energy Controller
+  * Extra - dock_name: North
+  > Pickup (Cobalt Translator)
+      Trivial
+  > Event - Sanctuary Energy Returned
+      After Ing Hive Energy Taken
+  > Lore Scan
+      Trivial
+  > Light Transport
+      Trivial
+
+> Pickup (Cobalt Translator); Heals? False
+  * Layers: default
+  * Pickup 116; Category? Major
+  * Extra - location_data:
+{'type': 'custom',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'CobaltTranslator',
+ 'connections': [],
+ 'removals': [3604525, 272040655],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'collision_size': {'x': 1.0, 'y': 1.0, 'z': 2.0},
+ 'layer': 'Default'}
+  > Door to Controller Access
+      Trivial
+
+> Event - Sanctuary Energy Returned; Heals? False
+  * Layers: default
+  * Event Sanctuary Energy Returned
+  > Door to Controller Access
+      Trivial
+
+> Lore Scan; Heals? False
+  * Layers: default
+  * Generic Hint; Requirement? (Cobalt Translator ≥ 1 and Scan Visor ≥ 1)
+  * Extra - translator: Cobalt
+  * Extra - string_asset_id: 1041207119
+  > Door to Controller Access
+      Trivial
+
+> Light Transport; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Activate Energy Controller Transports)
+  > Door to Controller Access
+      Trivial
+
+----------------
+Aerie Access
+Extra - asset_id: 3741790551
+Extra - low_memory_mode: True
+> Dock to Aerie Transport Station; Heals? False; Default Node
+  * Layers: default
+  * Open Passage to Aerie Transport Station/Dock to Aerie Access
+  * Extra - dock_name: Floor
+  > Dock to Aerie
+      Trivial
+
+> Dock to Aerie; Heals? False
+  * Layers: default
+  * Open Passage to Aerie/Dock to Aerie Access
+  * Extra - dock_name: Ceiling
+  > Dock to Aerie Transport Station
+      Trivial
+
+----------------
+Aerie
+Extra - asset_id: 1564082177
+Extra - low_memory_mode: True
+Hint Features - Abyss, Boss, Echo Visor Lock, Elevator, Portal
+> Portal to Hive Summit; Heals? False
+  * Layers: default
+  * Dark Portal to Hive Summit/Portal from Aerie
+  * Extra - dock_name: VirtualUnderStatueDock
+
+> Portal from Hive Summit; Heals? False
+  * Layers: default
+  * No Return Portal to Hive Summit/Portal to Aerie
+  * Extra - dock_name: VirtualArenaDock
+  > Dock to Aerie Access
+      Trivial
+  > Event - Aerie Pickup
+      All of the following:
+          After Dark Samus 2
+          Any of the following:
+              Space Jump Boots
+              # https://www.youtube.com/watch?v=su_5kgsXU8Y
+              Scan Visor and Combat/Scan Dash (Intermediate)
+              # https://www.youtube.com/watch?v=gt_lKlVVr28
+              Movement (Beginner) and Use Screw Attack (No Space Jump)
+          Echo Visor or Enabled Allow Vanilla Echo Visor
+
+> Dock to Aerie Access; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Open Passage to Aerie Access/Dock to Aerie
+  * Extra - dock_name: Docks_Floor
+  > Event - Dark Samus 2
+      Any of the following:
+          All of the following:
+              Normal Damage ≥ 50
+              Any of the following:
+                  Dark Visor
+                  Echo Visor and Combat (Beginner)
+          Invisible Objects (Advanced) and Normal Damage ≥ 100
+  > Bottom Floor
+      After Dark Samus 2
+
+> Pickup (Echo Visor); Heals? False
+  * Layers: default
+  * Pickup 118; Category? Major
+  * Extra - location_data:
+{'type': 'standard',
+ 'exclude_memo_from_removal': False,
+ 'original_model': 'EchoVisor',
+ 'connections': [{'target': 272695764, 'message': 'ACTV'}, {'target': 272695764, 'message': 'ZERO'}],
+ 'removals': [4260015, 272695742],
+ 'collision_offset': {'x': 0.0, 'y': 0.0, 'z': 1.0},
+ 'instances': {'pickup': 4260007,
+               'hud_memo': 4260014,
+               'streamed_audio': 4260013,
+               'sound': 4260009,
+               'audio_fade': 4260016}}
+  > Bottom Floor
+      Trivial
+
+> Elevator to Aerie Transport Station; Heals? False
+  * Layers: default
+  * Elevator to Aerie Transport Station/Elevator to Aerie
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: 4260106
+  * Extra - keep_name_when_vanilla: True
+  > Dock to Aerie Access
+      Trivial
+
+> Event - Dark Samus 2; Heals? False
+  * Layers: default
+  * Event Dark Samus 2
+  > Bottom Floor
+      Trivial
+
+> Event - Aerie Pickup; Heals? False
+  * Layers: default
+  * Event Aerie Pickup
+  > Pickup (Echo Visor)
+      Echo Visor or Enabled Allow Vanilla Echo Visor
+
+> Bottom Floor; Heals? False
+  * Layers: default
+  > Portal to Hive Summit
+      Trivial
+  > Dock to Aerie Access
+      Trivial
+  > Pickup (Echo Visor)
+      # https://www.youtube.com/watch?v=29qB37vxSgY
+      Morph Ball Bomb and Bomb Space Jump (Expert) and Movement (Expert) and Use Screw Attack (Space Jump)
+  > Elevator to Aerie Transport Station
+      Echo Visor and After Aerie Pickup
+  > Event - Dark Samus 2
+      Trivial
+

@@ -6,7 +6,7 @@
             "default_node": "Starting Point",
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x47_y202"
+                "map_name": "x47_y202"
             },
             "nodes": {
                 "Starting Point": {
@@ -63,6 +63,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Starting Point": {
                             "type": "or",
@@ -85,6 +86,32 @@
                                             "name": "Hi-Jump",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/Rx9tGIVI68k",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IceAbuse",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -134,7 +161,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x88_y233"
+                "map_name": "x88_y233"
             },
             "nodes": {
                 "Door to Maru Mari Hall": {
@@ -165,16 +192,8 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Kraid Prelude": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Break Floor Blocks"
                         },
                         "Door to The Overhang": {
                             "type": "and",
@@ -263,7 +282,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x128_y202"
+                "map_name": "x128_y202"
             },
             "nodes": {
                 "Door to Early Construction": {
@@ -303,24 +322,92 @@
                             }
                         },
                         "Pickup (Energy Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Ice Beam",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Freeze and jump off the Skree",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "https://youtu.be/k_WcxGatMW0 Freeze a Zoomer to the wall and jump off it",
                                             "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IceAbuse",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/xpj3fpkDejQ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/xtNeqnfRrDQ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -334,7 +421,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "IceAbuse",
+                                                        "name": "UnmorphJump",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -413,6 +500,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Early Construction": {
                             "type": "and",
@@ -429,7 +517,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x168_y112"
+                "map_name": "x168_y112"
             },
             "nodes": {
                 "Door to The Overhang": {
@@ -596,7 +684,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x136_y67"
+                "map_name": "x136_y67"
             },
             "nodes": {
                 "Door to Item Room (Long Beam)": {
@@ -677,7 +765,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x104_y65"
+                "map_name": "x104_y65"
             },
             "nodes": {
                 "Door to Item Corridor (Long Beam)": {
@@ -736,6 +824,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Item Corridor (Long Beam)": {
                             "type": "and",
@@ -752,7 +841,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x112_y22"
+                "map_name": "x112_y22"
             },
             "nodes": {
                 "Door to Blue Tower": {
@@ -833,7 +922,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x56_y22"
+                "map_name": "x56_y22"
             },
             "nodes": {
                 "Door to Final Highway": {
@@ -952,7 +1041,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x184_y96"
+                "map_name": "x184_y96"
             },
             "nodes": {
                 "Door to Blue Tower": {
@@ -1033,7 +1122,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x200_y90"
+                "map_name": "x200_y90"
             },
             "nodes": {
                 "Door to Tower Bridge": {
@@ -1200,7 +1289,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x272_y157"
+                "map_name": "x272_y157"
             },
             "nodes": {
                 "Pickup (Missile Launcher)": {
@@ -1223,6 +1312,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -1349,7 +1439,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x344_y155"
+                "map_name": "x344_y155"
             },
             "nodes": {
                 "Door to Orange Corridor": {
@@ -1434,7 +1524,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x256_y37"
+                "map_name": "x256_y37"
             },
             "nodes": {
                 "Door to Orange Tower": {
@@ -1465,8 +1555,37 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Green Hall": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks with Screw Attack"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1498,8 +1617,37 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Orange Tower": {
-                            "type": "template",
-                            "data": "Can Use Bombs"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks with Screw Attack"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -1509,7 +1657,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x312_y30"
+                "map_name": "x312_y30"
             },
             "nodes": {
                 "Door to Green Sanctuary W": {
@@ -1578,6 +1726,48 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/GgSowN-UNIM",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/6oJ6Kl0xAmY",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1620,7 +1810,7 @@
                     "connections": {
                         "Door to Green Sanctuary W": {
                             "type": "template",
-                            "data": "Can Use Bombs"
+                            "data": "Can Break Floor Blocks"
                         }
                     }
                 },
@@ -1666,7 +1856,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x272_y22"
+                "map_name": "x272_y22"
             },
             "nodes": {
                 "Door to Green Hall": {
@@ -1747,7 +1937,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x232_y20"
+                "map_name": "x232_y20"
             },
             "nodes": {
                 "Pickup (Varia Suit)": {
@@ -1770,6 +1960,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Item Corridor (Varia)": {
                             "type": "and",
@@ -1822,7 +2013,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x472_y67"
+                "map_name": "x472_y67"
             },
             "nodes": {
                 "Door to Green Sanctuary E": {
@@ -1889,26 +2080,55 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Green Sanctuary E": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Freeze the rippers",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice Beam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Ice Beam",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "https://youtu.be/rnLWPTIv4sg",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1965,7 +2185,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x432_y67"
+                "map_name": "x432_y67"
             },
             "nodes": {
                 "Door to Item Room (Bombs)": {
@@ -2046,7 +2266,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x392_y67"
+                "map_name": "x392_y67"
             },
             "nodes": {
                 "Pickup (Bombs)": {
@@ -2069,6 +2289,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Item Corridor (Bombs)": {
                             "type": "and",
@@ -2121,7 +2342,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x104_y260"
+                "map_name": "x104_y260"
             },
             "nodes": {
                 "Door to Early Construction": {
@@ -2206,7 +2427,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x240_y97"
+                "map_name": "x240_y97"
             },
             "nodes": {
                 "Door to Orange Tower": {
@@ -2287,7 +2508,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x320_y127"
+                "map_name": "x320_y127"
             },
             "nodes": {
                 "Door to Blue Rock Connector East": {
@@ -2368,7 +2589,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x296_y127"
+                "map_name": "x296_y127"
             },
             "nodes": {
                 "Door to Item Corridor (Ice Beam)": {
@@ -2427,6 +2648,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Item Corridor (Ice Beam)": {
                             "type": "and",
@@ -2443,7 +2665,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x40_y22"
+                "map_name": "x40_y22"
             },
             "nodes": {
                 "Door to Statue Chamber": {
@@ -2528,7 +2750,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x464_y97"
+                "map_name": "x464_y97"
             },
             "nodes": {
                 "Door to Orange Tower 2": {
@@ -2623,6 +2845,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -2677,7 +2900,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x392_y37"
+                "map_name": "x392_y37"
             },
             "nodes": {
                 "Door to Green Hall": {
@@ -2772,6 +2995,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Left Side": {
                             "type": "and",
@@ -2802,6 +3026,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Right Side": {
                             "type": "and",
@@ -2899,16 +3124,93 @@
                                 "comment": "Hidden Passage: Use bombs to enter morph tunnel then jump to the left and bomb the floor",
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Floor Blocks"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks with Screw Attack"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/ivMqYfDMlvQ",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IceAbuse",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph Ball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Long Beam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2922,7 +3224,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x280_y113"
+                "map_name": "x280_y113"
             },
             "nodes": {
                 "Door to Blue Rocks West": {
@@ -3003,7 +3305,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x312_y97"
+                "map_name": "x312_y97"
             },
             "nodes": {
                 "Door to Blue Rock Connector West": {
@@ -3084,7 +3386,7 @@
             "default_node": null,
             "hint_features": [],
             "extra": {
-                "map_name": "Brinstar/x344_y113"
+                "map_name": "x344_y113"
             },
             "nodes": {
                 "Door to Blue Rocks East": {
@@ -3158,16 +3460,8 @@
                             }
                         },
                         "Door to Item Corridor (Ice Beam)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Can Break Floor Blocks"
                         }
                     }
                 },
@@ -3228,6 +3522,48 @@
                                             "name": "Ice Beam",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/c-mIHuhI01I",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/R4ov8j87vQQ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]

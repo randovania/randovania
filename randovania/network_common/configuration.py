@@ -14,7 +14,6 @@ class NetworkConfiguration(TypedDict, total=False):
     server_address: Required[str]
     socketio_path: Required[str]
 
-    guest_secret: str
     discord_client_id: int
     verify_ssl: bool
 

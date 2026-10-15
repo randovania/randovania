@@ -6,16 +6,19 @@ from enum import Enum
 from typing import Self
 
 import randovania
+from randovania.game.game_enum import RandovaniaGame
 
 
 class ConnectorBuilderChoice(Enum):
     AM2R = "am2r"
+    ABANDONED = "abandoned"
     CS = "cave-story"
     DEBUG = "debug"
     DOLPHIN = "dolphin"
     DREAD = "dread"
     NINTENDONT = "nintendont"
     MSR = "msr"
+    YOKU = "yoku"
 
     @property
     def pretty_text(self) -> str:
@@ -34,6 +37,9 @@ class ConnectorBuilderChoice(Enum):
             if sys.platform == "linux" and randovania.is_frozen():
                 return os.getuid() == 0 and not randovania.is_flatpak()
 
+        if self is ConnectorBuilderChoice.YOKU:
+            return RandovaniaGame.YOKUS_ISLAND_EXPRESS.data.development_state.can_view()
+
         return True
 
     def supports_multiple_instances(self) -> bool:
@@ -46,10 +52,12 @@ class ConnectorBuilderChoice(Enum):
 
 _pretty_backend_name = {
     ConnectorBuilderChoice.AM2R: "AM2R",
+    ConnectorBuilderChoice.ABANDONED: "Abandoned World Bot",
     ConnectorBuilderChoice.CS: "Cave Story",
     ConnectorBuilderChoice.DEBUG: "Debug",
     ConnectorBuilderChoice.DOLPHIN: "Dolphin",
     ConnectorBuilderChoice.DREAD: "Dread",
     ConnectorBuilderChoice.NINTENDONT: "Nintendont",
     ConnectorBuilderChoice.MSR: "Samus Returns",
+    ConnectorBuilderChoice.YOKU: "Yoku's Island Express",
 }

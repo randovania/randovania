@@ -17,13 +17,11 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     # Setup
     reach = MagicMock(spec=GeneratorReach)
     reach.victory_condition_satisfied.return_value = False
-    reach.state.collected_pickup_indices = []
-    reach.state.collected_hints = []
-    reach.state.collected_events = []
+    reach.state.collected_pickups_hints_and_events.return_value = [], [], []
     reach.nodes = []
     reach.iterate_nodes = []
-    reach.game.region_list.all_nodes = ()
-    reach.game.game.generator.action_weights.DANGEROUS_ACTION_MULTIPLIER = 1.0
+    reach.graph.nodes = ()
+    reach.graph.game_enum.generator.action_weights.DANGEROUS_ACTION_MULTIPLIER = 1.0
 
     evaluated_action = EvaluatedAction(
         action=Action([blank_pickup]),
@@ -31,10 +29,10 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
         multiplier=1.0,
         offset=0.0,
     )
-    empty_uncollected = UncollectedState(set(), set(), set(), set())
+    empty_uncollected = UncollectedState(set(), set(), set())
 
     # Run
-    with debug.with_level(3):
+    with debug.with_level(debug.LogLevel.EXTREME):
         weight = _calculate_weights_for(
             evaluated_action,
             empty_uncollected,
@@ -46,15 +44,14 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     assert weight == 0.0
     assert out == (
         ">>> [P: Blank Pickup]\n"
-        "safe resources:\n"
-        "  indices: set()\n"
-        "  events: []\n"
-        "  hints: []\n"
-        "unsafe resources:\n"
-        "  indices: set()\n"
-        "  events: []\n"
-        "  hints: []\n"
-        "nodes: []\n\n"
+        "  safe resources:\n"
+        "    indices: set()\n"
+        "    events: []\n"
+        "    hints: []\n"
+        "  unsafe resources:\n"
+        "    indices: set()\n"
+        "    events: []\n"
+        "    hints: []\n"
     )
 
 

@@ -18,8 +18,6 @@ from randovania.layout.lib.teleporters import (
 )
 
 if TYPE_CHECKING:
-    from PySide6 import QtWidgets
-
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
@@ -29,7 +27,7 @@ if TYPE_CHECKING:
 
 
 class PresetTeleportersMSR(PresetTeleporterTab, Ui_PresetTeleportersMSR, NodeListHelper):
-    teleporter_mode_to_description = {
+    teleporter_mode_to_description: typing.ClassVar[dict[TeleporterShuffleMode, str]] = {
         TeleporterShuffleMode.VANILLA: "All elevators are connected to where they do in the original game.",
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking a elevator, the elevator in the room you are in will bring you back to where you were. "
@@ -70,9 +68,7 @@ class PresetTeleportersMSR(PresetTeleporterTab, Ui_PresetTeleportersMSR, NodeLis
         region_list = self.game_description.region_list
 
         locations = TeleporterList.nodes_list(self.game_enum)
-        checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
-            loc: self._create_check_for_source_teleporters(loc) for loc in locations
-        }
+        checks = {loc: self._create_check_for_source_teleporters(loc) for loc in locations}
 
         self._teleporters_source_for_location = copy.copy(checks)
         self._teleporters_source_destination: dict[NodeIdentifier, NodeIdentifier | None] = {}

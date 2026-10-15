@@ -1,0 +1,358 @@
+----------------
+Lava Passage
+Extra - map_name: Tourian1
+Extra - room_id: [1]
+> Door to Elevator to Brinstar; Heals? False
+  * Layers: default
+  * Blue Door to Elevator to Brinstar/Door to Lava Passage
+  * Extra - door_idx: [2]
+  > Door to Metroid Pit
+      Defeat Metroid
+
+> Door to Metroid Pit; Heals? False
+  * Layers: default
+  * Blue Door to Metroid Pit/Door to Lava Passage
+  * Extra - door_idx: [3]
+  > Door to Elevator to Brinstar
+      Defeat Metroid
+
+----------------
+Ledged Shaft
+Extra - map_name: Tourian2
+Extra - room_id: [2]
+> Door to I Shaped Room; Heals? False
+  * Layers: default
+  * Blue Door to I Shaped Room/Door to Ledged Shaft
+  * Extra - door_idx: [4]
+  > Door to Triple-Tiered Room
+      Defeat Metroid
+
+> Door to Triple-Tiered Room; Heals? False
+  * Layers: default
+  * Blue Door to Triple-Tiered Room/Door to Ledged Shaft
+  * Extra - door_idx: [5]
+  > Door to I Shaped Room
+      Defeat Metroid and Have Any Jump Upgrade
+
+----------------
+Rinka Hall (INITIAL)
+Extra - map_name: Tourian3
+Extra - room_id: [3, 10]
+> Door to Save Station (South); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (South)/Door to Rinka Hall (INITIAL)
+  * Extra - door_idx: [6, 20]
+  > Door to Command Center (INITIAL)
+      Trivial
+
+> Door to Command Center (INITIAL); Heals? False
+  * Layers: default
+  * Missile Door to Command Center (INITIAL)/Door to Rinka Hall (INITIAL)
+  * Extra - door_idx: [7, 19]
+  > Door to Save Station (South)
+      Trivial
+
+----------------
+Command Center (INITIAL)
+Extra - map_name: Tourian4
+Extra - room_id: [4, 9]
+> Door to Rinka Hall (INITIAL); Heals? False
+  * Layers: default
+  * Missile Door to Rinka Hall (INITIAL)/Door to Command Center (INITIAL)
+  * Extra - door_idx: [18]
+  > Arena
+      Trivial
+
+> Door to Escape Shaft; Heals? False
+  * Layers: default
+  * Blue Door to Escape Shaft/Open Passage to Command Center (INITIAL)
+  * Extra - door_idx: [9, 17]
+  > Arena
+      Trivial
+
+> Open Passage to Reliquary; Heals? False
+  * Layers: default
+  * Vertical Passage to Reliquary/Open Passage to Command Center (INITIAL)
+  * Extra - door_idx: [16]
+  > Arena
+      Trivial
+
+> Arena; Heals? False
+  * Layers: default
+  > Door to Rinka Hall (INITIAL)
+      Trivial
+  > Door to Escape Shaft
+      Trivial
+  > Open Passage to Reliquary
+      Trivial
+  > Event - Mother Brain
+      Trivial
+
+> Event - Mother Brain; Heals? False
+  * Layers: default
+  * Event Boss Mother Brain Defeated
+  > Arena
+      Trivial
+
+----------------
+Save Station (South)
+Extra - map_name: Tourian6
+Extra - room_id: [6]
+> Door to Triple-Tiered Room; Heals? False
+  * Layers: default
+  * Blue Door to Triple-Tiered Room/Door to Save Station (South)
+  * Extra - door_idx: [12]
+  > Save Station
+      Trivial
+
+> Door to Rinka Hall (INITIAL); Heals? False
+  * Layers: default
+  * Blue Door to Rinka Hall (INITIAL)/Door to Save Station (South)
+  * Extra - door_idx: [13]
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Triple-Tiered Room
+      Trivial
+  > Door to Rinka Hall (INITIAL)
+      Trivial
+
+----------------
+Reliquary
+Extra - map_name: Tourian7
+Extra - room_id: [7]
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 62; Category? Minor
+  * Extra - blockx: 14
+  * Extra - blocky: 8
+  > Open Passage to Command Center (INITIAL)
+      Tunnel Climb
+
+> Open Passage to Command Center (INITIAL); Heals? False
+  * Layers: default
+  * Vertical Passage to Command Center (INITIAL)/Open Passage to Reliquary
+  * Extra - door_idx: [15]
+  > Pickup (Power Bomb Tank)
+      Morph Ball
+
+----------------
+Escape Shaft
+Extra - map_name: Tourian8
+Extra - room_id: [8, 5]
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 63; Category? Minor
+  * Extra - blockx: 11
+  * Extra - blocky: 109
+  > Open Passage to Command Center (INITIAL)
+      Trivial
+
+> Tunnel to Elevator to Tourian; Heals? False
+  * Layers: default
+  * Tunnel to Elevator to Tourian/Open Passage to Escape Shaft
+  * Extra - door_idx: [21, 11]
+  > Open Passage to Command Center (INITIAL)
+      Trivial
+
+> Open Passage to Command Center (INITIAL); Heals? False
+  * Layers: default
+  * Horizontal Passage to Command Center (INITIAL)/Door to Escape Shaft
+  * Extra - door_idx: [22, 10]
+  > Pickup (Missile Tank)
+      Speed Booster or Use Space Jump
+  > Tunnel to Elevator to Tourian
+      Power Grip or Have Any Jump Upgrade
+
+----------------
+Save Station (North)
+Extra - map_name: Tourian11
+Extra - room_id: [11]
+> Door to Elevator to Brinstar; Heals? False
+  * Layers: default
+  * Blue Door to Elevator to Brinstar/Door to Save Station (North)
+  * Extra - door_idx: [24]
+  > Save Station
+      Trivial
+
+> Door to Antechamber; Heals? False
+  * Layers: default
+  * Blue Door to Antechamber/Door to Save Station (North)
+  * Extra - door_idx: [25]
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to Elevator to Brinstar
+      Trivial
+  > Door to Antechamber
+      Trivial
+
+----------------
+Antechamber
+Extra - map_name: Tourian12
+Extra - room_id: [12]
+> Door to Save Station (North); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (North)/Door to Antechamber
+  * Extra - door_idx: [26]
+  > Door to First Shaft
+      Trivial
+
+> Door to First Shaft; Heals? False
+  * Layers: default
+  * Blue Door to First Shaft/Door to Antechamber
+  * Extra - door_idx: [27]
+  > Door to Save Station (North)
+      Trivial
+
+----------------
+First Shaft
+Extra - map_name: Tourian13
+Extra - room_id: [13]
+> Door to Antechamber; Heals? False
+  * Layers: default
+  * Blue Door to Antechamber/Door to First Shaft
+  * Extra - door_idx: [28]
+  > Door to Entrance
+      Trivial
+
+> Door to Entrance; Heals? False
+  * Layers: default
+  * Blue Door to Entrance/Door to First Shaft
+  * Extra - door_idx: [29]
+  > Door to Antechamber
+      Trivial
+
+----------------
+Entrance
+Extra - map_name: Tourian14
+Extra - room_id: [14]
+> Door to First Shaft; Heals? False
+  * Layers: default
+  * Blue Door to First Shaft/Door to Entrance
+  * Extra - door_idx: [30]
+  > Door to Elevator to Brinstar
+      Defeat Metroid
+
+> Door to Elevator to Brinstar; Heals? False
+  * Layers: default
+  * Blue Door to Elevator to Brinstar/Door to Entrance
+  * Extra - door_idx: [31]
+  > Door to First Shaft
+      Defeat Metroid
+
+----------------
+Elevator to Brinstar
+Extra - map_name: Tourian15
+Extra - room_id: [15, 0]
+> Door to Lava Passage; Heals? False
+  * Layers: default
+  * Blue Door to Lava Passage/Door to Elevator to Brinstar
+  * Extra - door_idx: [23]
+  > Door to Entrance
+      Trivial
+
+> Door to Entrance; Heals? False
+  * Layers: default
+  * Blue Door to Entrance/Door to Elevator to Brinstar
+  * Extra - door_idx: [32, 35]
+  > Door to Lava Passage
+      Trivial
+
+> Door to Save Station (North); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (North)/Door to Elevator to Brinstar
+  * Extra - door_idx: [36, 1]
+  > Open Passage to Brinstar
+      Trivial
+
+> Open Passage to Brinstar; Heals? False
+  * Layers: default
+  * Vertical Passage to Elevator to Tourian/Open Passage to Tourian
+  * Extra - door_idx: [0]
+  > Door to Save Station (North)
+      Trivial
+
+----------------
+Triple-Tiered Room
+Extra - map_name: Tourian16
+Extra - room_id: [16]
+> Door to Ledged Shaft; Heals? False
+  * Layers: default
+  * Blue Door to Ledged Shaft/Door to Triple-Tiered Room
+  * Extra - door_idx: [33]
+  > Door to Save Station (South)
+      Can Use Any Bombs and Defeat Metroid
+
+> Door to Save Station (South); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (South)/Door to Triple-Tiered Room
+  * Extra - door_idx: [34]
+  > Door to Ledged Shaft
+      Can Use Any Bombs and Defeat Metroid
+
+----------------
+Save Station (East)
+Extra - map_name: Tourian17
+Extra - room_id: [17]
+> Door to I Shaped Room; Heals? False
+  * Layers: default
+  * Blue Door to I Shaped Room/Door to Save Station (East)
+  * Extra - door_idx: [42]
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False
+  * Layers: default
+  > Door to I Shaped Room
+      Trivial
+
+----------------
+I Shaped Room
+Extra - map_name: Tourian18
+Extra - room_id: [18]
+> Door to Metroid Pit; Heals? False
+  * Layers: default
+  * Blue Door to Metroid Pit/Door to I Shaped Room
+  * Extra - door_idx: [37]
+  > Door to Save Station (East)
+      Trivial
+
+> Door to Ledged Shaft; Heals? False
+  * Layers: default
+  * Blue Door to Ledged Shaft/Door to I Shaped Room
+  * Extra - door_idx: [38]
+  > Door to Save Station (East)
+      Trivial
+
+> Door to Save Station (East); Heals? False
+  * Layers: default
+  * Blue Door to Save Station (East)/Door to I Shaped Room
+  * Extra - door_idx: [41]
+  > Door to Metroid Pit
+      Trivial
+  > Door to Ledged Shaft
+      Trivial
+
+----------------
+Metroid Pit
+Extra - map_name: Tourian19
+Extra - room_id: [19]
+> Door to Lava Passage; Heals? False
+  * Layers: default
+  * Blue Door to Lava Passage/Door to Metroid Pit
+  * Extra - door_idx: [39]
+  > Door to I Shaped Room
+      Defeat Metroid
+
+> Door to I Shaped Room; Heals? False
+  * Layers: default
+  * Blue Door to I Shaped Room/Door to Metroid Pit
+  * Extra - door_idx: [40]
+  > Door to Lava Passage
+      Defeat Metroid
+

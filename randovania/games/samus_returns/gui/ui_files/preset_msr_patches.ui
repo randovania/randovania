@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>642</width>
-    <height>535</height>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
      <number>6</number>
     </property>
     <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
+     <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
     </property>
     <property name="leftMargin">
      <number>0</number>
@@ -59,7 +59,7 @@
          <x>0</x>
          <y>0</y>
          <width>626</width>
-         <height>681</height>
+         <height>844</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -188,7 +188,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="misc_group">
+         <widget class="QGroupBox" name="item_group">
           <property name="title">
            <string>Item Changes</string>
           </property>
@@ -203,7 +203,7 @@
            <item>
             <widget class="QLabel" name="charge_door_buff_label">
              <property name="text">
-              <string>Makes Charge Doors invulnerable to Power Bombs. Beam Burst is unaffected.</string>
+              <string>Makes Charge Doors invulnerable to Power Bombs and Beam Burst.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -261,10 +261,26 @@
              </property>
             </widget>
            </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="misc_group">
+          <property name="title">
+           <string>Misc. Changes</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QCheckBox" name="skip_opening_check">
+             <property name="text">
+              <string>Skip the opening storyboard cutscene</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <spacer name="verticalSpacer">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>

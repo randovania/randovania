@@ -17,6 +17,8 @@ from randovania.gui.lib.signal_handling import set_combo_with_value
 if TYPE_CHECKING:
     import pytestqt.qtbot
 
+    from randovania.interface_common.options import Options
+
 
 @pytest.mark.parametrize(
     ("widget_field", "field_name"),
@@ -27,12 +29,13 @@ if TYPE_CHECKING:
         ("show_player_damage", "show_player_damage"),
         ("show_death_counter", "show_death_counter"),
         ("enable_auto_tracker", "enable_auto_tracker"),
+        ("enable_debug_logging", "enable_debug_logging"),
     ],
 )
-def test_certain_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str) -> None:
+def test_certain_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str, options: Options) -> None:
     cosmetic_patches = DreadCosmeticPatches(**{field_name: False})  # type: ignore[arg-type]
 
-    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
@@ -48,10 +51,12 @@ def test_certain_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, fiel
         ("ambience_slider", "ambience_label", "ambience_volume"),
     ],
 )
-def test_certain_slider(skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, label_name: str, field_name: str) -> None:
+def test_certain_slider(
+    skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, label_name: str, field_name: str, options: Options
+) -> None:
     cosmetic_patches = DreadCosmeticPatches(**{field_name: 0})  # type: ignore[arg-type]
 
-    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches, options)
     label = getattr(dialog, label_name)
     skip_qtbot.addWidget(dialog)
     assert label.text() == "  0%"
@@ -63,10 +68,10 @@ def test_certain_slider(skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, labe
     assert label.text() == " 80%"
 
 
-def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = DreadCosmeticPatches(show_room_names=DreadRoomGuiType.NONE)
 
-    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     set_combo_with_value(dialog.room_names_dropdown, DreadRoomGuiType.WITH_FADE)
@@ -74,10 +79,10 @@ def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == DreadCosmeticPatches(show_room_names=DreadRoomGuiType.WITH_FADE)
 
 
-def test_missile_cosmetic_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
+def test_missile_cosmetic_dropdown(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = DreadCosmeticPatches(missile_cosmetic=DreadMissileCosmeticType.NONE)
 
-    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     set_combo_with_value(dialog.missile_cosmetic_dropdown, DreadMissileCosmeticType.TRANS)
@@ -96,10 +101,12 @@ def test_missile_cosmetic_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
         ("alt_power_bomb", "alt_power_bomb"),
     ],
 )
-def test_shield_type_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str) -> None:
+def test_shield_type_field(
+    skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str, options: Options
+) -> None:
     cosmetic_patches = DreadCosmeticPatches(**{field_name: DreadShieldType.DEFAULT})  # type: ignore[arg-type]
 
-    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches)
+    dialog = DreadCosmeticPatchesDialog(None, cosmetic_patches, options)
     skip_qtbot.addWidget(dialog)
 
     # test checking box

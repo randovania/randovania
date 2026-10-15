@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.gui.dialog.async_race_admin_dialog import AsyncRaceAdminDialog
+from randovania.gui.dialog.async_race.async_race_admin_dialog import AsyncRaceAdminDialog
 from randovania.network_common.async_race_room import AsyncRaceEntryData, AsyncRaceRoomAdminData
 from randovania.network_common.user import RandovaniaUser
 
@@ -18,7 +18,7 @@ def test_admin_data(skip_qtbot: QtBot):
     skip_qtbot.add_widget(parent)
 
     admin_data = AsyncRaceRoomAdminData(
-        [
+        users=[
             AsyncRaceEntryData(
                 user=RandovaniaUser(id=1235, name="user"),
                 join_date=datetime.datetime(2020, 5, 6, 0, 0, tzinfo=datetime.UTC),
