@@ -97,6 +97,13 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "supported.",
         ),
         (
+            "How do I play on Linux or the Steam Deck?",
+            "Run the Windows version through Proton and tell it to load the mod's xinput9_1_0.dll instead of its own. "
+            'On Steam, put this into the game\'s launch options: WINEDLLOVERRIDES="xinput9_1_0=n,b" %command%. '
+            "In Heroic or Lutris, add the environment variable WINEDLLOVERRIDES with the value xinput9_1_0=n,b. "
+            "Without it the game starts normally, but the mod is not loaded.",
+        ),
+        (
             "How do I start a seed?",
             "Export the seed to your game folder and launch the game. Pick an empty save slot and choose "
             "'Start Randovania Seed'. The entry shows the seed's hash, so you can check that it is the right one.",
@@ -105,6 +112,11 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "What is the goal?",
             "Beat the final boss. If the preset requires beacons, Nim only starts the ceremony that leads to the "
             "final boss once that many Wickerling beacons are lit. Each beacon takes 10 Wickerlings.",
+        ),
+        (
+            "I'm stuck. How do I get back to the start?",
+            "Open the pause menu and choose 'Warp to Start'. After you confirm, the game saves and takes you back "
+            "to where the seed started. Your items, fruit and collected locations are kept.",
         ),
         (
             "How do I remove the mod?",
