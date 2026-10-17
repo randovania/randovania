@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
 - Added: When used via a flatpak, Randovania now has a desktop context option to open the Auto Tracker directly.
+- Fixed: Exporting a preset now works again.
 
 ### Metroid Dread
 
@@ -21,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Fusion
 
 - Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
+
+### Metroid Prime Hunters
+
+- Fixed: Hint text being cut off if the text was too long.
+- Fixed: Sic Transit: The Shield Key pickup being unobtainable after defeating Slench 2.
 
 ## [11.1.1] - 2026-10-06
 
