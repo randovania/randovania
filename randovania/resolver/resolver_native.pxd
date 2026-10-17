@@ -21,3 +21,15 @@ cdef class ResolverScratch:
     cdef void begin(self, size_t num_nodes) except *
     cdef void reset(self) except *
 
+
+# Result of resolver_reach_process_nodes: which nodes are in reach and their health, snapshotted
+# out of ResolverScratch's buffers before they're reset for the next call.
+cdef class ReachResult:
+    cdef pvector[int] checked_nodes
+    cdef pvector[size_t] found_node_order
+    cdef public dict path_to_node
+    cdef public set satisfiable_requirements_for_additionals
+
+    cpdef bint is_node_in_reach(self, size_t node_index)
+    cpdef int health_at(self, size_t node_index)
+
