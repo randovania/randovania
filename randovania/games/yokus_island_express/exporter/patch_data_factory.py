@@ -44,6 +44,8 @@ class YokuPatchDataFactory(PatchDataFactory[YokuConfiguration, YokuCosmeticPatch
             }
             if details.is_for_remote_player:
                 pickup["caption"] = details.collection_text[0]
+                if details.model.game == self.game_enum():
+                    pickup["model"] = details.model.name
             pickups.append(pickup)
         return pickups
 
@@ -64,6 +66,15 @@ class YokuPatchDataFactory(PatchDataFactory[YokuConfiguration, YokuCosmeticPatch
 
         return dict(sorted(starting_items.items()))
 
+    def _create_starting_location(self) -> dict:
+        start = self.patches.starting_location
+        area = self.game.region_list.area_by_area_location(start.area_identifier)
+        node = self.game.region_list.node_by_identifier(start)
+        return {
+            "level": area.extra["level"],
+            "spawner": node.extra["spawner"],
+        }
+
     def create_game_specific_data(self, randovania_meta: PatcherDataMeta) -> dict:
         return {
             "configuration_identifier": self.description.shareable_hash,
@@ -72,6 +83,7 @@ class YokuPatchDataFactory(PatchDataFactory[YokuConfiguration, YokuCosmeticPatch
             "save": {
                 "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             },
+            "starting_location": self._create_starting_location(),
             "pickups": self._create_pickups(),
             "starting_items": self._create_starting_items(),
             "starting_fruit": self.configuration.effective_starting_fruit,
