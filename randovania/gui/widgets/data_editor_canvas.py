@@ -4,7 +4,7 @@ import functools
 import math
 import os
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Literal, NamedTuple
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 from PySide6 import QtCore, QtGui, QtWidgets
@@ -17,6 +17,7 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import GenericNode, Node, NodeLocation
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.requirements.base import Requirement
+from randovania.lib import map_bounds
 
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
@@ -30,62 +31,6 @@ _color_for_node: dict[type[Node], QtCore.Qt.GlobalColor] = {
     PickupNode: QtCore.Qt.GlobalColor.cyan,
     EventNode: QtCore.Qt.GlobalColor.magenta,
 }
-
-
-class BoundsInt(NamedTuple):
-    min_x: int
-    min_y: int
-    max_x: int
-    max_y: int
-
-
-class BoundsFloat(NamedTuple):
-    min_x: float
-    min_y: float
-    max_x: float
-    max_y: float
-
-    @classmethod
-    def from_bounds(cls, data: dict[str, float]) -> BoundsFloat:
-        return BoundsFloat(data["x1"], data["y1"], data["x2"], data["y2"])
-
-    @property
-    def as_rect(self) -> QRectF:
-        return QRectF(QPointF(self.min_x, self.min_y), QPointF(self.max_x, self.max_y))
-
-
-def _expand_bounds_to_match_aspect(image_bounds: BoundsInt, world_bounds: BoundsFloat) -> BoundsInt:
-    """
-    Expands the image bounds symmetrically on one axis until its aspect ratio matches the world bounds.
-    """
-    world_width = world_bounds.max_x - world_bounds.min_x
-    world_height = world_bounds.max_y - world_bounds.min_y
-    if world_width <= 0 or world_height <= 0:
-        return image_bounds
-
-    image_width = image_bounds.max_x - image_bounds.min_x
-    image_height = image_bounds.max_y - image_bounds.min_y
-    if image_width <= 0 or image_height <= 0:
-        return image_bounds
-
-    if image_width * world_height < image_height * world_width:
-        # image is proportionally narrower than the world: include more columns
-        padding = (image_height * world_width / world_height - image_width) / 2
-        return BoundsInt(
-            min_x=round(image_bounds.min_x - padding),
-            min_y=image_bounds.min_y,
-            max_x=round(image_bounds.max_x + padding),
-            max_y=image_bounds.max_y,
-        )
-    else:
-        # image is proportionally shorter than the world: include more rows
-        padding = (image_width * world_height / world_width - image_height) / 2
-        return BoundsInt(
-            min_x=image_bounds.min_x,
-            min_y=round(image_bounds.min_y - padding),
-            max_x=image_bounds.max_x,
-            max_y=round(image_bounds.max_y + padding),
-        )
 
 
 Matrix4f = tuple[
@@ -143,13 +88,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
     connected_node: Node | None = None
     _background_image: QtGui.QImage | None = None
     _region_image: QtGui.QImage | None = None
-    _calculated_region_image_bounds: BoundsInt | None = None
-    _manual_region_image_bounds: BoundsInt | None = None
-    region_bounds: BoundsFloat
-    area_bounds: BoundsFloat
+    _calculated_region_image_bounds: map_bounds.BoundsInt | None = None
+    _manual_region_image_bounds: map_bounds.BoundsInt | None = None
+    region_bounds: map_bounds.BoundsFloat
+    area_bounds: map_bounds.BoundsFloat
     area_size: QSizeF
     camera_data: CameraData | None = None
-    image_bounds: BoundsInt
+    image_bounds: map_bounds.BoundsInt
     edit_mode: bool = True
 
     scale: float
@@ -226,7 +171,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         if image_path is not None:
             self._region_image = QtGui.QImage(os.fspath(image_path))
-            self._manual_region_image_bounds = BoundsInt(
+            self._manual_region_image_bounds = map_bounds.BoundsInt(
                 min_x=region.extra.get("map_min_x", 0),
                 min_y=region.extra.get("map_min_y", 0),
                 max_x=self._region_image.width() - region.extra.get("map_max_x", 0),
@@ -257,7 +202,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             min_y = min(min_y, total_boundings["y1"], total_boundings["y2"])
             max_y = max(max_y, total_boundings["y1"], total_boundings["y2"])
 
-        self.region_bounds = BoundsFloat(
+        self.region_bounds = map_bounds.BoundsFloat(
             min_x=min_x,
             min_y=min_y,
             max_x=max_x,
@@ -265,7 +210,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         )
 
         if self._manual_region_image_bounds is not None:
-            self._calculated_region_image_bounds = _expand_bounds_to_match_aspect(
+            self._calculated_region_image_bounds = map_bounds.expand_bounds_to_match_aspect(
                 self._manual_region_image_bounds, self.region_bounds
             )
         else:
@@ -317,8 +262,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
             min_y = area.extra.get("map_min_y", 0)
             max_x = self._background_image.width() - area.extra.get("map_max_x", 0)
             max_y = self._background_image.height() - area.extra.get("map_max_y", 0)
-            self.image_bounds = BoundsInt(min_x, min_y, max_x, max_y)
-            self.region_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
+            self.image_bounds = map_bounds.BoundsInt(min_x, min_y, max_x, max_y)
+            self.region_bounds = map_bounds.BoundsFloat(min_x, min_y, max_x, max_y)
         # some games (msr + dread) do not use area images but one per region
         # the image to use was already set by `select_region`
         elif self._region_image is not None:
@@ -330,7 +275,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             self._background_image = None
             self.update_region_bounds()
 
-        self.area_bounds = BoundsFloat(
+        self.area_bounds = map_bounds.BoundsFloat(
             min_x=min_x,
             min_y=min_y,
             max_x=max_x,
@@ -343,8 +288,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         if self.camera_data is not None:
             # when using 3D projection, normalize coordinates to within [0.0, 1.0]
-            self.region_bounds = BoundsFloat(0.0, 0.0, 1.0, 1.0)
-            self.area_bounds = BoundsFloat(0.0, 0.0, 1.0, 1.0)
+            self.region_bounds = map_bounds.BoundsFloat(0.0, 0.0, 1.0, 1.0)
+            self.area_bounds = map_bounds.BoundsFloat(0.0, 0.0, 1.0, 1.0)
             self.area_size = QSizeF(1.0, 1.0)
 
         self.update()
@@ -409,7 +354,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             if "total_boundings" not in area.extra or area == self.area:
                 continue
 
-            bounds = BoundsFloat.from_bounds(area.extra["total_boundings"])
+            bounds = map_bounds.BoundsFloat.from_bounds(area.extra["total_boundings"])
             tl = self.game_loc_to_qt_local([bounds.min_x, bounds.min_y])
             br = self.game_loc_to_qt_local([bounds.max_x, bounds.max_y])
             rect = QRectF(tl, br)

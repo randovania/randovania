@@ -4,6 +4,7 @@ import logging
 import math
 import shutil
 import tempfile
+from collections.abc import Callable
 from pathlib import Path
 
 import discord
@@ -21,7 +22,7 @@ from randovania.game_description.db.area import Area
 from randovania.game_description.db.node import Node, NodeLocation
 from randovania.game_description.db.region import Region
 from randovania.game_description.game_description import GameDescription
-from randovania.lib import enum_lib
+from randovania.lib import enum_lib, map_bounds
 
 
 @dataclasses.dataclass()
@@ -77,17 +78,118 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
         shutil.rmtree(output_dir)
 
 
-def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
-    image_path = data_path.joinpath("assets", "maps", f"{area.map_name}.png")
-    if not image_path.exists():
+_REGION_CROP_PADDING = 40
+
+
+def _find_map_image(base_path: Path, name: str) -> Path | None:
+    for ext in ("webp", "png"):
+        path = base_path.joinpath(f"{name}.{ext}")
+        if path.is_file():
+            return path
+    return None
+
+
+def _open_rgba(path: Path) -> PIL.Image.Image:
+    with PIL.Image.open(path) as raw_im:
+        assert isinstance(raw_im, PIL.Image.Image)
+        return raw_im.convert("RGBA")
+
+
+def _area_world_bounds(area: Area) -> map_bounds.BoundsFloat | None:
+    if "total_boundings" in area.extra:
+        return map_bounds.BoundsFloat.from_bounds(area.extra["total_boundings"])
+
+    locations = [node.location for node in area.actual_nodes if node.location is not None]
+    if not locations:
+        return None
+    return map_bounds.BoundsFloat(
+        min(it.x for it in locations),
+        min(it.y for it in locations),
+        max(it.x for it in locations),
+        max(it.y for it in locations),
+    )
+
+
+def _crop_region_image(
+    im: PIL.Image.Image, region: Region, area: Area
+) -> tuple[PIL.Image.Image, Callable[[NodeLocation], tuple[float, float]]] | None:
+    """Crops the region image to the area, similarly to DataEditorCanvas."""
+    if "camera_data" in area.extra:
         return None
 
-    with PIL.Image.open(image_path) as raw_im:
-        assert isinstance(raw_im, PIL.Image.Image)
-        im = raw_im.convert("RGBA")
+    area_bounds = _area_world_bounds(area)
+    boundings = [
+        map_bounds.BoundsFloat.from_bounds(it.extra["total_boundings"])
+        for it in region.areas
+        if "total_boundings" in it.extra
+    ]
+    if area_bounds is None or not boundings:
+        return None
 
-    def location_to_pos(loc: NodeLocation):
-        return loc.x, im.height - loc.y
+    world = map_bounds.BoundsFloat(
+        min(min(it.min_x, it.max_x) for it in boundings),
+        min(min(it.min_y, it.max_y) for it in boundings),
+        max(max(it.min_x, it.max_x) for it in boundings),
+        max(max(it.min_y, it.max_y) for it in boundings),
+    )
+    world_width = world.max_x - world.min_x
+    world_height = world.max_y - world.min_y
+    if world_width <= 0 or world_height <= 0:
+        return None
+
+    image = map_bounds.expand_bounds_to_match_aspect(
+        map_bounds.BoundsInt(
+            region.extra.get("map_min_x", 0),
+            region.extra.get("map_min_y", 0),
+            im.width - region.extra.get("map_max_x", 0),
+            im.height - region.extra.get("map_max_y", 0),
+        ),
+        world,
+    )
+
+    def world_to_image(x: float, y: float) -> tuple[float, float]:
+        return (
+            image.min_x + (image.max_x - image.min_x) * (x - world.min_x) / world_width,
+            image.min_y + (image.max_y - image.min_y) * (1 - (y - world.min_y) / world_height),
+        )
+
+    corners = [
+        world_to_image(x, y)
+        for x in (area_bounds.min_x, area_bounds.max_x)
+        for y in (area_bounds.min_y, area_bounds.max_y)
+    ]
+    left = math.floor(min(c[0] for c in corners)) - _REGION_CROP_PADDING
+    top = math.floor(min(c[1] for c in corners)) - _REGION_CROP_PADDING
+    right = math.ceil(max(c[0] for c in corners)) + _REGION_CROP_PADDING
+    bottom = math.ceil(max(c[1] for c in corners)) + _REGION_CROP_PADDING
+
+    def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+        x, y = world_to_image(loc.x, loc.y)
+        return x - left, y - top
+
+    return im.crop((left, top, right, bottom)), location_to_pos
+
+
+def render_area_with_pillow(area: Area, region: Region, data_path: Path) -> io.BytesIO | None:
+    maps_path = data_path.joinpath("assets", "maps")
+
+    area_image_path = _find_map_image(maps_path.joinpath(region.name), area.map_name)
+    if area_image_path is not None:
+        im = _open_rgba(area_image_path)
+
+        def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+            return loc.x, im.height - loc.y
+
+    else:
+        # if no area image, crop the region image if there's one
+        region_image_path = _find_map_image(maps_path, region.name)
+        if region_image_path is None:
+            return None
+
+        cropped = _crop_region_image(_open_rgba(region_image_path), region, area)
+        if cropped is None:
+            return None
+        im, location_to_pos = cropped
 
     draw = ImageDraw.Draw(im)
 
@@ -352,7 +454,7 @@ class SelectAreaItem(discord.ui.Select):
 
         files = []
 
-        area_image = render_area_with_pillow(area.area, self.game.data_path)
+        area_image = render_area_with_pillow(area.area, self.split_region.region, self.game.data_path)
         if area_image is not None:
             files.append(discord.File(area_image, filename=f"{area.area.name}_image.png"))
 
