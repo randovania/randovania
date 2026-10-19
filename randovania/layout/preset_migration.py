@@ -8,7 +8,6 @@ import uuid
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
-from randovania.layout.base.standard_pickup_state import StandardPickupPriority
 from randovania.lib import migration_lib
 
 if typing.TYPE_CHECKING:
@@ -1302,11 +1301,11 @@ def _migrate_v120(preset: dict, game: RandovaniaGame, *, from_layout_description
 def _migrate_v121(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
     states = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
     mapping = {
-        0.25: StandardPickupPriority.VERY_LOW,
-        0.5: StandardPickupPriority.LOW,
-        1.0: StandardPickupPriority.NORMAL,
-        1.5: StandardPickupPriority.HIGH,
-        2.0: StandardPickupPriority.VERY_HIGH,
+        0.25: "very-low",
+        0.5: "low",
+        1.0: "normal",
+        1.5: "high",
+        2.0: "very-high",
     }
     for name, state in states.items():
         if "priority" in state:
