@@ -242,10 +242,12 @@ ConstructNode = NodeAdapter(
                     location_category=_build_enum(major=0, minor=1),
                     custom_index_group=OptionalValue(String),
                     hint_features=PrefixedArray(VarInt, String),
+                    grants_on_collect=PrefixedArray(VarInt, ConstructResourceGain),
                 ),
                 "event": Struct(
                     **NodeBaseFields,
                     event_name=String,
+                    grants_on_collect=PrefixedArray(VarInt, ConstructResourceGain),
                 ),
                 "configurable_node": Struct(
                     **NodeBaseFields,

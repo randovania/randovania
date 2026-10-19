@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import dataclasses
 import typing
 
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader, data_writer, default_database, integrity_check
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
@@ -94,3 +96,54 @@ def test_invalid_db(test_files_dir, acceptance_check):
             "than using the template \"something along the lines of 'use bombs'\"."
         ),
     ]
+
+
+def test_find_grants_on_collect_errors(blank_game_description):
+    # Setup
+    db = blank_game_description.resource_database
+    region_list = blank_game_description.region_list
+    event_node = region_list.node_by_identifier(NodeIdentifier.create("Intro", "Boss Arena", "Event - Boss"))
+    pickup_node = region_list.node_by_identifier(NodeIdentifier.create("Intro", "Boss Arena", "Pickup (Free Loot)"))
+    ammo = db.get_item("Ammo")
+
+    bad_event = dataclasses.replace(
+        event_node,
+        grants_on_collect=((ammo, 5), (ammo, 1), (event_node.event, 1)),
+    )
+    bad_pickup = dataclasses.replace(
+        pickup_node,
+        grants_on_collect=((db.get_item("Weapon"), 2), (db.get_event("KeySwitch1"), 0), (db.get_trick("Combat"), 1)),
+    )
+    good_pickup = dataclasses.replace(pickup_node, grants_on_collect=((ammo, 500), (db.get_event("KeySwitch1"), 1)))
+
+    # Run
+    event_errors = list(integrity_check.find_grants_on_collect_errors(bad_event))
+    pickup_errors = list(integrity_check.find_grants_on_collect_errors(bad_pickup))
+    good_errors = list(integrity_check.find_grants_on_collect_errors(good_pickup))
+
+    # Assert
+    assert event_errors == [
+        "Event - Boss grants Missile more than once",
+        "Event - Boss grants its own event First Boss Killed",
+    ]
+    assert pickup_errors == [
+        "Pickup (Free Loot) grants 2 of Weapon, more than its capacity of 1",
+        "Pickup (Free Loot) grants 0 of Key Switch 1, which must be positive",
+        "Pickup (Free Loot) grants Combat, which is neither an item nor an event",
+    ]
+    assert good_errors == []
+
+
+def test_find_node_errors_includes_grants_on_collect(blank_game_description):
+    # Setup
+    region_list = blank_game_description.region_list
+    node = region_list.node_by_identifier(NodeIdentifier.create("Intro", "Boss Arena", "Pickup (Free Loot)"))
+    node = dataclasses.replace(
+        node, grants_on_collect=((blank_game_description.resource_database.get_item("Ammo"), 0),)
+    )
+
+    # Run
+    errors = list(integrity_check.find_node_errors(blank_game_description, node))
+
+    # Assert
+    assert "Pickup (Free Loot) grants 0 of Missile, which must be positive" in errors

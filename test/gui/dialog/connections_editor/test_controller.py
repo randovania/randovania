@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, cast
 
 import pytest
 from PySide6.QtGui import QUndoStack
-from PySide6.QtWidgets import QComboBox, QStackedWidget, QTreeView, QWidget
+from PySide6.QtWidgets import QApplication, QComboBox, QStackedWidget, QTreeView, QWidget
 
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.node_requirement import NodeRequirement
@@ -90,7 +90,7 @@ def test_on_add_requirement_pressed_adds_as_sibling(controller, select, echoes_g
     expected_item_requirement = requirement_tree.default_from_type(
         ResourceType.ITEM, echoes_game_description.resource_database, echoes_game_description.region_list
     )
-    assert requirement_tree._at_path(result, POWER.next_sibling()) == expected_item_requirement
+    assert requirement_tree.at_path(result, POWER.next_sibling()) == expected_item_requirement
 
 
 def test_on_add_requirement_pressed_adds_as_last_child(controller, select, echoes_game_description):
@@ -100,7 +100,7 @@ def test_on_add_requirement_pressed_adds_as_last_child(controller, select, echoe
     expected_or_requirement = requirement_tree.default_from_type(
         RequirementOr, echoes_game_description.resource_database, echoes_game_description.region_list
     )
-    assert requirement_tree._at_path(result, LIGHT.next_sibling()) == expected_or_requirement
+    assert requirement_tree.at_path(result, LIGHT.next_sibling()) == expected_or_requirement
 
 
 def test_on_add_requirement_pressed_rejects_add(controller, select, single_requirement):
@@ -147,7 +147,7 @@ def test_on_shift_up_pressed_shifts_as_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(LIGHT).data(ROLE)
     controller.on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, LIGHT.previous_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, LIGHT.previous_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_escapes_to_parent(controller, select):
@@ -155,7 +155,7 @@ def test_on_shift_up_pressed_escapes_to_parent(controller, select):
     selected_requirement = controller._model.index_from_path(DARK).data(ROLE)
     controller.on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, POWER.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, POWER.next_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_ascends_into_sibling(controller, select):
@@ -163,7 +163,7 @@ def test_on_shift_up_pressed_ascends_into_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(ANNIHILATOR).data(ROLE)
     controller.on_shift_up_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, LIGHT.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, LIGHT.next_sibling()) == selected_requirement
 
 
 def test_on_shift_up_pressed_rejects_shift(controller, select, basic_requirement):
@@ -177,7 +177,7 @@ def test_on_shift_down_pressed_shifts_as_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(DARK).data(ROLE)
     controller.on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, DARK.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, DARK.next_sibling()) == selected_requirement
 
 
 def test_on_shift_down_pressed_escapes_to_parent(controller, select):
@@ -185,7 +185,7 @@ def test_on_shift_down_pressed_escapes_to_parent(controller, select):
     selected_requirement = controller._model.index_from_path(LIGHT).data(ROLE)
     controller.on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, OR.next_sibling()) == selected_requirement
+    assert requirement_tree.at_path(result, OR.next_sibling()) == selected_requirement
 
 
 def test_on_shift_down_pressed_descends_into_sibling(controller, select):
@@ -193,7 +193,7 @@ def test_on_shift_down_pressed_descends_into_sibling(controller, select):
     selected_requirement = controller._model.index_from_path(POWER).data(ROLE)
     controller.on_shift_down_pressed()
     result = controller._model.build_requirement()
-    assert requirement_tree._at_path(result, OR.previous_sibling().extend_with(0)) == selected_requirement
+    assert requirement_tree.at_path(result, OR.previous_sibling().extend_with(0)) == selected_requirement
 
 
 def test_on_shift_down_pressed_rejects_shift(controller, select, basic_requirement):
@@ -229,3 +229,45 @@ def test_on_type_combo_changed_changes_requirement_to_type(controller, select, t
         assert result.resource.resource_type == to_type
     else:
         assert isinstance(result, to_type)
+
+
+def test_on_duplicate_triggered_duplicates(controller, select):
+    select(OR)
+    controller.on_duplicate_triggered()
+    result = controller._model.build_requirement()
+    expected = requirement_tree.at_path(result, OR)
+    actual = requirement_tree.at_path(result, OR.next_sibling())
+    assert expected == actual
+
+
+POWER_AS_TEXT = """{
+    "type": "resource",
+    "data": {
+        "type": "items",
+        "name": "Power",
+        "amount": 1,
+        "negate": false
+    }
+}"""
+
+
+def test_on_copy_copies(controller, select):
+    select(POWER)
+    controller.on_copy()
+    assert QApplication.clipboard().text() == POWER_AS_TEXT
+
+
+@pytest.fixture
+def copy_to_clipboard():
+    def _copy(text: str) -> None:
+        QApplication.clipboard().setText(text)
+
+    return _copy
+
+
+def test_on_paste_adds_requirement(controller, select, copy_to_clipboard, echoes_item):
+    copy_to_clipboard(POWER_AS_TEXT)
+    select(OR)
+    controller.on_paste()
+    result = controller._model.build_requirement()
+    assert requirement_tree.at_path(result, LIGHT.next_sibling()) == echoes_item("Power")
