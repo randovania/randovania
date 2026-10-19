@@ -4,6 +4,7 @@ from randovania.game_description.pickup.pickup_entry import StartingPickupBehavi
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.standard_pickup_widget import StandardPickupWidget
 from randovania.layout.base.standard_pickup_state import (
+    StandardPickupPriority,
     StandardPickupState,
     StandardPickupStateCase,
 )
@@ -54,7 +55,7 @@ def test_state_change_to_starting(skip_qtbot, echoes_pickup_database, echoes_res
         include_copy_in_original_location=False,
         num_shuffled_pickups=0,
         num_included_in_starting_pickups=1,
-        priority=1.0,
+        priority=StandardPickupPriority.NORMAL,
         included_ammo=(),
     )
 

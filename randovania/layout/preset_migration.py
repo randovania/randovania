@@ -1298,6 +1298,20 @@ def _migrate_v120(preset: dict, game: RandovaniaGame, *, from_layout_description
     preset["configuration"].pop("staggered_multi_pickup_placement")
 
 
+def _migrate_v121(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    states = preset["configuration"]["standard_pickup_configuration"]["pickups_state"]
+    mapping = {
+        0.25: "very-low",
+        0.5: "low",
+        1.0: "normal",
+        1.5: "high",
+        2.0: "very-high",
+    }
+    for name, state in states.items():
+        if "priority" in state:
+            state["priority"] = mapping.get(state["priority"], "normal")
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1419,6 +1433,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v118,  # core: improved multi-dock support in dock weakness distributor
     _migrate_v119,  # prime: remove `allow_underwater_movement_without_gravity`
     _migrate_v120,  # remove staggered pickup placement
+    _migrate_v121,  # change pickup priority from float to enum
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
