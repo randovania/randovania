@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MZMGameTabWidget</class>
- <widget class="QTabWidget" name="BlankGameTabWidget">
+ <widget class="QTabWidget" name="MZMGameTabWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>3</number>
   </property>
   <property name="documentMode">
    <bool>true</bool>
@@ -52,7 +52,7 @@
     <item>
      <spacer name="intro_spacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -96,8 +96,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>499</width>
-         <height>363</height>
+         <width>497</width>
+         <height>365</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="faq_scroll_layout">
@@ -107,7 +107,90 @@
            <string># updated from code</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="differences_tab">
+   <attribute name="title">
+    <string>Differences</string>
+   </attribute>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QScrollArea" name="differences_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="differences_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>467</width>
+         <height>637</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="differences_label">
+          <property name="text">
+           <string>Randovania and the MARS patcher make some changes to the original game in order to improve the randomizer experience or to simply fix bugs in the original game. Key differences are: 
+
+### Gameplay
+
+- New Launcher items have been added for Missiles, Super Missiles, and Power Bombs which are required to use their respective ammo.
+
+- New movement items have been added for Springball, Infinite Bomb Jump, and Wall Jump Boots.
+
+- The Ruins Test event is no longer required to activate Space Jump, Gravity Suit, or Plasma Beam. The Ruins Test is now a pickup location.
+
+- The Zipline activation is now shuffled into the pool as a pickup. The Zipline activation platform is now a pickup location.
+
+- Deorem will only spawn when the player has collected Missile Launcher and no longer flees. Deorem only spawns in the first location near the Norfair elevator.
+
+- The Acid Worm and Ridley now always spawn regardless of the events.
+
+- The suitless sequence has been removed.
+
+- Missile Hatches are no longer weak to Super Missiles.
+
+- Hatches locked by events now revert to their correct types.
+
+- TODO: Say something about goal here...
+
+### Room Changes
+
+- Crateria - TODO - The Chozo pillar is now always extended.
+
+- Norfair - TODO - The Imago Cocoon room now always has tunnels.
+
+### Quality of Life
+
+- You can now warp to start by pressing L on the map screen. All progress since your last save will be lost. This is NEVER considered logical.
+
+- On the inventory screen, you can now enable/disable acquired powerups.
+
+- Ammo drop rates have been reworked so that Super Missiles will drop when Missiles are not acquired and Power Bombs will always drop when Health and Missile ammo is full.
+
+- A cosmetic setting has been added to reveal all hidden blocks.
+
+
+</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::TextFormat::MarkdownText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
