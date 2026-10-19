@@ -190,5 +190,5 @@ def test_render_area_with_pillow_crops_region_image(tmp_path):
 
     assert result is not None
     with PIL.Image.open(result) as im:
-        # 100x100 world units -> 100x100 pixels, plus padding on each side
-        assert im.size == (180, 180)
+        # 100x100 world units -> 100x100 pixels, plus padding on each side, zoomed to the target width
+        assert im.size == (900, 900)

@@ -12,7 +12,7 @@ import graphviz
 import PIL.Image
 from discord import Embed
 from discord.ext.commands import Context, Converter
-from PIL import ImageDraw
+from PIL import ImageDraw, ImageFont
 
 from randovania.discord_bot.bot import BotConfiguration, RandovaniaBot
 from randovania.discord_bot.randovania_cog import RandovaniaCog
@@ -78,7 +78,11 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
         shutil.rmtree(output_dir)
 
 
-_REGION_CROP_PADDING = 40
+_REGION_CROP_PADDING = 0.3
+_MIN_REGION_CROP_PADDING = 40
+_MIN_RENDER_SCALE = 2
+_MAX_RENDER_SCALE = 8
+_TARGET_IMAGE_WIDTH = 900
 
 
 def _find_map_image(base_path: Path, name: str) -> Path | None:
@@ -158,10 +162,13 @@ def _crop_region_image(
         for x in (area_bounds.min_x, area_bounds.max_x)
         for y in (area_bounds.min_y, area_bounds.max_y)
     ]
-    left = math.floor(min(c[0] for c in corners)) - _REGION_CROP_PADDING
-    top = math.floor(min(c[1] for c in corners)) - _REGION_CROP_PADDING
-    right = math.ceil(max(c[0] for c in corners)) + _REGION_CROP_PADDING
-    bottom = math.ceil(max(c[1] for c in corners)) + _REGION_CROP_PADDING
+    area_left, area_right = min(c[0] for c in corners), max(c[0] for c in corners)
+    area_top, area_bottom = min(c[1] for c in corners), max(c[1] for c in corners)
+    padding = max(_MIN_REGION_CROP_PADDING, _REGION_CROP_PADDING * max(area_right - area_left, area_bottom - area_top))
+    left = math.floor(area_left - padding)
+    top = math.floor(area_top - padding)
+    right = math.ceil(area_right + padding)
+    bottom = math.ceil(area_bottom + padding)
 
     def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
         x, y = world_to_image(loc.x, loc.y)
@@ -191,7 +198,17 @@ def render_area_with_pillow(area: Area, region: Region, data_path: Path) -> io.B
             return None
         im, location_to_pos = cropped
 
+    # render at a higher resolution so the lines and text are sharp
+    # small rooms are zoomed in more, so the nodes and their names don't overlap
+    scale = min(max(_TARGET_IMAGE_WIDTH / im.width, _MIN_RENDER_SCALE), _MAX_RENDER_SCALE)
+    base_to_pos = location_to_pos
+    im = im.resize((round(im.width * scale), round(im.height * scale)), PIL.Image.Resampling.LANCZOS)
+    font = ImageFont.load_default(size=20)
     draw = ImageDraw.Draw(im)
+
+    def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+        x, y = base_to_pos(loc)
+        return x * scale, y * scale
 
     def draw_connections_from(source_node: Node):
         for target_node, requirement in area.connections[source_node].items():
@@ -201,34 +218,34 @@ def render_area_with_pillow(area: Area, region: Region, data_path: Path) -> io.B
             source = location_to_pos(source_node.location)
             target = location_to_pos(target_node.location)
 
-            if sum((a - b) ** 2 for a, b in zip(source, target)) < 4:
+            if sum((a - b) ** 2 for a, b in zip(source, target)) < 16:
                 continue
 
-            draw.line(source + target, width=2, fill=(255, 255, 255, 255))
-            draw.line(source + target, width=1, fill=(0, 0, 0, 255))
+            draw.line(source + target, width=4, fill=(255, 255, 255, 255))
+            draw.line(source + target, width=2, fill=(0, 0, 0, 255))
 
     for node in area.nodes:
         if not node.is_derived_node:
             draw_connections_from(node)
 
+    radius = 10
     for node in area.nodes:
         if node.location is None or node.is_derived_node:
             continue
 
         p = location_to_pos(node.location)
-        draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(255, 255, 255, 255), width=5)
-        draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(0, 0, 0, 255), width=4)
+        draw.ellipse(
+            (p[0] - radius - 1, p[1] - radius - 1, p[0] + radius + 1, p[1] + radius + 1), fill=(255, 255, 255, 255)
+        )
+        draw.ellipse((p[0] - radius, p[1] - radius, p[0] + radius, p[1] + radius), fill=(0, 0, 0, 255))
         draw.text(
-            (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
+            (p[0], p[1] + 24),
             node.name,
+            font=font,
+            anchor="mt",
+            fill=(0, 0, 0, 255),
             stroke_width=2,
             stroke_fill=(255, 255, 255, 255),
-        )
-        draw.text(
-            (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
-            node.name,
-            stroke_width=1,
-            stroke_fill=(0, 0, 0, 255),
         )
 
     result = io.BytesIO()
