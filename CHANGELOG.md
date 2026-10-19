@@ -23,6 +23,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Phendrana Drifts
+- Changed: Cleaned up the connections from Ruins Entryway to Courtyard Entryway:
+  - Added: Several videos and comments for the tricks involved.
+  - Added: Getting from the top of the ruined building to the stone archway is now possible with an Intermediate Damage Boost.
+  - Added: Several alternative methods on getting on top of the fallen down stalactite.
+  - Added: Getting from the stone archway to the middle-left rooftop via Beginner Momvement.
+  - Added: Dashing from the middle-left rooftop to Courtyard Entryway is now possible with an Intermediate Combat/Scan Dash by dashing off of either the Sheegoth or the items drops from a crate.
+  - Changed: Climbing the ruined building now requires Beginner Standable Terrain for the Beginner Bomb Jump. Doing it with only Bomb Jumps is now Intermediate.
+
 ### Metroid Prime Hunters
 
 - Fixed: Hint text being cut off if the text was too long.
