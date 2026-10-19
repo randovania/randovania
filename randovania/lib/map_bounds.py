@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
-from typing import NamedTuple
+from dataclasses import dataclass
+from typing import Literal, NamedTuple
+
+import numpy as np
+
+from randovania.bitpacking.json_dataclass import JsonDataclass
 
 
 class BoundsInt(NamedTuple):
@@ -55,3 +60,41 @@ def expand_bounds_to_match_aspect(image_bounds: BoundsInt, world_bounds: BoundsF
             max_x=image_bounds.max_x,
             max_y=round(image_bounds.max_y + padding),
         )
+
+
+Matrix4f = tuple[
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+    tuple[float, float, float, float],
+]
+
+
+@dataclass(frozen=True)
+class CameraData(JsonDataclass):
+    """
+    The data necessary to project 3D world-space node coordinates onto the 2D canvas.
+    Most useful if generated at the same time as the area image is taken.
+    """
+
+    coords: Literal["opengl"]
+    """The coordinate system the nodes are using."""
+
+    projection: Matrix4f
+    """The projection matrix of the camera that took the screenshot."""
+
+    view: Matrix4f
+    """The view matrix of the camera that took the screenshot."""
+
+    def game_loc_to_qt_local(self, x: float, y: float, z: float) -> tuple[float, float]:
+        """Transforms the 3D coordinates into a pair of 2D coordinates, within the range [0.0, 1.0]."""
+
+        if self.coords == "opengl":
+            pos = np.array([x, y, z, 1.0])
+
+            clip_space_pos = np.array(self.projection) @ (np.array(self.view) @ pos)
+            ndc_space_pos = clip_space_pos[0:3] / clip_space_pos[3]
+
+            return (ndc_space_pos[0] + 1.0) / 2.0, (ndc_space_pos[1] + 1.0) / 2.0
+
+        raise ValueError("Unknown coordinate system")

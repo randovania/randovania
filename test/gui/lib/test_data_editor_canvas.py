@@ -7,7 +7,8 @@ from PySide6.QtCore import QPoint, QPointF
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.gui.widgets.data_editor_canvas import CameraData, DataEditorCanvas
+from randovania.gui.widgets.data_editor_canvas import DataEditorCanvas
+from randovania.lib.map_bounds import CameraData
 
 
 @pytest.fixture

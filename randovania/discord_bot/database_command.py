@@ -80,7 +80,7 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
 
 _REGION_CROP_PADDING = 0.3
 _MIN_REGION_CROP_PADDING = 40
-_MIN_RENDER_SCALE = 2
+_MIN_RENDER_SCALE = 1
 _MAX_RENDER_SCALE = 8
 _TARGET_IMAGE_WIDTH = 900
 
@@ -177,15 +177,41 @@ def _crop_region_image(
     return im.crop((left, top, right, bottom)), location_to_pos
 
 
+def _crop_area_image(
+    im: PIL.Image.Image, area: Area
+) -> tuple[PIL.Image.Image, Callable[[NodeLocation], tuple[float, float]]]:
+    """Crops the area image to its map bounds, mapping node locations like DataEditorCanvas does."""
+    bounds = map_bounds.BoundsInt(
+        area.extra.get("map_min_x", 0),
+        area.extra.get("map_min_y", 0),
+        im.width - area.extra.get("map_max_x", 0),
+        im.height - area.extra.get("map_max_y", 0),
+    )
+    width = bounds.max_x - bounds.min_x
+    height = bounds.max_y - bounds.min_y
+    im = im.crop(bounds)
+
+    if "camera_data" in area.extra:
+        camera = map_bounds.CameraData.from_json(area.extra["camera_data"])
+
+        def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+            u, v = camera.game_loc_to_qt_local(loc.x, loc.y, loc.z)
+            return width * u, height * (1 - v)
+
+    else:
+
+        def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+            return loc.x - bounds.min_x, bounds.max_y - loc.y
+
+    return im, location_to_pos
+
+
 def render_area_with_pillow(area: Area, region: Region, data_path: Path) -> io.BytesIO | None:
     maps_path = data_path.joinpath("assets", "maps")
 
     area_image_path = _find_map_image(maps_path.joinpath(region.name), area.map_name)
     if area_image_path is not None:
-        im = _open_rgba(area_image_path)
-
-        def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
-            return loc.x, im.height - loc.y
+        im, location_to_pos = _crop_area_image(_open_rgba(area_image_path), area)
 
     else:
         # if no area image, crop the region image if there's one
