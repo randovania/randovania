@@ -1309,7 +1309,7 @@ def _migrate_v121(preset: dict, game: RandovaniaGame, *, from_layout_description
     }
     for name, state in states.items():
         if "priority" in state:
-            state["priority"] = mapping[state["priority"]]
+            state["priority"] = mapping.get(state["priority"], "normal")
 
 
 _MIGRATIONS: list[PresetMigration | None] = [
