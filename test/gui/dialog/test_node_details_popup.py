@@ -12,6 +12,7 @@ from randovania.game_description.db.hint_node import (
     SpecificPickupHintNode,
 )
 from randovania.game_description.db.node import GenericNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
@@ -135,3 +136,38 @@ def test_on_dock_update_name_button(skip_qtbot, blank_game_description):
     assert dialog.name_edit.text() == "Weird Name"
     dialog.on_dock_update_name_button()
     assert dialog.name_edit.text() == node.name
+
+
+@pytest.mark.parametrize("node_name", ["Event - Boss", "Pickup (Free Loot)"])
+def test_unchanged_create_new_node_with_grants(skip_qtbot, blank_game_description, node_name):
+    node = blank_game_description.region_list.node_by_identifier(
+        NodeIdentifier.create("Intro", "Boss Arena", node_name)
+    )
+    dialog = NodeDetailsPopup(blank_game_description, node)
+    skip_qtbot.addWidget(dialog)
+
+    # Run
+    new_node = dialog.create_new_node()
+
+    # Assert
+    assert node.grants_on_collect
+    assert node == new_node
+
+
+@pytest.mark.parametrize(("node_name", "box_name"), [("Event - Boss", "event"), ("Pickup (Free Loot)", "pickup")])
+def test_change_grants_on_collect(skip_qtbot, blank_game_description, node_name, box_name):
+    db = blank_game_description.resource_database
+    node = blank_game_description.region_list.node_by_identifier(
+        NodeIdentifier.create("Intro", "Boss Arena", node_name)
+    )
+    dialog = NodeDetailsPopup(blank_game_description, node)
+    skip_qtbot.addWidget(dialog)
+    box = getattr(dialog, f"{box_name}_grants_box")
+    granted = ((db.get_item("Useless"), 3), (db.get_event("KeySwitch1"), 1))
+
+    # Run
+    box.items = granted
+    new_node = dialog.create_new_node()
+
+    # Assert
+    assert new_node.grants_on_collect == granted

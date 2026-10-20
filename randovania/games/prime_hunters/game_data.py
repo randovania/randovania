@@ -96,10 +96,20 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     presets=[
         "starter_preset.rdvpreset",
     ],
-    faq=[],
+    faq=[
+        (
+            "What versions of the game are supported?",
+            "Currently, only the US and European versions of the game are supported.",
+        ),
+        (
+            "Why is the Omega Cannon not an option to be shuffled into the pickup pool?",
+            "Once the Omega Cannon is collected, it overrides all other beams. "
+            "Currently, there are no plans to remedy this.",
+        ),
+    ],
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
-            "All items, excluding Octoliths",
+            "All items",
             "Force Fields",
             "Portals",
         ),

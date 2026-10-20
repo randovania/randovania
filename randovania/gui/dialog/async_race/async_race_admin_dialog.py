@@ -21,11 +21,29 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
     def __init__(self, db: list[AsyncRaceEntryData]) -> None:
         super().__init__()
         self.db = db
+        self.has_teams = any(entry.team_name is not None for entry in db)
+
+    def _column_index(self, field_name: str) -> int:
+        return next(i for i, column in enumerate(self._all_columns()) if column.field_name == field_name)
 
     @override
     def _all_columns(self) -> list[FieldDefinition]:
+        columns: list[FieldDefinition]
+        if self.has_teams:
+            columns = [
+                FieldDefinition("Team", "team_name", from_qt=None),
+                FieldDefinition(
+                    "Members",
+                    "members",
+                    to_qt=lambda members: ", ".join(member.name for member in members),
+                    from_qt=None,
+                ),
+            ]
+        else:
+            columns = [FieldDefinition("User", "user", to_qt=lambda v: v.name, from_qt=None)]
+
         return [
-            FieldDefinition("User", "user", to_qt=lambda v: v.name, from_qt=None),
+            *columns,
             DateFieldDefinition("Join Date", "join_date", read_only=True),
             DateFieldDefinition("Start Date", "start_date", optional=True),
             DateFieldDefinition("Finish Date", "finish_date", optional=True),
@@ -56,15 +74,15 @@ class AsyncRaceEntryDataDatabaseModel(EditableTableModel[AsyncRaceEntryData]):
         if role == Qt.ItemDataRole.DecorationRole:
             if index.row() < len(self._get_items()):
                 item = self.db[index.row()]
-                match index.column():
-                    case 2:  # Start Date
-                        if item.start_date is not None and item.start_date <= item.join_date:
-                            return QtGui.QColorConstants.Red
-                    case 3:  # Finish
-                        if item.finish_date is not None and (
-                            item.start_date is None or item.finish_date <= item.start_date
-                        ):
-                            return QtGui.QColorConstants.Red
+                column = index.column()
+                if column == self._column_index("start_date"):
+                    if item.start_date is not None and item.start_date <= item.join_date:
+                        return QtGui.QColorConstants.Red
+                elif column == self._column_index("finish_date"):
+                    if item.finish_date is not None and (
+                        item.start_date is None or item.finish_date <= item.start_date
+                    ):
+                        return QtGui.QColorConstants.Red
                 return None
             return QtGui.QColorConstants.Red
         return super().data(index, role)

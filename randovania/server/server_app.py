@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Annotated, Concatenate, cast
 
 import fastapi
+import jinja2
 import peewee
 import sentry_sdk
 import starlette
@@ -37,12 +38,13 @@ from randovania.network_common.authentication import AuthenticationMethod
 from randovania.network_common.signals import server_signals
 from randovania.server import client_check, fastapi_discord
 from randovania.server.database import User, World, database_lifespan
-from randovania.server.discord_auth import EnforceDiscordRole, discord_oauth_lifespan
+from randovania.server.discord_auth import EnforceDiscordRole, discord_client_lifespan, discord_oauth_lifespan
 from randovania.server.socketio import (
     fastapi_socketio_lifespan,
 )
 
 if TYPE_CHECKING:
+    from discord import Client as DiscordClient
     from socketio import AsyncServer
     from socketio_handler import SocketManager
 
@@ -92,6 +94,7 @@ class ServerApp:
 
     socket_manager: SocketManager
     discord: DiscordOAuthClient
+    discord_client: DiscordClient | None
     db: peewee.SqliteDatabase
     metrics: Instrumentator
     fernet_encrypt: Fernet
@@ -140,7 +143,12 @@ class ServerApp:
         self._setup_exception_handlers()
 
         server_path = Path(__file__).parent
-        self.templates = Jinja2Templates(directory=server_path.joinpath("templates"))
+        self.templates = Jinja2Templates(
+            env=jinja2.Environment(
+                loader=jinja2.FileSystemLoader(server_path.joinpath("templates")),
+                autoescape=jinja2.select_autoescape(default=True),
+            )
+        )
         self.app.mount("/static", StaticFiles(directory=server_path.joinpath("static")), name="static")
 
         self.metrics = Instrumentator()
@@ -157,6 +165,7 @@ class ServerApp:
 
         async with (
             discord_oauth_lifespan(_app) as self.discord,
+            discord_client_lifespan(_app) as self.discord_client,
             EnforceDiscordRole.lifespan(_app) as self.enforce_role,
             fastapi_socketio_lifespan(_app) as self.socket_manager,
             database_lifespan(_app) as self.db,

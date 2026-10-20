@@ -765,7 +765,7 @@ def _should_use_resolver_hints(config: BaseConfiguration) -> bool:
 
 async def get_resolver_hint_state(world: int, patches: GamePatches) -> ResolverHintState | None:
     with debug.with_level(debug.LogLevel.SILENT):
-        new_state = await resolver.resolve(patches.configuration, patches, collect_hint_data=True)
+        new_state = await resolver.resolve([(patches.configuration, patches)], collect_hint_data=True)
 
     if new_state is None:
         logger.warning(
@@ -774,7 +774,7 @@ async def get_resolver_hint_state(world: int, patches: GamePatches) -> ResolverH
         return None
     else:
         debug.debug_print(f">> World {world + 1} is solve-able after door placement. Beginning hint placement.")
-        return new_state.hint_state
+        return new_state[0].hint_state
 
 
 async def distribute_generic_hints(

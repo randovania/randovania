@@ -415,14 +415,22 @@ async def test_guest_login_post_valid_json(test_client, clean_database, mocker: 
 
 
 async def test_guest_login_post_valid_web(test_client, clean_database):
-    test_client.sa.sio.session = MagicMock()
-    test_client.sa.sio.session.return_value.__aenter__.return_value = {}
-
-    response = test_client.post("/guest_login", data={"name": "Foo", "sid": "1234"}, follow_redirects=False)
+    response = test_client.post("/guest_login", data={"name": "Foo"}, follow_redirects=False)
     assert response.status_code == 303
     assert response.headers["Location"] == "http://testserver/me"
     assert response.text == ""
-    assert User.get_by_id(1).name == "Guest: Foo"
+    user = User.get_by_id(1)
+    assert user.name == "Guest: Foo"
+
+    me_response = test_client.get("/me", headers={"Accept": "application/json"})
+    me_response.raise_for_status()
+    assert me_response.json() == user.as_json
+
+
+async def test_guest_login_post_json_missing_sid(test_client, clean_database):
+    response = test_client.post("/guest_login", headers={"Accept": "application/json"}, data={"name": "Foo"})
+    assert response.status_code == 400
+    assert response.json() == {"error_message": "Missing sid"}
 
 
 async def test_guest_login_post_not_debug(test_client):

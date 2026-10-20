@@ -2,7 +2,9 @@
 # cython: profile=False
 # pyright: reportPossiblyUnboundVariable=false
 # pyright: reportReturnType=false
-# mypy: disable-error-code="return"
+# arg-type: mypy sees Bitmask and BitmaskData as distinct types; pure mode aliases both to
+# BitmaskInt, so every `.data` boundary crossing trips a spurious mismatch.
+# mypy: disable-error-code="return, arg-type"
 
 from __future__ import annotations
 
@@ -29,13 +31,14 @@ else:
 if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.libcpp.utility import pair
-        from cython.cimports.libcpp.vector import vector
         from cython.cimports.randovania.game_description.resources.resource_collection import (
             ResourceCollection,
         )
-        from cython.cimports.randovania.lib.bitmask import Bitmask
+        from cython.cimports.randovania.lib.bitmask import Bitmask, BitmaskData
+        from cython.cimports.randovania.lib.cython_helper import pvector as vector
 else:
     from randovania.lib.bitmask import Bitmask
+    from randovania.lib.bitmask import Bitmask as BitmaskData
     from randovania.lib.cython_helper import Pair as pair
     from randovania.lib.cython_helper import PyImmutableRef, PyRef
     from randovania.lib.cython_helper import Vector as vector
@@ -82,8 +85,11 @@ class GraphRequirementList:
     """
 
     def __init__(self, resource_db: ResourceDatabaseView | None) -> None:
-        self._set_bitmask = Bitmask.create_native()
-        self._negate_bitmask = Bitmask.create_native()
+        # In compiled mode, `_set_bitmask`/`_negate_bitmask` are C++ values that
+        # already default-construct empty as part of allocating this object.
+        if not cython.compiled:
+            self._set_bitmask = Bitmask.create_native()
+            self._negate_bitmask = Bitmask.create_native()
         self._other_resources = vector[pair[cython.size_t, cython.int]]()
         self._damage_resources = vector[pair[cython.size_t, cython.int]]()
 
@@ -94,8 +100,8 @@ class GraphRequirementList:
     @cython.cfunc
     def from_components(
         resource_db: ResourceDatabaseView | None,
-        set_bitmask: Bitmask,
-        negate_bitmask: Bitmask,
+        set_bitmask: BitmaskData,
+        negate_bitmask: BitmaskData,
         other_resources: vector[pair[cython.size_t, cython.int]],
         damage_resources: vector[pair[cython.size_t, cython.int]],
     ) -> GraphRequirementList:
@@ -118,9 +124,9 @@ class GraphRequirementList:
     def create_empty(resource_db: ResourceDatabaseView | None) -> GraphRequirementList:
         """Fast path for creating empty instances without __init__ overhead."""
         result: GraphRequirementList = GraphRequirementList.__new__(GraphRequirementList)
-        result._set_bitmask = Bitmask.create_native()
-        result._negate_bitmask = Bitmask.create_native()
         if not cython.compiled:
+            result._set_bitmask = Bitmask.create_native()
+            result._negate_bitmask = Bitmask.create_native()
             result._other_resources = vector[pair[cython.size_t, cython.int]]()
             result._damage_resources = vector[pair[cython.size_t, cython.int]]()
         result._resource_db = resource_db
@@ -147,9 +153,15 @@ class GraphRequirementList:
         # if not self._frozen:
         #     raise RuntimeError("Cannot hash a non-frozen GraphRequirementList")
 
-        # Hash the bitmasks
-        result: cython.ulonglong = hash(self._set_bitmask)
-        result ^= hash(self._negate_bitmask) * 31
+        # Hash the bitmasks. `self._set_bitmask`/`_negate_bitmask` are a raw C++ value in compiled
+        # mode (no Python-level hash()), a Bitmask object in pure mode (has one).
+        result: cython.ulonglong = 0
+        if cython.compiled:
+            result = self._set_bitmask.hash_value()
+            result ^= self._negate_bitmask.hash_value() * 31
+        else:
+            result = hash(self._set_bitmask)
+            result ^= hash(self._negate_bitmask) * 31
 
         if cython.compiled:
             # Hash the unordered_maps using pure C arithmetic
@@ -205,7 +217,7 @@ class GraphRequirementList:
             raise RuntimeError("Cannot modify a frozen GraphRequirementList")
 
     @cython.cfunc
-    def _complexity_key_for_simplify(self) -> tuple[int, int, int]:
+    def _complexity_key_for_simplify(self) -> tuple[cython.int, cython.int, cython.int]:
         """
         A value that indicates how "complex" this requirement is. Used for sorting the alternatives in
         GraphRequirementSet.optimize_alternatives
@@ -253,7 +265,7 @@ class GraphRequirementList:
             return "Trivial"
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_other_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._other_resources for an entry with the given resource_index.
@@ -266,7 +278,7 @@ class GraphRequirementList:
         return -1
 
     @cython.cfunc
-    @cython.exceptval(check=False)  # type: ignore[call-arg]
+    @cython.exceptval(check=False)
     def _find_damage_idx(self, resource_index: cython.int) -> cython.int:
         """
         Searches self._damage_resources for an entry with the given resource_index.
@@ -355,11 +367,11 @@ class GraphRequirementList:
     # @cython.exceptval(check=False)
     def satisfied(self, resources: ResourceCollection, health: cython.float) -> cython.bint:
         """Checks if the given resources and health satisfies this requirement."""
-        if not self._set_bitmask.is_subset_of(resources.resource_bitmask):
+        if not self._set_bitmask.is_subset_of(resources.resource_bitmask.data):
             return False
 
         if not self._negate_bitmask.is_empty():
-            if self._negate_bitmask.is_subset_of(resources.resource_bitmask):
+            if self._negate_bitmask.is_subset_of(resources.resource_bitmask.data):
                 return False
 
         for entry in self._other_resources:
@@ -377,11 +389,11 @@ class GraphRequirementList:
     # @cython.exceptval(check=False)
     def satisfied_damage(self, resources: ResourceCollection) -> cython.float:
         """Checks if the given resources and health satisfies this requirement."""
-        if not self._set_bitmask.is_subset_of(resources.resource_bitmask):
+        if not self._set_bitmask.is_subset_of(resources.resource_bitmask.data):
             return INF
 
         if not self._negate_bitmask.is_empty():
-            if self._negate_bitmask.is_subset_of(resources.resource_bitmask):
+            if self._negate_bitmask.is_subset_of(resources.resource_bitmask.data):
                 return INF
 
         for entry in self._other_resources:
@@ -537,16 +549,13 @@ class GraphRequirementList:
         assert not negate or amount == 1
 
         if negate:
-            target_bitmask = self._negate_bitmask
-            other_bitmask = self._set_bitmask
+            if self._set_bitmask.is_set(resource_index):
+                raise ValueError("Cannot add resource requirement that conflicts with existing requirements")
+            self._negate_bitmask.set_bit(resource_index)
         else:
-            target_bitmask = self._set_bitmask
-            other_bitmask = self._negate_bitmask
-
-        if other_bitmask.is_set(resource_index):
-            raise ValueError("Cannot add resource requirement that conflicts with existing requirements")
-
-        target_bitmask.set_bit(resource_index)
+            if self._negate_bitmask.is_set(resource_index):
+                raise ValueError("Cannot add resource requirement that conflicts with existing requirements")
+            self._set_bitmask.set_bit(resource_index)
         if amount > 1:
             idx: cython.int = self._find_other_idx(resource_index)
             if idx != -1:
@@ -573,11 +582,11 @@ class GraphRequirementList:
         if not self._set_bitmask.is_empty():
             # A satisfied resource requirement becomes Trivial, which is then discarded
             # An unsatisfied resource requirement becomes Impossible, which means the entire And is impossible
-            if not self._set_bitmask.is_subset_of(resources.resource_bitmask):
+            if not self._set_bitmask.is_subset_of(resources.resource_bitmask.data):
                 return None
 
         if not self._negate_bitmask.is_empty():
-            if self._negate_bitmask.share_at_least_one_bit(resources.resource_bitmask):
+            if self._negate_bitmask.share_at_least_one_bit(resources.resource_bitmask.data):
                 return None
 
         for entry in self._other_resources:
@@ -698,20 +707,20 @@ class GraphRequirementList:
             1 if this is a single-requirement alternative
             2 if nothing was decided, calculate is_superset normally.
         """
-        if self._set_bitmask.share_at_least_one_bit(single_req_mask):
+        if self._set_bitmask.share_at_least_one_bit(single_req_mask.data):
             # We already have a requirement that is just one of these resources
             return 0
 
         if self.num_requirements() == 1 and not self._set_bitmask.is_empty():
-            single_req_mask.union(self._set_bitmask)
+            single_req_mask.data.union(self._set_bitmask)
             return 1
         else:
             return 2
 
 
-TRIVIAL_LIST: GraphRequirementList = GraphRequirementList(None)
+TRIVIAL_LIST = cython.declare(GraphRequirementList, GraphRequirementList(None))
 TRIVIAL_LIST.freeze()
-INF: cython.float = float("inf")
+INF = cython.declare(cython.float, float("inf"))
 
 
 @cython.final
@@ -970,7 +979,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def trivial(cls) -> typing.Self:
+    def trivial(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is always satisfied.
         """
@@ -984,7 +993,7 @@ class GraphRequirementSet:
 
     @classmethod
     @functools.cache
-    def impossible(cls) -> typing.Self:
+    def impossible(cls) -> GraphRequirementSet:
         """
         A GraphRequirementSet that is never satisfied.
         """
@@ -1052,12 +1061,12 @@ class GraphRequirementSet:
         return set_resources, resources_with_negate
 
 
-TRIVIAL_SET = GraphRequirementSet()
+TRIVIAL_SET = cython.declare(GraphRequirementSet, GraphRequirementSet())
 TRIVIAL_SET.add_alternative(TRIVIAL_LIST)
 TRIVIAL_SET.freeze()
 
 # No alternatives makes satisfied always return False
-IMPOSSIBLE_SET = GraphRequirementSet()
+IMPOSSIBLE_SET = cython.declare(GraphRequirementSet, GraphRequirementSet())
 IMPOSSIBLE_SET.freeze()
 
 

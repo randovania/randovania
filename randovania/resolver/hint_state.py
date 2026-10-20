@@ -19,9 +19,9 @@ class ResolverHintState(HintState):
         return other
 
     def valid_available_locations_for_hint(self, state: State, logic: Logic) -> list[PickupIndex]:
-        collected = list(state.collected_pickup_indices(logic.graph))
+        collected = list(state.collected_pickup_indices(self.graph))
         return [
             node.pickup_index
-            for node in logic.all_nodes
+            for node in self.graph.nodes
             if node.pickup_index is not None and node.pickup_index in collected
         ]

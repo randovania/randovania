@@ -15,18 +15,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
-    QGroupBox, QHBoxLayout, QLabel, QProgressBar,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractButton, QAbstractItemView, QApplication, QDialog,
+    QDialogButtonBox, QGridLayout, QGroupBox, QLabel,
+    QListWidget, QListWidgetItem, QProgressBar, QPushButton,
+    QSizePolicy, QVBoxLayout, QWidget)
 
 from randovania.gui.widgets.async_race_room_settings_widget import AsyncRaceRoomSettingsWidget
-from randovania.gui.widgets.background_task_widget import BackgroundTaskWidget
 
 class Ui_AsyncRaceCreationDialog(object):
     def setupUi(self, AsyncRaceCreationDialog):
         if not AsyncRaceCreationDialog.objectName():
             AsyncRaceCreationDialog.setObjectName(u"AsyncRaceCreationDialog")
-        AsyncRaceCreationDialog.resize(431, 198)
+        AsyncRaceCreationDialog.resize(431, 268)
         self.root_layout = QVBoxLayout(AsyncRaceCreationDialog)
         self.root_layout.setSpacing(6)
         self.root_layout.setContentsMargins(11, 11, 11, 11)
@@ -38,19 +38,37 @@ class Ui_AsyncRaceCreationDialog(object):
 
         self.preset_group = QGroupBox(AsyncRaceCreationDialog)
         self.preset_group.setObjectName(u"preset_group")
-        self.horizontalLayout = QHBoxLayout(self.preset_group)
-        self.horizontalLayout.setSpacing(6)
-        self.horizontalLayout.setContentsMargins(11, 11, 11, 11)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.preset_layout = QGridLayout(self.preset_group)
+        self.preset_layout.setSpacing(6)
+        self.preset_layout.setContentsMargins(11, 11, 11, 11)
+        self.preset_layout.setObjectName(u"preset_layout")
         self.preset_label = QLabel(self.preset_group)
         self.preset_label.setObjectName(u"preset_label")
+        self.preset_label.setWordWrap(True)
 
-        self.horizontalLayout.addWidget(self.preset_label)
+        self.preset_layout.addWidget(self.preset_label, 0, 0, 1, 3)
+
+        self.world_list = QListWidget(self.preset_group)
+        self.world_list.setObjectName(u"world_list")
+        self.world_list.setAlternatingRowColors(True)
+        self.world_list.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+
+        self.preset_layout.addWidget(self.world_list, 1, 0, 1, 3)
 
         self.preset_button = QPushButton(self.preset_group)
         self.preset_button.setObjectName(u"preset_button")
 
-        self.horizontalLayout.addWidget(self.preset_button)
+        self.preset_layout.addWidget(self.preset_button, 2, 0, 1, 1)
+
+        self.change_preset_button = QPushButton(self.preset_group)
+        self.change_preset_button.setObjectName(u"change_preset_button")
+
+        self.preset_layout.addWidget(self.change_preset_button, 2, 1, 1, 1)
+
+        self.remove_world_button = QPushButton(self.preset_group)
+        self.remove_world_button.setObjectName(u"remove_world_button")
+
+        self.preset_layout.addWidget(self.remove_world_button, 2, 2, 1, 1)
 
 
         self.root_layout.addWidget(self.preset_group)
@@ -90,9 +108,11 @@ class Ui_AsyncRaceCreationDialog(object):
 
     def retranslateUi(self, AsyncRaceCreationDialog):
         AsyncRaceCreationDialog.setWindowTitle(QCoreApplication.translate("AsyncRaceCreationDialog", u"Async Race Room Creation", None))
-        self.preset_group.setTitle(QCoreApplication.translate("AsyncRaceCreationDialog", u"Preset", None))
+        self.preset_group.setTitle(QCoreApplication.translate("AsyncRaceCreationDialog", u"Worlds", None))
         self.preset_label.setText(QCoreApplication.translate("AsyncRaceCreationDialog", u"No Preset Selected", None))
-        self.preset_button.setText(QCoreApplication.translate("AsyncRaceCreationDialog", u"Select Preset", None))
+        self.preset_button.setText(QCoreApplication.translate("AsyncRaceCreationDialog", u"Add world", None))
+        self.change_preset_button.setText(QCoreApplication.translate("AsyncRaceCreationDialog", u"Change preset", None))
+        self.remove_world_button.setText(QCoreApplication.translate("AsyncRaceCreationDialog", u"Remove world", None))
         self.progress_label.setText("")
     # retranslateUi
 

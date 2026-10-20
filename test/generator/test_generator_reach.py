@@ -220,6 +220,7 @@ def test_basic_search_with_translator_gate(
     )
 
     initial_state = State(
+        0,
         resources,
         {},
         (),
@@ -281,11 +282,7 @@ def test_reach_size_from_start_echoes(
     patches = generator.base_patches_factory.create_base_patches(
         layout_configuration, Random(15000), game, False, player_index=0
     )
-    graph, state = generator.bootstrap.logic_bootstrap_graph(
-        layout_configuration,
-        game,
-        patches,
-    )
+    graph, state = generator.bootstrap.logic_bootstrap_graph(layout_configuration, game, patches)
     state.resources.add_resource_gain(
         [
             (item("Combat Visor"), 1),
