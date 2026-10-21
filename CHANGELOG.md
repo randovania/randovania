@@ -26,7 +26,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: An option to have an R-Button press toggle between the secondary weapons and primary weapons instead of needing to hold it.
+- Changed: The timer that determines how much time needs to pass in a cold environment for knockback to occur now resets if you're not affected by cold, such as when equipping Varia Suit or going through a Door Transition.
+- Changed: Security Shaft West will now always have the red Zeela present.
 - Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
+- Fixed: The "Final Mission" song in Main Deck will no longer turn off when disabling Charge Beam or Missiles.
+- Fixed: Central Reactor Core now has the Kihunters only present after Yakuza was killed instead of them being there by default. Defeating Nettori makes them still dissapear.
 - Fixed: The chance for Bob's true colors, and gold-plated Power Bombs being lower than intended.
 
 ### Metroid Prime
