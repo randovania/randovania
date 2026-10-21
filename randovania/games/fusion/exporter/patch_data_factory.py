@@ -579,6 +579,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "instant_unmorph": self.configuration.instant_morph,
             "nerf_gerons": self.configuration.adjusted_geron_weaknesses,
             "use_alternative_hud_health_layout": self.cosmetic_patches.alt_health_display,
+            "use_toggle_for_secondary_weapon_selection": self.cosmetic_patches.secondary_weapon_toggle_mode,
             "unexplored_map": self.cosmetic_patches.starting_map,
             "reveal_hidden_tiles": self.cosmetic_patches.reveal_blocks,
             "stereo_default": self.cosmetic_patches.stereo_default,
