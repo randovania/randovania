@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Annotated, Concatenate, cast
 
 import fastapi
+import jinja2
 import peewee
 import sentry_sdk
 import starlette
@@ -142,7 +143,12 @@ class ServerApp:
         self._setup_exception_handlers()
 
         server_path = Path(__file__).parent
-        self.templates = Jinja2Templates(directory=server_path.joinpath("templates"))
+        self.templates = Jinja2Templates(
+            env=jinja2.Environment(
+                loader=jinja2.FileSystemLoader(server_path.joinpath("templates")),
+                autoescape=jinja2.select_autoescape(default=True),
+            )
+        )
         self.app.mount("/static", StaticFiles(directory=server_path.joinpath("static")), name="static")
 
         self.metrics = Instrumentator()

@@ -85,6 +85,18 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
         if all(quantity >= 0 for _, quantity in pickup.resource_gain(collection)):
             new_pickups.append(pickup)
 
+    # The resolver is set up with only this world, so it must be world 0
+    old_index = patches.player_index
+    patches = dataclasses.replace(
+        patches,
+        player_index=0,
+        pickup_assignment={
+            index: PickupTarget(target.pickup, 0)
+            for index, target in patches.pickup_assignment.items()
+            if target.world == old_index
+        },
+    )
+
     patches = patches.assign_extra_starting_pickups(new_pickups)
 
     states, logic = resolver.setup_resolver(

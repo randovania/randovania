@@ -63,6 +63,7 @@ class FusionCosmeticPatches(BaseCosmeticPatches):
     starting_map: bool = True
     reveal_blocks: bool = True
     alt_health_display: bool = False
+    secondary_weapon_toggle_mode: bool = False
 
     @classmethod
     def default(cls) -> FusionCosmeticPatches:

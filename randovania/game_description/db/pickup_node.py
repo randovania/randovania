@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from randovania.game_description.hint_features import HintFeature
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.pickup_index import PickupIndex
+    from randovania.game_description.resources.resource_info import ResourceGainTuple
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -35,6 +36,11 @@ class PickupNode(ResourceNode):
     hint_features: frozenset[HintFeature] = frozenset()
     """
     Which hint features are exclusive to this location and not the entire area.
+    """
+
+    grants_on_collect: ResourceGainTuple = ()
+    """
+    Resources this node hands out when collected, on top of what it always provides.
     """
 
     def __repr__(self) -> str:

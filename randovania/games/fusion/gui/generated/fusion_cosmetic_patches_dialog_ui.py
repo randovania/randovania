@@ -49,7 +49,7 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 663, 638))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 666, 708))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -90,6 +90,36 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.alt_health_display_label.setObjectName(u"alt_health_display_label")
 
         self.verticalLayout_2.addWidget(self.alt_health_display_label)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.verticalLayout_2.addItem(self.horizontalSpacer)
+
+        self.secondary_weapon_label = QLabel(self.gameplay_box)
+        self.secondary_weapon_label.setObjectName(u"secondary_weapon_label")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.secondary_weapon_label.sizePolicy().hasHeightForWidth())
+        self.secondary_weapon_label.setSizePolicy(sizePolicy)
+
+        self.verticalLayout_2.addWidget(self.secondary_weapon_label)
+
+        self.secondary_weapon_layout = QHBoxLayout()
+        self.secondary_weapon_layout.setSpacing(6)
+        self.secondary_weapon_layout.setObjectName(u"secondary_weapon_layout")
+        self.secondary_weapon_hold_option = QRadioButton(self.gameplay_box)
+        self.secondary_weapon_hold_option.setObjectName(u"secondary_weapon_hold_option")
+
+        self.secondary_weapon_layout.addWidget(self.secondary_weapon_hold_option)
+
+        self.secondary_weapon_toggle_option = QRadioButton(self.gameplay_box)
+        self.secondary_weapon_toggle_option.setObjectName(u"secondary_weapon_toggle_option")
+
+        self.secondary_weapon_layout.addWidget(self.secondary_weapon_toggle_option)
+
+
+        self.verticalLayout_2.addLayout(self.secondary_weapon_layout)
 
 
         self.verticalLayout.addWidget(self.gameplay_box)
@@ -384,6 +414,9 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.reveal_blocks_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Blocks that normally need bombs to be revealed are now always visible", None))
         self.alt_health_display_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Use Alternative HUD Health Display", None))
         self.alt_health_display_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Changes the Health display on the HUD to \"Current Energy / Total Energy\"", None))
+        self.secondary_weapon_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Secondary Weapon Selection Mode:", None))
+        self.secondary_weapon_hold_option.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Hold", None))
+        self.secondary_weapon_toggle_option.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Toggle", None))
         self.palette_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Color Rotation", None))
         self.suit_palette_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Suit Palette", None))
         self.suit_rando_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Randomize Hue Shift", None))

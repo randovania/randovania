@@ -34,8 +34,8 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
     _placeholder_metroid_message = "placeholder metroid text"
     _metroid_message_id = 56
     _lang_list = ("JAPANESE_KANJI", "JAPANESE_HIRAGANA", "ENGLISH", "GERMAN", "FRENCH", "ITALIAN", "SPANISH")
-    _easter_egg_bob = 64
-    _easter_egg_shiny = 1024
+    _easter_egg_bob = 63
+    _easter_egg_shiny = 1023
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
@@ -579,6 +579,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "instant_unmorph": self.configuration.instant_morph,
             "nerf_gerons": self.configuration.adjusted_geron_weaknesses,
             "use_alternative_hud_health_layout": self.cosmetic_patches.alt_health_display,
+            "use_toggle_for_secondary_weapon_selection": self.cosmetic_patches.secondary_weapon_toggle_mode,
             "unexplored_map": self.cosmetic_patches.starting_map,
             "reveal_hidden_tiles": self.cosmetic_patches.reveal_blocks,
             "stereo_default": self.cosmetic_patches.stereo_default,
