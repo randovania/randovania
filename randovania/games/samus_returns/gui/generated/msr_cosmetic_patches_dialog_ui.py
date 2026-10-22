@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
     QFrame, QGridLayout, QGroupBox, QHBoxLayout,
     QLabel, QPushButton, QRadioButton, QScrollArea,
-    QSizePolicy, QVBoxLayout, QWidget)
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
@@ -27,31 +27,18 @@ class Ui_MSRCosmeticPatchesDialog(object):
         if not MSRCosmeticPatchesDialog.objectName():
             MSRCosmeticPatchesDialog.setObjectName(u"MSRCosmeticPatchesDialog")
         MSRCosmeticPatchesDialog.resize(524, 546)
-        self.gridLayout = QGridLayout(MSRCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.reset_button = QPushButton(MSRCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-
-        self.gridLayout.addWidget(self.reset_button, 1, 2, 1, 1)
-
-        self.accept_button = QPushButton(MSRCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-
-        self.gridLayout.addWidget(self.accept_button, 1, 0, 1, 1)
-
-        self.cancel_button = QPushButton(MSRCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.gridLayout.addWidget(self.cancel_button, 1, 1, 1, 1)
-
+        MSRCosmeticPatchesDialog.setMinimumSize(QSize(0, 0))
+        self.verticalLayout_2 = QVBoxLayout(MSRCosmeticPatchesDialog)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(MSRCosmeticPatchesDialog)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 490, 786))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 508, 865))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -404,7 +391,45 @@ class Ui_MSRCosmeticPatchesDialog(object):
 
         self.scrollArea.setWidget(self.scroll_area_contents)
 
-        self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 3)
+        self.verticalLayout_2.addWidget(self.scrollArea)
+
+        self.line = QFrame(MSRCosmeticPatchesDialog)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_2.addWidget(self.line)
+
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.setSpacing(6)
+        self.footer_layout.setObjectName(u"footer_layout")
+        self.footer_layout.setContentsMargins(6, 6, 6, 6)
+        self.reset_button = QPushButton(MSRCosmeticPatchesDialog)
+        self.reset_button.setObjectName(u"reset_button")
+        self.reset_button.setText(u"\u2b8c Reset to Defaults")
+
+        self.footer_layout.addWidget(self.reset_button)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.footer_layout.addItem(self.horizontalSpacer)
+
+        self.accept_button = QPushButton(MSRCosmeticPatchesDialog)
+        self.accept_button.setObjectName(u"accept_button")
+        self.accept_button.setMinimumSize(QSize(96, 0))
+        self.accept_button.setText(u"\U0001f5f8 Accept")
+
+        self.footer_layout.addWidget(self.accept_button)
+
+        self.cancel_button = QPushButton(MSRCosmeticPatchesDialog)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(96, 0))
+        self.cancel_button.setText(u"\U0001f6c7 Cancel")
+
+        self.footer_layout.addWidget(self.cancel_button)
+
+
+        self.verticalLayout_2.addLayout(self.footer_layout)
 
 
         self.retranslateUi(MSRCosmeticPatchesDialog)
@@ -417,9 +442,6 @@ class Ui_MSRCosmeticPatchesDialog(object):
 
     def retranslateUi(self, MSRCosmeticPatchesDialog):
         MSRCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Metroid: Samus Returns - Cosmetic Options", None))
-        self.reset_button.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Reset to Defaults", None))
-        self.accept_button.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Accept", None))
-        self.cancel_button.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Cancel", None))
         self.samus_changes_box.setTitle(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Samus Changes", None))
         self.custom_laser_color_check.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Use custom Laser Aim colors", None))
         self.custom_laser_unlocked_color_button.setText(QCoreApplication.translate("MSRCosmeticPatchesDialog", u"Set Standard Free-Aim Color...", None))
