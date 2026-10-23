@@ -33,8 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sector 6 (NOC)
 
-- Changed: The Shinespark trick to break the bottom left bomb block in Geron's Crossing can now be expected in Door Lock Rando seeds.
-- Changed: The Shinespark trick to break the Super Missile Geron in Geron's Crossing can now be expected in Door Lock Rando seeds.
+- Changed: Geron's Crossing: The Shinespark trick to break the bottom left bomb block can now be expected in Door Lock Rando seeds.
+- Changed: Geron's Crossing: The Shinespark trick to destroy the Super Missile Geron can now be expected in Door Lock Rando seeds.
 
 ### Metroid Prime
 
