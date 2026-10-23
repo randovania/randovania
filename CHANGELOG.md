@@ -35,6 +35,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Central Reactor Core now has the Kihunters only present after Yakuza was killed instead of them being there by default. Defeating Nettori makes them still dissapear.
 - Fixed: The chance for Bob's true colors, and gold-plated Power Bombs being lower than intended.
 
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Changed: Geron's Crossing: The Shinespark trick to break the bottom left bomb block can now be expected in Door Lock Rando seeds.
+- Changed: Geron's Crossing: The Shinespark trick to destroy the Super Missile Geron can now be expected in Door Lock Rando seeds.
+
 ### Metroid Prime
 
 - Fixed: The chance for special Missile Expansions being lower than intended.
