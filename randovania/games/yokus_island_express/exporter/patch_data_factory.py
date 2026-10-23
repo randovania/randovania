@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
+import randovania
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -88,4 +89,5 @@ class YokuPatchDataFactory(PatchDataFactory[YokuConfiguration, YokuCosmeticPatch
             "starting_items": self._create_starting_items(),
             "starting_fruit": self.configuration.effective_starting_fruit,
             "required_beacons": self.configuration.required_beacons,
+            "rdv_version": randovania.VERSION,
         }
