@@ -29,6 +29,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
 - Fixed: The chance for Bob's true colors, and gold-plated Power Bombs being lower than intended.
 
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Changed: The Shinespark trick to break the bottom left bomb block in Geron's Crossing can now be expected in Door Lock Rando seeds.
+- Changed: The Shinespark trick to break the Super Missile Geron in Geron's Crossing can now be expected in Door Lock Rando seeds.
+
 ### Metroid Prime
 
 - Fixed: The chance for special Missile Expansions being lower than intended.
