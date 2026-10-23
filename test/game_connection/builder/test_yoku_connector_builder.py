@@ -38,6 +38,6 @@ async def test_create(depth: int):
             assert builder.get_status_message() == "Unable to connect to Yoku's Island Express"
 
 
-@pytest.mark.usefixtures("is_dev_version")
-def test_usable_only_where_the_game_is_visible(is_frozen: bool):
-    assert ConnectorBuilderChoice.YOKU.is_usable() is not is_frozen
+@pytest.mark.usefixtures("is_frozen")
+def test_usable_only_where_the_game_is_visible(is_dev_version: bool):
+    assert ConnectorBuilderChoice.YOKU.is_usable() is is_dev_version

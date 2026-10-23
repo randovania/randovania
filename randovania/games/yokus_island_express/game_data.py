@@ -85,7 +85,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Yoku",
     long_name="Yoku's Island Express",
-    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
+    development_state=randovania.game.development_state.DevelopmentState.STAGING,
     presets=[
         "starter_preset.rdvpreset",
         "beacon_hunt.rdvpreset",
@@ -114,9 +114,15 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "final boss once that many Wickerling beacons are lit. Each beacon takes 10 Wickerlings.",
         ),
         (
-            "I'm stuck. How do I get back to the start?",
+            "Can I warp somewhere?",
             "Open the pause menu and choose 'Warp to Start'. After you confirm, the game saves and takes you back "
-            "to where the seed started. Your items, fruit and collected locations are kept.",
+            "to where the seed started. 'Warp to Village' works the same way and takes you to the save point on "
+            "the right side of the village, below Rinri, once you have reached it. Your items, fruit and collected "
+            "locations are kept.",
+        ),
+        (
+            "How is this different from the game's own randomizer?",
+            "TODO",
         ),
         (
             "How do I remove the mod?",
@@ -124,7 +130,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "not changed.",
         ),
     ],
-    defaults_available_in_game_sessions=False,
+    defaults_available_in_game_sessions=randovania.is_dev_version(),
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
             "The 248 locations of the game's own randomizer",
