@@ -85,7 +85,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Yoku",
     long_name="Yoku's Island Express",
-    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
+    development_state=randovania.game.development_state.DevelopmentState.STAGING,
     presets=[
         "starter_preset.rdvpreset",
         "beacon_hunt.rdvpreset",
@@ -130,7 +130,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "not changed.",
         ),
     ],
-    defaults_available_in_game_sessions=False,
+    defaults_available_in_game_sessions=randovania.is_dev_version(),
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
             "The 248 locations of the game's own randomizer",
