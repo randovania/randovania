@@ -59,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Hint text being cut off if the text was too long.
 - Fixed: Sic Transit: The Shield Key pickup being unobtainable after defeating Slench 2.
+- Fixed: Council Chamber: The Artifact pickup can no longer be collected without the Shield Key if it becomes an Octolith.
 
 ## [11.1.1] - 2026-10-06
 
