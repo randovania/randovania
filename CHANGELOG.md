@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Central Reactor Core now has the Kihunters only present after Yakuza was killed instead of them being there by default. Defeating Nettori makes them still dissapear.
 - Fixed: The chance for Bob's true colors, and gold-plated Power Bombs being lower than intended.
 - Fixed: Mono audio can now be selected when Stereo audio is enabled as the default option.
+- Changed: The following pickups will now be placed in bulk at the same step during generation when multiple pickups are necessary to progress:
+  - Missile Tank
+  - Power Bomb Tank
+  - Energy Tank
 
 #### Logic Database
 
