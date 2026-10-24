@@ -25,6 +25,7 @@ from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
 _NINTENDONT_DOWNLOAD_URL = "https://github.com/randovania/Nintendont/releases/download/v11-multiworld/boot.dol"
+_MAX_HEADER_SIZE = 64 * 1024
 zip_folder = f"randovania-{VERSION}"
 
 
@@ -55,7 +56,11 @@ async def download_nintendont():
     if "GITHUB_TOKEN" in os.environ:
         headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
 
-    async with http_lib.http_session(headers=headers) as session:
+    async with http_lib.http_session(
+        headers=headers,
+        max_line_size=_MAX_HEADER_SIZE,
+        max_field_size=_MAX_HEADER_SIZE,
+    ) as session:
         print(f"Downloading {_NINTENDONT_DOWNLOAD_URL}")
         async with session.get(_NINTENDONT_DOWNLOAD_URL) as download_response:
             download_response.raise_for_status()
