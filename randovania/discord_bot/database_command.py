@@ -4,6 +4,7 @@ import logging
 import math
 import shutil
 import tempfile
+from collections.abc import Callable
 from pathlib import Path
 
 import discord
@@ -11,7 +12,7 @@ import graphviz
 import PIL.Image
 from discord import Embed
 from discord.ext.commands import Context, Converter
-from PIL import ImageDraw
+from PIL import ImageDraw, ImageFont
 
 from randovania.discord_bot.bot import BotConfiguration, RandovaniaBot
 from randovania.discord_bot.randovania_cog import RandovaniaCog
@@ -21,7 +22,7 @@ from randovania.game_description.db.area import Area
 from randovania.game_description.db.node import Node, NodeLocation
 from randovania.game_description.db.region import Region
 from randovania.game_description.game_description import GameDescription
-from randovania.lib import enum_lib
+from randovania.lib import enum_lib, map_bounds
 
 
 @dataclasses.dataclass()
@@ -77,19 +78,163 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
         shutil.rmtree(output_dir)
 
 
-def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
-    image_path = data_path.joinpath("assets", "maps", f"{area.map_name}.png")
-    if not image_path.exists():
+_REGION_CROP_PADDING = 0.3
+_MIN_REGION_CROP_PADDING = 40
+_MIN_RENDER_SCALE = 1
+_MAX_RENDER_SCALE = 8
+_TARGET_IMAGE_WIDTH = 900
+
+
+def _find_map_image(base_path: Path, name: str) -> Path | None:
+    for ext in ("webp", "png"):
+        path = base_path.joinpath(f"{name}.{ext}")
+        if path.is_file():
+            return path
+    return None
+
+
+def _open_rgba(path: Path) -> PIL.Image.Image:
+    with PIL.Image.open(path) as raw_im:
+        assert isinstance(raw_im, PIL.Image.Image)
+        return raw_im.convert("RGBA")
+
+
+def _area_world_bounds(area: Area) -> map_bounds.BoundsFloat | None:
+    if "total_boundings" in area.extra:
+        return map_bounds.BoundsFloat.from_bounds(area.extra["total_boundings"])
+
+    locations = [node.location for node in area.actual_nodes if node.location is not None]
+    if not locations:
+        return None
+    return map_bounds.BoundsFloat(
+        min(it.x for it in locations),
+        min(it.y for it in locations),
+        max(it.x for it in locations),
+        max(it.y for it in locations),
+    )
+
+
+def _crop_region_image(
+    im: PIL.Image.Image, region: Region, area: Area
+) -> tuple[PIL.Image.Image, Callable[[NodeLocation], tuple[float, float]]] | None:
+    """Crops the region image to the area, similarly to DataEditorCanvas."""
+    if "camera_data" in area.extra:
         return None
 
-    with PIL.Image.open(image_path) as raw_im:
-        assert isinstance(raw_im, PIL.Image.Image)
-        im = raw_im.convert("RGBA")
+    area_bounds = _area_world_bounds(area)
+    boundings = [
+        map_bounds.BoundsFloat.from_bounds(it.extra["total_boundings"])
+        for it in region.areas
+        if "total_boundings" in it.extra
+    ]
+    if area_bounds is None or not boundings:
+        return None
 
-    def location_to_pos(loc: NodeLocation):
-        return loc.x, im.height - loc.y
+    world = map_bounds.BoundsFloat(
+        min(min(it.min_x, it.max_x) for it in boundings),
+        min(min(it.min_y, it.max_y) for it in boundings),
+        max(max(it.min_x, it.max_x) for it in boundings),
+        max(max(it.min_y, it.max_y) for it in boundings),
+    )
+    world_width = world.max_x - world.min_x
+    world_height = world.max_y - world.min_y
+    if world_width <= 0 or world_height <= 0:
+        return None
 
+    image = map_bounds.expand_bounds_to_match_aspect(
+        map_bounds.BoundsInt(
+            region.extra.get("map_min_x", 0),
+            region.extra.get("map_min_y", 0),
+            im.width - region.extra.get("map_max_x", 0),
+            im.height - region.extra.get("map_max_y", 0),
+        ),
+        world,
+    )
+
+    def world_to_image(x: float, y: float) -> tuple[float, float]:
+        return (
+            image.min_x + (image.max_x - image.min_x) * (x - world.min_x) / world_width,
+            image.min_y + (image.max_y - image.min_y) * (1 - (y - world.min_y) / world_height),
+        )
+
+    corners = [
+        world_to_image(x, y)
+        for x in (area_bounds.min_x, area_bounds.max_x)
+        for y in (area_bounds.min_y, area_bounds.max_y)
+    ]
+    area_left, area_right = min(c[0] for c in corners), max(c[0] for c in corners)
+    area_top, area_bottom = min(c[1] for c in corners), max(c[1] for c in corners)
+    padding = max(_MIN_REGION_CROP_PADDING, _REGION_CROP_PADDING * max(area_right - area_left, area_bottom - area_top))
+    left = math.floor(area_left - padding)
+    top = math.floor(area_top - padding)
+    right = math.ceil(area_right + padding)
+    bottom = math.ceil(area_bottom + padding)
+
+    def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+        x, y = world_to_image(loc.x, loc.y)
+        return x - left, y - top
+
+    return im.crop((left, top, right, bottom)), location_to_pos
+
+
+def _crop_area_image(
+    im: PIL.Image.Image, area: Area
+) -> tuple[PIL.Image.Image, Callable[[NodeLocation], tuple[float, float]]]:
+    """Crops the area image to its map bounds, mapping node locations like DataEditorCanvas does."""
+    bounds = map_bounds.BoundsInt(
+        area.extra.get("map_min_x", 0),
+        area.extra.get("map_min_y", 0),
+        im.width - area.extra.get("map_max_x", 0),
+        im.height - area.extra.get("map_max_y", 0),
+    )
+    width = bounds.max_x - bounds.min_x
+    height = bounds.max_y - bounds.min_y
+    im = im.crop(bounds)
+
+    if "camera_data" in area.extra:
+        camera = map_bounds.CameraData.from_json(area.extra["camera_data"])
+
+        def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+            u, v = camera.game_loc_to_qt_local(loc.x, loc.y, loc.z)
+            return width * u, height * (1 - v)
+
+    else:
+
+        def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+            return loc.x - bounds.min_x, bounds.max_y - loc.y
+
+    return im, location_to_pos
+
+
+def render_area_with_pillow(area: Area, region: Region, data_path: Path) -> io.BytesIO | None:
+    maps_path = data_path.joinpath("assets", "maps")
+
+    area_image_path = _find_map_image(maps_path.joinpath(region.name), area.map_name)
+    if area_image_path is not None:
+        im, location_to_pos = _crop_area_image(_open_rgba(area_image_path), area)
+
+    else:
+        # if no area image, crop the region image if there's one
+        region_image_path = _find_map_image(maps_path, region.name)
+        if region_image_path is None:
+            return None
+
+        cropped = _crop_region_image(_open_rgba(region_image_path), region, area)
+        if cropped is None:
+            return None
+        im, location_to_pos = cropped
+
+    # render at a higher resolution so the lines and text are sharp
+    # small rooms are zoomed in more, so the nodes and their names don't overlap
+    scale = min(max(_TARGET_IMAGE_WIDTH / im.width, _MIN_RENDER_SCALE), _MAX_RENDER_SCALE)
+    base_to_pos = location_to_pos
+    im = im.resize((round(im.width * scale), round(im.height * scale)), PIL.Image.Resampling.LANCZOS)
+    font = ImageFont.load_default(size=20)
     draw = ImageDraw.Draw(im)
+
+    def location_to_pos(loc: NodeLocation) -> tuple[float, float]:
+        x, y = base_to_pos(loc)
+        return x * scale, y * scale
 
     def draw_connections_from(source_node: Node):
         for target_node, requirement in area.connections[source_node].items():
@@ -99,34 +244,34 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
             source = location_to_pos(source_node.location)
             target = location_to_pos(target_node.location)
 
-            if sum((a - b) ** 2 for a, b in zip(source, target)) < 4:
+            if sum((a - b) ** 2 for a, b in zip(source, target)) < 16:
                 continue
 
-            draw.line(source + target, width=2, fill=(255, 255, 255, 255))
-            draw.line(source + target, width=1, fill=(0, 0, 0, 255))
+            draw.line(source + target, width=4, fill=(255, 255, 255, 255))
+            draw.line(source + target, width=2, fill=(0, 0, 0, 255))
 
     for node in area.nodes:
         if not node.is_derived_node:
             draw_connections_from(node)
 
+    radius = 10
     for node in area.nodes:
         if node.location is None or node.is_derived_node:
             continue
 
         p = location_to_pos(node.location)
-        draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(255, 255, 255, 255), width=5)
-        draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(0, 0, 0, 255), width=4)
+        draw.ellipse(
+            (p[0] - radius - 1, p[1] - radius - 1, p[0] + radius + 1, p[1] + radius + 1), fill=(255, 255, 255, 255)
+        )
+        draw.ellipse((p[0] - radius, p[1] - radius, p[0] + radius, p[1] + radius), fill=(0, 0, 0, 255))
         draw.text(
-            (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
+            (p[0], p[1] + 24),
             node.name,
+            font=font,
+            anchor="mt",
+            fill=(0, 0, 0, 255),
             stroke_width=2,
             stroke_fill=(255, 255, 255, 255),
-        )
-        draw.text(
-            (p[0] - draw.textlength(node.name) / 2, p[1] + 15),
-            node.name,
-            stroke_width=1,
-            stroke_fill=(0, 0, 0, 255),
         )
 
     result = io.BytesIO()
@@ -352,7 +497,7 @@ class SelectAreaItem(discord.ui.Select):
 
         files = []
 
-        area_image = render_area_with_pillow(area.area, self.game.data_path)
+        area_image = render_area_with_pillow(area.area, self.split_region.region, self.game.data_path)
         if area_image is not None:
             files.append(discord.File(area_image, filename=f"{area.area.name}_image.png"))
 
