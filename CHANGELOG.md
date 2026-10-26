@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: Models of Wave Beam, Missile Launcher, Ice Missile, Storm Missile, Cross Bomb and Power Bomb.
+- Fixed: The death counter was incorrectly positioned in version 1.0.0 without the DNA HUD.
+
 #### Logic Database
 
 ##### Cataris
