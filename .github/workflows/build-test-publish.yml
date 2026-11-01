@@ -179,10 +179,6 @@ jobs:
       - name: Install Python packages
         run: uv sync --locked --extra gui --extra exporters --extra test --group installer
 
-      - name: Prepare macOS venv for universal2 build
-        run: uv run tools/bundle_macos_universal_wheels.py && uv pip install universal_wheels/*.whl
-        if: matrix.os.image == 'macos-latest'
-
       - name: create executable
         run: uv run --no-sync tools/create_release.py
         env:
