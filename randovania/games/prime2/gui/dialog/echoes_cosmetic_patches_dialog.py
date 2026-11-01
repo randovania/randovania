@@ -27,10 +27,8 @@ class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmetic
         self.setupUi(self)
 
         self.options_foldable.set_content_layout(self.options_foldable_layout)
-        self.options_foldable.title = "In-Game Options"
 
         self.suits_foldable.set_content_layout(self.suits_foldable_layout)
-        self.suits_foldable.title = "Suit Colors"
 
         self.field_to_slider_mapping = {
             "screen_brightness": self.screen_brightness_slider,

@@ -730,6 +730,7 @@ SOLO_RDVGAMES = [
     ("multi-cs+dread+prime1+prime2.rdvgame", None),
     ("multi-am2r+cs+dread+prime1+prime2.rdvgame", None),
     ("multi-am2r+cs+dread+prime1+prime2+msr.rdvgame", None),
+    ("multi-dread+msr+yoku.rdvgame", None),
     ("prime1_and_2_multi.rdvgame", None),
     ("cs_echoes_multi_1.rdvgame", None),
     ("dread_prime1_multiworld.rdvgame", None),  # dread-prime1 multi
@@ -811,6 +812,9 @@ SOLO_RDVGAMES = [
     ("samus_returns/non_required_mains.rdvgame", True),  # non-required main for power bombs + hide model
     # Zero Mission
     ("zero_mission/starter_preset.rdvgame", True),  # starter preset
+    # Yoku's Island Express
+    ("yokus_island_express/starter_preset.rdvgame", True),  # starter preset (starting trackers)
+    ("yokus_island_express/shuffled_trackers_fruit_beacons.rdvgame", True),  # shuffled trackers + 50 fruit + 2 beacons
 ]
 
 COOP_RDVGAMES = [

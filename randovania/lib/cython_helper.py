@@ -62,6 +62,9 @@ class Vector[T](list[T]):
     def resize(self, count: int, value: T) -> None:
         self.extend([value] * (count - len(self)))
 
+    def assign(self, count: int, value: T) -> None:
+        self[:] = [value] * count
+
     def py_resize(self, count: int, factory: Callable[[], T]) -> None:
         self.extend([factory() for _ in range(count - len(self))])
 
@@ -90,6 +93,15 @@ class Deque[T]:
 
     def push_back(self, item: T) -> None:
         self._data.append(item)
+
+    def front(self) -> T:
+        return self._data[0]
+
+    def size(self) -> int:
+        return len(self._data)
+
+    def clear(self) -> None:
+        self._data.clear()
 
     def __getitem__(self, idx: int) -> T:
         return self._data[idx]

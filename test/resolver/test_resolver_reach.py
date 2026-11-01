@@ -10,7 +10,7 @@ from randovania.resolver.resolver_reach import ResolverReach
 def test_possible_actions_empty():
     state = MagicMock()
 
-    reach = ResolverReach(MagicMock(), 0, resolver_native.ProcessNodesResponse({}, {}, set()))
+    reach = ResolverReach(MagicMock(), 0, resolver_native.ReachResult.for_testing({}, {}, set()))
     options = list(reach.possible_actions(state))
 
     assert options == []
@@ -28,7 +28,7 @@ def test_possible_actions_no_resources():
     node_b.node_index = 1
 
     # Run
-    reach = ResolverReach(logic, 0, resolver_native.ProcessNodesResponse({0: 1, 1: 1}, {}, set()))
+    reach = ResolverReach(logic, 0, resolver_native.ReachResult.for_testing({0: 1, 1: 1}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
@@ -47,14 +47,14 @@ def test_possible_actions_with_event():
     event.requirement_to_collect = MagicMock()
 
     logic.world_specific[0].all_nodes = [event]
-    damage_state = MagicMock()
+    health = 100
 
     # Run
-    reach = ResolverReach(logic, 0, resolver_native.ProcessNodesResponse({0: damage_state}, {}, set()))
+    reach = ResolverReach(logic, 0, resolver_native.ReachResult.for_testing({0: health}, {}, set()))
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
     assert options == [event]
     event.has_all_resources.assert_called_once_with(state.resources)
     logic.get_additional_requirements.assert_called_once_with(state.world_index, event)
-    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, damage_state)
+    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.resources, health)

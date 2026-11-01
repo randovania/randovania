@@ -296,7 +296,7 @@ async def test_on_session_actions_update(window: MultiplayerSessionWindow, sampl
         )
     )
 
-    dt = QtCore.QDateTime(2020, 1, 5, 0, 0, 0, 0, 0)
+    dt = QtCore.QDateTime(2020, 1, 5, 0, 0, 0)
 
     assert model_lib.get_texts(window.history_item_proxy) == [
         ["W1", "W2", "Bombs", "Temple Grounds/Hive Chamber A/Pickup (Missile)", dt],
@@ -1085,7 +1085,7 @@ async def test_update_session_audit_log(window: MultiplayerSessionWindow):
     assert scrollbar.value() == scrollbar.maximum()
 
     assert model_lib.get_texts(window.audit_item_model, max_rows=1) == [
-        ["You", "Did something for the 0-th time.", QtCore.QDateTime(2020, 1, 1, 5, 1, 0, 0, 0)]
+        ["You", "Did something for the 0-th time.", QtCore.QDateTime(2020, 1, 1, 5, 1, 0)]
     ]
 
     window.tab_audit.scrollToTop()

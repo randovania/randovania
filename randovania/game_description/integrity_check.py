@@ -18,6 +18,7 @@ from randovania.game_description.requirements.requirement_or import RequirementO
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.trick_documentation import TrickUsageState
 
 if TYPE_CHECKING:
@@ -100,12 +101,37 @@ def pickup_index_exists(pickup_index: PickupIndex, game: GameDescription) -> boo
     return any(pickup_node.pickup_index == pickup_index for _, _, pickup_node in game.iterate_nodes_of_type(PickupNode))
 
 
+def find_grants_on_collect_errors(node: EventNode | PickupNode) -> Iterator[str]:
+    seen = set()
+    for resource, amount in node.grants_on_collect:
+        if resource in seen:
+            yield f"{node.name} grants {resource.long_name} more than once"
+        seen.add(resource)
+
+        if resource.resource_type not in (ResourceType.ITEM, ResourceType.EVENT):
+            yield f"{node.name} grants {resource.long_name}, which is neither an item nor an event"
+
+        if amount < 1:
+            yield f"{node.name} grants {amount} of {resource.long_name}, which must be positive"
+        elif isinstance(resource, ItemResourceInfo) and amount > resource.max_capacity:
+            yield (
+                f"{node.name} grants {amount} of {resource.long_name}, "
+                f"more than its capacity of {resource.max_capacity}"
+            )
+
+        if isinstance(node, EventNode) and resource == node.event:
+            yield f"{node.name} grants its own event {resource.long_name}"
+
+
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
     region_list = game.region_list
     area = region_list.nodes_to_area(node)
 
     if invalid_layers := set(node.layers) - set(game.layers):
         yield f"{node.name} has unknown layers {invalid_layers}"
+
+    if isinstance(node, EventNode | PickupNode):
+        yield from find_grants_on_collect_errors(node)
 
     if isinstance(node, EventNode):
         if not node.name.startswith("Event -"):

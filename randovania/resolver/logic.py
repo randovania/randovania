@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraph, WorldGraphNode
+    from randovania.resolver.resolver_native import ResolverScratch
 
 
 class WorldSpecificLogic:
@@ -54,6 +55,9 @@ class Logic:
 
     _attempts: int
 
+    # Scratch state reused across resolver_reach_process_nodes() calls; owned by resolver_native.
+    _resolver_scratch: ResolverScratch | None
+
     def __init__(
         self,
         graphs: list[WorldGraph],
@@ -66,6 +70,7 @@ class Logic:
         self.prioritize_hints = prioritize_hints
         self.record_paths = record_paths
         self.disable_gc = disable_gc
+        self._resolver_scratch = None
 
         self.logger = TextResolverLogger()
         self.world_specific = [WorldSpecificLogic(graph, self) for graph in graphs]

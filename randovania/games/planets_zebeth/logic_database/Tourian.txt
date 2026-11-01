@@ -1,10 +1,12 @@
 ----------------
 Tourian Entrance
 Extra - map_name: x40_y75
-> Teleporter to Brinstar; Heals? True
+> Teleporter to Brinstar; Heals? True; Spawn Point
   * Layers: default
   * Teleporter to Tourian Prelude/Teleporter to Tourian; Excluded from Dock Lock Rando
   * Extra - object_id: 100022
+  * Extra - global_x: 640
+  * Extra - global_y: 832
   > Door to Testing Chamber
       Get rid of Larva Metroid
 
@@ -65,103 +67,31 @@ Extra - map_name: x40_y157
 > Door to Pipe Hall; Heals? False
   * Layers: default
   * Normal Door to Pipe Hall/Door to Command Center
-  > Gate 1
-      Trivial
-
-> Event - Gate 1; Heals? False
-  * Layers: default
-  * Event MB Gate 1 Destroyed
-  > Gate 1
-      Trivial
-
-> Event - Gate 2; Heals? False
-  * Layers: default
-  * Event MB Gate 2 Destroyed
-  > Gate 2
-      Trivial
-
-> Event - Gate 3; Heals? False
-  * Layers: default
-  * Event MB Gate 3 Destroyed
-  > Gate 3
-      Trivial
-
-> Event - Gate 4; Heals? False
-  * Layers: default
-  * Event MB Gate 4 Destroyed
-  > Gate 4
-      Trivial
-
-> Event - Gate 5; Heals? False
-  * Layers: default
-  * Event MB Gate 5 Destroyed
-  > Gate 5
-      Trivial
+  > Event - Mother Brain
+      All of the following:
+          Any of the following:
+              # Health Requirements
+              Normal Damage ≥ 500
+              Combat (Intermediate) and Normal Damage ≥ 300
+              Combat (Advanced) and Normal Damage ≥ 100
+          Any of the following:
+              # Ammo requirements
+              Missiles ≥ 90
+              # Have to go farm after zebetites
+              Missiles ≥ 50 and Combat (Intermediate)
 
 > Event - Mother Brain; Heals? False
   * Layers: default
   * Event Mother Brain Boss Killed
-  > Mother Brain
+  > Door to Pipe Hall
+      Trivial
+  > Dock to Escape Route
       Trivial
 
 > Dock to Escape Route; Heals? False
   * Layers: default
   * Open Passage to Escape Route/Door to Command Center
-  > Mother Brain
-      After Mother Brain Boss Killed
-
-> Gate 1; Heals? False
-  * Layers: default
-  > Door to Pipe Hall
-      Trivial
-  > Event - Gate 1
-      Missiles ≥ 10
-  > Gate 2
-      After MB Gate 1 Destroyed
-
-> Gate 5; Heals? False
-  * Layers: default
-  > Event - Gate 5
-      Missiles ≥ 10
-  > Mother Brain
-      After MB Gate 5 Destroyed
-  > Gate 4
-      Trivial
-
-> Mother Brain; Heals? False
-  * Layers: default
   > Event - Mother Brain
-      Missiles ≥ 33
-  > Dock to Escape Route
-      After Mother Brain Boss Killed
-  > Gate 5
-      Trivial
-
-> Gate 2; Heals? False
-  * Layers: default
-  > Event - Gate 2
-      Missiles ≥ 10
-  > Gate 1
-      Trivial
-  > Gate 3
-      After MB Gate 2 Destroyed
-
-> Gate 3; Heals? False
-  * Layers: default
-  > Event - Gate 3
-      Missiles ≥ 10
-  > Gate 2
-      Trivial
-  > Gate 4
-      After MB Gate 3 Destroyed
-
-> Gate 4; Heals? False
-  * Layers: default
-  > Event - Gate 4
-      Missiles ≥ 10
-  > Gate 5
-      After MB Gate 4 Destroyed
-  > Gate 3
       Trivial
 
 ----------------
@@ -170,18 +100,12 @@ Extra - map_name: x8_y97
 > Door to Command Center; Heals? False
   * Layers: default
   * Normal Door to Command Center/Dock to Escape Route
-  > Teleporter to Escape Route
-      Trivial
-
-> Teleporter to Escape Route; Heals? False
-  * Layers: default
-  * Teleporter to Escape Route/Event - End Game
-  > Door to Command Center
+  > Event - End Game
       Trivial
 
 > Event - End Game; Heals? False
   * Layers: default
   * Event Credits
-  > Teleporter to Escape Route
+  > Door to Command Center
       Trivial
 

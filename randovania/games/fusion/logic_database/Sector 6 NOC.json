@@ -60,6 +60,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Geron's Crossing": {
                             "type": "and",
@@ -197,6 +198,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Entrance Lobby Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -569,6 +577,32 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Entrance Lobby Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 325.0,
+                        "y": 300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "S6EntranceLobby",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Door to Entrance Recharge Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1144,7 +1178,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0",
+                                                        "comment": "Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0 - this can safely not have a DLR check. With the event visited, either you can go through the open door. Or if its locked, go around which requires having Screw and thus makes the Shinespark unnecessary.",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1152,15 +1186,6 @@
                                                                     "type": "items",
                                                                     "name": "SpeedBooster",
                                                                     "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -1176,19 +1201,19 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "L0Locks",
-                                                                    "amount": 1,
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "misc",
-                                                                    "name": "DoorLockRando",
+                                                                    "type": "events",
+                                                                    "name": "S6EntranceLobby",
                                                                     "amount": 1,
-                                                                    "negate": true
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
@@ -1285,7 +1310,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from Nav Room: https://youtu.be/u7c-Kq7AaXk",
+                                            "comment": "Shinespark from Entrance Lobby: https://youtu.be/u7c-Kq7AaXk - this can safely not have a DLR check, as if you are expected to do this connection then you can already enter this room from Entrance Lobby",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1312,15 +1337,6 @@
                                                         "name": "L0Locks",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 },
                                                 {
@@ -2885,6 +2901,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "S6ForbiddenEntrance",
+                    "grants_on_collect": [],
                     "connections": {
                         "Right of Power Bomb Wall": {
                             "type": "and",
@@ -4326,6 +4343,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "VariaCore-X",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Varia Suit)": {
                             "type": "and",
@@ -4360,6 +4378,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -5179,6 +5198,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Warehouse": {
                             "type": "or",
@@ -5555,6 +5575,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "X-B.O.X.",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Wave Beam)": {
                             "type": "and",
@@ -5589,6 +5610,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Event - B.O.X": {
                             "type": "and",
@@ -6328,6 +6350,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "B.O.X.",
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -6495,6 +6518,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to X-B.O.X. Arena (Upper)": {
                             "type": "and",
@@ -6529,6 +6553,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to X-B.O.X. Arena (Lower)": {
                             "type": "and",
@@ -7683,6 +7708,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Blue-X Blockade": {
                             "type": "or",
@@ -7887,6 +7913,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Clogged Cavern": {
                             "type": "and",
@@ -8506,6 +8533,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Twin Caverns East (Upper)": {
                             "type": "and",
@@ -8557,6 +8585,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Ledge": {
                             "type": "or",
@@ -9614,6 +9643,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Geron's Crossing": {
                             "type": "or",
@@ -10010,6 +10040,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Nocturnal Shaft": {
                             "type": "and",
@@ -10234,6 +10265,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom of Room": {
                             "type": "and",
@@ -10268,6 +10300,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Bottom of Room": {
                             "type": "and",
@@ -10486,7 +10519,8 @@
                         "x": 10,
                         "y": 8
                     }
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Clogged Cavern": {

@@ -1,32 +1,35 @@
 import cython
 from cpython.ref cimport PyObject, Py_INCREF, Py_DECREF
 from cython.cimports.libcpp.utility import pair
-from cython.cimports.libcpp.vector import vector
-from cython.cimports.libcpp.deque import deque
 
-from cython.cimports.randovania.lib.cython_helper import PyRef
+from cython.cimports.randovania.lib.cython_helper import IndexQueue, PyRef, pvector
 from cython.cimports.randovania.graph.graph_requirement import (
     GraphRequirementSetRef
 )
 
-cdef extern from *:
-    """
-    class ProcessNodesState {
-    public:
-        std::vector<int> checked_nodes;
-        std::deque<int> nodes_to_check;
-        std::vector<int> game_states_to_check;
-        std::vector<std::pair<GraphRequirementSetRef, bool>> satisfied_requirement_on_node;
+# Per-Logic scratch state for resolver_reach_process_nodes, reused across calls instead of
+# rebuilt every time; see ResolverScratch.begin()/reset() in resolver_native.py.
+cdef class ResolverScratch:
+    cdef pvector[int] checked_nodes
+    cdef IndexQueue[int] nodes_to_check
+    cdef pvector[int] game_states_to_check
+    cdef pvector[pair[GraphRequirementSetRef, bool]] satisfied_requirement_on_node
+    cdef pvector[size_t] found_node_order
+    cdef public bint in_use
+    cdef size_t capacity
 
-        ProcessNodesState() {}
-    };
-    """
+    cdef void begin(self, size_t num_nodes) except *
+    cdef void reset(self) except *
 
-    cdef cppclass ProcessNodesState:
-        vector[int] checked_nodes
-        deque[int] nodes_to_check
-        vector[int] game_states_to_check
-        vector[pair[GraphRequirementSetRef, bool]] satisfied_requirement_on_node
 
-        ProcessNodesState()
+# Result of resolver_reach_process_nodes: which nodes are in reach and their health, snapshotted
+# out of ResolverScratch's buffers before they're reset for the next call.
+cdef class ReachResult:
+    cdef pvector[int] checked_nodes
+    cdef pvector[size_t] found_node_order
+    cdef public dict path_to_node
+    cdef public set satisfiable_requirements_for_additionals
+
+    cpdef bint is_node_in_reach(self, size_t node_index)
+    cpdef int health_at(self, size_t node_index)
 

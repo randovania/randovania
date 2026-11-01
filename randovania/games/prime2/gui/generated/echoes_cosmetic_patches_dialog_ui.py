@@ -28,25 +28,11 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         if not EchoesCosmeticPatchesDialog.objectName():
             EchoesCosmeticPatchesDialog.setObjectName(u"EchoesCosmeticPatchesDialog")
         EchoesCosmeticPatchesDialog.resize(482, 450)
-        self.gridLayout = QGridLayout(EchoesCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.reset_button = QPushButton(EchoesCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-
-        self.gridLayout.addWidget(self.reset_button, 2, 2, 1, 1)
-
-        self.accept_button = QPushButton(EchoesCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-
-        self.gridLayout.addWidget(self.accept_button, 2, 0, 1, 1)
-
-        self.cancel_button = QPushButton(EchoesCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.gridLayout.addWidget(self.cancel_button, 2, 1, 1, 1)
-
+        self.verticalLayout_7 = QVBoxLayout(EchoesCosmeticPatchesDialog)
+        self.verticalLayout_7.setSpacing(0)
+        self.verticalLayout_7.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(EchoesCosmeticPatchesDialog)
         self.scrollArea.setObjectName(u"scrollArea")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -57,7 +43,7 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 448, 2424))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 466, 2483))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -651,7 +637,45 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.scrollArea.setWidget(self.scroll_area_contents)
 
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.verticalLayout_7.addWidget(self.scrollArea)
+
+        self.line = QFrame(EchoesCosmeticPatchesDialog)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_7.addWidget(self.line)
+
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.setSpacing(6)
+        self.footer_layout.setObjectName(u"footer_layout")
+        self.footer_layout.setContentsMargins(6, 6, 6, 6)
+        self.reset_button = QPushButton(EchoesCosmeticPatchesDialog)
+        self.reset_button.setObjectName(u"reset_button")
+        self.reset_button.setText(u"\u2b8c Reset to Defaults")
+
+        self.footer_layout.addWidget(self.reset_button)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.footer_layout.addItem(self.horizontalSpacer)
+
+        self.accept_button = QPushButton(EchoesCosmeticPatchesDialog)
+        self.accept_button.setObjectName(u"accept_button")
+        self.accept_button.setMinimumSize(QSize(96, 0))
+        self.accept_button.setText(u"\U0001f5f8 Accept")
+
+        self.footer_layout.addWidget(self.accept_button)
+
+        self.cancel_button = QPushButton(EchoesCosmeticPatchesDialog)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(96, 0))
+        self.cancel_button.setText(u"\U0001f6c7 Cancel")
+
+        self.footer_layout.addWidget(self.cancel_button)
+
+
+        self.verticalLayout_7.addLayout(self.footer_layout)
 
 
         self.retranslateUi(EchoesCosmeticPatchesDialog)
@@ -664,9 +688,6 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
     def retranslateUi(self, EchoesCosmeticPatchesDialog):
         EchoesCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Metroid Prime 2 - Cosmetic Options", None))
-        self.reset_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Reset to Defaults", None))
-        self.accept_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Accept", None))
-        self.cancel_button.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Cancel", None))
         self.game_changes_box.setTitle(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Game Changes", None))
         self.faster_credits_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Faster Credits", None))
         self.remove_hud_popup_check.setText(QCoreApplication.translate("EchoesCosmeticPatchesDialog", u"Skip Item Acquisition Popups", None))

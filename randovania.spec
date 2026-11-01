@@ -50,6 +50,8 @@ a = Analysis(
     hiddenimports=[
         "unittest.mock",
         "randovania.lib.bitmask",
+        # python-slugify imports it via importlib
+        "text_unidecode",
         "pytest_asyncio.plugin",
         "pytest_mock.plugin",
         "pytest_localftpserver.plugin",

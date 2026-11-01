@@ -26,6 +26,16 @@ def test_open_map(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     assert dialog.cosmetic_patches == PrimeCosmeticPatches(open_map=False)
 
 
+def test_foldable_properties_come_from_ui_file(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
+    dialog = PrimeCosmeticPatchesDialog(None, PrimeCosmeticPatches(), options)
+    skip_qtbot.addWidget(dialog)
+
+    assert dialog.suit_colors_foldable.title == "Suit Colors"
+    assert dialog.suit_colors_foldable.folded is False
+    assert dialog.options_foldable.title == "In-Game Options"
+    assert dialog.options_foldable.folded is True
+
+
 def test_force_fusion(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     cosmetic_patches = PrimeCosmeticPatches(force_fusion=True)
 

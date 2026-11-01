@@ -262,13 +262,11 @@ class SimpleResourceEditor(ResourceEditor):
         super().populate(requirement)
         requirement = cast("ResourceRequirement", requirement)
         with signals_blocked(self._checkbox_negate):
-            self._set_negate_combo(requirement)
+            self._set_negate_checkbox(requirement)
 
-    def _set_negate_combo(self, requirement: ResourceRequirement) -> None:
+    def _set_negate_checkbox(self, requirement: ResourceRequirement) -> None:
         self._checkbox_negate.setChecked(requirement.negate)
-        text = requirement.resource.resource_type.non_negated_prefix.strip()
-        if requirement.negate:
-            text = requirement.resource.resource_type.negated_prefix.strip()
+        text = requirement.resource.resource_type.negated_prefix.strip()
         self._checkbox_negate.setText(text)
 
     @override

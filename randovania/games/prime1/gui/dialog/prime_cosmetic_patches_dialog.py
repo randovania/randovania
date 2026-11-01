@@ -43,11 +43,8 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
         super().__init__(parent, current, options)
         self.setupUi(self)
 
-        self.suit_colors_foldable.setTitle("Suit Colors")
-        self.suit_colors_foldable.setFolded(False)
         self.suit_colors_foldable.set_content_layout(self.suit_colors_foldable_layout)
 
-        self.options_foldable.setTitle("In-Game Options")
         self.options_foldable.set_content_layout(self.options_foldable_layout)
 
         self.field_to_slider_mapping = {

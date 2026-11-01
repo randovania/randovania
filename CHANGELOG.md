@@ -5,6 +5,65 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [11.2.0] - 2026-11-01
+
+- Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
+- Added: When used via a flatpak, Randovania now has a desktop context option to open the Auto Tracker directly.
+- Changed: Slightly visually improved the footer of the cosmetic dialogs.
+- Fixed: Exporting a preset now works again.
+- Fixed: Rare cases where a permalink for a randomized game that had pickup priorities with "very low" didn't import properly.
+
+### Another Metroid 2 Remake
+
+- Fixed: The chance for finding rare special items being lower than intended.
+
+### Metroid Dread
+
+- Changed: Models of Wave Beam, Missile Launcher, Ice Missile, Storm Missile, Cross Bomb and Power Bomb.
+- Fixed: The death counter was incorrectly positioned in version 1.0.0 without the DNA HUD.
+
+#### Logic Database
+
+##### Cataris
+
+- Fixed: Teleport to Ghavoran: Missing requirement that Door Lock Rando has to be disabled to use Speed Booster to get up to the teleporter without Gravity Suit.
+
+### Metroid Fusion
+
+- Added: An option to have an R-Button press toggle between the secondary weapons and primary weapons instead of needing to hold it.
+- Changed: The timer that determines how much time needs to pass in a cold environment for knockback to occur now resets if you're not affected by cold, such as when equipping Varia Suit or going through a Door Transition.
+- Changed: Security Shaft West will now always have the red Zeela present.
+- Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
+- Changed: Adjusted padding in the Hints, Goal and Gameplay preset tabs.
+- Fixed: The "Final Mission" song in Main Deck will no longer turn off when disabling Charge Beam or Missiles.
+- Fixed: Central Reactor Core now has the Kihunters only present after Yakuza was killed instead of them being there by default. Defeating Nettori makes them still dissapear.
+- Fixed: The chance for Bob's true colors, and gold-plated Power Bombs being lower than intended.
+- Fixed: Mono audio can now be selected when Stereo audio is enabled as the default option.
+- Changed: The following pickups will now be placed in bulk at the same step during generation when multiple pickups are necessary to progress:
+  - Missile Tank
+  - Power Bomb Tank
+  - Energy Tank
+
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Changed: Geron's Crossing: The Shinespark trick to break the bottom left bomb block can now be expected in Door Lock Rando seeds.
+- Changed: Geron's Crossing: The Shinespark trick to destroy the Super Missile Geron can now be expected in Door Lock Rando seeds.
+
+### Metroid Prime
+
+- Fixed: The chance for special Missile Expansions being lower than intended.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: The chance for your run being validated and special Missile Expansions being lower than intended.
+
+### Metroid Prime Hunters
+
+- Fixed: Hint text being cut off if the text was too long.
+- Fixed: Sic Transit: The Shield Key pickup being unobtainable after defeating Slench 2.
+- Fixed: Council Chamber: The Artifact pickup can no longer be collected without the Shield Key if it becomes an Octolith.
 
 ## [11.1.1] - 2026-10-06
 
