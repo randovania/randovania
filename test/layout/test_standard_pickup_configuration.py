@@ -31,7 +31,7 @@ def _create_config_for(test_files_dir, game: RandovaniaGame, replace: dict):
     params=[
         {"encoded": b"\x00\x00\x00", "replace": {}},
         {
-            "encoded": b"\x03\x1b\xa8\x00",
+            "encoded": b"\x03\x1b\xa4\x00\x00",
             "replace": {
                 "pickups_state": {
                     "Spider Ball": {

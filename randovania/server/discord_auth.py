@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Self, TypedDict
 
 import aiohttp
+from discord import Client as DiscordClient
 
 from randovania.lib import http_lib
 from randovania.server.fastapi_discord import DiscordOAuthClient
@@ -75,3 +76,18 @@ async def discord_oauth_lifespan(_app: RdvFastAPI) -> Lifespan[DiscordOAuthClien
     if discord.client_session is not None:
         await discord.client_session.close()
         discord.client_session = None
+
+
+@asynccontextmanager
+async def discord_client_lifespan(_app: RdvFastAPI) -> Lifespan[DiscordClient | None]:
+    config = _app.sa.configuration
+    if "discord_bot" not in config:
+        yield None
+    else:
+        client = DiscordClient()
+
+        await client.login(config["discord_bot"]["token"])
+        # client.connect "blocks" the current asyncio loop, so don't use it
+
+        yield client
+        await client.close()

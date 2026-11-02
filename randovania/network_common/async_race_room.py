@@ -1,24 +1,37 @@
-import dataclasses
+import base64
 import datetime
 import enum
-import typing
+import uuid
+from typing import Self
 
-from randovania.bitpacking.json_dataclass import JsonDataclass
+from pydantic import AwareDatetime, Field, field_serializer
+
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.json_base_model import JsonBaseModel
 from randovania.network_common.game_details import GameDetails
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.user import RandovaniaUser
 
 
-@dataclasses.dataclass
-class AsyncRaceSettings(JsonDataclass):
+def race_uses_teams(world_count: int, allow_coop: bool) -> bool:
+    """
+    Whether a race with these settings is played in teams, each hosted in its own multiplayer
+    session, rather than by individual users.
+    """
+    return world_count > 1 or allow_coop
+
+
+class AsyncRaceSettings(JsonBaseModel):
     name: str
     password: str | None
-    start_date: datetime.datetime
-    end_date: datetime.datetime
+    start_date: AwareDatetime
+    end_date: AwareDatetime
     visibility: MultiplayerSessionVisibility
     allow_pause: bool
+    allow_coop: bool = False
+    allow_abandon_worlds: bool = False
+    shared_team_timer: bool = True
 
 
 class AsyncRaceRoomRaceStatus(enum.Enum):
@@ -31,7 +44,7 @@ class AsyncRaceRoomRaceStatus(enum.Enum):
     FINISHED = "finished"
 
     @classmethod
-    def from_dates(cls, start: datetime.datetime, end: datetime.datetime, now: datetime.datetime) -> typing.Self:
+    def from_dates(cls, start: datetime.datetime, end: datetime.datetime, now: datetime.datetime) -> Self:
         """Calculates the status based on the given start and end dates, compared to a given now."""
         if now < start:
             return cls.SCHEDULED
@@ -41,8 +54,7 @@ class AsyncRaceRoomRaceStatus(enum.Enum):
         return cls.ACTIVE
 
 
-@dataclasses.dataclass
-class AsyncRaceRoomListEntry(JsonDataclass):
+class AsyncRaceRoomListEntry(JsonBaseModel):
     """
     Contains necessary data to describe AsyncRaceRoom for a room browser.
     """
@@ -55,33 +67,34 @@ class AsyncRaceRoomListEntry(JsonDataclass):
     creation_date: datetime.datetime
     start_date: datetime.datetime
     end_date: datetime.datetime
-    visibility: "MultiplayerSessionVisibility"
+    visibility: MultiplayerSessionVisibility
     race_status: AsyncRaceRoomRaceStatus
 
     def game_summary(self) -> str:
-        """Gets an human-presentable description of what games are involved in this room."""
+        """Gets a human-presentable description of what games are involved in this room."""
         if self.games is None:
             return "Unknown"
         return self.games[0].long_name if len(self.games) == 1 else "Multiworld"
 
 
-@dataclasses.dataclass
-class RaceRoomLeaderboardEntry(JsonDataclass):
+class RaceRoomLeaderboardEntry(JsonBaseModel):
     """
-    None for time indicates the user forfeited.
+    One row of a race's results. A room played individually has one row per user, named after
+    them; a room played in teams has one row per team, named after it. None for time indicates
+    the participant forfeited.
     """
 
-    user: RandovaniaUser
+    display_name: str
     time: datetime.timedelta | None
+    members: list[RandovaniaUser] = Field(default_factory=list)
 
 
-@dataclasses.dataclass
-class RaceRoomLeaderboard(JsonDataclass):
+class RaceRoomLeaderboard(JsonBaseModel):
     entries: list[RaceRoomLeaderboardEntry]
+    uses_teams: bool = False
 
 
-@dataclasses.dataclass
-class AsyncRacePauseEntry(JsonDataclass):
+class AsyncRacePauseEntry(JsonBaseModel):
     """
     A pause attempt. End being None indicates the pause is still active.
     """
@@ -90,13 +103,13 @@ class AsyncRacePauseEntry(JsonDataclass):
     end: datetime.datetime | None
 
 
-@dataclasses.dataclass
-class AsyncRaceEntryData(JsonDataclass):
+class AsyncRaceEntryData(JsonBaseModel):
     """
-    All data about a user's entry to a race. Should only be available to admins.
+    All data about one participant of a race: a single user in a room played individually,
+    or a whole team in a room played in teams. Should only be available to admins.
     """
 
-    user: RandovaniaUser
+    user: RandovaniaUser | None
     join_date: datetime.datetime
     start_date: datetime.datetime | None
     finish_date: datetime.datetime | None
@@ -104,6 +117,18 @@ class AsyncRaceEntryData(JsonDataclass):
     pauses: list[AsyncRacePauseEntry]
     submission_notes: str
     proof_url: str
+    team_id: int | None = None
+    team_name: str | None = None
+    members: list[RandovaniaUser] = Field(default_factory=list)
+
+    @property
+    def display_name(self) -> str:
+        """How this participant is named in admin views."""
+        if self.team_name is not None:
+            return self.team_name
+        if self.user is not None:
+            return self.user.name
+        return "<unknown>"
 
     def is_valid(self) -> bool:
         """Returns True if all three dates are consistent, False otherwise."""
@@ -116,8 +141,8 @@ class AsyncRaceEntryData(JsonDataclass):
                 return self.join_date < self.start_date
 
 
-@dataclasses.dataclass
-class AsyncRaceRoomAdminData(JsonDataclass):
+class AsyncRaceRoomAdminData(JsonBaseModel):
+    # FIXME: The field name is weird
     users: list[AsyncRaceEntryData]
 
 
@@ -130,10 +155,69 @@ class AsyncRaceRoomUserStatus(enum.Enum):
     FORFEITED = "forfeited"
 
 
-@dataclasses.dataclass
-class AsyncRaceRoomEntry(JsonDataclass):
+class AsyncRaceWorldEntry(JsonBaseModel):
+    """One world of a team's multiworld, and who on the team is playing it."""
+
+    world_uuid: uuid.UUID
+    order: int
+    name: str
+    claimed_by: list[RandovaniaUser]
+
+    def is_claimed_by(self, user_id: int) -> bool:
+        return any(user.id == user_id for user in self.claimed_by)
+
+
+class AsyncRaceTeamMember(JsonBaseModel):
     """
-    Contains all data a client can receive about a AsyncRaceRoom.
+    One member of a team. `status` and `time` are only filled in for the user's own team, until
+    the race is over; `time` also needs a team timed per member, and that member to be done.
+    """
+
+    user: RandovaniaUser
+    status: AsyncRaceRoomUserStatus | None = None
+    time: datetime.timedelta | None = None
+
+
+class AsyncRaceTeamEntry(JsonBaseModel):
+    """
+    A team playing a race room. Who is on it is public; `status` is only filled in for the user's
+    own team, until the race is over, and `worlds`/`session_id` for their team and the creator.
+    """
+
+    id: int
+    name: str
+    status: AsyncRaceRoomUserStatus | None
+    members: list[AsyncRaceTeamMember]
+    worlds: list[AsyncRaceWorldEntry]
+    captain: RandovaniaUser | None = None
+    session_id: int | None = None  # The hidden multiplayer session hosting this team's multiworld
+
+    @property
+    def member_count(self) -> int:
+        return len(self.members)
+
+    @property
+    def member_users(self) -> list[RandovaniaUser]:
+        return [member.user for member in self.members]
+
+    def member_for(self, user_id: int) -> AsyncRaceTeamMember | None:
+        for member in self.members:
+            if member.user.id == user_id:
+                return member
+        return None
+
+    def worlds_for(self, user_id: int) -> list[AsyncRaceWorldEntry]:
+        """The worlds of this team the given user claimed."""
+        return [world for world in self.worlds if world.is_claimed_by(user_id)]
+
+    @property
+    def unclaimed_worlds(self) -> list[AsyncRaceWorldEntry]:
+        return [world for world in self.worlds if not world.claimed_by]
+
+
+class AsyncRaceRoomEntry(JsonBaseModel):
+    """
+    Contains all data a client can receive about an AsyncRaceRoom.
     """
 
     id: int
@@ -142,7 +226,7 @@ class AsyncRaceRoomEntry(JsonDataclass):
     creation_date: datetime.datetime
     start_date: datetime.datetime
     end_date: datetime.datetime
-    visibility: "MultiplayerSessionVisibility"
+    visibility: MultiplayerSessionVisibility
     race_status: AsyncRaceRoomRaceStatus
     auth_token: str
     game_details: GameDetails
@@ -150,7 +234,57 @@ class AsyncRaceRoomEntry(JsonDataclass):
     is_admin: bool
     self_status: AsyncRaceRoomUserStatus
     allow_pause: bool
+    world_count: int = 1
+    self_time: datetime.timedelta | None = None
+    teams: list[AsyncRaceTeamEntry] = Field(default_factory=list)
+    self_team_id: int | None = None
+    self_has_exported: bool = False
+    self_is_captain: bool = False
+    allow_coop: bool = False
+    allow_abandon_worlds: bool = False
+    shared_team_timer: bool = True
 
     @property
     def presets(self) -> list[VersionedPreset]:
         return [VersionedPreset.from_bytes(s) for s in self.presets_raw]
+
+    @field_serializer("presets_raw")
+    def serialize_presets(self, value: list[bytes]) -> list[str]:
+        return [base64.b64encode(v).decode("ascii") for v in value]
+
+    @property
+    def is_multiworld(self) -> bool:
+        """Whether the layout being raced has more than one world."""
+        return self.world_count > 1
+
+    @property
+    def uses_teams(self) -> bool:
+        """
+        Rooms played in teams go through a multiplayer session; rooms without teams are played
+        by individual users.
+        """
+        return race_uses_teams(self.world_count, self.allow_coop)
+
+    @property
+    def self_team(self) -> AsyncRaceTeamEntry | None:
+        if self.self_team_id is None:
+            return None
+        for team in self.teams:
+            if team.id == self.self_team_id:
+                return team
+        return None
+
+    @property
+    def can_control_team(self) -> bool:
+        return not self.uses_teams or self.self_is_captain
+
+    @property
+    def can_control_timer(self) -> bool:
+        if not self.uses_teams:
+            return True
+        if self.self_is_captain:
+            return True
+        if self.shared_team_timer:
+            return False
+        # Individual timers only become the member's own once the captain has started the race.
+        return self.self_status != AsyncRaceRoomUserStatus.JOINED

@@ -42,7 +42,7 @@ class LocationList(BitPackValue):
 
     def __post_init__(self) -> None:
         if not isinstance(self.locations, tuple):
-            raise ValueError(f"locations must be tuple, got {type(self.locations)}")
+            raise TypeError(f"locations must be tuple, got {type(self.locations)}")
 
         if list(self.locations) != sorted(self.locations):
             raise ValueError(f"locations aren't sorted: {self.locations}")
@@ -77,7 +77,7 @@ class LocationList(BitPackValue):
     @classmethod
     def from_json(cls, value: list[dict], game: RandovaniaGame) -> Self:
         if not isinstance(value, list):
-            raise ValueError(f"StartingLocation from_json must receive a list, got {type(value)}")
+            raise TypeError(f"StartingLocation from_json must receive a list, got {type(value)}")
         elements = [cls.element_type().from_json(location) for location in value]
         return cls.with_elements(elements, game)
 

@@ -89,7 +89,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="SM3L32IN",
+        expected_seed_hash="EBM7KFFO",
     )
 
 
@@ -159,7 +159,10 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ],
         need_to_play=[
             "A ROM of Metroid Fusion (USA)",
-            "A Gameboy Advance Emulator (recommended mGBA or Bizhawk)",
+            (
+                "A Gameboy Advance Emulator (recommended mGBA or Bizhawk) or something that can run "
+                "ROMs natively (flashcard, open_agb_firm, Game Boy Interface, etc.)"
+            ),
         ],
     ),
     hash_words=_hash_words(),

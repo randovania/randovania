@@ -37,7 +37,8 @@ def RdvFileResponse(data: str, filename: str) -> Response:
 async def admin_sessions(
     sa: ServerAppDep, user: AdminDep, request: Request, page: Annotated[int, Query(ge=1)] = 1
 ) -> HTMLResponse:
-    page_count = ceil(MultiplayerSession.select().count() / 20)
+    not_a_race = MultiplayerSession.race_team.is_null()
+    page_count = ceil(MultiplayerSession.select().where(not_a_race).count() / 20)
 
     if not page_count:
         return sa.templates.TemplateResponse(
@@ -54,7 +55,7 @@ async def admin_sessions(
         raise HTTPException(status_code=404, detail="Session page not found")
 
     order = MultiplayerSession.creation_date.desc()  # type: ignore[attr-defined]
-    paginated_query = MultiplayerSession.select().order_by(order).paginate(page, 20)
+    paginated_query = MultiplayerSession.select().where(not_a_race).order_by(order).paginate(page, 20)
 
     return sa.templates.TemplateResponse(
         request,

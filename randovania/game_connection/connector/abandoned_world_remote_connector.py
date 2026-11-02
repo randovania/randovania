@@ -18,10 +18,9 @@ import time
 from typing import TYPE_CHECKING
 
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent, RemoteConnector
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.generator.pickup_pool import PoolResults, pool_creator
+from randovania.generator.pickup_pool import pool_creator
 from randovania.graph.graph_requirement import GraphRequirementList, GraphRequirementSet
 from randovania.layout import filtered_database, game_patches_serializer
 from randovania.network_common.error import WorldNotAssociatedError
@@ -32,7 +31,7 @@ from randovania.resolver.resolver import advance_depth
 
 if TYPE_CHECKING:
     import uuid
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Sequence
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -50,7 +49,7 @@ _MAX_RESOLVER_ATTEMPTS = 500_000
 logger = logging.getLogger(__name__)
 
 
-def setup_for_world(configuration: BaseConfiguration, game_modifications: dict, order: int) -> tuple[WorldGraph, State]:
+def setup_for_world(configuration: BaseConfiguration, game_modifications: dict) -> tuple[WorldGraph, State]:
     """
     Builds the world graph and starting state for one world (same as ``resolver.setup_resolver``)
     from the data served by the server for an abandoned world.
@@ -63,10 +62,10 @@ def setup_for_world(configuration: BaseConfiguration, game_modifications: dict, 
     immutable_game = filtered_database.game_description_for_layout(configuration)
     pool = pool_creator.calculate_pool_results(configuration, immutable_game)
 
-    all_pools: list[PoolResults] = [pool] * (order + 1)
-    all_games: list[GameDescription] = [immutable_game] * (order + 1)
+    # The server has provided a game_modifications dict that has all locations being either local pickups or nothing,
+    # with the owner being index 0.
     patches = game_patches_serializer.decode_single(
-        order, all_pools, immutable_game, game_modifications, configuration, all_games
+        0, [pool], immutable_game, game_modifications, configuration, [immutable_game]
     )
 
     game = immutable_game.get_mutable()
@@ -84,8 +83,8 @@ class _AbandonedWorldLogic(Logic):
     "require L's node-resource"
     """
 
-    def __init__(self, graph: WorldGraph, configuration: BaseConfiguration, collected: set[int]):
-        super().__init__(graph, configuration, disable_gc=False)
+    def __init__(self, graph: WorldGraph, collected: set[int]):
+        super().__init__([graph], disable_gc=False)
 
         resource_database = graph.converter.resource_database
         victory = GraphRequirementSet()
@@ -96,7 +95,11 @@ class _AbandonedWorldLogic(Logic):
             alternative.add_resource(graph.resource_info_for_node(node), 1, False)
             victory.add_alternative(alternative)
         victory.freeze()
-        self._victory_condition = victory
+        self.victory_condition = victory
+
+    def victory_conditions_satisfied(self, states: Sequence[State]) -> bool:
+        assert len(states) == 1
+        return self.victory_condition.satisfied(states[0].resources, states[0].health_for_damage_requirements)
 
 
 def _fresh_state(
@@ -129,13 +132,13 @@ async def _compute_one_round(
     Returns the newly-collected pickup indices (empty if nothing more is reachable) and the state the
     resolver ended in, for inventory reporting.
     """
-    logic = _AbandonedWorldLogic(graph, configuration, collected)
+    logic = _AbandonedWorldLogic(graph, collected)
     state = _fresh_state(graph, starting_state, collected, received_pickups)
-    if logic.victory_condition(state).num_alternatives() == 0:
+    if logic.victory_condition.num_alternatives() == 0:
         return set(), state  # every location collected; an empty OR would force a pointless full sweep
 
     try:
-        result = await advance_depth(state, logic, lambda s: None, max_attempts=_MAX_RESOLVER_ATTEMPTS)
+        result = await advance_depth(logic, [state], lambda s: None, max_attempts=_MAX_RESOLVER_ATTEMPTS)
     except ResolverTimeoutError:
         logger.info("Abandoned world connector paused; will retry when new items arrive.")
         logger.debug("Resolver attempt cap reached (%d).", _MAX_RESOLVER_ATTEMPTS)
@@ -143,7 +146,7 @@ async def _compute_one_round(
     if result is None:
         return set(), state  # nothing new reachable
 
-    return {pickup_index.index for pickup_index in result.collected_pickup_indices(graph)} - collected, result
+    return {pickup_index.index for pickup_index in result[0].collected_pickup_indices(graph)} - collected, result[0]
 
 
 class AbandonedWorldRemoteConnector(RemoteConnector):
@@ -159,14 +162,12 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
         self,
         layout_uuid: uuid.UUID,
         preset: VersionedPreset,
-        order: int,
         game_modifications: dict,
         collected_locations: Iterable[int],
     ):
         super().__init__()
         self._layout_uuid = layout_uuid
         self._preset = preset
-        self._order = order
         self._game_modifications = game_modifications
 
         # All mutable resolution state is owned by this connector instance.
@@ -230,7 +231,8 @@ class AbandonedWorldRemoteConnector(RemoteConnector):
     def _ensure_setup(self) -> tuple[WorldGraph, State]:
         if self._graph is None or self._starting_state is None:
             self._graph, self._starting_state = setup_for_world(
-                self._preset.get_preset().configuration, self._game_modifications, self._order
+                self._preset.get_preset().configuration,
+                self._game_modifications,
             )
         return self._graph, self._starting_state
 

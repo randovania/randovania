@@ -18,10 +18,9 @@ from randovania.gui.dialog.game_export_dialog import (
     prompt_for_output_file,
     spoiler_path_for,
 )
-from randovania.interface_common.options import Options
 
 if TYPE_CHECKING:
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
 class EchoesOPRGameExportDialog(GameExportDialog[EchoesOPRConfiguration], Ui_EchoesOPRGameExportDialog):

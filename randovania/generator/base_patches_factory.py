@@ -51,30 +51,29 @@ class BasePatchesFactory[Configuration: BaseConfiguration]:
         player_index: int,
         rng_required: bool = True,
     ) -> GamePatches:
-        """ """
         patches = self.create_static_base_patches(configuration, game, player_index)
 
         # Teleporters
         try:
             patches = patches.assign_dock_connections(self.dock_connections_assignment(configuration, game, rng))
-        except MissingRng as e:
+        except MissingRng:
             if rng_required:
-                raise e
+                raise
 
         # Starting Location
         try:
             patches = patches.assign_starting_location(
                 self.starting_location_for_configuration(configuration, game, rng)
             )
-        except MissingRng as e:
+        except MissingRng:
             if rng_required:
-                raise e
+                raise
 
         try:
             patches = patches.assign_game_specific(self.create_game_specific(configuration, game, rng))
-        except MissingRng as e:
+        except MissingRng:
             if rng_required:
-                raise e
+                raise
 
         # Check Item Pool
         self.check_item_pool(configuration)

@@ -11,12 +11,12 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.hint_features import HintFeature
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
-from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.generator.hint_distributor import HintFeatureGaussianParams
+    from randovania.lib.json_lib import JsonObject, JsonObject_RO
 
 
 class HintDarkTemple(Enum):

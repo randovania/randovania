@@ -16,7 +16,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QGridLayout, QHBoxLayout, QLabel, QPushButton,
+    QFrame, QHBoxLayout, QLabel, QPushButton,
     QScrollArea, QSizePolicy, QSpacerItem, QVBoxLayout,
     QWidget)
 
@@ -25,31 +25,17 @@ class Ui_PlanetsZebethCosmeticPatchesDialog(object):
         if not PlanetsZebethCosmeticPatchesDialog.objectName():
             PlanetsZebethCosmeticPatchesDialog.setObjectName(u"PlanetsZebethCosmeticPatchesDialog")
         PlanetsZebethCosmeticPatchesDialog.resize(437, 405)
-        self.gridLayout = QGridLayout(PlanetsZebethCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.accept_button = QPushButton(PlanetsZebethCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-
-        self.gridLayout.addWidget(self.accept_button, 2, 0, 1, 1)
-
-        self.reset_button = QPushButton(PlanetsZebethCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-
-        self.gridLayout.addWidget(self.reset_button, 2, 2, 1, 1)
-
-        self.cancel_button = QPushButton(PlanetsZebethCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.gridLayout.addWidget(self.cancel_button, 2, 1, 1, 1)
-
+        self.verticalLayout_2 = QVBoxLayout(PlanetsZebethCosmeticPatchesDialog)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(PlanetsZebethCosmeticPatchesDialog)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 417, 337))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 435, 357))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -114,13 +100,47 @@ class Ui_PlanetsZebethCosmeticPatchesDialog(object):
 
         self.verticalLayout.addWidget(self.use_alternative_escape_theme_label)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
         self.scrollArea.setWidget(self.scroll_area_contents)
 
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.verticalLayout_2.addWidget(self.scrollArea)
+
+        self.line = QFrame(PlanetsZebethCosmeticPatchesDialog)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_2.addWidget(self.line)
+
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.setSpacing(6)
+        self.footer_layout.setObjectName(u"footer_layout")
+        self.footer_layout.setContentsMargins(6, 6, 6, 6)
+        self.reset_button = QPushButton(PlanetsZebethCosmeticPatchesDialog)
+        self.reset_button.setObjectName(u"reset_button")
+        self.reset_button.setText(u"\u2b8c Reset to Defaults")
+
+        self.footer_layout.addWidget(self.reset_button)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.footer_layout.addItem(self.horizontalSpacer)
+
+        self.accept_button = QPushButton(PlanetsZebethCosmeticPatchesDialog)
+        self.accept_button.setObjectName(u"accept_button")
+        self.accept_button.setMinimumSize(QSize(96, 0))
+        self.accept_button.setText(u"\U0001f5f8 Accept")
+
+        self.footer_layout.addWidget(self.accept_button)
+
+        self.cancel_button = QPushButton(PlanetsZebethCosmeticPatchesDialog)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(96, 0))
+        self.cancel_button.setText(u"\U0001f6c7 Cancel")
+
+        self.footer_layout.addWidget(self.cancel_button)
+
+
+        self.verticalLayout_2.addLayout(self.footer_layout)
 
 
         self.retranslateUi(PlanetsZebethCosmeticPatchesDialog)
@@ -133,9 +153,6 @@ class Ui_PlanetsZebethCosmeticPatchesDialog(object):
 
     def retranslateUi(self, PlanetsZebethCosmeticPatchesDialog):
         PlanetsZebethCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Metroid Planets (Zebeth) - Cosmetic Options", None))
-        self.accept_button.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Accept", None))
-        self.reset_button.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Reset to Defaults", None))
-        self.cancel_button.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Cancel", None))
         self.show_unexplored_map_check.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Show fully unexplored map by default", None))
         self.show_unexplored_map_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Makes you start with a map, which shows unexplored pickups and non-visited tiles as gray.", None))
         self.room_name_label.setText(QCoreApplication.translate("PlanetsZebethCosmeticPatchesDialog", u"Show Room Names on HUD", None))

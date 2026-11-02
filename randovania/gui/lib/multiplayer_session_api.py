@@ -10,7 +10,6 @@ from randovania.gui.lib.qt_network_client import NetworkErrorDelegator, handle_n
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import admin_actions
 from randovania.network_common.signals import server_signals
-from randovania.network_common.signals.common import SioDataType
 
 if typing.TYPE_CHECKING:
     import uuid
@@ -20,6 +19,7 @@ if typing.TYPE_CHECKING:
     from randovania.lib.type_lib import AsyncCallable
     from randovania.network_common.multiplayer_session import MultiplayerWorld
     from randovania.network_common.session_visibility import MultiplayerSessionVisibility
+    from randovania.network_common.signals.common import SioDataType
 
 
 class SessionIdLoggingFilter(logging.Filter):

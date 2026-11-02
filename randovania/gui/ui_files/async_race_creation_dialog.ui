@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>431</width>
-    <height>198</height>
+    <height>268</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,61 +20,88 @@
    <item>
     <widget class="QGroupBox" name="preset_group">
      <property name="title">
-      <string>Preset</string>
+      <string>Worlds</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
+     <layout class="QGridLayout" name="preset_layout">
+      <item row="0" column="0" colspan="3">
        <widget class="QLabel" name="preset_label">
         <property name="text">
          <string>No Preset Selected</string>
         </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="0" colspan="3">
+       <widget class="QListWidget" name="world_list">
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
        <widget class="QPushButton" name="preset_button">
         <property name="text">
-         <string>Select Preset</string>
+         <string>Add world</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="change_preset_button">
+        <property name="text">
+         <string>Change preset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="remove_world_button">
+        <property name="text">
+         <string>Remove world</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-    <item>
-     <widget class="QLabel" name="progress_label">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::TextFormat::MarkdownText</enum>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-      <property name="openExternalLinks">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QProgressBar" name="progress_bar">
-      <property name="value">
-       <number>0</number>
-      </property>
-      <property name="invertedAppearance">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
+   <item>
+    <widget class="QLabel" name="progress_label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::TextFormat::MarkdownText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="progress_bar">
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QDialogButtonBox" name="button_box">
      <property name="standardButtons">
@@ -90,12 +117,6 @@
    <class>AsyncRaceRoomSettingsWidget</class>
    <extends>QWidget</extends>
    <header>randovania.gui.widgets.async_race_room_settings_widget</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BackgroundTaskWidget</class>
-   <extends>QWidget</extends>
-   <header>randovania.gui.widgets.background_task_widget</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

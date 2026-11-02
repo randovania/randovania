@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import dataclasses
 from random import Random
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.game_description import GameDescription
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.generator import generate_and_validate_description
 from randovania.interface_common.preset_editor import PresetEditor
@@ -16,12 +16,15 @@ from randovania.layout.base.dock_weakness_distributor_configuration import (
 )
 from randovania.layout.generator_parameters import GeneratorParameters
 
+if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
+
 
 @pytest.fixture
 def _force_blank_two_way(blank_game_description):
     dock_type = blank_game_description.dock_type_database.find_type("door")
     rando_settings = dock_type.get_weakness_distributor()
-    dock_type
+
     object.__setattr__(
         rando_settings,
         "force_change_two_way",

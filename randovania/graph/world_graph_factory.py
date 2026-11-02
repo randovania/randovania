@@ -32,7 +32,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
 
 
 def _get_dock_open_requirement(node: DockNode, weakness: DockWeakness) -> Requirement:
@@ -210,11 +210,16 @@ def create_node(
     Creates one WorldGraphNode based on one original node.
     """
     resources: list[ResourceInfo] = []
+    granted: ResourceGainTuple = ()
 
     if isinstance(original_node, EventNode):
         resources.append(original_node.event)
+        granted = original_node.grants_on_collect
     elif isinstance(original_node, EventPickupNode):
         resources.append(original_node.event_node.event)
+        granted = original_node.event_node.grants_on_collect + original_node.pickup_node.grants_on_collect
+    elif isinstance(original_node, PickupNode):
+        granted = original_node.grants_on_collect
 
     pickup_index = None
     if isinstance(original_node, PickupNode):
@@ -237,6 +242,8 @@ def create_node(
     )
     for resource in resources:
         node.add_resource(resource, database)
+    for resource, amount in granted:
+        node.add_granted_resource(resource, amount, database)
     return node
 
 
@@ -306,6 +313,7 @@ class GraphResourceDatabaseView(ResourceDatabaseViewProxy):
 
 
 def create_patchless_graph(
+    world_index: int,
     database_view: GameDatabaseView,
     static_resources: ResourceCollection,
     damage_multiplier: float,
@@ -371,6 +379,7 @@ def create_patchless_graph(
             front_of_dock_mapping[new_node.node_index] = front_node.node_index
 
     graph = WorldGraph(
+        world_index=world_index,
         game_enum=database_view.get_game_enum(),
         resource_database=resource_database,
         victory_condition=GraphRequirementSet.trivial(),
@@ -590,6 +599,7 @@ def duplicate_and_adjust_graph_for_patches(
         nodes.append(new_node)
 
     new_graph = WorldGraph(
+        world_index=base_graph.world_index,
         game_enum=base_graph.game_enum,
         resource_database=base_graph.resource_database,
         victory_condition=base_graph.victory_condition,
@@ -615,6 +625,7 @@ def create_graph(
     flatten_to_set_on_patch: bool,
 ) -> WorldGraph:
     graph = create_patchless_graph(
+        patches.player_index,
         database_view,
         static_resources,
         damage_multiplier,

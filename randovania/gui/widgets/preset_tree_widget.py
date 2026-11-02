@@ -29,7 +29,8 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
     expanded_connected: bool = False
 
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
-        source = self.preset_for_item(self.currentItem())
+        current_item = self.currentItem()
+        source = self.preset_for_item(current_item) if current_item is not None else None
         if source is None:
             return event.setDropAction(Qt.DropAction.IgnoreAction)
 
@@ -89,7 +90,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         self.preset_to_item = {}
         default_parent = None
-        root_parents = set()
+        root_parents: set[QtWidgets.QTreeWidgetItem] = set()
 
         def create_item(
             parent: QtWidgets.QTreeWidgetItem | QtWidgets.QTreeWidget,
@@ -143,7 +144,11 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
                             # LOOP DETECTED!
                             target_parent = default_parent
                             break
-                        parent_item = parent_item.parent()
+                        new_parent_item = parent_item.parent()
+                        if new_parent_item is None:
+                            target_parent = default_parent
+                            break
+                        parent_item = new_parent_item
 
                     if default_parent != target_parent:
                         default_parent.removeChild(self_item)

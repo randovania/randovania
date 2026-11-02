@@ -5,7 +5,6 @@ import typing
 
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.gui.item_tracker.tracker_structure import TrackerStructure
 from randovania.lib import enum_lib
 from randovania.lib.signal import RdvSignal
 
@@ -15,6 +14,7 @@ if typing.TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
+    from randovania.gui.item_tracker.tracker_structure import TrackerStructure
     from randovania.network_common.error import BaseNetworkError
     from randovania.network_common.remote_pickup import RemotePickup
 
@@ -28,6 +28,7 @@ class ImportantStatusMessage(enum.Enum):
     """Messages that Randovania can request the game displays."""
 
     DISCONNECTED_FROM_SERVER = "disconnected-from-server"
+    INVALID_PICKUP_INDEX = "invalid-pickup-index"
 
     long_name: str
 
@@ -37,7 +38,8 @@ enum_lib.add_long_name(
     {
         ImportantStatusMessage.DISCONNECTED_FROM_SERVER: (
             "Connection to the server has been lost. Please check Randovania application for details."
-        )
+        ),
+        ImportantStatusMessage.INVALID_PICKUP_INDEX: ("An invalid location was collected. Please submit a bug report."),
     },
 )
 

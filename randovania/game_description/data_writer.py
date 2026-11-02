@@ -94,7 +94,7 @@ def write_requirement(requirement: Requirement) -> dict:
         return write_node_requirement(requirement)
 
     else:
-        raise ValueError(f"Unknown requirement type: {type(requirement)}")
+        raise TypeError(f"Unknown requirement type: {type(requirement)}")
 
 
 def write_optional_requirement(requirement: Requirement | None) -> dict | None:
@@ -313,11 +313,13 @@ def write_node(node: Node) -> dict:
         data["location_category"] = node.location_category.value
         data["custom_index_group"] = node.custom_index_group
         data["hint_features"] = [ft.name for ft in sorted(node.hint_features)]
+        data["grants_on_collect"] = write_resource_gain(node.grants_on_collect)
 
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data.update(common_fields)
         data["event_name"] = node.event.short_name
+        data["grants_on_collect"] = write_resource_gain(node.grants_on_collect)
 
     elif isinstance(node, ConfigurableNode):
         data["node_type"] = "configurable_node"
@@ -342,7 +344,7 @@ def write_node(node: Node) -> dict:
         data["requirement_to_activate"] = write_requirement(node.requirement_to_activate)
 
     else:
-        raise ValueError(f"Unknown node class: {node}")
+        raise TypeError(f"Unknown node class: {node}")
 
     return data
 

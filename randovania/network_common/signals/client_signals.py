@@ -2,14 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Never
 
-from randovania.network_common.async_race_room import AsyncRaceRoomEntry
-from randovania.network_common.multiplayer_session import (
-    MultiplayerSessionActions,
-    MultiplayerSessionAuditLog,
-    MultiplayerSessionEntry,
-    MultiplayerWorldPickups,
-)
-from randovania.network_common.remote_inventory import RemoteInventory
 from randovania.network_common.signals.common import TypedBytes, TypedJsonObject, args_to_sio_data
 
 if TYPE_CHECKING:
@@ -19,6 +11,14 @@ if TYPE_CHECKING:
     from socketio import AsyncClient
 
     from randovania.lib.type_lib import AsyncCallable
+    from randovania.network_common.async_race_room import AsyncRaceRoomEntry
+    from randovania.network_common.multiplayer_session import (
+        MultiplayerSessionActions,
+        MultiplayerSessionAuditLog,
+        MultiplayerSessionEntry,
+        MultiplayerWorldPickups,
+    )
+    from randovania.network_common.remote_inventory import RemoteInventory
     from randovania.server.server_app import ServerApp
 
 
@@ -125,6 +125,10 @@ async def WorldJsonInventory(*args: Any, **kwargs: Any) -> None: ...
 
 @client_signal("multiplayer_binary_inventory")
 async def WorldBinaryInventory(entry_id: str, user_id: int, raw_inventory: TypedBytes[RemoteInventory]) -> None: ...
+
+
+@client_signal("world_important_status_message")
+async def WorldImportantStatusMessage(world_uuid_bytes: bytes, message: str) -> None: ...
 
 
 @client_signal("async_race_room_update")

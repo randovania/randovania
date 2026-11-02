@@ -367,6 +367,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "OmegaMetroid",
+                    "grants_on_collect": [],
                     "connections": {
                         "Event - Victory": {
                             "type": "and",
@@ -392,6 +393,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "VictoryEvent",
+                    "grants_on_collect": [],
                     "connections": {
                         "Ship": {
                             "type": "and",
@@ -422,7 +424,8 @@
                         "x": 18,
                         "y": 13
                     }
-                ]
+                ],
+                "unlocked_save_recharge_station": true
             },
             "nodes": {
                 "Door to Docking Bay Hangar": {
@@ -767,6 +770,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Docking Bay Climb": {
                             "type": "and",
@@ -867,7 +871,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE",
+                                            "comment": "Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE . Can safely not have DLR check, as you can always enter from one door, which is enough to spark.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -894,15 +898,6 @@
                                                         "name": "ShinesparkTrick",
                                                         "amount": 3,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "OpenHatchLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -2081,7 +2076,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY",
+                                                        "comment": "Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2105,15 +2100,6 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "misc",
-                                                                    "name": "DoorLockRando",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
                                                                     "name": "EntranceRando",
                                                                     "amount": 1,
                                                                     "negate": true
@@ -2122,8 +2108,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "L0Locks",
+                                                                    "type": "events",
+                                                                    "name": "OpDeckSave",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -2228,7 +2214,7 @@
                         "y": 400.0,
                         "z": 0.0
                     },
-                    "description": "This door is currently an event door and thus always Level-0",
+                    "description": "Room Graphics are incorrect, this is an L0 door.",
                     "layers": [
                         "default"
                     ],
@@ -2275,6 +2261,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "SA-X",
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Operations Room Hatch": {
                             "type": "and",
@@ -2730,6 +2717,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckOperationsMissileShield",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
                             "type": "and",
@@ -3537,6 +3525,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Restricted Navigation Room": {
                             "type": "or",
@@ -4355,6 +4344,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckPBGeron",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Station Entrance": {
                             "type": "and",
@@ -4492,15 +4482,23 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Kickclimb off the platform",
+                                            "comment": "Reach the upper spot",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Walljump off the platform",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -4513,7 +4511,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get into tunnel",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5295,7 +5293,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Speedboost from other room",
+                                            "comment": "Speedboost from other room. This can safely not have DLR check; either you come from here in which case you opened the door, or you arrived here, in which case you can go back the way you came from.",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5304,15 +5302,6 @@
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 },
                                                 {
@@ -5432,6 +5421,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "MAIN_HUB_BOTTOM",
                         "door_idx": [
                             50
                         ],
@@ -5572,6 +5563,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckHubVisited",
+                    "grants_on_collect": [],
                     "connections": {
                         "Elevator to Main Elevator Shaft": {
                             "type": "and",
@@ -5706,6 +5698,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_2",
                         "door_idx": [
                             68
                         ]
@@ -5857,6 +5851,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_4",
                         "door_idx": [
                             70
                         ]
@@ -5960,6 +5956,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_6",
                         "door_idx": [
                             72
                         ]
@@ -6111,6 +6109,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_1",
                         "door_idx": [
                             67
                         ]
@@ -6262,6 +6262,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_3",
                         "door_idx": [
                             69
                         ]
@@ -6365,6 +6367,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TO_SECTOR_5",
                         "door_idx": [
                             71
                         ]
@@ -6845,6 +6849,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Crew Quarters East": {
                             "type": "and",
@@ -6962,7 +6967,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y",
+                                            "comment": "Destroy with Speed Booster",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6976,37 +6981,10 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "ShinesparkTrick",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
                                                         "type": "misc",
                                                         "name": "EntranceRando",
                                                         "amount": 1,
                                                         "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -7025,6 +7003,57 @@
                                                         "name": "Knowledge",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Run from edge of Operations Deck. TODO: vid.",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Run from Save Station, spark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y . This can safely have no DLR check",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "OpDeckSave",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -7287,6 +7316,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckMaintainanceGeronLower",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Crew Quarters West": {
                             "type": "and",
@@ -7312,6 +7342,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "MainDeckMaintainanceGeronUpper",
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Operations Deck": {
                             "type": "and",
@@ -7480,6 +7511,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -7709,6 +7741,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Arachnus",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Morph Ball)": {
                             "type": "and",
@@ -7745,6 +7778,7 @@
                     "hint_features": [
                         "boss"
                     ],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -8063,6 +8097,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
                             "type": "and",
@@ -8109,6 +8144,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "MAIN_HUB_TOP",
                         "door_idx": [
                             94,
                             49
@@ -8413,6 +8450,39 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Operations Save Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Operations Save Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 88.56,
+                        "y": 131.43,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "OpDeckSave",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -8458,6 +8528,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Operations Ventilation": {
                             "type": "and",
@@ -8632,6 +8703,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Dark Stairwell": {
                             "type": "or",
@@ -8740,6 +8812,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Station Entrance": {
                             "type": "and",
@@ -9284,7 +9357,7 @@
                         "Other to Silo Tunnel": {
                             "type": "and",
                             "data": {
-                                "comment": "Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw",
+                                "comment": "Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw . Can safely not have DLR check, as if you can reach Aux and be here, you can go through doors.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9307,7 +9380,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get high enough to spark",
+                                            "comment": "Get high enough to the third platform to spark",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9322,8 +9395,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 2,
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 }
@@ -9387,15 +9460,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "OpenHatchLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": "Beam requirements.",
@@ -9405,15 +9469,6 @@
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "ChargeBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -9429,67 +9484,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Having only one beam makes this harder to hit / have only one attempt",
-                                                        "items": [
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "If you only have charge, you need to have access to the other side",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "ChargeBeam",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "events",
-                                                                                            "name": "RightSiloCheckpointShutter",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "WaveBeam",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Without Wave nor Charge, there's only one attempt and its hard.",
+                                                        "comment": "Without Wave, there's only one attempt and its hard.",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9497,15 +9492,6 @@
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
                                                                     "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "RightSiloCheckpointShutter",
-                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -9520,6 +9506,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "RightSiloCheckpointShutter",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -9640,7 +9635,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4",
+                                            "comment": "Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4 .  Can safely not have DLR check as Save Station is a dead-end",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9665,15 +9660,6 @@
                                                     "data": {
                                                         "type": "misc",
                                                         "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "OpenHatchLockRando",
                                                         "amount": 1,
                                                         "negate": true
                                                     }
@@ -9785,6 +9771,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Silo Scaffolding": {
                             "type": "and",
@@ -10141,6 +10128,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Pickup": {
                             "type": "and",
@@ -10690,13 +10678,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Access Right of Silo Checkpoint Shutter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -10746,31 +10727,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Access Right of Silo Checkpoint Shutter": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 201.96,
-                        "y": 116.83,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "RightSiloCheckpointShutter",
-                    "connections": {
-                        "Door to Auxiliary Navigation Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -10879,6 +10835,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Aux Power Station Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -10905,6 +10868,33 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Door to Auxiliary Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Aux Power Station Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 152.35,
+                        "y": 164.02,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "RightSiloCheckpointShutter",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Auxiliary Navigation Room": {
                             "type": "and",
@@ -11261,6 +11251,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Central Nexus": {
                             "type": "or",
@@ -11480,6 +11471,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "OPERATIONS_DECK_TOP",
                         "door_idx": [
                             26
                         ]
@@ -11582,6 +11575,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "OPERATIONS_DECK_BOTTOM",
                         "door_idx": [
                             25
                         ]
@@ -11794,7 +11789,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Equipment manip",
+                                                        "comment": "Disable Screw during the walljump to ledge grab on the left side and jump to the right side",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -12278,6 +12273,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "RESTRICTED_LAB_TO_SECTOR_1",
                         "door_idx": [
                             154
                         ]
@@ -12381,6 +12378,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Beside Pickup": {
                             "type": "and",
@@ -12684,6 +12682,7 @@
                     "hint_features": [
                         "systems_console"
                     ],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",
@@ -12805,6 +12804,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Animals",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Save the Animals)": {
                             "type": "and",
@@ -12966,7 +12966,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Hornoad)": {
+                        "Hornoad": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12999,8 +12999,40 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Hornoad": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hornoad": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 221.97,
+                        "y": 140.41,
+                        "z": 0.0
+                    },
+                    "description": "Always drops Refill-X.",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
                     "connections": {
                         "Door to Quarantine Junction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Hornoad)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13051,6 +13083,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Dark Stairwell": {
                             "type": "and",
@@ -13163,6 +13196,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Main Elevator": {
                             "type": "and",
@@ -13307,6 +13341,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "up",
+                        "name": "HABITATION_DECK_BOTTOM",
                         "door_idx": [
                             177
                         ]
@@ -13409,6 +13445,8 @@
                         "default"
                     ],
                     "extra": {
+                        "direction": "down",
+                        "name": "HABITATION_DECK_TOP",
                         "door_idx": [
                             178
                         ]
@@ -13643,7 +13681,7 @@
                         "y": 80.0,
                         "z": 0.0
                     },
-                    "description": "This door is currently an event door and thus always Level-0",
+                    "description": "Room Graphics are incorrect, this is an L0 door.",
                     "layers": [
                         "default"
                     ],
@@ -13690,6 +13728,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Controls",
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Operations Deck": {
                             "type": "and",
@@ -13742,6 +13781,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Arachnus Arena": {
                             "type": "and",
@@ -13915,6 +13955,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Yakuza",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Space Jump)": {
                             "type": "and",
@@ -13949,6 +13990,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",

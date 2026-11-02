@@ -69,7 +69,8 @@ def test_persist_logical_pickup_placement(skip_qtbot, preset_manager):
     skip_qtbot.addWidget(window)
 
     # Run
-    skip_qtbot.keyClicks(window.logical_pickup_placement_combo, "Major pickups")
+    combo = window.logical_pickup_placement_combo
+    combo.setCurrentIndex(combo.findData(LogicalPickupPlacementConfiguration.MAJORS))
 
     # Assert
     editor.__enter__.return_value.set_configuration_field.assert_called_once_with(

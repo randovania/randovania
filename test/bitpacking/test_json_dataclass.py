@@ -2,16 +2,19 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+import json
 import uuid
 from enum import Enum
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
 
 import pytest
 
 from randovania.bitpacking.construct_pack import construct_for_type
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game.game_enum import RandovaniaGame
-from randovania.lib.json_lib import JsonObject
+
+if TYPE_CHECKING:
+    from randovania.lib.json_lib import JsonObject
 
 
 class A(Enum):
@@ -57,39 +60,68 @@ class HasDict(JsonDataclass):
     h: tuple[int, RandovaniaGame, str]
 
 
-@pytest.fixture(
-    params=[
-        {
-            "instance": D2(a=A.bar, b=D1(a=5, b="foo", c=1), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=()),
-            "json": {
-                "a": "bar",
-                "b": {"a": 5, "b": "foo", "c": 1},
-                "c": "00000000-0000-1111-0000-000000000000",
-                "d": [],
-            },
+@dataclasses.dataclass()
+class NonJsonSerializable(JsonDataclass):
+    a: list[bytes]
+    b: bytes
+    c: datetime.datetime
+    d: datetime.timedelta
+    e: uuid.UUID
+
+
+NON_JSON_SERIALIZABLE_CASES = [
+    {
+        "instance": NonJsonSerializable(
+            a=[b"RDVP\x03\x87\r", b"(\xb5/\xfd`N\x12\xed3\x00\x9aS|\x0e2pk\xd2"],
+            b=b"RDVP\x03\x87\r",
+            c=datetime.datetime(2026, 8, 15, 17, 11, 0, tzinfo=datetime.UTC),
+            d=datetime.timedelta(days=2, hours=3, minutes=4, seconds=5, microseconds=6),
+            e=uuid.UUID("fa8e4fb7-cb9b-4f18-923a-c42ac19356ad"),
+        ),
+        "json": {
+            "a": ["UkRWUAOHDQ==", "KLUv/WBOEu0zAJpTfA4ycGvS"],
+            "b": "UkRWUAOHDQ==",
+            "c": "2026-08-15T17:11:00+00:00",
+            "d": {"days": 2, "seconds": 11045, "microseconds": 6},
+            "e": "fa8e4fb7-cb9b-4f18-923a-c42ac19356ad",
         },
-        {
-            "instance": D2(
-                a=None, b=D1(a=5, b="foo", c=2), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=(10, 25, 20)
-            ),
-            "json": {
-                "a": None,
-                "b": {"a": 5, "b": "foo", "c": 2},
-                "c": "00000000-0000-1111-0000-000000000000",
-                "d": [10, 25, 20],
-            },
+    },
+]
+
+D2_CASES = [
+    {
+        "instance": D2(a=A.bar, b=D1(a=5, b="foo", c=1), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=()),
+        "json": {
+            "a": "bar",
+            "b": {"a": 5, "b": "foo", "c": 1},
+            "c": "00000000-0000-1111-0000-000000000000",
+            "d": [],
         },
-        {
-            "instance": D2(a=None, b=D1(a=5, b="foo"), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=(50,)),
-            "json": {
-                "a": None,
-                "b": {"a": 5, "b": "foo", "c": 5},
-                "c": "00000000-0000-1111-0000-000000000000",
-                "d": [50],
-            },
+    },
+    {
+        "instance": D2(
+            a=None, b=D1(a=5, b="foo", c=2), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=(10, 25, 20)
+        ),
+        "json": {
+            "a": None,
+            "b": {"a": 5, "b": "foo", "c": 2},
+            "c": "00000000-0000-1111-0000-000000000000",
+            "d": [10, 25, 20],
         },
-    ],
-)
+    },
+    {
+        "instance": D2(a=None, b=D1(a=5, b="foo"), c=uuid.UUID("00000000-0000-1111-0000-000000000000"), d=(50,)),
+        "json": {
+            "a": None,
+            "b": {"a": 5, "b": "foo", "c": 5},
+            "c": "00000000-0000-1111-0000-000000000000",
+            "d": [50],
+        },
+    },
+]
+
+
+@pytest.fixture(params=D2_CASES + NON_JSON_SERIALIZABLE_CASES)
 def sample_values(request):
     return request.param["instance"], request.param["json"]
 
@@ -101,7 +133,21 @@ def test_as_json(sample_values):
 
 def test_from_json(sample_values):
     value, data = sample_values
-    assert D2.from_json(data) == value
+    assert value.__class__.from_json(data) == value
+
+
+@pytest.fixture(params=NON_JSON_SERIALIZABLE_CASES)
+def sample_values_non_serializable(request):
+    return request.param["instance"], request.param["json"]
+
+
+def test_conversion(sample_values_non_serializable):
+    value, _ = sample_values_non_serializable
+    # throws because of non serializable elemets
+    with pytest.raises(TypeError):
+        json.dumps(value)
+    # works after our conversion
+    json.dumps(value.as_json)
 
 
 def test_from_json_old():

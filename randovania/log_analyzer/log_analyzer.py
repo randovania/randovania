@@ -23,16 +23,19 @@ if TYPE_CHECKING:
 
 NON_MAJOR_PROGRESSION = [
     "Missile Expansion",
+    "Missile Tank",
+    "Missile+ Tank",
     "Energy Tank",
+    "Energy Part",
     "Energy Transfer Module",
     "Artifact",
     "Power Bomb Expansion",
+    "Power Bomb Tank",
     "Ice Spreader",
     "Wavebuster",
     "Gravity Suit",
     "Flamethrower",
     "X-Ray Visor",
-    "Grapple Beam",
     "Thermal Visor",
     "Phazon Suit",
     "Sonic Boom",
@@ -45,6 +48,8 @@ NON_MAJOR_PROGRESSION = [
     "Dark Ammo Expansion",
     "Light Ammo Expansion",
     "Beam Ammo Expansion",
+    "Speed Booster Upgrade",
+    "Flash Shift Upgrade",
 ]
 
 

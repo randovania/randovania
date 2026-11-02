@@ -27,6 +27,8 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
               Can Break Single Bomb Blocks
               # Currently logically useless: but maybe if we have an option to remove screw blocks https://youtu.be/Ifde8nknvYk
               Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Event - Entrance Lobby Visited
+      Trivial
 
 > Door to Geron's Crossing; Heals? False
   * Layers: default
@@ -72,6 +74,12 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
               Movement (Intermediate)
               # Make Menus clip through: https://youtu.be/iu21O6E7tCQ
               Knowledge (Advanced) and Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
+
+> Event - Entrance Lobby Visited; Heals? False
+  * Layers: default
+  * Event Sector 6 Entrance Lobby Visited
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Save Room
@@ -178,8 +186,8 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 7, 'y': 
           Any of the following:
               # Destroy the Bomb Block
               Can Break Single Bomb Blocks
-              # Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0
-              Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0 - this can safely not have a DLR check. With the event visited, either you can go through the open door. Or if its locked, go around which requires having Screw and thus makes the Shinespark unnecessary.
+              Speed Booster and After Sector 6 Entrance Lobby Visited and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Entrance Rando
           Any of the following:
               # Enter the tunnel
               Can Bounce in Ball
@@ -188,8 +196,8 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 7, 'y': 
       Any of the following:
           Can Kill Super Geron
           After Boss Varia Core-X Defeated and Knowledge (Intermediate)
-          # Shinespark from Nav Room: https://youtu.be/u7c-Kq7AaXk
-          Level 0 Keycard and Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark from Entrance Lobby: https://youtu.be/u7c-Kq7AaXk - this can safely not have a DLR check, as if you are expected to do this connection then you can already enter this room from Entrance Lobby
+          Level 0 Keycard and Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando
 
 > Lower Right; Heals? False
   * Layers: default
@@ -260,7 +268,8 @@ Extra - minimap_coordinates: [{'x': 10, 'y': 2}, {'x': 10, 'y': 3}, {'x': 10, 'y
       Trivial
   > Door to Pillar Highway
       All of the following:
-          Level 0 Keycard and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space
+          Screw Attack and Speed Booster and After Sector 6 Forbidden Entrance Visited and Disabled Entrance Rando
           Any of the following:
               # Ice X logic
               Varia Suit
@@ -344,39 +353,50 @@ Extra - minimap_coordinates: [{'x': 7, 'y': 4}, {'x': 8, 'y': 4}, {'x': 9, 'y': 
   * Layers: default
   * L4 Hatch to X-B.O.X. Arena Access/Door to Forbidden Entrance
   * Extra - door_idx: [3]
-  > Door to Nocturnal Shaft
-      All of the following:
-          Can Use Power Bombs
-          Any of the following:
-              # Ice X logic
-              Varia Suit
-              # Tank all the damage - 6 X
-              Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
-              # Minimum with plasma - 3 X: https://youtu.be/ZkMJi-sOhh8
-              Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
-              # Power Bomb also freezes X: https://youtu.be/XS5WZciqgOk
-              Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
-              # Plasma and Wide can freeze all X and avoid all damage: https://youtu.be/OB0sEEmjurc
-              Plasma Beam and Wide Beam and Combat (Advanced)
+  > Right of Power Bomb Wall
+      Can Use Power Bombs
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Forbidden Entrance
   * Extra - door_idx: [33]
+  > Right of Power Bomb Wall
+      Any of the following:
+          # Ice X logic
+          Varia Suit
+          # Tank all the damage - 6 X
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
+          # Minimum with plasma - 3 X: https://youtu.be/g_pKLsS1vos
+          Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
+          # Power Bomb also freezes X: https://youtu.be/Anr2464Uz0w
+          Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
+          # Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/cIdt2h_VvhQ
+          Plasma Beam and Wide Beam and Combat (Advanced)
+
+> Right of Power Bomb Wall; Heals? False
+  * Layers: default
   > Door to X-B.O.X. Arena Access
-      All of the following:
-          Can Use Power Bombs
-          Any of the following:
-              # Ice X logic
-              Varia Suit
-              # Tank all the damage - 6 X
-              Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
-              # Minimum with plasma - 3 X: https://youtu.be/g_pKLsS1vos
-              Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
-              # Power Bomb also freezes X: https://youtu.be/Anr2464Uz0w
-              Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
-              # Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/cIdt2h_VvhQ
-              Plasma Beam and Wide Beam and Combat (Advanced)
+      Can Use Power Bombs
+  > Door to Nocturnal Shaft
+      Any of the following:
+          # Ice X logic
+          Varia Suit
+          # Tank all the damage - 6 X
+          Damage Boosts (Intermediate) and Blue-X Damage ≥ 414
+          # Minimum with plasma - 3 X: https://youtu.be/ZkMJi-sOhh8
+          Plasma Beam and Damage Boosts (Advanced) and Blue-X Damage ≥ 207
+          # Power Bomb also freezes X: https://youtu.be/XS5WZciqgOk
+          Power Bombs ≥ 4 and Combat (Advanced) and Knowledge (Advanced)
+          # Plasma and Wide can freeze all X and avoid all damage: https://youtu.be/OB0sEEmjurc
+          Plasma Beam and Wide Beam and Combat (Advanced)
+  > Event - Forbidden Entrance Visited
+      Trivial
+
+> Event - Forbidden Entrance Visited; Heals? False
+  * Layers: default
+  * Event Sector 6 Forbidden Entrance Visited
+  > Right of Power Bomb Wall
+      Trivial
 
 ----------------
 Nocturnal Playground
@@ -649,7 +669,8 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 4}, {'x': 5, 'y': 5}, {'x': 6, 'y': 
       Trivial
   > Door to Spaceboost Alley
       All of the following:
-          Level 4 Keycard and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando and Can Use Power Bombs
+          # Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space
+          Screw Attack and Speed Booster and After Sector 6 Forbidden Entrance Visited and Disabled Entrance Rando
           Any of the following:
               # Ice X logic
               Varia Suit
@@ -672,8 +693,8 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 4}, {'x': 5, 'y': 5}, {'x': 6, 'y': 
           Space Jump or Wall Jump (Beginner)
           # Freeze the Menus: https://youtu.be/_HmPed89A7E
           Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Any Weapon
-          # Shinespark from X-B.O.X. Arena: https://youtu.be/BHmNhsne3hw
-          Level 0 Keycard and Screw Attack and Speed Booster and After Boss X-B.O.X. Defeated and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark from X-B.O.X. Arena: https://youtu.be/BHmNhsne3hw - Can safely not have DLR check, assuming that Authorization Checkpoint leads to Space
+          Level 0 Keycard and Screw Attack and Speed Booster and After Boss X-B.O.X. Defeated and Shinespark Tricks (Beginner) and Disabled Entrance Rando
 
 > Door to Spaceboost Alley; Heals? False
   * Layers: default
@@ -681,9 +702,10 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 4}, {'x': 5, 'y': 5}, {'x': 6, 'y': 
   * Extra - door_idx: [89]
   > Door to Forbidden Entrance
       Any of the following:
+          # Can safely not have DLR check.
           Morph Ball
           # Shinespark from Spaceboost Alley: https://youtu.be/r71Z7nR9eRY
-          Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
 
 ----------------
 Zozoro Wine Cellar
@@ -843,6 +865,8 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 1}, {'x': 0, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Sector Hub Lift 6/Elevator to Sector 6 (NOC)
+  * Extra - direction: up
+  * Extra - name: SECTOR_6_TO_MAIN_HUB
   * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
@@ -1412,6 +1436,7 @@ Extra - minimap_coordinates: [{'x': 2, 'y': 3}]
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
   * Open Passage to Sector 4 (AQA) Eastbound Glass Tube/Area Transition to Sector 6 (NOC)
+  * Extra - direction: left
   * Extra - door_idx: [81]
   > Door to Entrance Lobby
       Trivial
@@ -1431,6 +1456,7 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 2}]
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
   * Open Passage to Sector 5 (ARC) Westbound Glass Tube/Area Transition to Sector 6 (NOC)
+  * Extra - direction: right
   * Extra - door_idx: [84]
   > Door to Nocturnal Shaft
       Trivial
@@ -1529,15 +1555,15 @@ Hint Features - Multiple Pickups
               # No High Jump: https://youtu.be/lcOsHzfPVDI
               Space Jump and Movement (Intermediate)
   > Door to X-B.O.X. Arena Access
-      Any of the following:
-          Speed Booster or Have Any Jump Upgrade
-          Wall Jump (Intermediate) and Can Single Walljump
+      # For Hijump/WJ, jump ontop of the building on the left, through the shot blocks and to the top
+      Speed Booster or Wall Jump (Intermediate) or Have Any Jump Upgrade
 
 ----------------
 Cavern Save Access
 Extra - map_name: Sector 640
 Extra - room_id: [40]
 Extra - minimap_coordinates: [{'x': 9, 'y': 8}, {'x': 10, 'y': 8}]
+Extra - unlocked_save_recharge_station: True
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Cavern Save Access

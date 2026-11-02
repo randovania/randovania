@@ -23,9 +23,13 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         for color_space in ColorSpace:
             self.color_space_combo.addItem(color_space.long_name, color_space)
 
-        self.radio_buttons = {
+        self.music_radio_buttons = {
             False: self.mono_option,
             True: self.stereo_option,
+        }
+        self.secondary_radio_buttons = {
+            False: self.secondary_weapon_hold_option,
+            True: self.secondary_weapon_toggle_option,
         }
 
         self.on_new_cosmetic_patches(current)
@@ -69,8 +73,13 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         # Checkbox for Symmetric Option
         self._persist_check_field(self.symmetric_check, "enable_symmetric")
         # Radio buttons for Mono/Stereo
-        for stereo_default, radio_button in self.radio_buttons.items():
+        for stereo_default, radio_button in self.music_radio_buttons.items():
             radio_button.toggled.connect(functools.partial(self._on_stereo_option_changed, stereo_default))
+        # Radio buttons for Hold/Toggle
+        for secondary_weapon_default, radio_button in self.secondary_radio_buttons.items():
+            radio_button.toggled.connect(
+                functools.partial(self._on_secondary_weapon_option_changed, secondary_weapon_default)
+            )
         # Checkboxes for disabling Music/SFX
         self._persist_check_field(self.disable_music_check, "disable_music")
         self._persist_check_field(self.disable_sfx_check, "disable_sfx")
@@ -115,6 +124,10 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         if value:
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, stereo_default=option)
 
+    def _on_secondary_weapon_option_changed(self, option: bool, value: bool) -> None:
+        if value:
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, secondary_weapon_toggle_mode=option)
+
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
         self.map_check.setChecked(patches.starting_map)
         self.reveal_blocks_check.setChecked(patches.reveal_blocks)
@@ -149,8 +162,10 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         self.tileset_override_shift_spin_max.setValue(patches.tileset_hue_override_max)
         set_combo_with_value(self.color_space_combo, patches.color_space)
         self.symmetric_check.setChecked(patches.enable_symmetric)
-        for stereo_default, radio_button in self.radio_buttons.items():
+        for stereo_default, radio_button in self.music_radio_buttons.items():
             radio_button.setChecked(stereo_default == patches.stereo_default)
+        for secondary_weapon_default, radio_button in self.secondary_radio_buttons.items():
+            radio_button.setChecked(secondary_weapon_default == patches.secondary_weapon_toggle_mode)
         self.disable_music_check.setChecked(patches.disable_music)
         self.disable_sfx_check.setChecked(patches.disable_sfx)
 

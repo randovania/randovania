@@ -22,7 +22,7 @@ else:
 if cython.compiled:
     if not typing.TYPE_CHECKING:
         from cython.cimports.randovania.game_description.resources.resource_collection import (
-            ResourceCollection,
+            ResourceCollection,  # noqa: TC002 (weirdly placed for cython rules)
         )
 
 

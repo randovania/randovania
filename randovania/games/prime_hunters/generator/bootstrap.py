@@ -5,12 +5,10 @@ from typing import TYPE_CHECKING, override
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime_hunters.layout import HuntersConfiguration, force_field_configuration
 from randovania.games.prime_hunters.layout.force_field_configuration import LayoutForceFieldRequirement
-from randovania.lib.json_lib import JsonType
 from randovania.resolver.bootstrap import Bootstrap, ConfigurableNodeBootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
@@ -21,7 +19,9 @@ if TYPE_CHECKING:
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.requirements.base import Requirement
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.lib.json_lib import JsonType
     from randovania.resolver.damage_state import DamageState
 
 
@@ -45,11 +45,12 @@ class HuntersBootstrap(Bootstrap[HuntersConfiguration]):
     def assign_pool_results(
         self, rng: Random, configuration: HuntersConfiguration, patches: GamePatches, pool_results: PoolResults
     ) -> GamePatches:
-        pickups_to_preplace = [
-            pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "octolith"
-        ]
-        locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
-        self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
+        if configuration.octoliths.prefer_bosses:
+            pickups_to_preplace = [
+                pickup for pickup in list(pool_results.to_place) if pickup.gui_category.name == "octolith"
+            ]
+            locations = self.all_preplaced_pickup_locations(patches.game, configuration, is_boss_location)
+            self.pre_place_pickups(rng, pickups_to_preplace, locations, pool_results, patches.game.game)
 
         # Shield Keys
         if not configuration.shuffle_shield_keys:

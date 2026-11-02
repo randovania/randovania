@@ -18,7 +18,6 @@ from randovania.gui.item_tracker.tracker_structure import (
     TrackerElement,
     TrackerStructure,
 )
-from randovania.gui.item_tracker.tracker_theme import TrackerTheme
 from randovania.gui.lib.pixmap_lib import paint_with_opacity
 from randovania.gui.widgets.tracker_item_image import TrackerItemImage
 
@@ -26,6 +25,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.gui.item_tracker.tracker_theme import TrackerTheme
 
 
 type ElementWidget = QtWidgets.QLabel | TrackerItemImage | QtWidgets.QProgressBar

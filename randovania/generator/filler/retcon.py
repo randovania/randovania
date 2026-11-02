@@ -18,7 +18,8 @@ from randovania.lib import random_lib
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Mapping, Set
+    from collections.abc import Callable, Mapping
+    from collections.abc import Set as AbstractSet
     from random import Random
 
     from randovania.game_description.game_patches import GamePatches
@@ -35,8 +36,8 @@ def _index_age_weight(age: float) -> float:
 
 
 def _calculate_uncollected_index_weights(
-    uncollected_indices: Set[PickupIndex],
-    assigned_indices: Set[PickupIndex],
+    uncollected_indices: AbstractSet[PickupIndex],
+    assigned_indices: AbstractSet[PickupIndex],
     index_age: Mapping[PickupIndex, float],
     indices_groups: list[set[PickupIndex]],
 ) -> dict[PickupIndex, float]:

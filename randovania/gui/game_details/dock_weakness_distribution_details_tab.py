@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Self, override
 
-from PySide6 import QtWidgets
-
-from randovania.game.game_enum import RandovaniaGame
-from randovania.game_description.db.dock import DockType
 from randovania.gui.game_details.base_connection_details_tab import BaseConnectionDetailsTab
 
 if TYPE_CHECKING:
+    from PySide6 import QtWidgets
+
+    from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.db.dock import DockType
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.interface_common.worlds_configuration import WorldsConfiguration

@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING, Self
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.dock import DockType, DockWeakness
 from randovania.lib import enum_lib
@@ -17,6 +16,7 @@ from randovania.lib import enum_lib
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.dock import DockTypeDatabase
 
 

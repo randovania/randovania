@@ -107,7 +107,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="LHK6D3PS",
+        expected_seed_hash="GFCNWA5G",
         database_collectable_ignore_events=("Event33",),
     )
 
@@ -158,7 +158,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
             "I picked up Gravity Suit too early and it is inhibiting my ability to perform Gravityless "
             "Underwater Movement tricks. How do I proceed?",
             "You can temporarily unequip Gravity Suit by performing the following:\n\n"
-            "\n\n```\nStart Menu --> Options --> Visor / Suit --> Gravity Suit --> Off\n```",
+            "```\nStart Menu --> Options --> Visor / Suit --> Gravity Suit --> Off\n```",
         ),
     ],
     web_info=randovania.game.web_info.GameWebInfo(

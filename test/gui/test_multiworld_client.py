@@ -76,7 +76,7 @@ async def test_on_game_state_updated(client: MultiworldClient, tmp_path, exists,
     the_id = INVALID_UUID if exists == "invalid" else uuid.UUID("00000000-0000-0000-1111-000000000000")
     data = WorldData(
         collected_locations=(10, 15) if exists else (10,),
-        was_game_beaten=True if game_beaten else False,
+        was_game_beaten=bool(game_beaten),
     )
     if exists == "invalid":
         client._all_data = {}

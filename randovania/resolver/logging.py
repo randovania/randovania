@@ -23,9 +23,8 @@ if TYPE_CHECKING:
     from randovania.graph.graph_requirement import GraphRequirementSet
     from randovania.graph.state import State
     from randovania.graph.world_graph import WorldGraphNode
-    from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
-    from randovania.resolver.resolver import ActionPriority
+    from randovania.resolver.resolver import ActionPriority, PotentialAction
 
 
 class ActionType(StrEnum):
@@ -241,14 +240,14 @@ class ResolverLogger(abc.ABC):
         """Internal logic for logging actions."""
 
     @final
-    def log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
+    def log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, *PotentialAction]]) -> None:
         """Logs a list of satisfiable actions at this stage in the resolver process."""
         if not self.should_perform_logging:
             return
         self._log_checking_satisfiable(actions)
 
     @abc.abstractmethod
-    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
+    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, *PotentialAction]]) -> None:
         """Internal logic for logging checking satisifiable actions."""
 
     @final
@@ -262,7 +261,7 @@ class ResolverLogger(abc.ABC):
                 action_details_from_state(state),
                 has_action,
                 possible_action,
-                logic.get_additional_requirements(state.node),
+                logic.get_additional_requirements(state.world_index, state.node),
             )
         )
 
@@ -284,7 +283,7 @@ class ResolverLogger(abc.ABC):
             SkipLogEntry(
                 node,
                 details,
-                logic.get_additional_requirements(node),
+                logic.get_additional_requirements(state.world_index, node),
             )
         )
 
@@ -293,22 +292,23 @@ class ResolverLogger(abc.ABC):
         """Internal logic for logging skipped actions."""
 
     @final
-    def log_complete(self, state: State | None) -> None:
+    def log_complete(self, states: list[State] | None) -> None:
         """Logs the resolver completing its run."""
         if not self.should_perform_logging:
             return
-        self._log_victory(state)
+        self._log_victory(states)
 
     @abc.abstractmethod
-    def _log_victory(self, state: State | None) -> None:
+    def _log_victory(self, states: list[State] | None) -> None:
         """
         Internal logic for logging completion.
 
-        :param state: Will be `None` if the run was unsuccesful.
+        :param states: Will be `None` if the run was unsuccesful.
         """
 
 
 class TextResolverLogger(ResolverLogger):
+    prefix: str = ""
     current_indent: int
 
     def logger_start(self) -> None:
@@ -320,7 +320,7 @@ class TextResolverLogger(ResolverLogger):
         return debug.debug_level() > debug.LogLevel.SILENT
 
     def _indent(self, offset: int = 0) -> str:
-        return " " * (self.current_indent - offset)
+        return self.prefix + " " * (self.current_indent - offset)
 
     def action_string(self, details: ActionDetails | None) -> str:
         if details is None:
@@ -348,12 +348,14 @@ class TextResolverLogger(ResolverLogger):
 
             debug.print_function(f"{self._indent(1)}> {node_str}{energy_str} for {action_str}[{resources}]")
 
-    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, WorldGraphNode, DamageState]]) -> None:
+    def _log_checking_satisfiable(self, actions: Iterable[tuple[ActionPriority, *PotentialAction]]) -> None:
         if self.should_show("CheckSatisfiable", debug.debug_level()):
             if actions:
                 debug.print_function(f"{self._indent()}# Satisfiable Actions")
-                for priority, action, _ in actions:
-                    debug.print_function(f"{self._indent(-1)}= [{priority.name}] {self.node_string(action)}")
+                for priority, wi, action, _ in actions:
+                    debug.print_function(
+                        f"{self._indent(-1)}= [World {wi + 1}] [{priority.name}] {self.node_string(action)}"
+                    )
             else:
                 debug.print_function(f"{self._indent()}# No Satisfiable Actions")
 
@@ -391,5 +393,5 @@ class TextResolverLogger(ResolverLogger):
                 self.print_requirement_set(skip_entry.additional_requirements, -1)
                 self.last_printed_additional[skip_entry.location.node_index] = skip_entry.additional_requirements
 
-    def _log_victory(self, state: State | None) -> None:
+    def _log_victory(self, states: list[State] | None) -> None:
         return

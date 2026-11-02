@@ -9,7 +9,6 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from randovania.exporter import item_names
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.filtered_game_database_view import LayerFilteredGameDatabaseView
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
 from randovania.gui.lib import signal_handling
@@ -19,6 +18,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.interface_common.worlds_configuration import WorldsConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 

@@ -370,6 +370,9 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 6}, {'x': 5, 'y': 7}, {'x': 5, 'y': 
           # Damage Reqs
           Varia Suit
           Damage Runs (Expert) and Cold Damage ≥ 366
+  > Red Zeela
+      # TODO: fill this out properly
+      Varia Suit
 
 > Door to Level 3 Security Room; Heals? False
   * Layers: default
@@ -392,6 +395,12 @@ Extra - minimap_coordinates: [{'x': 5, 'y': 6}, {'x': 5, 'y': 7}, {'x': 5, 'y': 
               Can Use Any Bombs
               # Freeze Zeelas: https://youtu.be/t5b_QO1MXyg
               Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+
+> Red Zeela; Heals? True
+  * Layers: default
+  > Door to Security Save Room
+      # TODO: fill this out properly
+      Varia Suit
 
 ----------------
 Level 3 Security Room
@@ -1018,6 +1027,8 @@ Extra - minimap_coordinates: [{'x': 0, 'y': 1}, {'x': 0, 'y': 2}]
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Sector Hub Lift 5/Elevator to Sector 5 (ARC)
+  * Extra - direction: up
+  * Extra - name: SECTOR_5_TO_MAIN_HUB
   * Extra - door_idx: [0]
   > Door to Entrance Navigation Room
       Trivial
@@ -1187,6 +1198,7 @@ Extra - minimap_coordinates: [{'x': 1, 'y': 4}]
 > Area Transition to Sector 6 (NOC); Heals? False
   * Layers: default
   * Open Passage to Sector 6 (NOC) Eastbound Glass Tube/Area Transition to Sector 5 (ARC)
+  * Extra - direction: left
   * Extra - door_idx: [2]
   > Door to Magic Box
       Trivial
@@ -1429,6 +1441,7 @@ Extra - minimap_coordinates: [{'x': 12, 'y': 3}]
 > Area Transition to Sector 3 (PYR); Heals? False
   * Layers: default
   * Open Passage to Sector 3 (PYR) Westbound Glass Tube/Area Transition to Sector 5 (ARC)
+  * Extra - direction: right
   * Extra - door_idx: [83]
   > Door to Crow's Nest
       Trivial

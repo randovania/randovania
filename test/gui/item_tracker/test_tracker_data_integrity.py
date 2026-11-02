@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 import typing
-from collections.abc import Iterator
-from pathlib import Path
 from typing import Any
 
 import pytest
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import json_lib
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Iterator
+    from pathlib import Path
 
 
 def _game_tracker_dirs() -> Iterator[tuple[RandovaniaGame, Path]]:

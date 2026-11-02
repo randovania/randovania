@@ -64,6 +64,7 @@ async def test_emit_session_meta_update(session_update, mock_sa, default_game_li
         "allow_coop": False,
         "allow_everyone_claim_world": False,
         "allow_abandon_worlds": True,
+        "is_race_session": False,
     }
 
     # Run

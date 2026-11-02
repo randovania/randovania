@@ -113,7 +113,9 @@ async def test_drop_event_preset(default_main_window) -> None:
 async def test_browse_racetime(default_main_window, mocker):
     mock_new_dialog = mocker.patch("randovania.gui.dialog.racetime_browser_dialog.RacetimeBrowserDialog")
     mock_execute_dialog = mocker.patch(
-        "randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock, return_value=QDialog.Accepted
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        new_callable=AsyncMock,
+        return_value=QDialog.DialogCode.Accepted,
     )
     dialog = mock_new_dialog.return_value
     dialog.refresh = AsyncMock(return_value=True)
@@ -127,6 +129,35 @@ async def test_browse_racetime(default_main_window, mocker):
     dialog.refresh.assert_awaited_once_with()
     mock_execute_dialog.assert_awaited_once_with(dialog)
     default_main_window.generate_seed_from_permalink.assert_awaited_once_with(dialog.permalink)
+
+
+@pytest.mark.parametrize("accepted", [False, True])
+async def test_on_menu_action_open_map_tracker(default_main_window, mocker, accepted):
+    mock_new_dialog = mocker.patch("randovania.gui.dialog.select_preset_dialog.SelectPresetDialog")
+    mock_execute_dialog = mocker.patch(
+        "randovania.gui.lib.async_dialog.execute_dialog",
+        new_callable=AsyncMock,
+        return_value=QDialog.DialogCode.Accepted if accepted else QDialog.DialogCode.Rejected,
+    )
+    dialog = mock_new_dialog.return_value
+    default_main_window.open_map_tracker = AsyncMock()
+
+    # Run
+    await default_main_window._on_menu_action_open_map_tracker()
+
+    # Assert
+    mock_new_dialog.assert_called_once_with(
+        default_main_window,
+        default_main_window._options,
+        for_multiworld=False,
+        allowed_games=ANY,
+        description=ANY,
+    )
+    mock_execute_dialog.assert_awaited_once_with(dialog)
+    if accepted:
+        default_main_window.open_map_tracker.assert_awaited_once_with(dialog.selected_preset.get_preset.return_value)
+    else:
+        default_main_window.open_map_tracker.assert_not_awaited()
 
 
 async def test_generate_seed_from_permalink(default_main_window, mocker):

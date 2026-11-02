@@ -83,7 +83,6 @@ class AbandonedWorldConnectorBuilder(ConnectorBuilder):
         return AbandonedWorldRemoteConnector(
             self.layout_uuid,
             VersionedPreset.from_str(data["preset_raw"]),
-            data["order"],
             data["game_modifications"],
             data["collected_locations"],
         )

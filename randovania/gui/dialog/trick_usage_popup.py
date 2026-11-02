@@ -7,7 +7,6 @@ from PySide6 import QtWidgets
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
@@ -24,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.requirement_list import RequirementList
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.layout.preset import Preset

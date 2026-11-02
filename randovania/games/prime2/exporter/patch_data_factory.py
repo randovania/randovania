@@ -53,8 +53,8 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.layout_description import LayoutDescription
 
-_EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
-_EASTER_EGG_SHINY_MISSILE = 8192
+_EASTER_EGG_RUN_VALIDATED_CHANCE = 1023
+_EASTER_EGG_SHINY_MISSILE = 8191
 
 _ENERGY_CONTROLLER_MAP_ASSET_IDS = [
     618058071,  # Agon EC

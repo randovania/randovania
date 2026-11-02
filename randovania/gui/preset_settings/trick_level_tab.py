@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
-from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.dialog.trick_details_popup import BaseResourceDetailsPopup, TrickDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -15,6 +14,7 @@ from randovania.layout.lib import trick_lib
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
     from randovania.gui.lib.window_manager import WindowManager

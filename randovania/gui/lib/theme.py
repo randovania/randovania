@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from PySide6 import QtGui
 from PySide6.QtCore import Qt
 
 from randovania.gui.lib.common_qt_lib import current_application
-from randovania.gui.qt import RdvApplication
+
+if TYPE_CHECKING:
+    from randovania.gui.qt import RdvApplication
 
 _current_dark_theme = None
 

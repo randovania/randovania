@@ -28,31 +28,17 @@ class Ui_PrimeCosmeticPatchesDialog(object):
         if not PrimeCosmeticPatchesDialog.objectName():
             PrimeCosmeticPatchesDialog.setObjectName(u"PrimeCosmeticPatchesDialog")
         PrimeCosmeticPatchesDialog.resize(600, 640)
-        self.gridLayout = QGridLayout(PrimeCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.reset_button = QPushButton(PrimeCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-
-        self.gridLayout.addWidget(self.reset_button, 2, 2, 1, 1)
-
-        self.accept_button = QPushButton(PrimeCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-
-        self.gridLayout.addWidget(self.accept_button, 2, 0, 1, 1)
-
-        self.cancel_button = QPushButton(PrimeCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.gridLayout.addWidget(self.cancel_button, 2, 1, 1, 1)
-
+        self.verticalLayout_2 = QVBoxLayout(PrimeCosmeticPatchesDialog)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(PrimeCosmeticPatchesDialog)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 566, 1236))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 584, 1350))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -126,25 +112,66 @@ class Ui_PrimeCosmeticPatchesDialog(object):
         self.suit_colors_layout = QGridLayout()
         self.suit_colors_layout.setSpacing(6)
         self.suit_colors_layout.setObjectName(u"suit_colors_layout")
-        self.suit_toggles_layout = QVBoxLayout()
-        self.suit_toggles_layout.setSpacing(6)
-        self.suit_toggles_layout.setObjectName(u"suit_toggles_layout")
-        self.force_fusion_check = QCheckBox(self.suit_colors_foldable)
-        self.force_fusion_check.setObjectName(u"force_fusion_check")
+        self.gunship_slider_layout = QHBoxLayout()
+        self.gunship_slider_layout.setSpacing(6)
+        self.gunship_slider_layout.setObjectName(u"gunship_slider_layout")
+        self.gunship_slider_left_spacer = QSpacerItem(0, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.suit_toggles_layout.addWidget(self.force_fusion_check)
+        self.gunship_slider_layout.addItem(self.gunship_slider_left_spacer)
 
-        self.rainbow_phazon_ball_check = QCheckBox(self.suit_colors_foldable)
-        self.rainbow_phazon_ball_check.setObjectName(u"rainbow_phazon_ball_check")
+        self.gunship_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
+        self.gunship_rotation_slider.setObjectName(u"gunship_rotation_slider")
+        sizePolicy1.setHeightForWidth(self.gunship_rotation_slider.sizePolicy().hasHeightForWidth())
+        self.gunship_rotation_slider.setSizePolicy(sizePolicy1)
+        self.gunship_rotation_slider.setMinimumSize(QSize(180, 0))
+        self.gunship_rotation_slider.setMaximumSize(QSize(180, 16777215))
+        self.gunship_rotation_slider.setMaximum(360)
+        self.gunship_rotation_slider.setSingleStep(5)
+        self.gunship_rotation_slider.setPageStep(30)
+        self.gunship_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.gunship_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.gunship_rotation_slider.setTickInterval(90)
 
-        self.suit_toggles_layout.addWidget(self.rainbow_phazon_ball_check)
+        self.gunship_slider_layout.addWidget(self.gunship_rotation_slider)
 
-        self.suit_toggles_spacer = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.gunship_slider_right_spacer = QSpacerItem(0, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.suit_toggles_layout.addItem(self.suit_toggles_spacer)
+        self.gunship_slider_layout.addItem(self.gunship_slider_right_spacer)
 
 
-        self.suit_colors_layout.addLayout(self.suit_toggles_layout, 0, 0, 3, 2)
+        self.suit_colors_layout.addLayout(self.gunship_slider_layout, 1, 2, 1, 2)
+
+        self.gravity_suit_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
+        self.gravity_suit_rotation_slider.setObjectName(u"gravity_suit_rotation_slider")
+        self.gravity_suit_rotation_slider.setMaximum(360)
+        self.gravity_suit_rotation_slider.setSingleStep(5)
+        self.gravity_suit_rotation_slider.setPageStep(30)
+        self.gravity_suit_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.gravity_suit_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.gravity_suit_rotation_slider.setTickInterval(90)
+
+        self.suit_colors_layout.addWidget(self.gravity_suit_rotation_slider, 4, 2, 1, 1)
+
+        self.phazon_suit_image_label = QLabel(self.suit_colors_foldable)
+        self.phazon_suit_image_label.setObjectName(u"phazon_suit_image_label")
+        self.phazon_suit_image_label.setMinimumSize(QSize(130, 188))
+        self.phazon_suit_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.suit_colors_layout.addWidget(self.phazon_suit_image_label, 5, 3, 1, 1)
+
+        self.varia_ball_image_label = QLabel(self.suit_colors_foldable)
+        self.varia_ball_image_label.setObjectName(u"varia_ball_image_label")
+        self.varia_ball_image_label.setMinimumSize(QSize(130, 140))
+        self.varia_ball_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.suit_colors_layout.addWidget(self.varia_ball_image_label, 6, 1, 1, 1)
+
+        self.gunship_image_label = QLabel(self.suit_colors_foldable)
+        self.gunship_image_label.setObjectName(u"gunship_image_label")
+        self.gunship_image_label.setMinimumSize(QSize(180, 137))
+        self.gunship_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.suit_colors_layout.addWidget(self.gunship_image_label, 2, 2, 1, 2)
 
         self.gunship_header_layout = QHBoxLayout()
         self.gunship_header_layout.setSpacing(6)
@@ -175,98 +202,11 @@ class Ui_PrimeCosmeticPatchesDialog(object):
 
         self.suit_colors_layout.addLayout(self.gunship_header_layout, 0, 2, 1, 2)
 
-        self.gunship_slider_layout = QHBoxLayout()
-        self.gunship_slider_layout.setSpacing(6)
-        self.gunship_slider_layout.setObjectName(u"gunship_slider_layout")
-        self.gunship_slider_left_spacer = QSpacerItem(0, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.gunship_slider_layout.addItem(self.gunship_slider_left_spacer)
-
-        self.gunship_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
-        self.gunship_rotation_slider.setObjectName(u"gunship_rotation_slider")
-        sizePolicy1.setHeightForWidth(self.gunship_rotation_slider.sizePolicy().hasHeightForWidth())
-        self.gunship_rotation_slider.setSizePolicy(sizePolicy1)
-        self.gunship_rotation_slider.setMinimumSize(QSize(180, 0))
-        self.gunship_rotation_slider.setMaximumSize(QSize(180, 16777215))
-        self.gunship_rotation_slider.setMaximum(360)
-        self.gunship_rotation_slider.setSingleStep(5)
-        self.gunship_rotation_slider.setPageStep(30)
-        self.gunship_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.gunship_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
-        self.gunship_rotation_slider.setTickInterval(90)
-
-        self.gunship_slider_layout.addWidget(self.gunship_rotation_slider)
-
-        self.gunship_slider_right_spacer = QSpacerItem(0, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.gunship_slider_layout.addItem(self.gunship_slider_right_spacer)
-
-
-        self.suit_colors_layout.addLayout(self.gunship_slider_layout, 1, 2, 1, 2)
-
-        self.gunship_image_label = QLabel(self.suit_colors_foldable)
-        self.gunship_image_label.setObjectName(u"gunship_image_label")
-        self.gunship_image_label.setMinimumSize(QSize(180, 137))
-        self.gunship_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.suit_colors_layout.addWidget(self.gunship_image_label, 2, 2, 1, 2)
-
-        self.power_suit_name_label = QLabel(self.suit_colors_foldable)
-        self.power_suit_name_label.setObjectName(u"power_suit_name_label")
-        self.power_suit_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.suit_colors_layout.addWidget(self.power_suit_name_label, 3, 0, 1, 1)
-
         self.varia_suit_name_label = QLabel(self.suit_colors_foldable)
         self.varia_suit_name_label.setObjectName(u"varia_suit_name_label")
         self.varia_suit_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.suit_colors_layout.addWidget(self.varia_suit_name_label, 3, 1, 1, 1)
-
-        self.gravity_suit_name_label = QLabel(self.suit_colors_foldable)
-        self.gravity_suit_name_label.setObjectName(u"gravity_suit_name_label")
-        self.gravity_suit_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.suit_colors_layout.addWidget(self.gravity_suit_name_label, 3, 2, 1, 1)
-
-        self.phazon_suit_name_label = QLabel(self.suit_colors_foldable)
-        self.phazon_suit_name_label.setObjectName(u"phazon_suit_name_label")
-        self.phazon_suit_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.suit_colors_layout.addWidget(self.phazon_suit_name_label, 3, 3, 1, 1)
-
-        self.power_suit_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
-        self.power_suit_rotation_slider.setObjectName(u"power_suit_rotation_slider")
-        self.power_suit_rotation_slider.setMaximum(360)
-        self.power_suit_rotation_slider.setSingleStep(5)
-        self.power_suit_rotation_slider.setPageStep(30)
-        self.power_suit_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.power_suit_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
-        self.power_suit_rotation_slider.setTickInterval(90)
-
-        self.suit_colors_layout.addWidget(self.power_suit_rotation_slider, 4, 0, 1, 1)
-
-        self.varia_suit_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
-        self.varia_suit_rotation_slider.setObjectName(u"varia_suit_rotation_slider")
-        self.varia_suit_rotation_slider.setMaximum(360)
-        self.varia_suit_rotation_slider.setSingleStep(5)
-        self.varia_suit_rotation_slider.setPageStep(30)
-        self.varia_suit_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.varia_suit_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
-        self.varia_suit_rotation_slider.setTickInterval(90)
-
-        self.suit_colors_layout.addWidget(self.varia_suit_rotation_slider, 4, 1, 1, 1)
-
-        self.gravity_suit_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
-        self.gravity_suit_rotation_slider.setObjectName(u"gravity_suit_rotation_slider")
-        self.gravity_suit_rotation_slider.setMaximum(360)
-        self.gravity_suit_rotation_slider.setSingleStep(5)
-        self.gravity_suit_rotation_slider.setPageStep(30)
-        self.gravity_suit_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
-        self.gravity_suit_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
-        self.gravity_suit_rotation_slider.setTickInterval(90)
-
-        self.suit_colors_layout.addWidget(self.gravity_suit_rotation_slider, 4, 2, 1, 1)
 
         self.phazon_suit_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
         self.phazon_suit_rotation_slider.setObjectName(u"phazon_suit_rotation_slider")
@@ -279,12 +219,31 @@ class Ui_PrimeCosmeticPatchesDialog(object):
 
         self.suit_colors_layout.addWidget(self.phazon_suit_rotation_slider, 4, 3, 1, 1)
 
+        self.power_ball_image_label = QLabel(self.suit_colors_foldable)
+        self.power_ball_image_label.setObjectName(u"power_ball_image_label")
+        self.power_ball_image_label.setMinimumSize(QSize(130, 140))
+        self.power_ball_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.suit_colors_layout.addWidget(self.power_ball_image_label, 6, 0, 1, 1)
+
+        self.phazon_suit_name_label = QLabel(self.suit_colors_foldable)
+        self.phazon_suit_name_label.setObjectName(u"phazon_suit_name_label")
+        self.phazon_suit_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.suit_colors_layout.addWidget(self.phazon_suit_name_label, 3, 3, 1, 1)
+
         self.power_suit_image_label = QLabel(self.suit_colors_foldable)
         self.power_suit_image_label.setObjectName(u"power_suit_image_label")
         self.power_suit_image_label.setMinimumSize(QSize(130, 188))
         self.power_suit_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.suit_colors_layout.addWidget(self.power_suit_image_label, 5, 0, 1, 1)
+
+        self.gravity_suit_name_label = QLabel(self.suit_colors_foldable)
+        self.gravity_suit_name_label.setObjectName(u"gravity_suit_name_label")
+        self.gravity_suit_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.suit_colors_layout.addWidget(self.gravity_suit_name_label, 3, 2, 1, 1)
 
         self.varia_suit_image_label = QLabel(self.suit_colors_foldable)
         self.varia_suit_image_label.setObjectName(u"varia_suit_image_label")
@@ -293,6 +252,13 @@ class Ui_PrimeCosmeticPatchesDialog(object):
 
         self.suit_colors_layout.addWidget(self.varia_suit_image_label, 5, 1, 1, 1)
 
+        self.phazon_ball_image_label = QLabel(self.suit_colors_foldable)
+        self.phazon_ball_image_label.setObjectName(u"phazon_ball_image_label")
+        self.phazon_ball_image_label.setMinimumSize(QSize(130, 140))
+        self.phazon_ball_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.suit_colors_layout.addWidget(self.phazon_ball_image_label, 6, 3, 1, 1)
+
         self.gravity_suit_image_label = QLabel(self.suit_colors_foldable)
         self.gravity_suit_image_label.setObjectName(u"gravity_suit_image_label")
         self.gravity_suit_image_label.setMinimumSize(QSize(130, 188))
@@ -300,26 +266,53 @@ class Ui_PrimeCosmeticPatchesDialog(object):
 
         self.suit_colors_layout.addWidget(self.gravity_suit_image_label, 5, 2, 1, 1)
 
-        self.phazon_suit_image_label = QLabel(self.suit_colors_foldable)
-        self.phazon_suit_image_label.setObjectName(u"phazon_suit_image_label")
-        self.phazon_suit_image_label.setMinimumSize(QSize(130, 188))
-        self.phazon_suit_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.power_suit_name_label = QLabel(self.suit_colors_foldable)
+        self.power_suit_name_label.setObjectName(u"power_suit_name_label")
+        self.power_suit_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.suit_colors_layout.addWidget(self.phazon_suit_image_label, 5, 3, 1, 1)
+        self.suit_colors_layout.addWidget(self.power_suit_name_label, 3, 0, 1, 1)
 
-        self.power_ball_image_label = QLabel(self.suit_colors_foldable)
-        self.power_ball_image_label.setObjectName(u"power_ball_image_label")
-        self.power_ball_image_label.setMinimumSize(QSize(130, 140))
-        self.power_ball_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.varia_suit_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
+        self.varia_suit_rotation_slider.setObjectName(u"varia_suit_rotation_slider")
+        self.varia_suit_rotation_slider.setMaximum(360)
+        self.varia_suit_rotation_slider.setSingleStep(5)
+        self.varia_suit_rotation_slider.setPageStep(30)
+        self.varia_suit_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.varia_suit_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.varia_suit_rotation_slider.setTickInterval(90)
 
-        self.suit_colors_layout.addWidget(self.power_ball_image_label, 6, 0, 1, 1)
+        self.suit_colors_layout.addWidget(self.varia_suit_rotation_slider, 4, 1, 1, 1)
 
-        self.varia_ball_image_label = QLabel(self.suit_colors_foldable)
-        self.varia_ball_image_label.setObjectName(u"varia_ball_image_label")
-        self.varia_ball_image_label.setMinimumSize(QSize(130, 140))
-        self.varia_ball_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.suit_toggles_layout = QVBoxLayout()
+        self.suit_toggles_layout.setSpacing(6)
+        self.suit_toggles_layout.setObjectName(u"suit_toggles_layout")
+        self.force_fusion_check = QCheckBox(self.suit_colors_foldable)
+        self.force_fusion_check.setObjectName(u"force_fusion_check")
 
-        self.suit_colors_layout.addWidget(self.varia_ball_image_label, 6, 1, 1, 1)
+        self.suit_toggles_layout.addWidget(self.force_fusion_check)
+
+        self.rainbow_phazon_ball_check = QCheckBox(self.suit_colors_foldable)
+        self.rainbow_phazon_ball_check.setObjectName(u"rainbow_phazon_ball_check")
+
+        self.suit_toggles_layout.addWidget(self.rainbow_phazon_ball_check)
+
+        self.suit_toggles_spacer = QSpacerItem(20, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.suit_toggles_layout.addItem(self.suit_toggles_spacer)
+
+
+        self.suit_colors_layout.addLayout(self.suit_toggles_layout, 0, 0, 3, 2)
+
+        self.power_suit_rotation_slider = ScrollProtectedSlider(self.suit_colors_foldable)
+        self.power_suit_rotation_slider.setObjectName(u"power_suit_rotation_slider")
+        self.power_suit_rotation_slider.setMaximum(360)
+        self.power_suit_rotation_slider.setSingleStep(5)
+        self.power_suit_rotation_slider.setPageStep(30)
+        self.power_suit_rotation_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.power_suit_rotation_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
+        self.power_suit_rotation_slider.setTickInterval(90)
+
+        self.suit_colors_layout.addWidget(self.power_suit_rotation_slider, 4, 0, 1, 1)
 
         self.gravity_ball_image_label = QLabel(self.suit_colors_foldable)
         self.gravity_ball_image_label.setObjectName(u"gravity_ball_image_label")
@@ -327,13 +320,6 @@ class Ui_PrimeCosmeticPatchesDialog(object):
         self.gravity_ball_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.suit_colors_layout.addWidget(self.gravity_ball_image_label, 6, 2, 1, 1)
-
-        self.phazon_ball_image_label = QLabel(self.suit_colors_foldable)
-        self.phazon_ball_image_label.setObjectName(u"phazon_ball_image_label")
-        self.phazon_ball_image_label.setMinimumSize(QSize(130, 140))
-        self.phazon_ball_image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.suit_colors_layout.addWidget(self.phazon_ball_image_label, 6, 3, 1, 1)
 
 
         self.suit_colors_foldable_layout.addLayout(self.suit_colors_layout)
@@ -566,7 +552,45 @@ class Ui_PrimeCosmeticPatchesDialog(object):
 
         self.scrollArea.setWidget(self.scroll_area_contents)
 
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.verticalLayout_2.addWidget(self.scrollArea)
+
+        self.line = QFrame(PrimeCosmeticPatchesDialog)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_2.addWidget(self.line)
+
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.setSpacing(6)
+        self.footer_layout.setObjectName(u"footer_layout")
+        self.footer_layout.setContentsMargins(6, 6, 6, 6)
+        self.reset_button = QPushButton(PrimeCosmeticPatchesDialog)
+        self.reset_button.setObjectName(u"reset_button")
+        self.reset_button.setText(u"\u2b8c Reset to Defaults")
+
+        self.footer_layout.addWidget(self.reset_button)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.footer_layout.addItem(self.horizontalSpacer)
+
+        self.accept_button = QPushButton(PrimeCosmeticPatchesDialog)
+        self.accept_button.setObjectName(u"accept_button")
+        self.accept_button.setMinimumSize(QSize(96, 0))
+        self.accept_button.setText(u"\U0001f5f8 Accept")
+
+        self.footer_layout.addWidget(self.accept_button)
+
+        self.cancel_button = QPushButton(PrimeCosmeticPatchesDialog)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(96, 0))
+        self.cancel_button.setText(u"\U0001f6c7 Cancel")
+
+        self.footer_layout.addWidget(self.cancel_button)
+
+
+        self.verticalLayout_2.addLayout(self.footer_layout)
 
 
         self.retranslateUi(PrimeCosmeticPatchesDialog)
@@ -579,33 +603,30 @@ class Ui_PrimeCosmeticPatchesDialog(object):
 
     def retranslateUi(self, PrimeCosmeticPatchesDialog):
         PrimeCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Metroid Prime 1 - Cosmetic Options", None))
-        self.reset_button.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Reset to Defaults", None))
-        self.accept_button.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Accept", None))
-        self.cancel_button.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Cancel", None))
         self.game_changes_box.setTitle(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Game Changes", None))
         self.pickup_markers_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Add item icons on map", None))
         self.open_map_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Open map from start", None))
         self.custom_hud_color.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Use a custom HUD color", None))
         self.custom_hud_color_button.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Set Color...", None))
         self.suit_colors_foldable.setProperty(u"title", QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Suit Colors", None))
-        self.force_fusion_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Fusion Suit", None))
-        self.rainbow_phazon_ball_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Rainbow Ball (Phazon Suit)", None))
+        self.phazon_suit_image_label.setText("")
+        self.varia_ball_image_label.setText("")
+        self.gunship_image_label.setText("")
         self.gunship_name_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Gunship", None))
         self.gunship_header_separator_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"|", None))
         self.match_gunship_to_power_suit_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Match Power Suit", None))
-        self.gunship_image_label.setText("")
-        self.power_suit_name_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Power", None))
         self.varia_suit_name_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Varia", None))
-        self.gravity_suit_name_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Gravity", None))
+        self.power_ball_image_label.setText("")
         self.phazon_suit_name_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Phazon", None))
         self.power_suit_image_label.setText("")
+        self.gravity_suit_name_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Gravity", None))
         self.varia_suit_image_label.setText("")
-        self.gravity_suit_image_label.setText("")
-        self.phazon_suit_image_label.setText("")
-        self.power_ball_image_label.setText("")
-        self.varia_ball_image_label.setText("")
-        self.gravity_ball_image_label.setText("")
         self.phazon_ball_image_label.setText("")
+        self.gravity_suit_image_label.setText("")
+        self.power_suit_name_label.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Power", None))
+        self.force_fusion_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Fusion Suit", None))
+        self.rainbow_phazon_ball_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Rainbow Ball (Phazon Suit)", None))
+        self.gravity_ball_image_label.setText("")
         self.options_foldable.setProperty(u"title", QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"In-Game Options", None))
         self.visor_box.setTitle(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Visor", None))
         self.hud_lag_check.setText(QCoreApplication.translate("PrimeCosmeticPatchesDialog", u"Hud Lag", None))

@@ -119,6 +119,13 @@ def pretty_print_requirement(
         print_function("{}{}{}".format(prefix, "    " * nested_level, text))
 
 
+def _grants_on_collect_text(node: EventNode | PickupNode) -> str:
+    if not node.grants_on_collect:
+        return ""
+    granted = ", ".join(f"{amount}x {resource.long_name}" for resource, amount in node.grants_on_collect)
+    return f"; Grants {granted}"
+
+
 def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: ResourceDatabaseView) -> str:
     if isinstance(node, DockNode):
         try:
@@ -144,10 +151,10 @@ def pretty_print_node_type(node: Node, game_view: GameDatabaseView, db: Resource
         message = f"Pickup {node.pickup_index.index}; Category? {node.location_category.long_name}"
         if node.custom_index_group is not None:
             message += f"; Index Group: {node.custom_index_group}"
-        return message
+        return message + _grants_on_collect_text(node)
 
     elif isinstance(node, EventNode):
-        return f"Event {node.event.long_name}"
+        return f"Event {node.event.long_name}{_grants_on_collect_text(node)}"
 
     elif isinstance(node, ConfigurableNode):
         return "Configurable Node"
@@ -255,19 +262,23 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("====================\nTemplates\n")
     for template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template.display_name}:\n")
-        for level, text in pretty_format_requirement(template.requirement, game.resource_database):
-            output.write("      {}{}\n".format("    " * level, text))
+        output.writelines(
+            "      {}{}\n".format("    " * level, text)
+            for level, text in pretty_format_requirement(template.requirement, game.resource_database)
+        )
 
     output.write("\n====================\nDock Weaknesses\n")
     for dock_type in game.dock_type_database.dock_types:
         output.write(f"\n> {dock_type.long_name}")
-        for extra_name, extra_field in dock_type.extra.items():
-            output.write(f"\n* Extra - {extra_name}: {extra_field}")
+        output.writelines(
+            f"\n* Extra - {extra_name}: {extra_field}" for extra_name, extra_field in dock_type.extra.items()
+        )
 
         for weakness in game.dock_type_database.get_by_type(dock_type):
             output.write(f"\n  * {weakness.name}\n")
-            for extra_name, extra_field in weakness.extra.items():
-                output.write(f"      Extra - {extra_name}: {extra_field}\n")
+            output.writelines(
+                f"      Extra - {extra_name}: {extra_field}\n" for extra_name, extra_field in weakness.extra.items()
+            )
             if weakness.unsafe_target_in_distributor_wtw:
                 output.write(
                     f"      Considered unsafe as target for "
@@ -275,15 +286,19 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
                 )
 
             output.write("      Open:\n")
-            for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1):
-                output.write("      {}{}\n".format("    " * level, text))
+            output.writelines(
+                "      {}{}\n".format("    " * level, text)
+                for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1)
+            )
 
             if weakness.lock is not None:
                 output.write(f"      Lock type: {weakness.lock}\n")
-                for level, text in pretty_format_requirement(
-                    weakness.lock.requirement, game.resource_database, level=1
-                ):
-                    output.write("      {}{}\n".format("    " * level, text))
+                output.writelines(
+                    "      {}{}\n".format("    " * level, text)
+                    for level, text in pretty_format_requirement(
+                        weakness.lock.requirement, game.resource_database, level=1
+                    )
+                )
             else:
                 output.write("      No lock\n")
             output.write("\n")

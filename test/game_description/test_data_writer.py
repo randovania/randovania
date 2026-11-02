@@ -4,6 +4,9 @@ import pytest
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader, data_writer
+from randovania.game_description.db.event_node import EventNode
+from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate
 from randovania.games import default_data
@@ -40,3 +43,19 @@ def test_fail_write_used_trick_levels(test_files_dir):
     )
 
     assert data_writer.write_used_trick_levels(game) is None
+
+
+def test_round_trip_grants_on_collect(blank_game_data):
+    # Run
+    game = data_reader.decode_data(blank_game_data)
+    encoded_data = data_writer.write_game_description(game)
+
+    # Assert
+    db = game.resource_database
+    boss = game.region_list.node_by_identifier(NodeIdentifier.create("Intro", "Boss Arena", "Event - Boss"))
+    loot = game.region_list.node_by_identifier(NodeIdentifier.create("Intro", "Boss Arena", "Pickup (Free Loot)"))
+    assert isinstance(boss, EventNode)
+    assert isinstance(loot, PickupNode)
+    assert boss.grants_on_collect == ((db.get_item("Useless"), 2),)
+    assert loot.grants_on_collect == ((db.get_item("Useless"), 1),)
+    assert encoded_data == blank_game_data

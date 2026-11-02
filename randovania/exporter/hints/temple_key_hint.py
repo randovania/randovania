@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import guaranteed_item_hint
-from randovania.game_description.hint import HintDarkTemple
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.hint import HintDarkTemple
     from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 
 

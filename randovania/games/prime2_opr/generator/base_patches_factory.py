@@ -2,17 +2,20 @@ from __future__ import annotations
 
 import collections
 import typing
-from random import Random
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.db.node import Node
-from randovania.game_description.game_database_view import GameDatabaseView
-from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.games.prime2 import dark_aether_helper
 from randovania.games.prime2.generator.base_patches_factory import SharedEchoesBasePatches
 from randovania.games.prime2_opr.layout import EchoesOPRConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory
+
+if typing.TYPE_CHECKING:
+    from random import Random
+
+    from randovania.game_description.db.node import Node
+    from randovania.game_description.game_database_view import GameDatabaseView
+    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_patches import GamePatches
 
 
 class EchoesOPRBasePatchesFactory(BasePatchesFactory[EchoesOPRConfiguration]):

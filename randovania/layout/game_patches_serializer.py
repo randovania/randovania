@@ -134,13 +134,16 @@ def serialize_single_world_only(world_index: int, num_worlds: int, patches: Game
     without spoiling what the world's locations hold for other worlds. It can be decoded with
     ``decode_single`` using only this world's game and pool.
     """
+
+    def _adjust_location(location: dict) -> dict:
+        if location["owner"] != world_index:
+            location["pickup"] = _NOTHING_PICKUP_NAME
+
+        location["owner"] = 0
+        return location
+
     result = serialize_single(world_index, num_worlds, patches)
-    result["locations"] = [
-        location
-        if location["owner"] == world_index
-        else {**location, "pickup": _NOTHING_PICKUP_NAME, "owner": world_index}
-        for location in result["locations"]
-    ]
+    result["locations"] = [_adjust_location(loc) for loc in result["locations"]]
     result["hints"] = {}
     return result
 
@@ -230,11 +233,7 @@ def decode_single(
     if game_modifications["game"] != game.game.value:
         raise ValueError(f"Expected '{game.game.value}', got '{game_modifications['game']}'")
 
-    if "custom_patcher_data" in game_modifications:
-        custom_patcher_data = game_modifications["custom_patcher_data"]
-    else:
-        custom_patcher_data = []
-
+    custom_patcher_data = game_modifications.get("custom_patcher_data", [])
     game_specific = game_modifications["game_specific"]
 
     # Starting Location

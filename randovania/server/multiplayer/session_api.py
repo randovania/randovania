@@ -52,6 +52,7 @@ async def list_sessions(sa: ServerApp, sid: str, limit: int | None = None) -> li
             MultiplayerMembership,
             on=MultiplayerMembership.session == MultiplayerSession.id,
         )
+        .where(MultiplayerSession.race_team.is_null())
         .group_by(MultiplayerSession.id)
         .order_by(MultiplayerSession.id.desc())  # type: ignore[attr-defined]
         .limit(limit)
@@ -90,6 +91,19 @@ async def create_session(
     return new_session.create_session_entry()
 
 
+def _may_join_race_session(session: MultiplayerSession, user: User) -> bool:
+    """
+    A session backing an async race team holds the item history of a seed every other team is still
+    racing, so it's limited to that team. The room's creator is let in as well: checking a team's
+    run is their job, and the item history is the only place that shows it.
+    """
+    if session.is_user_in_session(user):
+        return True
+
+    team = session.get_race_team()
+    return team is not None and bool(team.room.creator == user)
+
+
 async def join_session(
     sa: ServerApp,
     sid: str,
@@ -98,6 +112,16 @@ async def join_session(
 ) -> TypedJsonObject[MultiplayerSessionEntry]:
     session = MultiplayerSession.get_by_id(session_id)
     user = await sa.get_current_user(sid)
+
+    if session.is_race_session:
+        if not _may_join_race_session(session, user):
+            raise error.NotAuthorizedForActionError("This session belongs to an async race room")
+
+        team = session.get_race_team()
+        if team is not None and not session.is_user_in_session(user):
+            database.AsyncRaceAuditEntry.create(
+                room=team.room, user=user, message=f"Opened the session of team {team.name}."
+            )
 
     if not session.is_user_in_session(user):
         if session.password is not None:

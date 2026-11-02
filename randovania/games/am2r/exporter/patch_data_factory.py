@@ -108,7 +108,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
 
 
 class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatches]):
-    _EASTER_EGG_SHINY = 1024
+    _EASTER_EGG_SHINY = 1023
 
     # Effect, sprite, header => new_sprite, new_header
     SHINIES: ClassVar[dict[tuple[str, str, str], tuple[str, str]]] = {
@@ -348,7 +348,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 else node.extra["instance_id"]
             ): {
                 "lock": weakness.extra.get("door_name", weakness.long_name),
-                "is_dock": True if node.default_dock_weakness.extra.get("is_dock", None) is not None else False,
+                "is_dock": node.default_dock_weakness.extra.get("is_dock", None) is not None,
                 "facing_direction": node.extra["facing"] if node.extra.get("facing", None) is not None else "invalid",
             }
             for node, weakness in self.patches.all_dock_weaknesses(self.game)

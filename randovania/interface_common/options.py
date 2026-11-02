@@ -5,7 +5,6 @@ import json
 import typing
 import uuid
 from enum import Enum
-from types import TracebackType
 from typing import TYPE_CHECKING, TypeVar, overload
 
 import randovania
@@ -17,6 +16,7 @@ from randovania.lib import migration_lib, version_lib
 if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
+    from types import TracebackType
     from typing import Any, Self
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches

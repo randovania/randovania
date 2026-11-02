@@ -28,7 +28,8 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
         self.placed_slider.valueChanged.connect(self._on_placed_slider_changed)
-        self._on_prefer_bosses(True)
+        self.restrict_placement_radiobutton.toggled.connect(self._on_restrict_placement)
+        self.free_placement_radiobutton.toggled.connect(self._on_free_placement)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -45,9 +46,21 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
         with self._editor as editor:
             editor.set_configuration_field("octoliths", call(config.octoliths))
 
-    def _on_prefer_bosses(self, value: bool) -> None:
+    def _on_restrict_placement(self, value: bool) -> None:
+        if not value:
+            return
+
         def edit(config: HuntersOctolithConfig) -> HuntersOctolithConfig:
-            return dataclasses.replace(config, prefer_bosses=value)
+            return dataclasses.replace(config, prefer_bosses=True)
+
+        self._edit_config(edit)
+
+    def _on_free_placement(self, value: bool) -> None:
+        if not value:
+            return
+
+        def edit(config: HuntersOctolithConfig) -> HuntersOctolithConfig:
+            return dataclasses.replace(config, prefer_bosses=False)
 
         self._edit_config(edit)
 
@@ -62,4 +75,6 @@ class PresetHuntersGoal(PresetTab, Ui_PresetHuntersGoal):
     def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, HuntersConfiguration)
         octoliths = preset.configuration.octoliths
+        self.free_placement_radiobutton.setChecked(not octoliths.prefer_bosses)
+        self.restrict_placement_radiobutton.setChecked(octoliths.prefer_bosses)
         self.placed_slider.setValue(octoliths.placed_octoliths)

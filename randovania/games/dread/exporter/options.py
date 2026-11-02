@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import dataclasses
 from pathlib import Path
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import DreadModPlatform, LinuxRyujinxPath
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
-from randovania.lib.json_lib import JsonObject
+
+if TYPE_CHECKING:
+    from randovania.lib.json_lib import JsonObject
 
 
 @dataclasses.dataclass(frozen=True)
