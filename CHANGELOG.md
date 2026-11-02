@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sector 1 (SRX)
 
+- Changed: Lava Lake: Updated damage run logic and videos.
 - Changed: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
 
 ##### Sector 2 (TRO)
