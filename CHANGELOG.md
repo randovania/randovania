@@ -9,11 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed: Intel macOS devices are no longer supported.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
+
 ### Metroid Fusion
 
 #### Logic Database
 
 ##### Sector 1 (SRX)
+
 - Changed: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
 
 ## [12.0.0] - 2026-11-01
