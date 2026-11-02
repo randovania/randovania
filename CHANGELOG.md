@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed: Intel macOS devices are no longer supported.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
+
 ## [12.0.0] - 2026-11-01
 
 - Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
