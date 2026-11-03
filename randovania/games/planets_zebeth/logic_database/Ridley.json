@@ -246,33 +246,8 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Purple Gauntlet": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Hi-Jump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "TODO: Add movement/IBJ",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Bombs"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Climb High Ledge"
                         },
                         "Door to Hall of Pillars": {
                             "type": "and",
@@ -384,10 +359,12 @@
                     "grants_on_collect": [],
                     "connections": {
                         "Door to Block Room W": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -420,10 +397,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -464,11 +443,86 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Right)": {
+                        "Door to Artificial Passage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/Y2Sx2_mE7eA",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph Ball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Damage Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IceAbuse",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia Suit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -500,81 +554,84 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Right)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1016.0,
-                        "y": 24.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
                         "Door to Block Room W": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Left)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tunnel entrance (Left)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 72.0,
-                        "y": 24.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Artificial Passage": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel entrance (Right)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/mSuIy_bssuc",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice Beam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph Ball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Damage Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IceAbuse",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia Suit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -623,13 +680,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Pit": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -663,6 +713,13 @@
                             }
                         },
                         "Door to Dessgeega Attic": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Bottom part": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -779,42 +836,6 @@
                         }
                     }
                 },
-                "Pit": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 112.0,
-                        "y": 576.0,
-                        "z": 0.0
-                    },
-                    "description": "The pit is 2 block large",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Hall of Pillars": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: ADD IBJ",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
-                            }
-                        },
-                        "Bottom part": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Bottom part": {
                     "node_type": "generic",
                     "heal": false,
@@ -830,6 +851,27 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "IBJ straight up",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IBJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Path of Reflection": {
                             "type": "and",
                             "data": {
@@ -883,10 +925,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Tower of Doom": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -919,10 +963,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Artificial Passage": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -964,10 +1010,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Tower of Doom": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1000,10 +1048,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Artificial Passage": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1126,11 +1176,20 @@
                         "Door to Path of Reflection": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: IBJ",
+                                "comment": "https://youtu.be/nM_D8CVfknU",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IBJ",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1174,10 +1233,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1205,17 +1266,21 @@
                     "grants_on_collect": [],
                     "connections": {
                         "Door to Tower of Doom": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Purple Tower": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1248,10 +1313,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1293,10 +1360,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Green Gauntlet": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1329,17 +1398,21 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Green Gauntlet": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Lava Foyer": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1372,17 +1445,21 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Infinite Gauntlet": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to The Wall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1415,10 +1492,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to The Wall": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1460,10 +1539,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1491,10 +1572,12 @@
                     "grants_on_collect": [],
                     "connections": {
                         "Door to Gambit Tower": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1677,11 +1760,20 @@
                         "Door to Green Bridge": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: ADD IBJ",
+                                "comment": "IBJ straight up",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IBJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1739,10 +1831,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Gambit Tower": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1775,10 +1869,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Artificial Passage": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1820,10 +1916,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Purple Tower": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1856,10 +1954,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Gambit Tower": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1901,10 +2001,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Ridley Arena": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1937,10 +2039,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Gambit Tower": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2044,6 +2148,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2057,8 +2170,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 134.5625250340463,
-                        "y": 161.42593927741729,
+                        "x": 135.3499856445593,
+                        "y": 143.19839219064028,
                         "z": 0.0
                     },
                     "description": "",
@@ -2109,13 +2222,48 @@
                             }
                         },
                         "Door to Lava Reliquary": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Bombs"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/CrQ2zxU9n5g",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph Ball",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "RidleyDead",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Damage Boost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2123,7 +2271,7 @@
                         "Event - Ridley Killed": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: combat reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -2150,6 +2298,61 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Damage requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 25,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Wave Beam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2160,8 +2363,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 136.0,
-                        "y": 104.0,
+                        "x": 177.6124031007752,
+                        "y": 153.6655592469546,
                         "z": 0.0
                     },
                     "description": "",
@@ -2191,8 +2394,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 232.0,
-                        "y": 88.0,
+                        "x": 230.76854928017718,
+                        "y": 87.12193921496248,
                         "z": 0.0
                     },
                     "description": "",
@@ -2250,10 +2453,12 @@
                     "grants_on_collect": [],
                     "connections": {
                         "Fake lava": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2286,10 +2491,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Fake lava": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2310,19 +2517,33 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Energy Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Ridley Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "Hi-Jump",
+                                "name": "Varia Suit",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Ridley Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia Suit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb High Ledge"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2364,10 +2585,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Purple Tower": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2400,10 +2623,12 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Ridley Entrance": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Varia Suit",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
