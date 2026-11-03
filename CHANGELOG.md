@@ -17,6 +17,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
 
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Changed: Lava Lake: Updated damage run logic and videos.
+- Changed: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
+
+##### Sector 2 (TRO)
+
+- Changed: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
+
+##### Sector 4 (AQA)
+
+- Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
+
 ### Metroid Prime 2: Echoes
 
 - Fixed: Enabling Door Lock Rando makes the Generator consider this instead of always assuming it's disabled.
