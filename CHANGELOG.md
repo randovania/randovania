@@ -30,6 +30,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
 
+#### Sector 3 (PYR)
+
+- Chagned: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with less Missiles, on Advanced Combat to not miss a Missile. Additionally, for dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
+
 ##### Sector 4 (AQA)
 
 - Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
