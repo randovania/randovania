@@ -32,9 +32,9 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
             True: self.secondary_weapon_toggle_option,
         }
         self.music_shuffle_radio_buttons = {
-            MusicMode.VANILLA: self.vanilla_music_option,
-            MusicMode.TYPE: self.type_music_option,
-            MusicMode.FULL: self.full_music_option,
+            MusicMode.VANILLA: self.vanilla_shuffle_button,
+            MusicMode.TYPE: self.type_shuffle_button,
+            MusicMode.FULL: self.full_shuffle_button,
         }
 
         self.on_new_cosmetic_patches(current)
