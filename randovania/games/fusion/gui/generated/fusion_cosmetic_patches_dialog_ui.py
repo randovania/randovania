@@ -36,7 +36,7 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 684, 708))
+        self.scroll_area_contents.setGeometry(QRect(0, -322, 681, 882))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -313,6 +313,53 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.verticalLayout.addWidget(self.palette_box)
 
+        self.verticalGroupBox = QGroupBox(self.scroll_area_contents)
+        self.verticalGroupBox.setObjectName(u"verticalGroupBox")
+        self.music_shuffle_box = QVBoxLayout(self.verticalGroupBox)
+        self.music_shuffle_box.setSpacing(6)
+        self.music_shuffle_box.setContentsMargins(11, 11, 11, 11)
+        self.music_shuffle_box.setObjectName(u"music_shuffle_box")
+        self.music_shuffle_box.setContentsMargins(9, 9, 9, 9)
+        self.music_sub_label = QLabel(self.verticalGroupBox)
+        self.music_sub_label.setObjectName(u"music_sub_label")
+        self.music_sub_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
+
+        self.music_shuffle_box.addWidget(self.music_sub_label)
+
+        self.vanilla_button = QRadioButton(self.verticalGroupBox)
+        self.vanilla_button.setObjectName(u"vanilla_button")
+
+        self.music_shuffle_box.addWidget(self.vanilla_button)
+
+        self.label = QLabel(self.verticalGroupBox)
+        self.label.setObjectName(u"label")
+
+        self.music_shuffle_box.addWidget(self.label)
+
+        self.type_button = QRadioButton(self.verticalGroupBox)
+        self.type_button.setObjectName(u"type_button")
+
+        self.music_shuffle_box.addWidget(self.type_button)
+
+        self.label_2 = QLabel(self.verticalGroupBox)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setWordWrap(True)
+
+        self.music_shuffle_box.addWidget(self.label_2)
+
+        self.full_button = QRadioButton(self.verticalGroupBox)
+        self.full_button.setObjectName(u"full_button")
+
+        self.music_shuffle_box.addWidget(self.full_button)
+
+        self.label_3 = QLabel(self.verticalGroupBox)
+        self.label_3.setObjectName(u"label_3")
+
+        self.music_shuffle_box.addWidget(self.label_3)
+
+
+        self.verticalLayout.addWidget(self.verticalGroupBox)
+
         self.audio_box = QGroupBox(self.scroll_area_contents)
         self.audio_box.setObjectName(u"audio_box")
         self.audio_layout = QVBoxLayout(self.audio_box)
@@ -459,6 +506,14 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.tileset_override_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Override Hue Shift (min,max)", None))
         self.color_space_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Color Space", None))
         self.symmetric_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Enable Symmetric", None))
+        self.verticalGroupBox.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Music", None))
+        self.music_sub_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Changes how music is shuffled.", None))
+        self.vanilla_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Vanilla", None))
+        self.label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Does not shuffle any songs.", None))
+        self.type_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Per Type", None))
+        self.label_2.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Only shuffles songs within certain types, those being \"boss\", \"exploration\", \"jingle\", and \"short\". This ensures you won't be hearing any boss music while trying to explore an area. Certain songs, such as the Credits song, are exempt from shuffling.", None))
+        self.full_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Full Random", None))
+        self.label_3.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Will shuffle all songs. Certain songs, such as the Credits song, are exempt from shuffling.", None))
         self.audio_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Audio Options", None))
         self.default_audio_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Default Audio Settings:", None))
         self.mono_option.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Mono", None))

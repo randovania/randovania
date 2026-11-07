@@ -4,6 +4,7 @@ import math
 import textwrap
 import typing
 from collections import defaultdict
+from random import Random
 from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
@@ -16,11 +17,11 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.games.fusion.exporter.joke_hints import FUSION_JOKE_HINTS
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
-from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
+from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
-from randovania.lib import json_lib
+from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
     from mars_patcher.mf.auto_generated_types import MarsschemamfStartingItems
@@ -28,6 +29,92 @@ if TYPE_CHECKING:
     from randovania.exporter.patch_data_factory import PatcherDataMeta
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.pickup.pickup_entry import PickupEntry
+
+
+def construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
+    boss_list = [
+        "MUSIC_ARACHNUS_BATTLE",
+        "MUSIC_ZAZABI_BATTLE",
+        "MUSIC_BOX_BATTLE",
+        "MUSIC_SERRIS_YAKUZA_BATTLE",
+        "MUSIC_VARIA_CORE_X_BATTLE",
+        "MUSIC_NIGHTMARE_BATTLE",
+        "MUSIC_NEO_RIDLEY_BATTLE",
+        "MUSIC_CHOZO_STATUE_CORE_X_BATTLE",
+        "MUSIC_NETTORI_BATTLE",
+        "MUSIC_SA_X_BATTLE",
+    ]
+
+    exploration_list = [
+        "MUSIC_SECTOR_1",
+        "MUSIC_SECTOR_2",
+        "MUSIC_SECTOR_3",
+        "MUSIC_SECTOR_5",
+        "MUSIC_SECTOR_4",
+        "MUSIC_SECTOR_6",
+        "MUSIC_MAIN_DECK_LIVELY",
+        "MUSIC_HEADING_TO_NIGHTMARE_RIDLEY",
+        "MUSIC_MAIN_BOILER_COOLDOWN_MISSION",
+        "MUSIC_SECTOR_4_UNDERWATER",
+        "MUSIC_FINAL_ORDER",
+    ]
+
+    jingle_list = [
+        "MUSIC_ITEM_JINGLE",
+        "MUSIC_LOADING_SAVE",
+        "MUSIC_MESSAGE_POPUP",
+        "MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND",
+        "MUSIC_OBJECTIVE_COMPLETE",
+        "MUSIC_PRE_TITLE_END",
+        "MUSIC_EPILOGUE_END",
+    ]
+
+    short_list = [
+        "MUSIC_AFTER_EVENT",
+        "MUSIC_NAVIGATION_ROOM",
+        "MUSIC_SECURITY_DATA_ROOM",
+        "MUSIC_SA_X_APPEARANCE",
+        "MUSIC_SA_X_CHASE",
+        "MUSIC_BOSS_TENSION",
+        "MUSIC_MAIN_DECK_AMBIENCE",
+        "MUSIC_SILENCE_1_SHIP",
+        "MUSIC_TENSION",
+        "MUSIC_OMEGA_METROID_DEFEATED",
+        "MUSIC_OPERATIONS_DECK",
+        "MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND_AND_AMVIENCE",
+        "MUSIC_X_INVASION_DETECTION",
+        "MUSIC_SA_X_ELEVATOR",
+        "MUSIC_OPERATIONS_DECK_ELEVATOR_OFFLINE_AMBIENCE",
+        "MUSIC_STATION_ESCAPE",
+        "MUSIC_DISQUIETING",
+        "MUSIC_SHOCK",
+        "MUSIC_SILENCE_1",
+        "MUSIC_MAIN_BOILER_OVERHEATING",
+        "MUSIC_SILENCE_2",
+        "MUSIC_INTRIGUE",
+        "MUSIC_UNUSED_5E",
+        "MUSIC_UNEASE",
+    ]
+
+    if music_mode == MusicMode.VANILLA:
+        return {}
+
+    # Music is now either TYPE or FULL
+    assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
+
+    total_orig = boss_list + exploration_list + jingle_list + short_list
+
+    if music_mode == MusicMode.FULL:
+        total_new = random_lib.shuffle(rng, iter(total_orig))
+    else:
+        # MusicMode is TYPE
+        shuffled_boss = random_lib.shuffle(rng, iter(boss_list))
+        shuffled_exploration = random_lib.shuffle(rng, iter(exploration_list))
+        shuffled_jingle = random_lib.shuffle(rng, iter(jingle_list))
+        shuffled_short = random_lib.shuffle(rng, iter(short_list))
+        total_new = shuffled_boss + shuffled_exploration + shuffled_jingle + shuffled_short
+
+    return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new, strict=True)}
 
 
 class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
@@ -585,6 +672,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "stereo_default": self.cosmetic_patches.stereo_default,
             "disable_music": self.cosmetic_patches.disable_music,
             "disable_sound_effects": self.cosmetic_patches.disable_sfx,
+            "music_shuffle": self.cosmetic_patches.construct_music_shuffle_dict(
+                self.music, Random(self.description.shareable_hash)
+            ),
             "environmental_damage": self.create_environmental_damage(),
         }
         ## Uncomment to spew the patch data into the terminal

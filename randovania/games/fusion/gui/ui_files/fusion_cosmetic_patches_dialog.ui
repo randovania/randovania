@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>684</width>
-        <height>708</height>
+        <y>-322</y>
+        <width>681</width>
+        <height>882</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -505,6 +505,82 @@
              </widget>
             </item>
            </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="verticalGroupBox">
+         <property name="title">
+          <string>Music</string>
+         </property>
+         <layout class="QVBoxLayout" name="music_shuffle_box">
+          <property name="leftMargin">
+           <number>9</number>
+          </property>
+          <property name="topMargin">
+           <number>9</number>
+          </property>
+          <property name="rightMargin">
+           <number>9</number>
+          </property>
+          <property name="bottomMargin">
+           <number>9</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="music_sub_label">
+            <property name="text">
+             <string>Changes how music is shuffled.</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="vanilla_button">
+            <property name="text">
+             <string>Vanilla</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Does not shuffle any songs.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="type_button">
+            <property name="text">
+             <string>Per Type</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Only shuffles songs within certain types, those being &quot;boss&quot;, &quot;exploration&quot;, &quot;jingle&quot;, and &quot;short&quot;. This ensures you won't be hearing any boss music while trying to explore an area. Certain songs, such as the Credits song, are exempt from shuffling.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="full_button">
+            <property name="text">
+             <string>Full Random</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Will shuffle all songs. Certain songs, such as the Credits song, are exempt from shuffling.</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
