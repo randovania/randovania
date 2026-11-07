@@ -673,7 +673,7 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "disable_music": self.cosmetic_patches.disable_music,
             "disable_sound_effects": self.cosmetic_patches.disable_sfx,
             "music_shuffle": self.cosmetic_patches.construct_music_shuffle_dict(
-                self.music, Random(self.description.shareable_hash)
+                self.music, Random(self.description.get_seed_for_world(self.worlds_config.world_index))
             ),
             "environmental_damage": self.create_environmental_damage(),
         }
