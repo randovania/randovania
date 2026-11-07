@@ -5,7 +5,7 @@ import functools
 from typing import TYPE_CHECKING, override
 
 from randovania.games.fusion.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
-from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches
+from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches, MusicMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -30,6 +30,11 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         self.secondary_radio_buttons = {
             False: self.secondary_weapon_hold_option,
             True: self.secondary_weapon_toggle_option,
+        }
+        self.music_shuffle_radio_buttons = {
+            MusicMode.VANILLA: self.vanilla_music_option,
+            MusicMode.TYPE: self.type_music_option,
+            MusicMode.FULL: self.full_music_option,
         }
 
         self.on_new_cosmetic_patches(current)
@@ -168,6 +173,8 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
             radio_button.setChecked(secondary_weapon_default == patches.secondary_weapon_toggle_mode)
         self.disable_music_check.setChecked(patches.disable_music)
         self.disable_sfx_check.setChecked(patches.disable_sfx)
+        for music_mode, radio_button in self.music_shuffle_radio_buttons.items():
+            radio_button.setChecked(music_mode == patches.music)
 
     @property
     def cosmetic_patches(self) -> FusionCosmeticPatches:
