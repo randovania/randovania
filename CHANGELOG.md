@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [12.1.0] - 2026-12-XX
 
+- Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
 - Removed: Intel macOS devices are no longer supported.
 
 ### Metroid Dread
@@ -37,6 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: Enabling Door Lock Rando makes the Generator consider this instead of always assuming it's disabled.
+
+### Metroid Prime Hunters
+
+- Fixed: Subterranean: The platform sometimes being unusable after Cretaphid v4 is defeated.
 
 ## [12.0.0] - 2026-11-01
 
