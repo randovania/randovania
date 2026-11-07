@@ -138,7 +138,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
 
     def _on_music_option_changed(self, option: MusicMode, value: bool) -> None:
         if value:
-            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music=option)
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music_shuffle=option)
 
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
         self.map_check.setChecked(patches.starting_map)
@@ -181,7 +181,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         self.disable_music_check.setChecked(patches.disable_music)
         self.disable_sfx_check.setChecked(patches.disable_sfx)
         for music_mode, radio_button in self.music_shuffle_radio_buttons.items():
-            radio_button.setChecked(music_mode == patches.music)
+            radio_button.setChecked(music_mode == patches.music_shuffle)
 
     @property
     def cosmetic_patches(self) -> FusionCosmeticPatches:

@@ -66,7 +66,7 @@ class FusionCosmeticPatches(BaseCosmeticPatches):
     stereo_default: bool = True
     disable_music: bool = False
     disable_sfx: bool = False
-    music: MusicMode = MusicMode.VANILLA
+    music_shuffle: MusicMode = MusicMode.VANILLA
     # Misc Options
     starting_map: bool = True
     reveal_blocks: bool = True

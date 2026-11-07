@@ -31,7 +31,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
-def construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
+def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
     boss_list = [
         "MUSIC_ARACHNUS_BATTLE",
         "MUSIC_ZAZABI_BATTLE",
@@ -672,8 +672,9 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "stereo_default": self.cosmetic_patches.stereo_default,
             "disable_music": self.cosmetic_patches.disable_music,
             "disable_sound_effects": self.cosmetic_patches.disable_sfx,
-            "music_shuffle": self.cosmetic_patches.construct_music_shuffle_dict(
-                self.music, Random(self.description.get_seed_for_world(self.worlds_config.world_index))
+            "music_shuffle": _construct_music_shuffle_dict(
+                self.cosmetic_patches.music_shuffle,
+                Random(self.description.get_seed_for_world(self.worlds_config.world_index)),
             ),
             "environmental_damage": self.create_environmental_damage(),
         }
