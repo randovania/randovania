@@ -59,16 +59,6 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         "FINAL_ORDER",
     ]
 
-    jingle_list = [
-        "ITEM_JINGLE",
-        "LOADING_SAVE",
-        "MESSAGE_POPUP",
-        "OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND",
-        "OBJECTIVE_COMPLETE",
-        "PRE_TITLE_END",
-        "EPILOGUE_END",
-    ]
-
     short_list = [
         "AFTER_EVENT",
         "NAVIGATION_ROOM",
@@ -96,23 +86,34 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         "UNEASE",
     ]
 
+    jingle_list = [
+        "ITEM_JINGLE",
+        "LOADING_SAVE",
+        "MESSAGE_POPUP",
+        "OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND",
+        "OBJECTIVE_COMPLETE",
+        "PRE_TITLE_END",
+        "EPILOGUE_END",
+    ]
+
     if music_mode == MusicMode.VANILLA:
         return {}
 
     # Music is now either TYPE or FULL
     assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
 
-    total_orig = boss_list + exploration_list + short_list
+    total_orig = boss_list + exploration_list + short_list + jingle_list
 
     if music_mode == MusicMode.FULL:
-        total_new = random_lib.shuffle(rng, iter(total_orig)) + random_lib.shuffle(rng, iter(jingle_list))
+        temp_full = boss_list + exploration_list + short_list
+        total_new = random_lib.shuffle(rng, iter(temp_full)) + random_lib.shuffle(rng, iter(jingle_list))
     else:
         # MusicMode is TYPE
         shuffled_boss = random_lib.shuffle(rng, iter(boss_list))
         shuffled_exploration = random_lib.shuffle(rng, iter(exploration_list))
-        shuffled_jingle = random_lib.shuffle(rng, iter(jingle_list))
         shuffled_short = random_lib.shuffle(rng, iter(short_list))
-        total_new = shuffled_boss + shuffled_exploration + shuffled_jingle + shuffled_short
+        shuffled_jingle = random_lib.shuffle(rng, iter(jingle_list))
+        total_new = shuffled_boss + shuffled_exploration + shuffled_short + shuffled_jingle
 
     return {f"{orig}": f"{new}" for orig, new in zip(total_orig, total_new, strict=True)}
 
