@@ -38,6 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Enabling Door Lock Rando makes the Generator consider this instead of always assuming it's disabled.
 
+### Metroid Prime Hunters
+
+- Fixed: Subterranean: The platform sometimes being unusable after Cretaphid v4 is defeated.
+
 ## [12.0.0] - 2026-11-01
 
 - Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
