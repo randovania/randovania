@@ -152,7 +152,7 @@ Server and logic written by [Henrique "Darkszero" Gemignani](https://github.com/
 Dolphin and Nintendont integrations written by [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/). These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).
 
 ### Cave Story
-Cave Story Doukutsu and CSE2 Tweaked integations written by [duncathan_salt](https://twitter.com/duncathan_salt), [periwinkle](https://github.com/periwinkle9) and [ikuyo](https://github.com/calvarado194).
+Cave Story Doukutsu and CSE2 Tweaked integrations written by [duncathan_salt](https://twitter.com/duncathan_salt), [periwinkle](https://github.com/periwinkle9) and [ikuyo](https://github.com/calvarado194).
 
 ### Metroid Dread
 Integration written by [Thanatos](https://github.com/ThanatosGit) and [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/).
@@ -252,7 +252,7 @@ uv pip install -e ..\factorio-randovania-mod\
 ## UI Files
 
 The python files associated with the Qt Creator's UI files are created with the `tools/uic_wrapper.py` script.
-It is called automatically when commiting via `pre-commit`, but you can run it manually via:
+It is called automatically when committing via `pre-commit`, but you can run it manually via:
 
 ```
 uvx pre-commit run qtui -a

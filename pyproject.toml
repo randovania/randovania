@@ -35,7 +35,7 @@ dependencies = [
     # permalinks
     "bitstruct",
     # obfuscator, guest login, server code
-    "cryptography<49.0.0",  # v49 drops support for macOS x86-64
+    "cryptography",
     # Generator
     "networkx",
     "tenacity>=7.0.0",
@@ -79,7 +79,7 @@ exporters = [
     "factorio-randovania-mod==0.8.1",
 
     # Metroid Dread
-    "open-dread-rando==2.20.1",
+    "open-dread-rando==2.21.0",
 
     # Metroid Fusion and Zero Mission
     "mars-patcher==0.18.1",
@@ -100,7 +100,7 @@ exporters = [
     "mp2hudcolor==1.0.14",
 
     # Metroid Prime Hunters
-    "open-prime-hunters-rando==0.15.2",
+    "open-prime-hunters-rando==0.15.3",
 
     # Metroid: Samus Returns
     "open-samus-returns-rando==3.6.2",
@@ -128,7 +128,7 @@ gui = [
 ]
 
 server = [
-    "fastapi<0.144", # REST server
+    "fastapi<0.163", # REST server
     "jinja2", # templating
     "uvicorn[standard]", # server runner
     "itsdangerous", # for starlette SessionMiddleware

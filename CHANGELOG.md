@@ -5,7 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [11.2.0] - 2026-11-01
+## [12.1.0] - 2026-12-XX
+
+- Removed: Intel macOS devices are no longer supported.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
+
+### Metroid Fusion
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Changed: Lava Lake: Updated damage run logic and videos.
+- Changed: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
+
+##### Sector 2 (TRO)
+
+- Changed: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
+
+##### Sector 4 (AQA)
+
+- Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Enabling Door Lock Rando makes the Generator consider this instead of always assuming it's disabled.
+
+### Metroid Prime Hunters
+
+- Fixed: Subterranean: The platform sometimes being unusable after Cretaphid v4 is defeated.
+
+## [12.0.0] - 2026-11-01
 
 - Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
 - Added: When used via a flatpak, Randovania now has a desktop context option to open the Auto Tracker directly.
@@ -18,6 +55,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The chance for finding rare special items being lower than intended.
 
 ### Metroid Dread
+
+- Changed: Models of Wave Beam, Missile Launcher, Ice Missile, Storm Missile, Cross Bomb and Power Bomb.
+- Fixed: The death counter was incorrectly positioned in version 1.0.0 without the DNA HUD.
 
 #### Logic Database
 
