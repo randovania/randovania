@@ -5,7 +5,7 @@ import functools
 from typing import TYPE_CHECKING, override
 
 from randovania.games.fusion.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
-from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches
+from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches, MusicMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -30,6 +30,11 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         self.secondary_radio_buttons = {
             False: self.secondary_weapon_hold_option,
             True: self.secondary_weapon_toggle_option,
+        }
+        self.music_shuffle_radio_buttons = {
+            MusicMode.VANILLA: self.vanilla_shuffle_button,
+            MusicMode.TYPE: self.type_shuffle_button,
+            MusicMode.FULL: self.full_shuffle_button,
         }
 
         self.on_new_cosmetic_patches(current)
@@ -80,6 +85,9 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
             radio_button.toggled.connect(
                 functools.partial(self._on_secondary_weapon_option_changed, secondary_weapon_default)
             )
+        # Radio buttons for Music Shuffle
+        for music_mode, radio_button in self.music_shuffle_radio_buttons.items():
+            radio_button.toggled.connect(functools.partial(self._on_music_option_changed, music_mode))
         # Checkboxes for disabling Music/SFX
         self._persist_check_field(self.disable_music_check, "disable_music")
         self._persist_check_field(self.disable_sfx_check, "disable_sfx")
@@ -128,6 +136,10 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         if value:
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, secondary_weapon_toggle_mode=option)
 
+    def _on_music_option_changed(self, option: MusicMode, value: bool) -> None:
+        if value:
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music_shuffle=option)
+
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
         self.map_check.setChecked(patches.starting_map)
         self.reveal_blocks_check.setChecked(patches.reveal_blocks)
@@ -168,6 +180,8 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
             radio_button.setChecked(secondary_weapon_default == patches.secondary_weapon_toggle_mode)
         self.disable_music_check.setChecked(patches.disable_music)
         self.disable_sfx_check.setChecked(patches.disable_sfx)
+        for music_mode, radio_button in self.music_shuffle_radio_buttons.items():
+            radio_button.setChecked(music_mode == patches.music_shuffle)
 
     @property
     def cosmetic_patches(self) -> FusionCosmeticPatches:
