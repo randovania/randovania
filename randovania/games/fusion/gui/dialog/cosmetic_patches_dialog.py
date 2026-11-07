@@ -85,6 +85,9 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
             radio_button.toggled.connect(
                 functools.partial(self._on_secondary_weapon_option_changed, secondary_weapon_default)
             )
+        # Radio buttons for Music Shuffle
+        for music_mode, radio_button in self.music_shuffle_radio_buttons.items():
+            radio_button.toggled.connect(functools.partial(self._on_music_option_changed, music_mode))
         # Checkboxes for disabling Music/SFX
         self._persist_check_field(self.disable_music_check, "disable_music")
         self._persist_check_field(self.disable_sfx_check, "disable_sfx")
@@ -132,6 +135,10 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
     def _on_secondary_weapon_option_changed(self, option: bool, value: bool) -> None:
         if value:
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, secondary_weapon_toggle_mode=option)
+
+    def _on_music_option_changed(self, option: MusicMode, value: bool) -> None:
+        if value:
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, music=option)
 
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
         self.map_check.setChecked(patches.starting_map)
