@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Fusion
 
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
+
 #### Logic Database
 
 ##### Sector 1 (SRX)
