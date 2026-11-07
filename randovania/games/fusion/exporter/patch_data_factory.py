@@ -102,10 +102,10 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
     # Music is now either TYPE or FULL
     assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
 
-    total_orig = boss_list + exploration_list + jingle_list + short_list
+    total_orig = boss_list + exploration_list + short_list
 
     if music_mode == MusicMode.FULL:
-        total_new = random_lib.shuffle(rng, iter(total_orig))
+        total_new = random_lib.shuffle(rng, iter(total_orig)) + random_lib.shuffle(rng, iter(jingle_list))
     else:
         # MusicMode is TYPE
         shuffled_boss = random_lib.shuffle(rng, iter(boss_list))
