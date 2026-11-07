@@ -513,7 +513,7 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.vanilla_shuffle_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Vanilla", None))
         self.vanilla_shuffle_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Does not shuffle any songs.", None))
         self.type_shuffle_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Per Type", None))
-        self.type_shuffle_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Only shuffles songs within certain types, those being \"boss\", \"exploration\", \"jingle\", and \"short\". This ensures you won't be hearing any boss music while trying to explore an area. Certain songs, such as the Credits song, are exempt from shuffling.", None))
+        self.type_shuffle_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Shuffles songs of the same type. This ensures that you won't hear boss music while exploring, or an item jingle as the escape sequence. Certain songs, such as the Credits song, are exempt from shuffling.", None))
         self.full_shuffle_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Full Random", None))
         self.full_shuffle_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Will shuffle all songs with each other. Jingles are shuffled separately. Certain songs, such as the Credits song, are exempt from shuffling.", None))
         self.audio_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Audio Options", None))
