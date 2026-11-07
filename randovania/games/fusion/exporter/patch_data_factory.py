@@ -114,7 +114,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         shuffled_short = random_lib.shuffle(rng, iter(short_list))
         total_new = shuffled_boss + shuffled_exploration + shuffled_jingle + shuffled_short
 
-    return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new, strict=True)}
+    return {f"{orig}": f"{new}" for orig, new in zip(total_orig, total_new, strict=True)}
 
 
 class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
