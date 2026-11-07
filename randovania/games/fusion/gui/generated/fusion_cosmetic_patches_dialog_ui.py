@@ -36,7 +36,7 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, -322, 681, 882))
+        self.scroll_area_contents.setGeometry(QRect(0, -338, 681, 882))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -328,6 +328,7 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.vanilla_button = QRadioButton(self.verticalGroupBox)
         self.vanilla_button.setObjectName(u"vanilla_button")
+        self.vanilla_button.setChecked(True)
 
         self.music_shuffle_box.addWidget(self.vanilla_button)
 
