@@ -3,6 +3,7 @@ from __future__ import annotations
 import dataclasses
 from enum import Enum
 
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import enum_lib
@@ -24,6 +25,12 @@ enum_lib.add_long_name(
         ColorSpace.HSV: "HSV",
     },
 )
+
+
+class MusicMode(BitPackEnum, Enum):
+    VANILLA = "vanilla_music"
+    TYPE = "type_music"
+    FULL = "full_music"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -59,6 +66,7 @@ class FusionCosmeticPatches(BaseCosmeticPatches):
     stereo_default: bool = True
     disable_music: bool = False
     disable_sfx: bool = False
+    music_shuffle: MusicMode = MusicMode.VANILLA
     # Misc Options
     starting_map: bool = True
     reveal_blocks: bool = True

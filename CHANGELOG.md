@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [12.1.0] - 2026-12-XX
 
+- Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
 - Removed: Intel macOS devices are no longer supported.
 
 ### Metroid Dread
@@ -18,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
 
 ### Metroid Fusion
+
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
 
 #### Logic Database
 
@@ -33,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Sector 3 (PYR)
 
 - Changed: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
+- Changed: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
 
 ##### Sector 4 (AQA)
 
@@ -41,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: Enabling Door Lock Rando makes the Generator consider this instead of always assuming it's disabled.
+
+### Metroid Prime Hunters
+
+- Fixed: Subterranean: The platform sometimes being unusable after Cretaphid v4 is defeated.
 
 ## [12.0.0] - 2026-11-01
 
