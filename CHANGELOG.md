@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Sector 3 (PYR)
 
+- Changed: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
 - Changed: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
 
 ##### Sector 4 (AQA)
