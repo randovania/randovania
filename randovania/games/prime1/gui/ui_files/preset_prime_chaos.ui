@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>487</width>
-         <height>1190</height>
+         <height>1334</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -63,10 +63,10 @@
         <item>
          <spacer name="top_spacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Policy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -117,7 +117,7 @@
            <item>
             <widget class="QLabel" name="legacy_mode_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. This includes:&lt;/p&gt;&lt;p&gt;Fixed crashes, Fixed softlocks, Fast item acquisition, Better pickup scans, Undo non-NTSC sequence break patches, Varia-only heat protection and &amp;quot;General&amp;quot; QoL&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. Enabling this setting includes:&lt;/p&gt;&lt;p&gt;Introducing crashes, introducing ways to brick a game, non-0-00 NTSC versions being unable to do sequence breaks, every suit giving heat protection, not having &amp;quot;General&amp;quot; QoL and more.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -304,10 +304,10 @@
                 <number>2</number>
                </property>
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
                <property name="tickPosition">
-                <enum>QSlider::TicksBelow</enum>
+                <enum>QSlider::TickPosition::TicksBelow</enum>
                </property>
               </widget>
              </item>
@@ -329,7 +329,7 @@
                 <string>0</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -356,10 +356,10 @@
                 <number>2</number>
                </property>
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
                <property name="tickPosition">
-                <enum>QSlider::TicksBelow</enum>
+                <enum>QSlider::TickPosition::TicksBelow</enum>
                </property>
               </widget>
              </item>
@@ -381,7 +381,7 @@
                 <string>0</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <set>Qt::AlignmentFlag::AlignCenter</set>
                </property>
               </widget>
              </item>
