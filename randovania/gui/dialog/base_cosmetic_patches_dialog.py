@@ -21,6 +21,9 @@ class GameSpecificCosmeticWidget[CosmeticPatches: BaseCosmeticPatches](QtWidgets
         self._cosmetic_patches = current
 
     def reset(self) -> None:
+        """
+        Should change all values back to the default settings. Is called when the "Reset to defaults"-button is pressed.
+        """
         raise NotImplementedError
 
     @classmethod
@@ -32,6 +35,11 @@ class GameSpecificCosmeticWidget[CosmeticPatches: BaseCosmeticPatches](QtWidgets
         return self._cosmetic_patches
 
     def default_size(self) -> tuple[int, int]:
+        """
+        The default size the cosmetic dialog should be displayed as.
+        If not overridden, will use the default size specified in the .ui file.
+        :return: Default width and default height.
+        """
         geometry = self.geometry()
         return geometry.width(), geometry.height()
 
