@@ -15,9 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
-    QLabel, QPushButton, QRadioButton, QScrollArea,
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGridLayout,
+    QGroupBox, QHBoxLayout, QLabel, QRadioButton,
     QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
     QWidget)
 
@@ -25,23 +24,13 @@ class Ui_FusionCosmeticPatchesDialog(object):
     def setupUi(self, FusionCosmeticPatchesDialog):
         if not FusionCosmeticPatchesDialog.objectName():
             FusionCosmeticPatchesDialog.setObjectName(u"FusionCosmeticPatchesDialog")
-        FusionCosmeticPatchesDialog.resize(700, 585)
+        FusionCosmeticPatchesDialog.resize(700, 964)
         self.verticalLayout_3 = QVBoxLayout(FusionCosmeticPatchesDialog)
-        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setSpacing(6)
         self.verticalLayout_3.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.scrollArea = QScrollArea(FusionCosmeticPatchesDialog)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setWidgetResizable(True)
-        self.scroll_area_contents = QWidget()
-        self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, -354, 681, 898))
-        self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.gameplay_box = QGroupBox(self.scroll_area_contents)
+        self.gameplay_box = QGroupBox(FusionCosmeticPatchesDialog)
         self.gameplay_box.setObjectName(u"gameplay_box")
         self.verticalLayout_2 = QVBoxLayout(self.gameplay_box)
         self.verticalLayout_2.setSpacing(6)
@@ -109,9 +98,9 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.verticalLayout_2.addLayout(self.secondary_weapon_layout)
 
 
-        self.verticalLayout.addWidget(self.gameplay_box)
+        self.verticalLayout_3.addWidget(self.gameplay_box)
 
-        self.palette_box = QGroupBox(self.scroll_area_contents)
+        self.palette_box = QGroupBox(FusionCosmeticPatchesDialog)
         self.palette_box.setObjectName(u"palette_box")
         self.palette_layout = QVBoxLayout(self.palette_box)
         self.palette_layout.setSpacing(6)
@@ -311,9 +300,9 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.palette_layout.addLayout(self.color_space_layout)
 
 
-        self.verticalLayout.addWidget(self.palette_box)
+        self.verticalLayout_3.addWidget(self.palette_box)
 
-        self.music_shuffle_box = QGroupBox(self.scroll_area_contents)
+        self.music_shuffle_box = QGroupBox(FusionCosmeticPatchesDialog)
         self.music_shuffle_box.setObjectName(u"music_shuffle_box")
         self.verticalLayout_4 = QVBoxLayout(self.music_shuffle_box)
         self.verticalLayout_4.setSpacing(6)
@@ -360,9 +349,9 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.verticalLayout_4.addWidget(self.full_shuffle_label)
 
 
-        self.verticalLayout.addWidget(self.music_shuffle_box)
+        self.verticalLayout_3.addWidget(self.music_shuffle_box)
 
-        self.audio_box = QGroupBox(self.scroll_area_contents)
+        self.audio_box = QGroupBox(FusionCosmeticPatchesDialog)
         self.audio_box.setObjectName(u"audio_box")
         self.audio_layout = QVBoxLayout(self.audio_box)
         self.audio_layout.setSpacing(6)
@@ -419,64 +408,10 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.audio_layout.addLayout(self.music_layout)
 
 
-        self.verticalLayout.addWidget(self.audio_box)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
-        self.scrollArea.setWidget(self.scroll_area_contents)
-
-        self.verticalLayout_3.addWidget(self.scrollArea)
-
-        self.line = QFrame(FusionCosmeticPatchesDialog)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout_3.addWidget(self.line)
-
-        self.footer_layout = QHBoxLayout()
-        self.footer_layout.setSpacing(6)
-        self.footer_layout.setObjectName(u"footer_layout")
-        self.footer_layout.setContentsMargins(6, 6, 6, 6)
-        self.reset_button = QPushButton(FusionCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-        self.reset_button.setText(u"\u2b8c Reset to Defaults")
-
-        self.footer_layout.addWidget(self.reset_button)
-
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.footer_layout.addItem(self.horizontalSpacer_2)
-
-        self.accept_button = QPushButton(FusionCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.accept_button.sizePolicy().hasHeightForWidth())
-        self.accept_button.setSizePolicy(sizePolicy1)
-        self.accept_button.setMinimumSize(QSize(96, 0))
-        self.accept_button.setText(u"\U0001f5f8 Accept")
-
-        self.footer_layout.addWidget(self.accept_button)
-
-        self.cancel_button = QPushButton(FusionCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-        self.cancel_button.setMinimumSize(QSize(96, 0))
-        self.cancel_button.setText(u"\U0001f6c7 Cancel")
-
-        self.footer_layout.addWidget(self.cancel_button)
-
-
-        self.verticalLayout_3.addLayout(self.footer_layout)
+        self.verticalLayout_3.addWidget(self.audio_box)
 
 
         self.retranslateUi(FusionCosmeticPatchesDialog)
-
-        self.accept_button.setDefault(True)
-
 
         QMetaObject.connectSlotsByName(FusionCosmeticPatchesDialog)
     # setupUi

@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+    from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
@@ -25,7 +25,7 @@ class GameGui:
     tab_provider: Callable[[PresetEditor, WindowManager], Iterable[type[PresetTab]]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
-    cosmetic_dialog: type[BaseCosmeticPatchesDialog] | None
+    cosmetic_dialog: type[GameSpecificCosmeticWidget] | None
     """Dialog box for editing the game's cosmetic settings."""
 
     export_dialog: type[GameExportDialog]

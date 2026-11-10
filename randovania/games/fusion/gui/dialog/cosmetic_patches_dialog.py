@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, override
 
 from randovania.games.fusion.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
 from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches, MusicMode
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatches], Ui_FusionCosmeticPatchesDialog):
+class FusionCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_FusionCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: FusionCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -46,8 +46,6 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         return FusionCosmeticPatches
 
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         # Checkboxes for enabling Gameplay Options
         self._persist_check_field(self.map_check, "starting_map")
         self._persist_check_field(self.reveal_blocks_check, "reveal_blocks")
@@ -183,9 +181,9 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog[FusionCosmeticPatche
         for music_mode, radio_button in self.music_shuffle_radio_buttons.items():
             radio_button.setChecked(music_mode == patches.music_shuffle)
 
-    @property
-    def cosmetic_patches(self) -> FusionCosmeticPatches:
-        return self._cosmetic_patches
-
     def reset(self) -> None:
         self.on_new_cosmetic_patches(FusionCosmeticPatches())
+
+    @override
+    def default_size(self) -> tuple[int, int]:
+        return 700, 585
