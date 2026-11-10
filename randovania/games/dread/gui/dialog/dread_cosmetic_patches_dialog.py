@@ -11,7 +11,7 @@ from randovania.games.dread.layout.dread_cosmetic_patches import (
     DreadRoomGuiType,
     DreadShieldType,
 )
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib import signal_handling, slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches], Ui_DreadCosmeticPatchesDialog):
+class DreadCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_DreadCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: DreadCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -55,8 +55,6 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
         return DreadCosmeticPatches
 
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         self._persist_check_field(self.show_boss_life, "show_boss_lifebar")
         self._persist_check_field(self.show_enemy_life, "show_enemy_life")
         self._persist_check_field(self.show_enemy_damage, "show_enemy_damage")
@@ -107,7 +105,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
             shield_type = DreadShieldType.ALTERNATE if value else DreadShieldType.DEFAULT
             self._cosmetic_patches = dataclasses.replace(
                 self._cosmetic_patches,
-                **{attribute_name: shield_type},  # type: ignore[arg-type]
+                **{attribute_name: shield_type},
             )
 
         signal_handling.on_checked(checkbox, persist)
@@ -121,13 +119,13 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog[DreadCosmeticPatches]
     def _on_slider_update(self, slider: QtWidgets.QSlider, field_name: str, _: None) -> None:
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,
-            **{f"{field_name}_volume": slider.value()},  # type: ignore[arg-type]
+            **{f"{field_name}_volume": slider.value()},
         )
         getattr(self, f"{field_name}_label_updater")(slider)
 
-    @property
-    def cosmetic_patches(self) -> DreadCosmeticPatches:
-        return self._cosmetic_patches
-
     def reset(self) -> None:
         self.on_new_cosmetic_patches(DreadCosmeticPatches())
+
+    @override
+    def default_size(self) -> tuple[int, int]:
+        return 624, 797

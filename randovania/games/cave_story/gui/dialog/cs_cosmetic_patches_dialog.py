@@ -13,7 +13,7 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import (
     MyChar,
     SongGame,
 )
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog[CSCosmeticPatches], Ui_CSCosmeticPatchesDialog):
+class CSCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_CSCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: CSCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -38,8 +38,6 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog[CSCosmeticPatches], Ui_C
         return CSCosmeticPatches
 
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         signal_handling.on_combo(self.music_type_combo, self._on_music_type_changed)
         self.mychar_left_button.clicked.connect(self._mychar_left)
         self.mychar_right_button.clicked.connect(self._mychar_right)
@@ -110,9 +108,9 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog[CSCosmeticPatches], Ui_C
                 elif song.source_game == SongGame.KERO:
                     self.song_kero_check.setChecked(True)
 
-    @property
-    def cosmetic_patches(self) -> CSCosmeticPatches:
-        return self._cosmetic_patches
-
     def reset(self) -> None:
         self.on_new_cosmetic_patches(CSCosmeticPatches())
+
+    @override
+    def default_size(self) -> tuple[int, int]:
+        return 424, 421

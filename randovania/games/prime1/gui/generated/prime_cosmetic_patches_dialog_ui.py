@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
-    QLabel, QPushButton, QScrollArea, QSizePolicy,
-    QSlider, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
+    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QSlider, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 from randovania.gui.widgets.foldable import Foldable
 from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
@@ -27,23 +27,13 @@ class Ui_PrimeCosmeticPatchesDialog(object):
     def setupUi(self, PrimeCosmeticPatchesDialog):
         if not PrimeCosmeticPatchesDialog.objectName():
             PrimeCosmeticPatchesDialog.setObjectName(u"PrimeCosmeticPatchesDialog")
-        PrimeCosmeticPatchesDialog.resize(600, 640)
+        PrimeCosmeticPatchesDialog.resize(600, 1408)
         self.verticalLayout_2 = QVBoxLayout(PrimeCosmeticPatchesDialog)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.scrollArea = QScrollArea(PrimeCosmeticPatchesDialog)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setWidgetResizable(True)
-        self.scroll_area_contents = QWidget()
-        self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 584, 1350))
-        self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.game_changes_box = QGroupBox(self.scroll_area_contents)
+        self.game_changes_box = QGroupBox(PrimeCosmeticPatchesDialog)
         self.game_changes_box.setObjectName(u"game_changes_box")
         self.game_changes_layout = QVBoxLayout(self.game_changes_box)
         self.game_changes_layout.setSpacing(6)
@@ -100,9 +90,9 @@ class Ui_PrimeCosmeticPatchesDialog(object):
         self.game_changes_layout.addLayout(self.hud_color_layout)
 
 
-        self.verticalLayout.addWidget(self.game_changes_box)
+        self.verticalLayout_2.addWidget(self.game_changes_box)
 
-        self.suit_colors_foldable = Foldable(self.scroll_area_contents)
+        self.suit_colors_foldable = Foldable(PrimeCosmeticPatchesDialog)
         self.suit_colors_foldable.setObjectName(u"suit_colors_foldable")
         self.suit_colors_foldable.setProperty(u"folded", False)
         self.suit_colors_foldable_layout = QVBoxLayout(self.suit_colors_foldable)
@@ -325,9 +315,9 @@ class Ui_PrimeCosmeticPatchesDialog(object):
         self.suit_colors_foldable_layout.addLayout(self.suit_colors_layout)
 
 
-        self.verticalLayout.addWidget(self.suit_colors_foldable)
+        self.verticalLayout_2.addWidget(self.suit_colors_foldable)
 
-        self.options_foldable = Foldable(self.scroll_area_contents)
+        self.options_foldable = Foldable(PrimeCosmeticPatchesDialog)
         self.options_foldable.setObjectName(u"options_foldable")
         self.options_foldable.setProperty(u"folded", True)
         self.options_foldable_layout = QVBoxLayout(self.options_foldable)
@@ -544,59 +534,10 @@ class Ui_PrimeCosmeticPatchesDialog(object):
         self.options_foldable_layout.addWidget(self.screen_box)
 
 
-        self.verticalLayout.addWidget(self.options_foldable)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
-        self.scrollArea.setWidget(self.scroll_area_contents)
-
-        self.verticalLayout_2.addWidget(self.scrollArea)
-
-        self.line = QFrame(PrimeCosmeticPatchesDialog)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout_2.addWidget(self.line)
-
-        self.footer_layout = QHBoxLayout()
-        self.footer_layout.setSpacing(6)
-        self.footer_layout.setObjectName(u"footer_layout")
-        self.footer_layout.setContentsMargins(6, 6, 6, 6)
-        self.reset_button = QPushButton(PrimeCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-        self.reset_button.setText(u"\u2b8c Reset to Defaults")
-
-        self.footer_layout.addWidget(self.reset_button)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.footer_layout.addItem(self.horizontalSpacer)
-
-        self.accept_button = QPushButton(PrimeCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-        self.accept_button.setMinimumSize(QSize(96, 0))
-        self.accept_button.setText(u"\U0001f5f8 Accept")
-
-        self.footer_layout.addWidget(self.accept_button)
-
-        self.cancel_button = QPushButton(PrimeCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-        self.cancel_button.setMinimumSize(QSize(96, 0))
-        self.cancel_button.setText(u"\U0001f6c7 Cancel")
-
-        self.footer_layout.addWidget(self.cancel_button)
-
-
-        self.verticalLayout_2.addLayout(self.footer_layout)
+        self.verticalLayout_2.addWidget(self.options_foldable)
 
 
         self.retranslateUi(PrimeCosmeticPatchesDialog)
-
-        self.accept_button.setDefault(True)
-
 
         QMetaObject.connectSlotsByName(PrimeCosmeticPatchesDialog)
     # setupUi

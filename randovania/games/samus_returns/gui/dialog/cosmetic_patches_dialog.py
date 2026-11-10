@@ -8,7 +8,7 @@ from PySide6 import QtGui, QtWidgets
 
 from randovania.games.samus_returns.gui.generated.msr_cosmetic_patches_dialog_ui import Ui_MSRCosmeticPatchesDialog
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRRoomGuiType, MusicMode
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib import signal_handling, slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MSRCosmeticPatches], Ui_MSRCosmeticPatchesDialog):
+class MSRCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_MSRCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: MSRCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -51,8 +51,6 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MSRCosmeticPatches], Ui
         return MSRCosmeticPatches
 
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         self._persist_check_field(self.custom_laser_color_check, "use_laser_color")
         self._persist_check_field(self.custom_energy_tank_color_check, "use_energy_tank_color")
         self._persist_check_field(self.custom_aeion_bar_color_check, "use_aeion_bar_color")
@@ -168,13 +166,13 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MSRCosmeticPatches], Ui
     def _on_slider_update(self, slider: QtWidgets.QSlider, field_name: str, _: None) -> None:
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,
-            **{f"{field_name}_volume": slider.value()},  # type: ignore[arg-type]
+            **{f"{field_name}_volume": slider.value()},
         )
         getattr(self, f"{field_name}_label_updater")(slider)
 
-    @property
-    def cosmetic_patches(self) -> MSRCosmeticPatches:
-        return self._cosmetic_patches
-
     def reset(self) -> None:
         self.on_new_cosmetic_patches(MSRCosmeticPatches())
+
+    @override
+    def default_size(self) -> tuple[int, int]:
+        return 542, 546

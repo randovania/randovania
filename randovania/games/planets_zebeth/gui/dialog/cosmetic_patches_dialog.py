@@ -10,7 +10,7 @@ from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches impo
     PlanetsZebethCosmeticPatches,
     PlanetsZebethRoomGuiType,
 )
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
@@ -19,9 +19,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class PlanetsZebethCosmeticPatchesDialog(
-    BaseCosmeticPatchesDialog[PlanetsZebethCosmeticPatches], Ui_PlanetsZebethCosmeticPatchesDialog
-):
+class PlanetsZebethCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_PlanetsZebethCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: PlanetsZebethCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -38,8 +36,6 @@ class PlanetsZebethCosmeticPatchesDialog(
         return PlanetsZebethCosmeticPatches
 
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         self._persist_check_field(self.disable_low_health_beeping_check, "disable_low_health_beeping")
         self.room_name_dropdown.currentIndexChanged.connect(self._on_room_name_update)
         self._persist_check_field(self.show_unexplored_map_check, "show_unexplored_map")
@@ -57,10 +53,6 @@ class PlanetsZebethCosmeticPatchesDialog(
         self.show_unexplored_map_check.setChecked(patches.show_unexplored_map)
         self.use_alternative_escape_theme_check.setChecked(patches.use_alternative_escape_theme)
         self.use_sm_boss_theme_check.setChecked(patches.use_sm_boss_theme)
-
-    @property
-    def cosmetic_patches(self) -> PlanetsZebethCosmeticPatches:
-        return self._cosmetic_patches
 
     def reset(self) -> None:
         self.on_new_cosmetic_patches(PlanetsZebethCosmeticPatches())

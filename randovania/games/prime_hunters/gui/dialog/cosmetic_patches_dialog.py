@@ -10,14 +10,14 @@ from randovania.games.prime_hunters.gui.generated.prime_hunters_cosmetic_patches
     Ui_HuntersCosmeticPatchesDialog,
 )
 from randovania.games.prime_hunters.layout.prime_hunters_cosmetic_patches import HuntersCosmeticPatches
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 
 if TYPE_CHECKING:
     from randovania.games.prime_hunters.layout.prime_hunters_cosmetic_suits import HuntersSuitPreferences
     from randovania.interface_common.options import Options
 
 
-class HuntersCosmeticPatchesDialog(BaseCosmeticPatchesDialog[HuntersCosmeticPatches], Ui_HuntersCosmeticPatchesDialog):
+class HuntersCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_HuntersCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: HuntersCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -31,8 +31,6 @@ class HuntersCosmeticPatchesDialog(BaseCosmeticPatchesDialog[HuntersCosmeticPatc
         return HuntersCosmeticPatches
 
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         self._persist_check_field(self.shuffle_hunter_colors_check, "shuffle_hunter_colors")
 
         self.left_button.clicked.connect(partial(self._on_suit_color_changed, True))
@@ -55,10 +53,6 @@ class HuntersCosmeticPatchesDialog(BaseCosmeticPatchesDialog[HuntersCosmeticPatc
             suit_color=dataclasses.replace(self.cosmetic_patches.suit_color, varia=new_suit),
         )
         self._set_suit_colors(self.cosmetic_patches.suit_color)
-
-    @property
-    def cosmetic_patches(self) -> HuntersCosmeticPatches:
-        return self._cosmetic_patches
 
     def reset(self) -> None:
         self.on_new_cosmetic_patches(HuntersCosmeticPatches())

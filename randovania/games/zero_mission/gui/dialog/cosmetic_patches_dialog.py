@@ -6,7 +6,7 @@ from randovania.games.zero_mission.gui.generated.zero_mission_cosmetic_patches_d
     Ui_MZMCosmeticPatchesDialog,
 )
 from randovania.games.zero_mission.layout.zero_mission_cosmetic_patches import MZMCosmeticPatches
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class MZMCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MZMCosmeticPatches], Ui_MZMCosmeticPatchesDialog):
+class MZMCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_MZMCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: MZMCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -28,16 +28,12 @@ class MZMCosmeticPatchesDialog(BaseCosmeticPatchesDialog[MZMCosmeticPatches], Ui
         return MZMCosmeticPatches
 
     def connect_signals(self) -> None:
-        super().connect_signals()
         # More signals here!
+        pass
 
     def on_new_cosmetic_patches(self, patches: MZMCosmeticPatches) -> None:
         # Update fields with the new values
         pass
-
-    @property
-    def cosmetic_patches(self) -> MZMCosmeticPatches:
-        return self._cosmetic_patches
 
     def reset(self) -> None:
         self.on_new_cosmetic_patches(MZMCosmeticPatches())

@@ -9,7 +9,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from randovania.games.prime2.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
 from randovania.games.prime2.layout.echoes_cosmetic_patches import BaseEchoesCosmeticPatches, EchoesCosmeticPatches
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib import slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.interface_common.options import Options
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 
 class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmeticPatches](
-    BaseCosmeticPatchesDialog[EchoesCosmeticPatchesT], Ui_EchoesCosmeticPatchesDialog
+    GameSpecificCosmeticWidget, Ui_EchoesCosmeticPatchesDialog
 ):
     def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesCosmeticPatchesT, options: Options):
         super().__init__(parent, current, options)
@@ -65,8 +65,6 @@ class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmetic
         self._update_color_squares()
 
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         self._persist_check_field(self.remove_hud_popup_check, "disable_hud_popup")
         self._persist_check_field(self.faster_credits_check, "speed_up_credits")
         self._persist_check_field(self.open_map_check, "open_map")
@@ -143,7 +141,7 @@ class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmetic
             self._cosmetic_patches,
             suit_colors=dataclasses.replace(
                 self.cosmetic_patches.suit_colors,
-                **{suit_name: new_suit},  # type: ignore[arg-type]
+                **{suit_name: new_suit},
             ),
         )
         self._set_suit_colors(self.cosmetic_patches.suit_colors)
@@ -200,10 +198,6 @@ class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmetic
         return color_square
 
     @property
-    def cosmetic_patches(self) -> EchoesCosmeticPatchesT:
-        return self._cosmetic_patches
-
-    @property
     def preferences(self) -> EchoesUserPreferences:
         return self._cosmetic_patches.user_preferences
 
@@ -229,6 +223,11 @@ class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmetic
             self.preferences,
             **{field_name: check.isChecked()},  # type: ignore[arg-type]
         )
+
+    @classmethod
+    @override
+    def cosmetic_patches_type(cls) -> type[EchoesCosmeticPatchesT]:
+        raise NotImplementedError
 
     def reset(self) -> None:
         self.on_new_cosmetic_patches(self.cosmetic_patches_type().default())
@@ -259,3 +258,7 @@ class EchoesCosmeticPatchesDialog(BaseEchoesCosmeticPatchesDialog[EchoesCosmetic
         super().on_new_cosmetic_patches(patches)
         self.unvisited_room_names_check.setChecked(patches.unvisited_room_names)
         self.pickup_markers_check.setChecked(patches.pickup_markers)
+
+    @override
+    def default_size(self) -> tuple[int, int]:
+        return 482, 450

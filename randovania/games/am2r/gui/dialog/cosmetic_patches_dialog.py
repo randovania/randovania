@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, override
 
 from randovania.games.am2r.gui.generated.am2r_cosmetic_patches_dialog_ui import Ui_AM2RCosmeticPatchesDialog
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, AM2RRoomGuiType, MusicMode
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib import color_lib
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -20,7 +20,7 @@ DEFAULT_ETANK_COLOR = (112, 222, 250)
 DEFAULT_DNA_COLOR = (46, 208, 5)
 
 
-class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog[AM2RCosmeticPatches], Ui_AM2RCosmeticPatchesDialog):
+class AM2RCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_AM2RCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: AM2RCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -56,7 +56,6 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog[AM2RCosmeticPatches], 
             box.setStyleSheet(style)
 
     def connect_signals(self) -> None:
-        super().connect_signals()
         self._persist_check_field(self.show_unexplored_map_check, "show_unexplored_map")
         self._persist_check_field(self.unveiled_blocks_check, "unveiled_blocks")
         self.room_name_dropdown.currentIndexChanged.connect(self._on_room_name_mode_update)
@@ -119,9 +118,9 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog[AM2RCosmeticPatches], 
         for music_mode, radio_button in self.radio_buttons.items():
             radio_button.setChecked(music_mode == patches.music)
 
-    @property
-    def cosmetic_patches(self) -> AM2RCosmeticPatches:
-        return self._cosmetic_patches
-
     def reset(self) -> None:
         self.on_new_cosmetic_patches(AM2RCosmeticPatches())
+
+    @override
+    def default_size(self) -> tuple[int, int]:
+        return 548, 533
