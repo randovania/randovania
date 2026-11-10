@@ -49,14 +49,14 @@ class BaseCosmeticPatchesDialog[CosmeticPatches: BaseCosmeticPatches](QtWidgets.
     accept_button: QtWidgets.QPushButton
     cancel_button: QtWidgets.QPushButton
     reset_button: QtWidgets.QPushButton
-    contentWidget: GameSpecificCosmeticWidget[BaseCosmeticPatches]
+    contentWidget: GameSpecificCosmeticWidget[CosmeticPatches]
 
     def __init__(
         self,
         parent: QtWidgets.QWidget | None,
         current: CosmeticPatches,
         options: Options,
-        game_widget: type[GameSpecificCosmeticWidget],
+        game_widget: type[GameSpecificCosmeticWidget[CosmeticPatches]],
     ) -> None:
         super().__init__(parent)
         self.setupUi(self)
