@@ -1312,6 +1312,10 @@ def _migrate_v121(preset: dict, game: RandovaniaGame, *, from_layout_description
             state["priority"] = mapping.get(state["priority"], "normal")
 
 
+def _migrate_v122(preset: dict, game: RandovaniaGame, *, from_layout_description: bool) -> None:
+    preset["configuration"]["place_filler_items"] = True
+
+
 _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1434,6 +1438,7 @@ _MIGRATIONS: list[PresetMigration | None] = [
     _migrate_v119,  # prime: remove `allow_underwater_movement_without_gravity`
     _migrate_v120,  # remove staggered pickup placement
     _migrate_v121,  # change pickup priority from float to enum
+    _migrate_v122,  # core: add option to not place filler pickups
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
