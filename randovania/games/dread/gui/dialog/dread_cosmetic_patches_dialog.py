@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class DreadCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_DreadCosmeticPatchesDialog):
+class DreadCosmeticPatchesDialog(GameSpecificCosmeticWidget[DreadCosmeticPatches], Ui_DreadCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: DreadCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -105,7 +105,7 @@ class DreadCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_DreadCosmeticPat
             shield_type = DreadShieldType.ALTERNATE if value else DreadShieldType.DEFAULT
             self._cosmetic_patches = dataclasses.replace(
                 self._cosmetic_patches,
-                **{attribute_name: shield_type},
+                **{attribute_name: shield_type},  # type: ignore[arg-type]
             )
 
         signal_handling.on_checked(checkbox, persist)
@@ -119,7 +119,7 @@ class DreadCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_DreadCosmeticPat
     def _on_slider_update(self, slider: QtWidgets.QSlider, field_name: str, _: None) -> None:
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,
-            **{f"{field_name}_volume": slider.value()},
+            **{f"{field_name}_volume": slider.value()},  # type: ignore[arg-type]
         )
         getattr(self, f"{field_name}_label_updater")(slider)
 

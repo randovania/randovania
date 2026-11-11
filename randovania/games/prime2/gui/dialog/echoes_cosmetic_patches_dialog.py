@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 
 class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmeticPatches](
-    GameSpecificCosmeticWidget, Ui_EchoesCosmeticPatchesDialog
+    GameSpecificCosmeticWidget[EchoesCosmeticPatchesT], Ui_EchoesCosmeticPatchesDialog
 ):
     def __init__(self, parent: QtWidgets.QWidget | None, current: EchoesCosmeticPatchesT, options: Options):
         super().__init__(parent, current, options)
@@ -141,7 +141,7 @@ class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmetic
             self._cosmetic_patches,
             suit_colors=dataclasses.replace(
                 self.cosmetic_patches.suit_colors,
-                **{suit_name: new_suit},
+                **{suit_name: new_suit},  # type: ignore[arg-type]
             ),
         )
         self._set_suit_colors(self.cosmetic_patches.suit_colors)

@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class MSRCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_MSRCosmeticPatchesDialog):
+class MSRCosmeticPatchesDialog(GameSpecificCosmeticWidget[MSRCosmeticPatches], Ui_MSRCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: MSRCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -166,7 +166,7 @@ class MSRCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_MSRCosmeticPatches
     def _on_slider_update(self, slider: QtWidgets.QSlider, field_name: str, _: None) -> None:
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,
-            **{f"{field_name}_volume": slider.value()},
+            **{f"{field_name}_volume": slider.value()},  # type: ignore[arg-type]
         )
         getattr(self, f"{field_name}_label_updater")(slider)
 

@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class CSCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_CSCosmeticPatchesDialog):
+class CSCosmeticPatchesDialog(GameSpecificCosmeticWidget[CSCosmeticPatches], Ui_CSCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: CSCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)

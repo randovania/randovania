@@ -38,7 +38,7 @@ def _suit_render_path(file_name: str) -> Path:
     return RandovaniaGame.METROID_PRIME.data_path.joinpath("assets", "suit_renders", f"{file_name}.webp")
 
 
-class PrimeCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_PrimeCosmeticPatchesDialog):
+class PrimeCosmeticPatchesDialog(GameSpecificCosmeticWidget[PrimeCosmeticPatches], Ui_PrimeCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: PrimeCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -171,7 +171,7 @@ class PrimeCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_PrimeCosmeticPat
         field_name = "fusion_suit_color_rotations" if self._cosmetic_patches.force_fusion else "suit_color_rotations"
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches,
-            **{field_name: rotations},
+            **{field_name: rotations},  # type: ignore[arg-type]
         )
         self._update_suit_previews()
 

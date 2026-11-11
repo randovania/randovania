@@ -20,7 +20,7 @@ DEFAULT_ETANK_COLOR = (112, 222, 250)
 DEFAULT_DNA_COLOR = (46, 208, 5)
 
 
-class AM2RCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_AM2RCosmeticPatchesDialog):
+class AM2RCosmeticPatchesDialog(GameSpecificCosmeticWidget[AM2RCosmeticPatches], Ui_AM2RCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: AM2RCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)

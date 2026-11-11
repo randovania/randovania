@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override
 
-from PySide6 import QtWidgets
-
 from randovania.games.blank.gui.generated.blank_cosmetic_patches_dialog_ui import Ui_BlankCosmeticPatchesDialog
 from randovania.games.blank.layout.blank_cosmetic_patches import BlankCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
@@ -14,7 +12,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class BlankCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_BlankCosmeticPatchesDialog):
+class BlankCosmeticPatchesDialog(GameSpecificCosmeticWidget[BlankCosmeticPatches], Ui_BlankCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: BlankCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)

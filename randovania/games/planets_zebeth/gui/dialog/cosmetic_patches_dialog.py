@@ -19,7 +19,9 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class PlanetsZebethCosmeticPatchesDialog(GameSpecificCosmeticWidget, Ui_PlanetsZebethCosmeticPatchesDialog):
+class PlanetsZebethCosmeticPatchesDialog(
+    GameSpecificCosmeticWidget[PlanetsZebethCosmeticPatches], Ui_PlanetsZebethCosmeticPatchesDialog
+):
     def __init__(self, parent: QtWidgets.QWidget | None, current: PlanetsZebethCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)

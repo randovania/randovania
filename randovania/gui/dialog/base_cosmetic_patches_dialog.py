@@ -27,7 +27,7 @@ class GameSpecificCosmeticWidget[CosmeticPatches: BaseCosmeticPatches](QtWidgets
         raise NotImplementedError
 
     @classmethod
-    def cosmetic_patches_type(cls) -> type[BaseCosmeticPatches]:
+    def cosmetic_patches_type(cls) -> type[CosmeticPatches]:
         raise NotImplementedError
 
     @property
