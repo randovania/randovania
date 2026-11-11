@@ -45,6 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: The description for Legacy Mode to be clearer.
+
 #### Logic Database
 
 ##### Phendrana Drifts
