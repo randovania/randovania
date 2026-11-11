@@ -43,6 +43,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Phendrana Drifts
+- Changed: Cleaned up the connections from Ruins Entryway to Courtyard Entryway:
+  - Added: Several videos and comments for the tricks involved.
+  - Added: Getting from the top of the ruined building to the stone archway is now possible with an Intermediate Damage Boost.
+  - Added: Several alternative methods on getting on top of the fallen down stalactite.
+  - Added: Getting from the stone archway to the middle-left rooftop via Beginner Momvement.
+  - Added: Dashing from the middle-left rooftop to Courtyard Entryway is now possible with an Intermediate Combat/Scan Dash by dashing off of either the Sheegoth or the items drops from a crate.
+  - Changed: Climbing the ruined building now requires Beginner Standable Terrain for the Beginner Bomb Jump. Doing it with only Bomb Jumps is now Intermediate.
+
 ### Metroid Prime 2: Echoes
 
 - Fixed: Enabling Door Lock Rando makes the Generator consider this instead of always assuming it's disabled.
@@ -104,19 +117,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: The chance for your run being validated and special Missile Expansions being lower than intended.
-
-### Metroid Prime
-
-#### Logic Database
-
-##### Phendrana Drifts
-- Changed: Cleaned up the connections from Ruins Entryway to Courtyard Entryway:
-  - Added: Several videos and comments for the tricks involved.
-  - Added: Getting from the top of the ruined building to the stone archway is now possible with an Intermediate Damage Boost.
-  - Added: Several alternative methods on getting on top of the fallen down stalactite.
-  - Added: Getting from the stone archway to the middle-left rooftop via Beginner Momvement.
-  - Added: Dashing from the middle-left rooftop to Courtyard Entryway is now possible with an Intermediate Combat/Scan Dash by dashing off of either the Sheegoth or the items drops from a crate.
-  - Changed: Climbing the ruined building now requires Beginner Standable Terrain for the Beginner Bomb Jump. Doing it with only Bomb Jumps is now Intermediate.
 
 ### Metroid Prime Hunters
 
