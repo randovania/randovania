@@ -51,7 +51,7 @@ class BaseSocketExecutor[HolderT: CommonSocketHolder]:
         if self.is_connected():
             return None
 
-        writer: StreamWriter | None = None
+        opened_writer: StreamWriter | None = None
         try:
             self._socket_error = None
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
@@ -60,6 +60,7 @@ class BaseSocketExecutor[HolderT: CommonSocketHolder]:
                 reader, writer = await asyncio.wait_for(connection, timeout=self._connect_timeout)
             else:
                 reader, writer = await connection
+            opened_writer = writer
 
             error = await self._perform_handshake(reader, writer)
             if error is not None:
@@ -75,8 +76,8 @@ class BaseSocketExecutor[HolderT: CommonSocketHolder]:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
             self._socket_error = e
-            if writer is not None:
-                writer.close()
+            if opened_writer is not None:
+                opened_writer.close()
             return self._message_for_connect_error(e)
 
     def _message_for_connect_error(self, error: Exception) -> str:
