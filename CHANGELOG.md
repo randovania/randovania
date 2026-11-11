@@ -40,7 +40,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sector 4 (AQA)
 
+- Changed: Aquarium Pirate Tank: Adjusted the requirements for fighting the Aqua Pirates to be less lenient.
 - Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
+
+##### Sector 5 (ARC)
+
+- Changed: Flooded Access: Adjusted the requirements for fighting the Aqua Pirate when going up to be less lenient.
+- Changed: Flooded Access: When going up, both the damage boost through the Aqua Pirate and dodging it have been bumped down to Beginner Damage Boost and Beginner Combat respectively
+- Changed: Flooded Access: When going down, the damage boost through the Aqua Pirate has been bumped down to Beginner Damage Boost.
+- Changed: Zebesian Waters: Adjusted the requirements for fighting the Aqua Pirates to be less lenient.
+- Changed: Flooded Airlock: Adjusted the requirements for fighting the Aqua Pirates in Zebesian Waters to be less lenient.
 
 ### Metroid Prime 2: Echoes
 
