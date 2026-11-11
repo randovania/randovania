@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-335</y>
+         <y>0</y>
          <width>542</width>
-         <height>884</height>
+         <height>1162</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -160,6 +160,31 @@
             <widget class="QLabel" name="logical_pickup_placement_description">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Minimal&lt;/span&gt;: Only the pickups required to beat the game are guaranteed to be obtainable.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="place_filler_check">
+             <property name="text">
+              <string>Place filler</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="place_filler_label">
+             <property name="text">
+              <string>If this setting is enabled, all pickups from the pickup pool will be placed.
+If it is disabled, only pickups necessary to achieve the victory condition will be placed and everything else will be filled with Nothing pickups.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
