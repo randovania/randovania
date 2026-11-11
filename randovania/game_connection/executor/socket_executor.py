@@ -51,6 +51,7 @@ class BaseSocketExecutor[HolderT: CommonSocketHolder]:
         if self.is_connected():
             return None
 
+        writer: StreamWriter | None = None
         try:
             self._socket_error = None
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
@@ -74,6 +75,8 @@ class BaseSocketExecutor[HolderT: CommonSocketHolder]:
             # UnicodeError is for some invalid ip addresses
             self._socket = None
             self._socket_error = e
+            if writer is not None:
+                writer.close()
             return self._message_for_connect_error(e)
 
     def _message_for_connect_error(self, error: Exception) -> str:
