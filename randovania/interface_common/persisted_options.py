@@ -219,7 +219,7 @@ _CONVERTER_FOR_VERSION = [
     _msr_exheader_path,  # adds empty exheader path for MSR
     _msr_room_names_visible,  # forces room name display to be on by default
     _only_new_fields,  # Adds tileset+background rotation for AM2R
-    _only_new_fields,  # added MSR's music shuffle cosemetic option
+    _only_new_fields,  # added MSR's music shuffle cosmetic option
     _only_new_fields,  # added MSR's music sliders
     _remove_msr_fields,  # removes MSR's exheader and input field
     _only_new_fields,  # added last_changelog_displayed_dev
@@ -232,6 +232,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # enabled field for builders
     _only_new_fields,  # split trackers into structure+theme
     _prime1_fusion_suit_color_rotations,  # prime1: suit colors are now remembered per Fusion Suit state
+    _only_new_fields,  # fusion: added able to switch secondary weapon selection from toggle to hold
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

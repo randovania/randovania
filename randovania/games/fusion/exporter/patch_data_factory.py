@@ -4,6 +4,7 @@ import math
 import textwrap
 import typing
 from collections import defaultdict
+from random import Random
 from typing import TYPE_CHECKING, override
 
 from randovania.exporter import item_names
@@ -16,11 +17,11 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.fusion.exporter.hint_namer import FusionColor, FusionHintNamer
 from randovania.games.fusion.exporter.joke_hints import FUSION_JOKE_HINTS
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
-from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
+from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches, MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.hint_configuration import SpecificPickupHintMode
 from randovania.layout.base.pickup_model import PickupModelStyle
-from randovania.lib import json_lib
+from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
     from mars_patcher.mf.auto_generated_types import MarsschemamfStartingItems
@@ -30,12 +31,99 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
+def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
+    boss_list = [
+        "ARACHNUS_BATTLE",
+        "ZAZABI_BATTLE",
+        "BOX_BATTLE",
+        "SERRIS_YAKUZA_BATTLE",
+        "VARIA_CORE_X_BATTLE",
+        "NIGHTMARE_BATTLE",
+        "NEO_RIDLEY_BATTLE",
+        "CHOZO_STATUE_CORE_X_BATTLE",
+        "NETTORI_BATTLE",
+        "SA_X_BATTLE",
+    ]
+
+    exploration_list = [
+        "SECTOR_1",
+        "SECTOR_2",
+        "SECTOR_3",
+        "SECTOR_5",
+        "SECTOR_4",
+        "SECTOR_6",
+        "MAIN_DECK_LIVELY",
+        "HEADING_TO_NIGHTMARE_RIDLEY",
+        "MAIN_BOILER_COOLDOWN_MISSION",
+        "SECTOR_4_UNDERWATER",
+        "FINAL_ORDER",
+    ]
+
+    short_list = [
+        "AFTER_EVENT",
+        "NAVIGATION_ROOM",
+        "SECURITY_DATA_ROOM",
+        "SA_X_APPEARANCE",
+        "SA_X_CHASE",
+        "BOSS_TENSION",
+        "MAIN_DECK_AMBIENCE",
+        "SILENCE_1_SHIP",
+        "TENSION",
+        "OMEGA_METROID_DEFEATED",
+        "OPERATIONS_DECK",
+        "OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND_AND_AMBIENCE",
+        "X_INVASION_DETECTION",
+        "SA_X_ELEVATOR",
+        "OPERATIONS_DECK_ELEVATOR_OFFLINE_AMBIENCE",
+        "STATION_ESCAPE",
+        "DISQUIETING",
+        "SHOCK",
+        "SILENCE_1",
+        "MAIN_BOILER_OVERHEATING",
+        "SILENCE_2",
+        "INTRIGUE",
+        "UNUSED_5E",
+        "UNEASE",
+    ]
+
+    jingle_list = [
+        "ITEM_JINGLE",
+        "LOADING_SAVE",
+        "MESSAGE_POPUP",
+        "OPERATIONS_DECK_ELEVATOR_OFFLINE_SOUND",
+        "OBJECTIVE_COMPLETE",
+        "PRE_TITLE_END",
+        "EPILOGUE_END",
+    ]
+
+    if music_mode == MusicMode.VANILLA:
+        return {}
+
+    # Music is now either TYPE or FULL
+    assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
+
+    total_orig = boss_list + exploration_list + short_list + jingle_list
+
+    if music_mode == MusicMode.FULL:
+        temp_songs = boss_list + exploration_list + short_list
+        total_new = random_lib.shuffle(rng, iter(temp_songs)) + random_lib.shuffle(rng, iter(jingle_list))
+    else:
+        # MusicMode is TYPE
+        shuffled_boss = random_lib.shuffle(rng, iter(boss_list))
+        shuffled_exploration = random_lib.shuffle(rng, iter(exploration_list))
+        shuffled_short = random_lib.shuffle(rng, iter(short_list))
+        shuffled_jingle = random_lib.shuffle(rng, iter(jingle_list))
+        total_new = shuffled_boss + shuffled_exploration + shuffled_short + shuffled_jingle
+
+    return {f"{orig}": f"{new}" for orig, new in zip(total_orig, total_new, strict=True)}
+
+
 class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeticPatches]):
     _placeholder_metroid_message = "placeholder metroid text"
     _metroid_message_id = 56
     _lang_list = ("JAPANESE_KANJI", "JAPANESE_HIRAGANA", "ENGLISH", "GERMAN", "FRENCH", "ITALIAN", "SPANISH")
-    _easter_egg_bob = 64
-    _easter_egg_shiny = 1024
+    _easter_egg_bob = 63
+    _easter_egg_shiny = 1023
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FUSION
@@ -579,11 +667,16 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
             "instant_unmorph": self.configuration.instant_morph,
             "nerf_gerons": self.configuration.adjusted_geron_weaknesses,
             "use_alternative_hud_health_layout": self.cosmetic_patches.alt_health_display,
+            "use_toggle_for_secondary_weapon_selection": self.cosmetic_patches.secondary_weapon_toggle_mode,
             "unexplored_map": self.cosmetic_patches.starting_map,
             "reveal_hidden_tiles": self.cosmetic_patches.reveal_blocks,
             "stereo_default": self.cosmetic_patches.stereo_default,
             "disable_music": self.cosmetic_patches.disable_music,
             "disable_sound_effects": self.cosmetic_patches.disable_sfx,
+            "music_replacement": _construct_music_shuffle_dict(
+                self.cosmetic_patches.music_shuffle,
+                Random(self.description.get_seed_for_world(self.worlds_config.world_index)),
+            ),
             "environmental_damage": self.create_environmental_damage(),
         }
         ## Uncomment to spew the patch data into the terminal

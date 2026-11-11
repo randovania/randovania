@@ -16,43 +16,26 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QFrame, QGridLayout, QHBoxLayout, QLabel,
-    QPushButton, QRadioButton, QScrollArea, QSizePolicy,
-    QSpacerItem, QSpinBox, QVBoxLayout, QWidget)
+    QFrame, QHBoxLayout, QLabel, QPushButton,
+    QRadioButton, QScrollArea, QSizePolicy, QSpacerItem,
+    QSpinBox, QVBoxLayout, QWidget)
 
 class Ui_AM2RCosmeticPatchesDialog(object):
     def setupUi(self, AM2RCosmeticPatchesDialog):
         if not AM2RCosmeticPatchesDialog.objectName():
             AM2RCosmeticPatchesDialog.setObjectName(u"AM2RCosmeticPatchesDialog")
         AM2RCosmeticPatchesDialog.resize(548, 533)
-        self.gridLayout = QGridLayout(AM2RCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.cancel_button = QPushButton(AM2RCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-        self.cancel_button.setAutoDefault(True)
-
-        self.gridLayout.addWidget(self.cancel_button, 2, 1, 1, 1)
-
-        self.accept_button = QPushButton(AM2RCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-        self.accept_button.setAutoDefault(True)
-
-        self.gridLayout.addWidget(self.accept_button, 2, 0, 1, 1)
-
-        self.reset_button = QPushButton(AM2RCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-        self.reset_button.setAutoDefault(True)
-
-        self.gridLayout.addWidget(self.reset_button, 2, 2, 1, 1)
-
+        self.verticalLayout_2 = QVBoxLayout(AM2RCosmeticPatchesDialog)
+        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(AM2RCosmeticPatchesDialog)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 514, 785))
+        self.scroll_area_contents.setGeometry(QRect(0, 0, 532, 744))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -346,7 +329,48 @@ class Ui_AM2RCosmeticPatchesDialog(object):
 
         self.scrollArea.setWidget(self.scroll_area_contents)
 
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.verticalLayout_2.addWidget(self.scrollArea)
+
+        self.line_3 = QFrame(AM2RCosmeticPatchesDialog)
+        self.line_3.setObjectName(u"line_3")
+        self.line_3.setFrameShape(QFrame.Shape.HLine)
+        self.line_3.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_2.addWidget(self.line_3)
+
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.setSpacing(6)
+        self.footer_layout.setObjectName(u"footer_layout")
+        self.footer_layout.setContentsMargins(6, 6, 6, 6)
+        self.reset_button = QPushButton(AM2RCosmeticPatchesDialog)
+        self.reset_button.setObjectName(u"reset_button")
+        self.reset_button.setText(u"\u2b8c Reset to Defaults")
+        self.reset_button.setAutoDefault(True)
+
+        self.footer_layout.addWidget(self.reset_button)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.footer_layout.addItem(self.horizontalSpacer_2)
+
+        self.accept_button = QPushButton(AM2RCosmeticPatchesDialog)
+        self.accept_button.setObjectName(u"accept_button")
+        self.accept_button.setMinimumSize(QSize(96, 0))
+        self.accept_button.setText(u"\U0001f5f8 Accept")
+        self.accept_button.setAutoDefault(True)
+
+        self.footer_layout.addWidget(self.accept_button)
+
+        self.cancel_button = QPushButton(AM2RCosmeticPatchesDialog)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(96, 0))
+        self.cancel_button.setText(u"\U0001f6c7 Cancel")
+        self.cancel_button.setAutoDefault(True)
+
+        self.footer_layout.addWidget(self.cancel_button)
+
+
+        self.verticalLayout_2.addLayout(self.footer_layout)
 
 
         self.retranslateUi(AM2RCosmeticPatchesDialog)
@@ -359,9 +383,6 @@ class Ui_AM2RCosmeticPatchesDialog(object):
 
     def retranslateUi(self, AM2RCosmeticPatchesDialog):
         AM2RCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("AM2RCosmeticPatchesDialog", u"AM2R - Cosmetic Options", None))
-        self.cancel_button.setText(QCoreApplication.translate("AM2RCosmeticPatchesDialog", u"Cancel", None))
-        self.accept_button.setText(QCoreApplication.translate("AM2RCosmeticPatchesDialog", u"Accept", None))
-        self.reset_button.setText(QCoreApplication.translate("AM2RCosmeticPatchesDialog", u"Reset to Defaults", None))
         self.label.setText(QCoreApplication.translate("AM2RCosmeticPatchesDialog", u"Game Changes", None))
         self.show_unexplored_map_check.setText(QCoreApplication.translate("AM2RCosmeticPatchesDialog", u"Show fully unexplored map by default", None))
         self.show_unexplored_map_label.setText(QCoreApplication.translate("AM2RCosmeticPatchesDialog", u"Makes you start with a map, which shows unexplored pickups and non-visited tiles as gray.", None))

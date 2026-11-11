@@ -16,40 +16,27 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-    QPushButton, QRadioButton, QScrollArea, QSizePolicy,
-    QSpacerItem, QSpinBox, QVBoxLayout, QWidget)
+    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
+    QLabel, QPushButton, QRadioButton, QScrollArea,
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+    QWidget)
 
 class Ui_FusionCosmeticPatchesDialog(object):
     def setupUi(self, FusionCosmeticPatchesDialog):
         if not FusionCosmeticPatchesDialog.objectName():
             FusionCosmeticPatchesDialog.setObjectName(u"FusionCosmeticPatchesDialog")
         FusionCosmeticPatchesDialog.resize(700, 585)
-        self.gridLayout = QGridLayout(FusionCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.reset_button = QPushButton(FusionCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-
-        self.gridLayout.addWidget(self.reset_button, 3, 2, 1, 1)
-
-        self.cancel_button = QPushButton(FusionCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.gridLayout.addWidget(self.cancel_button, 3, 1, 1, 1)
-
-        self.accept_button = QPushButton(FusionCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-
-        self.gridLayout.addWidget(self.accept_button, 3, 0, 1, 1)
-
+        self.verticalLayout_3 = QVBoxLayout(FusionCosmeticPatchesDialog)
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.scrollArea = QScrollArea(FusionCosmeticPatchesDialog)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
         self.scroll_area_contents = QWidget()
         self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 663, 638))
+        self.scroll_area_contents.setGeometry(QRect(0, -354, 681, 898))
         self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
@@ -90,6 +77,36 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.alt_health_display_label.setObjectName(u"alt_health_display_label")
 
         self.verticalLayout_2.addWidget(self.alt_health_display_label)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.verticalLayout_2.addItem(self.horizontalSpacer)
+
+        self.secondary_weapon_label = QLabel(self.gameplay_box)
+        self.secondary_weapon_label.setObjectName(u"secondary_weapon_label")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.secondary_weapon_label.sizePolicy().hasHeightForWidth())
+        self.secondary_weapon_label.setSizePolicy(sizePolicy)
+
+        self.verticalLayout_2.addWidget(self.secondary_weapon_label)
+
+        self.secondary_weapon_layout = QHBoxLayout()
+        self.secondary_weapon_layout.setSpacing(6)
+        self.secondary_weapon_layout.setObjectName(u"secondary_weapon_layout")
+        self.secondary_weapon_hold_option = QRadioButton(self.gameplay_box)
+        self.secondary_weapon_hold_option.setObjectName(u"secondary_weapon_hold_option")
+
+        self.secondary_weapon_layout.addWidget(self.secondary_weapon_hold_option)
+
+        self.secondary_weapon_toggle_option = QRadioButton(self.gameplay_box)
+        self.secondary_weapon_toggle_option.setObjectName(u"secondary_weapon_toggle_option")
+
+        self.secondary_weapon_layout.addWidget(self.secondary_weapon_toggle_option)
+
+
+        self.verticalLayout_2.addLayout(self.secondary_weapon_layout)
 
 
         self.verticalLayout.addWidget(self.gameplay_box)
@@ -296,6 +313,55 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.verticalLayout.addWidget(self.palette_box)
 
+        self.music_shuffle_box = QGroupBox(self.scroll_area_contents)
+        self.music_shuffle_box.setObjectName(u"music_shuffle_box")
+        self.verticalLayout_4 = QVBoxLayout(self.music_shuffle_box)
+        self.verticalLayout_4.setSpacing(6)
+        self.verticalLayout_4.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(9, 9, 9, 9)
+        self.music_sub_label = QLabel(self.music_shuffle_box)
+        self.music_sub_label.setObjectName(u"music_sub_label")
+        self.music_sub_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
+
+        self.verticalLayout_4.addWidget(self.music_sub_label)
+
+        self.vanilla_shuffle_button = QRadioButton(self.music_shuffle_box)
+        self.vanilla_shuffle_button.setObjectName(u"vanilla_shuffle_button")
+        self.vanilla_shuffle_button.setChecked(True)
+
+        self.verticalLayout_4.addWidget(self.vanilla_shuffle_button)
+
+        self.vanilla_shuffle_label = QLabel(self.music_shuffle_box)
+        self.vanilla_shuffle_label.setObjectName(u"vanilla_shuffle_label")
+
+        self.verticalLayout_4.addWidget(self.vanilla_shuffle_label)
+
+        self.type_shuffle_button = QRadioButton(self.music_shuffle_box)
+        self.type_shuffle_button.setObjectName(u"type_shuffle_button")
+
+        self.verticalLayout_4.addWidget(self.type_shuffle_button)
+
+        self.type_shuffle_label = QLabel(self.music_shuffle_box)
+        self.type_shuffle_label.setObjectName(u"type_shuffle_label")
+        self.type_shuffle_label.setWordWrap(True)
+
+        self.verticalLayout_4.addWidget(self.type_shuffle_label)
+
+        self.full_shuffle_button = QRadioButton(self.music_shuffle_box)
+        self.full_shuffle_button.setObjectName(u"full_shuffle_button")
+
+        self.verticalLayout_4.addWidget(self.full_shuffle_button)
+
+        self.full_shuffle_label = QLabel(self.music_shuffle_box)
+        self.full_shuffle_label.setObjectName(u"full_shuffle_label")
+        self.full_shuffle_label.setWordWrap(True)
+
+        self.verticalLayout_4.addWidget(self.full_shuffle_label)
+
+
+        self.verticalLayout.addWidget(self.music_shuffle_box)
+
         self.audio_box = QGroupBox(self.scroll_area_contents)
         self.audio_box.setObjectName(u"audio_box")
         self.audio_layout = QVBoxLayout(self.audio_box)
@@ -361,7 +427,50 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.scrollArea.setWidget(self.scroll_area_contents)
 
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.verticalLayout_3.addWidget(self.scrollArea)
+
+        self.line = QFrame(FusionCosmeticPatchesDialog)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_3.addWidget(self.line)
+
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.setSpacing(6)
+        self.footer_layout.setObjectName(u"footer_layout")
+        self.footer_layout.setContentsMargins(6, 6, 6, 6)
+        self.reset_button = QPushButton(FusionCosmeticPatchesDialog)
+        self.reset_button.setObjectName(u"reset_button")
+        self.reset_button.setText(u"\u2b8c Reset to Defaults")
+
+        self.footer_layout.addWidget(self.reset_button)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.footer_layout.addItem(self.horizontalSpacer_2)
+
+        self.accept_button = QPushButton(FusionCosmeticPatchesDialog)
+        self.accept_button.setObjectName(u"accept_button")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.accept_button.sizePolicy().hasHeightForWidth())
+        self.accept_button.setSizePolicy(sizePolicy1)
+        self.accept_button.setMinimumSize(QSize(96, 0))
+        self.accept_button.setText(u"\U0001f5f8 Accept")
+
+        self.footer_layout.addWidget(self.accept_button)
+
+        self.cancel_button = QPushButton(FusionCosmeticPatchesDialog)
+        self.cancel_button.setObjectName(u"cancel_button")
+        self.cancel_button.setMinimumSize(QSize(96, 0))
+        self.cancel_button.setText(u"\U0001f6c7 Cancel")
+
+        self.footer_layout.addWidget(self.cancel_button)
+
+
+        self.verticalLayout_3.addLayout(self.footer_layout)
 
 
         self.retranslateUi(FusionCosmeticPatchesDialog)
@@ -374,9 +483,6 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
     def retranslateUi(self, FusionCosmeticPatchesDialog):
         FusionCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Metroid Fusion - Cosmetic Options", None))
-        self.reset_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Reset to Defaults", None))
-        self.cancel_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Cancel", None))
-        self.accept_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Accept", None))
         self.gameplay_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"General Gameplay", None))
         self.map_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Show unexplored map from start", None))
         self.map_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"This setting reveals the entire map including item dots", None))
@@ -384,6 +490,9 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.reveal_blocks_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Blocks that normally need bombs to be revealed are now always visible", None))
         self.alt_health_display_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Use Alternative HUD Health Display", None))
         self.alt_health_display_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Changes the Health display on the HUD to \"Current Energy / Total Energy\"", None))
+        self.secondary_weapon_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Secondary Weapon Selection Mode:", None))
+        self.secondary_weapon_hold_option.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Hold", None))
+        self.secondary_weapon_toggle_option.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Toggle", None))
         self.palette_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Color Rotation", None))
         self.suit_palette_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Suit Palette", None))
         self.suit_rando_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Randomize Hue Shift", None))
@@ -399,6 +508,14 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.tileset_override_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Override Hue Shift (min,max)", None))
         self.color_space_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Color Space", None))
         self.symmetric_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Enable Symmetric", None))
+        self.music_shuffle_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Music", None))
+        self.music_sub_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Changes how music is shuffled.", None))
+        self.vanilla_shuffle_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Vanilla", None))
+        self.vanilla_shuffle_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Does not shuffle any songs.", None))
+        self.type_shuffle_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Per Type", None))
+        self.type_shuffle_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Shuffles songs within the same category. This ensures that you won't hear boss music while exploring, or an item jingle as the escape sequence. Certain songs, such as the Credits song, are excluded from shuffling.", None))
+        self.full_shuffle_button.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Full Random", None))
+        self.full_shuffle_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Will shuffle all songs with each other. Jingles are shuffled separately. Certain songs, such as the Credits song, are excluded from shuffling.", None))
         self.audio_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Audio Options", None))
         self.default_audio_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Default Audio Settings:", None))
         self.mono_option.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Mono", None))

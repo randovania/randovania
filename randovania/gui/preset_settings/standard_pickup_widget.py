@@ -11,6 +11,7 @@ from randovania.gui.generated.standard_pickup_widget_ui import Ui_StandardPickup
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.layout.base import standard_pickup_state
 from randovania.layout.base.standard_pickup_state import (
+    StandardPickupPriority,
     StandardPickupState,
     StandardPickupStateCase,
 )
@@ -64,12 +65,10 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
                 text = case.pretty_text
             self.state_case_combo.addItem(text, case)
 
-        self.priority_combo.addItem("Very Low", 0.25)
-        self.priority_combo.addItem("Low", 0.50)
-        self.priority_combo.addItem("Normal", 1.0)
-        self.priority_combo.addItem("High", 1.5)
-        self.priority_combo.addItem("Very High", 2.0)
-        set_combo_with_value(self.priority_combo, 1.0)
+        for priority in StandardPickupPriority:
+            self.priority_combo.addItem(priority.pretty_text, priority)
+
+        set_combo_with_value(self.priority_combo, StandardPickupPriority.NORMAL)
 
         # connect
         self.state_case_combo.currentIndexChanged.connect(self._on_select_case)

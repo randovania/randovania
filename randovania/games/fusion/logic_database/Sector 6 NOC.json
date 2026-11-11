@@ -199,6 +199,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Entrance Lobby Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -570,6 +577,32 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Entrance Lobby Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 325.0,
+                        "y": 300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "S6EntranceLobby",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Door to Entrance Recharge Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1145,7 +1178,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0",
+                                                        "comment": "Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0 - this can safely not have a DLR check. With the event visited, either you can go through the open door. Or if its locked, go around which requires having Screw and thus makes the Shinespark unnecessary.",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1153,15 +1186,6 @@
                                                                     "type": "items",
                                                                     "name": "SpeedBooster",
                                                                     "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -1177,19 +1201,19 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "L0Locks",
-                                                                    "amount": 1,
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "misc",
-                                                                    "name": "DoorLockRando",
+                                                                    "type": "events",
+                                                                    "name": "S6EntranceLobby",
                                                                     "amount": 1,
-                                                                    "negate": true
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
@@ -1286,7 +1310,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark from Nav Room: https://youtu.be/u7c-Kq7AaXk",
+                                            "comment": "Shinespark from Entrance Lobby: https://youtu.be/u7c-Kq7AaXk - this can safely not have a DLR check, as if you are expected to do this connection then you can already enter this room from Entrance Lobby",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1313,15 +1337,6 @@
                                                         "name": "L0Locks",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLockRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 },
                                                 {

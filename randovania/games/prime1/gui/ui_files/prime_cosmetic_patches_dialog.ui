@@ -13,32 +13,23 @@
   <property name="windowTitle">
    <string>Metroid Prime 1 - Cosmetic Options</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="2">
-    <widget class="QPushButton" name="reset_button">
-     <property name="text">
-      <string>Reset to Defaults</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="cancel_button">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -48,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>566</width>
-        <height>1236</height>
+        <width>584</width>
+        <height>1350</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -155,88 +146,6 @@
          <layout class="QVBoxLayout" name="suit_colors_foldable_layout">
           <item>
            <layout class="QGridLayout" name="suit_colors_layout">
-            <item row="0" column="0" rowspan="3" colspan="2">
-             <layout class="QVBoxLayout" name="suit_toggles_layout">
-              <item>
-               <widget class="QCheckBox" name="force_fusion_check">
-                <property name="text">
-                 <string>Fusion Suit</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="rainbow_phazon_ball_check">
-                <property name="text">
-                 <string>Rainbow Ball (Phazon Suit)</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="suit_toggles_spacer">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>0</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="2" colspan="2">
-             <layout class="QHBoxLayout" name="gunship_header_layout">
-              <item>
-               <spacer name="gunship_header_left_spacer">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="gunship_name_label">
-                <property name="text">
-                 <string>Gunship</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="gunship_header_separator_label">
-                <property name="text">
-                 <string>|</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="match_gunship_to_power_suit_check">
-                <property name="text">
-                 <string>Match Power Suit</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="gunship_header_right_spacer">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
             <item row="1" column="2" colspan="2">
              <layout class="QHBoxLayout" name="gunship_slider_layout">
               <item>
@@ -307,106 +216,6 @@
               </item>
              </layout>
             </item>
-            <item row="2" column="2" colspan="2">
-             <widget class="QLabel" name="gunship_image_label">
-              <property name="minimumSize">
-               <size>
-                <width>180</width>
-                <height>137</height>
-               </size>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="power_suit_name_label">
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string>Power</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLabel" name="varia_suit_name_label">
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string>Varia</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="2">
-             <widget class="QLabel" name="gravity_suit_name_label">
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string>Gravity</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="3">
-             <widget class="QLabel" name="phazon_suit_name_label">
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string>Phazon</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="ScrollProtectedSlider" name="power_suit_rotation_slider">
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>30</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="tickPosition">
-               <enum>QSlider::TickPosition::TicksBelow</enum>
-              </property>
-              <property name="tickInterval">
-               <number>90</number>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="ScrollProtectedSlider" name="varia_suit_rotation_slider">
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>30</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="tickPosition">
-               <enum>QSlider::TickPosition::TicksBelow</enum>
-              </property>
-              <property name="tickInterval">
-               <number>90</number>
-              </property>
-             </widget>
-            </item>
             <item row="4" column="2">
              <widget class="ScrollProtectedSlider" name="gravity_suit_rotation_slider">
               <property name="maximum">
@@ -426,6 +235,115 @@
               </property>
               <property name="tickInterval">
                <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="3">
+             <widget class="QLabel" name="phazon_suit_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>188</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="varia_ball_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>140</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2" colspan="2">
+             <widget class="QLabel" name="gunship_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>180</width>
+                <height>137</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2" colspan="2">
+             <layout class="QHBoxLayout" name="gunship_header_layout">
+              <item>
+               <spacer name="gunship_header_left_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="gunship_name_label">
+                <property name="text">
+                 <string>Gunship</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="gunship_header_separator_label">
+                <property name="text">
+                 <string>|</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="match_gunship_to_power_suit_check">
+                <property name="text">
+                 <string>Match Power Suit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="gunship_header_right_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="varia_suit_name_label">
+              <property name="text">
+               <string>Varia</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -451,6 +369,32 @@
               </property>
              </widget>
             </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="power_ball_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>140</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLabel" name="phazon_suit_name_label">
+              <property name="text">
+               <string>Phazon</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
             <item row="5" column="0">
              <widget class="QLabel" name="power_suit_image_label">
               <property name="minimumSize">
@@ -459,11 +403,21 @@
                 <height>188</height>
                </size>
               </property>
+              <property name="text">
+               <string/>
+              </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLabel" name="gravity_suit_name_label">
               <property name="text">
-               <string/>
+               <string>Gravity</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -475,91 +429,11 @@
                 <height>188</height>
                </size>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
               <property name="text">
                <string/>
               </property>
-             </widget>
-            </item>
-            <item row="5" column="2">
-             <widget class="QLabel" name="gravity_suit_image_label">
-              <property name="minimumSize">
-               <size>
-                <width>130</width>
-                <height>188</height>
-               </size>
-              </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="3">
-             <widget class="QLabel" name="phazon_suit_image_label">
-              <property name="minimumSize">
-               <size>
-                <width>130</width>
-                <height>188</height>
-               </size>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="power_ball_image_label">
-              <property name="minimumSize">
-               <size>
-                <width>130</width>
-                <height>140</height>
-               </size>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLabel" name="varia_ball_image_label">
-              <property name="minimumSize">
-               <size>
-                <width>130</width>
-                <height>140</height>
-               </size>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="2">
-             <widget class="QLabel" name="gravity_ball_image_label">
-              <property name="minimumSize">
-               <size>
-                <width>130</width>
-                <height>140</height>
-               </size>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-              <property name="text">
-               <string/>
               </property>
              </widget>
             </item>
@@ -571,11 +445,128 @@
                 <height>140</height>
                </size>
               </property>
+              <property name="text">
+               <string/>
+              </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
+             </widget>
+            </item>
+            <item row="5" column="2">
+             <widget class="QLabel" name="gravity_suit_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>188</height>
+               </size>
+              </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="power_suit_name_label">
+              <property name="text">
+               <string>Power</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="ScrollProtectedSlider" name="varia_suit_rotation_slider">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TickPosition::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" rowspan="3" colspan="2">
+             <layout class="QVBoxLayout" name="suit_toggles_layout">
+              <item>
+               <widget class="QCheckBox" name="force_fusion_check">
+                <property name="text">
+                 <string>Fusion Suit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="rainbow_phazon_ball_check">
+                <property name="text">
+                 <string>Rainbow Ball (Phazon Suit)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="suit_toggles_spacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item row="4" column="0">
+             <widget class="ScrollProtectedSlider" name="power_suit_rotation_slider">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>30</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TickPosition::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>90</number>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLabel" name="gravity_ball_image_label">
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>140</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
              </widget>
             </item>
@@ -897,6 +888,78 @@
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="footer_layout">
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="reset_button">
+       <property name="text">
+        <string notr="true">⮌ Reset to Defaults</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="accept_button">
+       <property name="minimumSize">
+        <size>
+         <width>96</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string notr="true">🗸 Accept</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancel_button">
+       <property name="minimumSize">
+        <size>
+         <width>96</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string notr="true">🛇 Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
