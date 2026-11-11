@@ -224,11 +224,6 @@ class BaseEchoesCosmeticPatchesDialog[EchoesCosmeticPatchesT: BaseEchoesCosmetic
             **{field_name: check.isChecked()},  # type: ignore[arg-type]
         )
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[EchoesCosmeticPatchesT]:
-        raise NotImplementedError
-
     def reset(self) -> None:
         self.on_new_cosmetic_patches(self.cosmetic_patches_type().default())
 
@@ -241,11 +236,6 @@ class EchoesCosmeticPatchesDialog(BaseEchoesCosmeticPatchesDialog[EchoesCosmetic
         self.unvisited_map_icons_check.setVisible(False)
         self.hud_color_beam_visor_check.setVisible(False)
         self.hud_color_text_check.setVisible(False)
-
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[EchoesCosmeticPatches]:
-        return EchoesCosmeticPatches
 
     @override
     def connect_signals(self) -> None:

@@ -32,11 +32,6 @@ class CSCosmeticPatchesDialog(GameSpecificCosmeticWidget[CSCosmeticPatches], Ui_
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[CSCosmeticPatches]:
-        return CSCosmeticPatches
-
     def connect_signals(self) -> None:
         signal_handling.on_combo(self.music_type_combo, self._on_music_type_changed)
         self.mychar_left_button.clicked.connect(self._mychar_left)

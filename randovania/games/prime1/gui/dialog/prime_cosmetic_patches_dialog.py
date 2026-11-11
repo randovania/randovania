@@ -88,11 +88,6 @@ class PrimeCosmeticPatchesDialog(GameSpecificCosmeticWidget[PrimeCosmeticPatches
         self.on_new_cosmetic_patches(current)
         self._update_color_squares()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[PrimeCosmeticPatches]:
-        return PrimeCosmeticPatches
-
     def connect_signals(self) -> None:
         self._persist_check_field(self.open_map_check, "open_map")
         self._persist_check_field(self.pickup_markers_check, "pickup_markers")

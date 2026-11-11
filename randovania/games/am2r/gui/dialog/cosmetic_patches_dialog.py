@@ -38,11 +38,6 @@ class AM2RCosmeticPatchesDialog(GameSpecificCosmeticWidget[AM2RCosmeticPatches],
         self.connect_signals()
         self._update_color_squares()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[AM2RCosmeticPatches]:
-        return AM2RCosmeticPatches
-
     def _update_color_squares(self) -> None:
         box_color_rotation_mapping = [
             (self.custom_health_rotation_square, DEFAULT_HEALTH_COLOR, self._cosmetic_patches.health_hud_rotation),

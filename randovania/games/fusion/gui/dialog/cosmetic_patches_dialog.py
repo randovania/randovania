@@ -40,11 +40,6 @@ class FusionCosmeticPatchesDialog(GameSpecificCosmeticWidget[FusionCosmeticPatch
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[FusionCosmeticPatches]:
-        return FusionCosmeticPatches
-
     def connect_signals(self) -> None:
         # Checkboxes for enabling Gameplay Options
         self._persist_check_field(self.map_check, "starting_map")

@@ -45,11 +45,6 @@ class MSRCosmeticPatchesDialog(GameSpecificCosmeticWidget[MSRCosmeticPatches], U
         self.on_new_cosmetic_patches(current)
         self._update_color_squares()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[MSRCosmeticPatches]:
-        return MSRCosmeticPatches
-
     def connect_signals(self) -> None:
         self._persist_check_field(self.custom_laser_color_check, "use_laser_color")
         self._persist_check_field(self.custom_energy_tank_color_check, "use_energy_tank_color")

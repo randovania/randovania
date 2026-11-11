@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from functools import partial
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
@@ -24,11 +24,6 @@ class HuntersCosmeticPatchesDialog(GameSpecificCosmeticWidget[HuntersCosmeticPat
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
-
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[HuntersCosmeticPatches]:
-        return HuntersCosmeticPatches
 
     def connect_signals(self) -> None:
         self._persist_check_field(self.shuffle_hunter_colors_check, "shuffle_hunter_colors")

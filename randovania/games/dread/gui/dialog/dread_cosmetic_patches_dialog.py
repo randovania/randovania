@@ -49,11 +49,6 @@ class DreadCosmeticPatchesDialog(GameSpecificCosmeticWidget[DreadCosmeticPatches
         self.connect_signals()
         self.on_new_cosmetic_patches(current)
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[DreadCosmeticPatches]:
-        return DreadCosmeticPatches
-
     def connect_signals(self) -> None:
         self._persist_check_field(self.show_boss_life, "show_boss_lifebar")
         self._persist_check_field(self.show_enemy_life, "show_enemy_life")

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING
 
 from randovania.games.blank.gui.generated.blank_cosmetic_patches_dialog_ui import Ui_BlankCosmeticPatchesDialog
 from randovania.games.blank.layout.blank_cosmetic_patches import BlankCosmeticPatches
@@ -19,11 +19,6 @@ class BlankCosmeticPatchesDialog(GameSpecificCosmeticWidget[BlankCosmeticPatches
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
-
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[BlankCosmeticPatches]:
-        return BlankCosmeticPatches
 
     def connect_signals(self) -> None:
         # More signals here!

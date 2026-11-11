@@ -26,9 +26,8 @@ class GameSpecificCosmeticWidget[CosmeticPatches: BaseCosmeticPatches](QtWidgets
         """
         raise NotImplementedError
 
-    @classmethod
-    def cosmetic_patches_type(cls) -> type[CosmeticPatches]:
-        raise NotImplementedError
+    def cosmetic_patches_type(self) -> type[CosmeticPatches]:
+        return type(self.cosmetic_patches)
 
     @property
     def cosmetic_patches(self) -> CosmeticPatches:
@@ -68,9 +67,10 @@ class BaseCosmeticPatchesDialog[CosmeticPatches: BaseCosmeticPatches](QtWidgets.
     ) -> None:
         super().__init__(parent)
         self.setupUi(self)
-        assert isinstance(current, game_widget.cosmetic_patches_type())
 
         widget = game_widget(self.scroll_area_contents, current, options)
+        assert isinstance(current, widget.cosmetic_patches_type())
+
         self.scroll_area_layout.replaceWidget(self.contentWidget, widget)
         geometry = self.geometry()
         default_width, default_height = widget.default_size()

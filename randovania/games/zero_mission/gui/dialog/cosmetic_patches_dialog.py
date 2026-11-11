@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING
 
 from randovania.games.zero_mission.gui.generated.zero_mission_cosmetic_patches_dialog_ui import (
     Ui_MZMCosmeticPatchesDialog,
@@ -21,11 +21,6 @@ class MZMCosmeticPatchesDialog(GameSpecificCosmeticWidget[MZMCosmeticPatches], U
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
-
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[MZMCosmeticPatches]:
-        return MZMCosmeticPatches
 
     def connect_signals(self) -> None:
         # More signals here!

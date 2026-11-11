@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING
 
 from randovania.games.planets_zebeth.gui.generated.planets_zebeth_cosmetic_patches_dialog_ui import (
     Ui_PlanetsZebethCosmeticPatchesDialog,
@@ -31,11 +31,6 @@ class PlanetsZebethCosmeticPatchesDialog(
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
-
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[PlanetsZebethCosmeticPatches]:
-        return PlanetsZebethCosmeticPatches
 
     def connect_signals(self) -> None:
         self._persist_check_field(self.disable_low_health_beeping_check, "disable_low_health_beeping")
