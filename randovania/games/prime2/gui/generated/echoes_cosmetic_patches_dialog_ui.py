@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
-    QLabel, QPushButton, QScrollArea, QSizePolicy,
-    QSlider, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
+    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QSlider, QVBoxLayout,
+    QWidget)
 
 from randovania.gui.widgets.foldable import Foldable
 from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
@@ -27,28 +27,13 @@ class Ui_EchoesCosmeticPatchesDialog(object):
     def setupUi(self, EchoesCosmeticPatchesDialog):
         if not EchoesCosmeticPatchesDialog.objectName():
             EchoesCosmeticPatchesDialog.setObjectName(u"EchoesCosmeticPatchesDialog")
-        EchoesCosmeticPatchesDialog.resize(482, 450)
+        EchoesCosmeticPatchesDialog.resize(482, 2477)
         self.verticalLayout_7 = QVBoxLayout(EchoesCosmeticPatchesDialog)
-        self.verticalLayout_7.setSpacing(0)
+        self.verticalLayout_7.setSpacing(6)
         self.verticalLayout_7.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.scrollArea = QScrollArea(EchoesCosmeticPatchesDialog)
-        self.scrollArea.setObjectName(u"scrollArea")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
-        self.scrollArea.setSizePolicy(sizePolicy)
-        self.scrollArea.setWidgetResizable(True)
-        self.scroll_area_contents = QWidget()
-        self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 466, 2483))
-        self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.game_changes_box = QGroupBox(self.scroll_area_contents)
+        self.game_changes_box = QGroupBox(EchoesCosmeticPatchesDialog)
         self.game_changes_box.setObjectName(u"game_changes_box")
         self.game_changes_layout = QVBoxLayout(self.game_changes_box)
         self.game_changes_layout.setSpacing(6)
@@ -85,9 +70,9 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.game_changes_layout.addWidget(self.unvisited_map_icons_check)
 
 
-        self.verticalLayout.addWidget(self.game_changes_box)
+        self.verticalLayout_7.addWidget(self.game_changes_box)
 
-        self.hud_color_group_box = QGroupBox(self.scroll_area_contents)
+        self.hud_color_group_box = QGroupBox(EchoesCosmeticPatchesDialog)
         self.hud_color_group_box.setObjectName(u"hud_color_group_box")
         self.verticalLayout_6 = QVBoxLayout(self.hud_color_group_box)
         self.verticalLayout_6.setSpacing(6)
@@ -103,21 +88,21 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.custom_hud_color_button = QPushButton(self.hud_color_group_box)
         self.custom_hud_color_button.setObjectName(u"custom_hud_color_button")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.custom_hud_color_button.sizePolicy().hasHeightForWidth())
-        self.custom_hud_color_button.setSizePolicy(sizePolicy1)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.custom_hud_color_button.sizePolicy().hasHeightForWidth())
+        self.custom_hud_color_button.setSizePolicy(sizePolicy)
 
         self.hud_color_layout.addWidget(self.custom_hud_color_button)
 
         self.custom_hud_color_square = QFrame(self.hud_color_group_box)
         self.custom_hud_color_square.setObjectName(u"custom_hud_color_square")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.custom_hud_color_square.sizePolicy().hasHeightForWidth())
-        self.custom_hud_color_square.setSizePolicy(sizePolicy2)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.custom_hud_color_square.sizePolicy().hasHeightForWidth())
+        self.custom_hud_color_square.setSizePolicy(sizePolicy1)
         self.custom_hud_color_square.setMinimumSize(QSize(22, 22))
         self.custom_hud_color_square.setAutoFillBackground(False)
         self.custom_hud_color_square.setFrameShape(QFrame.Shape.StyledPanel)
@@ -140,9 +125,9 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.verticalLayout_6.addWidget(self.hud_color_beam_visor_check)
 
 
-        self.verticalLayout.addWidget(self.hud_color_group_box)
+        self.verticalLayout_7.addWidget(self.hud_color_group_box)
 
-        self.suits_foldable = Foldable(self.scroll_area_contents)
+        self.suits_foldable = Foldable(EchoesCosmeticPatchesDialog)
         self.suits_foldable.setObjectName(u"suits_foldable")
         self.suits_foldable.setProperty(u"folded", True)
         self.suits_foldable_layout = QVBoxLayout(self.suits_foldable)
@@ -162,22 +147,22 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.simple_left_button = QPushButton(self.simple_suit_box)
         self.simple_left_button.setObjectName(u"simple_left_button")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.simple_left_button.sizePolicy().hasHeightForWidth())
-        self.simple_left_button.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.simple_left_button.sizePolicy().hasHeightForWidth())
+        self.simple_left_button.setSizePolicy(sizePolicy2)
         self.simple_left_button.setMaximumSize(QSize(48, 16777215))
 
         self.horizontalLayout_2.addWidget(self.simple_left_button)
 
         self.simple_value_box = QGroupBox(self.simple_suit_box)
         self.simple_value_box.setObjectName(u"simple_value_box")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.simple_value_box.sizePolicy().hasHeightForWidth())
-        self.simple_value_box.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.simple_value_box.sizePolicy().hasHeightForWidth())
+        self.simple_value_box.setSizePolicy(sizePolicy3)
         self.simple_value_box.setFlat(False)
         self.verticalLayout_2 = QVBoxLayout(self.simple_value_box)
         self.verticalLayout_2.setSpacing(6)
@@ -185,11 +170,11 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.simple_name_label = QLabel(self.simple_value_box)
         self.simple_name_label.setObjectName(u"simple_name_label")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.simple_name_label.sizePolicy().hasHeightForWidth())
-        self.simple_name_label.setSizePolicy(sizePolicy5)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.simple_name_label.sizePolicy().hasHeightForWidth())
+        self.simple_name_label.setSizePolicy(sizePolicy4)
         font = QFont()
         font.setPointSize(9)
         font.setBold(True)
@@ -200,8 +185,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.simple_img_label = QLabel(self.simple_value_box)
         self.simple_img_label.setObjectName(u"simple_img_label")
-        sizePolicy5.setHeightForWidth(self.simple_img_label.sizePolicy().hasHeightForWidth())
-        self.simple_img_label.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.simple_img_label.sizePolicy().hasHeightForWidth())
+        self.simple_img_label.setSizePolicy(sizePolicy4)
         self.simple_img_label.setMinimumSize(QSize(256, 256))
         self.simple_img_label.setMaximumSize(QSize(16777215, 16777215))
         font1 = QFont()
@@ -216,8 +201,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.simple_right_button = QPushButton(self.simple_suit_box)
         self.simple_right_button.setObjectName(u"simple_right_button")
-        sizePolicy3.setHeightForWidth(self.simple_right_button.sizePolicy().hasHeightForWidth())
-        self.simple_right_button.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.simple_right_button.sizePolicy().hasHeightForWidth())
+        self.simple_right_button.setSizePolicy(sizePolicy2)
         self.simple_right_button.setMinimumSize(QSize(0, 0))
         self.simple_right_button.setMaximumSize(QSize(48, 16777215))
         self.simple_right_button.setBaseSize(QSize(0, 0))
@@ -235,16 +220,16 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.varia_left_button = QPushButton(self.varia_suit_box)
         self.varia_left_button.setObjectName(u"varia_left_button")
-        sizePolicy3.setHeightForWidth(self.varia_left_button.sizePolicy().hasHeightForWidth())
-        self.varia_left_button.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.varia_left_button.sizePolicy().hasHeightForWidth())
+        self.varia_left_button.setSizePolicy(sizePolicy2)
         self.varia_left_button.setMaximumSize(QSize(48, 16777215))
 
         self.horizontalLayout_3.addWidget(self.varia_left_button)
 
         self.varia_value_box = QGroupBox(self.varia_suit_box)
         self.varia_value_box.setObjectName(u"varia_value_box")
-        sizePolicy4.setHeightForWidth(self.varia_value_box.sizePolicy().hasHeightForWidth())
-        self.varia_value_box.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.varia_value_box.sizePolicy().hasHeightForWidth())
+        self.varia_value_box.setSizePolicy(sizePolicy3)
         self.varia_value_box.setFlat(False)
         self.verticalLayout_3 = QVBoxLayout(self.varia_value_box)
         self.verticalLayout_3.setSpacing(6)
@@ -252,8 +237,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.varia_name_label = QLabel(self.varia_value_box)
         self.varia_name_label.setObjectName(u"varia_name_label")
-        sizePolicy5.setHeightForWidth(self.varia_name_label.sizePolicy().hasHeightForWidth())
-        self.varia_name_label.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.varia_name_label.sizePolicy().hasHeightForWidth())
+        self.varia_name_label.setSizePolicy(sizePolicy4)
         self.varia_name_label.setFont(font)
         self.varia_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -261,8 +246,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.varia_img_label = QLabel(self.varia_value_box)
         self.varia_img_label.setObjectName(u"varia_img_label")
-        sizePolicy5.setHeightForWidth(self.varia_img_label.sizePolicy().hasHeightForWidth())
-        self.varia_img_label.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.varia_img_label.sizePolicy().hasHeightForWidth())
+        self.varia_img_label.setSizePolicy(sizePolicy4)
         self.varia_img_label.setMinimumSize(QSize(256, 256))
         self.varia_img_label.setMaximumSize(QSize(16777215, 16777215))
         self.varia_img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -274,8 +259,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.varia_right_button = QPushButton(self.varia_suit_box)
         self.varia_right_button.setObjectName(u"varia_right_button")
-        sizePolicy3.setHeightForWidth(self.varia_right_button.sizePolicy().hasHeightForWidth())
-        self.varia_right_button.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.varia_right_button.sizePolicy().hasHeightForWidth())
+        self.varia_right_button.setSizePolicy(sizePolicy2)
         self.varia_right_button.setMinimumSize(QSize(0, 0))
         self.varia_right_button.setMaximumSize(QSize(48, 16777215))
         self.varia_right_button.setBaseSize(QSize(0, 0))
@@ -293,16 +278,16 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.dark_left_button = QPushButton(self.dark_suit_box)
         self.dark_left_button.setObjectName(u"dark_left_button")
-        sizePolicy3.setHeightForWidth(self.dark_left_button.sizePolicy().hasHeightForWidth())
-        self.dark_left_button.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.dark_left_button.sizePolicy().hasHeightForWidth())
+        self.dark_left_button.setSizePolicy(sizePolicy2)
         self.dark_left_button.setMaximumSize(QSize(48, 16777215))
 
         self.horizontalLayout_4.addWidget(self.dark_left_button)
 
         self.dark_value_box = QGroupBox(self.dark_suit_box)
         self.dark_value_box.setObjectName(u"dark_value_box")
-        sizePolicy4.setHeightForWidth(self.dark_value_box.sizePolicy().hasHeightForWidth())
-        self.dark_value_box.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.dark_value_box.sizePolicy().hasHeightForWidth())
+        self.dark_value_box.setSizePolicy(sizePolicy3)
         self.dark_value_box.setFlat(False)
         self.verticalLayout_4 = QVBoxLayout(self.dark_value_box)
         self.verticalLayout_4.setSpacing(6)
@@ -310,8 +295,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.dark_name_label = QLabel(self.dark_value_box)
         self.dark_name_label.setObjectName(u"dark_name_label")
-        sizePolicy5.setHeightForWidth(self.dark_name_label.sizePolicy().hasHeightForWidth())
-        self.dark_name_label.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.dark_name_label.sizePolicy().hasHeightForWidth())
+        self.dark_name_label.setSizePolicy(sizePolicy4)
         font2 = QFont()
         font2.setBold(True)
         self.dark_name_label.setFont(font2)
@@ -321,8 +306,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.dark_img_label = QLabel(self.dark_value_box)
         self.dark_img_label.setObjectName(u"dark_img_label")
-        sizePolicy5.setHeightForWidth(self.dark_img_label.sizePolicy().hasHeightForWidth())
-        self.dark_img_label.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.dark_img_label.sizePolicy().hasHeightForWidth())
+        self.dark_img_label.setSizePolicy(sizePolicy4)
         self.dark_img_label.setMinimumSize(QSize(256, 256))
         self.dark_img_label.setMaximumSize(QSize(16777215, 16777215))
         self.dark_img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -334,8 +319,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.dark_right_button = QPushButton(self.dark_suit_box)
         self.dark_right_button.setObjectName(u"dark_right_button")
-        sizePolicy3.setHeightForWidth(self.dark_right_button.sizePolicy().hasHeightForWidth())
-        self.dark_right_button.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.dark_right_button.sizePolicy().hasHeightForWidth())
+        self.dark_right_button.setSizePolicy(sizePolicy2)
         self.dark_right_button.setMinimumSize(QSize(0, 0))
         self.dark_right_button.setMaximumSize(QSize(48, 16777215))
         self.dark_right_button.setBaseSize(QSize(0, 0))
@@ -353,16 +338,16 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.light_left_button = QPushButton(self.light_suit_box)
         self.light_left_button.setObjectName(u"light_left_button")
-        sizePolicy3.setHeightForWidth(self.light_left_button.sizePolicy().hasHeightForWidth())
-        self.light_left_button.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.light_left_button.sizePolicy().hasHeightForWidth())
+        self.light_left_button.setSizePolicy(sizePolicy2)
         self.light_left_button.setMaximumSize(QSize(48, 16777215))
 
         self.horizontalLayout_5.addWidget(self.light_left_button)
 
         self.light_value_box = QGroupBox(self.light_suit_box)
         self.light_value_box.setObjectName(u"light_value_box")
-        sizePolicy4.setHeightForWidth(self.light_value_box.sizePolicy().hasHeightForWidth())
-        self.light_value_box.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.light_value_box.sizePolicy().hasHeightForWidth())
+        self.light_value_box.setSizePolicy(sizePolicy3)
         self.light_value_box.setFlat(False)
         self.verticalLayout_5 = QVBoxLayout(self.light_value_box)
         self.verticalLayout_5.setSpacing(6)
@@ -370,8 +355,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.light_name_label = QLabel(self.light_value_box)
         self.light_name_label.setObjectName(u"light_name_label")
-        sizePolicy5.setHeightForWidth(self.light_name_label.sizePolicy().hasHeightForWidth())
-        self.light_name_label.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.light_name_label.sizePolicy().hasHeightForWidth())
+        self.light_name_label.setSizePolicy(sizePolicy4)
         self.light_name_label.setFont(font)
         self.light_name_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -379,8 +364,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.light_img_label = QLabel(self.light_value_box)
         self.light_img_label.setObjectName(u"light_img_label")
-        sizePolicy5.setHeightForWidth(self.light_img_label.sizePolicy().hasHeightForWidth())
-        self.light_img_label.setSizePolicy(sizePolicy5)
+        sizePolicy4.setHeightForWidth(self.light_img_label.sizePolicy().hasHeightForWidth())
+        self.light_img_label.setSizePolicy(sizePolicy4)
         self.light_img_label.setMinimumSize(QSize(256, 256))
         self.light_img_label.setMaximumSize(QSize(16777215, 16777215))
         self.light_img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -392,8 +377,8 @@ class Ui_EchoesCosmeticPatchesDialog(object):
 
         self.light_right_button = QPushButton(self.light_suit_box)
         self.light_right_button.setObjectName(u"light_right_button")
-        sizePolicy3.setHeightForWidth(self.light_right_button.sizePolicy().hasHeightForWidth())
-        self.light_right_button.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.light_right_button.sizePolicy().hasHeightForWidth())
+        self.light_right_button.setSizePolicy(sizePolicy2)
         self.light_right_button.setMinimumSize(QSize(0, 0))
         self.light_right_button.setMaximumSize(QSize(48, 16777215))
         self.light_right_button.setBaseSize(QSize(0, 0))
@@ -409,9 +394,9 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.suits_foldable_layout.addWidget(self.advanced_check)
 
 
-        self.verticalLayout.addWidget(self.suits_foldable)
+        self.verticalLayout_7.addWidget(self.suits_foldable)
 
-        self.options_foldable = Foldable(self.scroll_area_contents)
+        self.options_foldable = Foldable(EchoesCosmeticPatchesDialog)
         self.options_foldable.setObjectName(u"options_foldable")
         self.options_foldable.setProperty(u"folded", True)
         self.options_foldable_layout = QVBoxLayout(self.options_foldable)
@@ -629,59 +614,10 @@ class Ui_EchoesCosmeticPatchesDialog(object):
         self.options_foldable_layout.addWidget(self.screen_box)
 
 
-        self.verticalLayout.addWidget(self.options_foldable)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
-        self.scrollArea.setWidget(self.scroll_area_contents)
-
-        self.verticalLayout_7.addWidget(self.scrollArea)
-
-        self.line = QFrame(EchoesCosmeticPatchesDialog)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout_7.addWidget(self.line)
-
-        self.footer_layout = QHBoxLayout()
-        self.footer_layout.setSpacing(6)
-        self.footer_layout.setObjectName(u"footer_layout")
-        self.footer_layout.setContentsMargins(6, 6, 6, 6)
-        self.reset_button = QPushButton(EchoesCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-        self.reset_button.setText(u"\u2b8c Reset to Defaults")
-
-        self.footer_layout.addWidget(self.reset_button)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.footer_layout.addItem(self.horizontalSpacer)
-
-        self.accept_button = QPushButton(EchoesCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-        self.accept_button.setMinimumSize(QSize(96, 0))
-        self.accept_button.setText(u"\U0001f5f8 Accept")
-
-        self.footer_layout.addWidget(self.accept_button)
-
-        self.cancel_button = QPushButton(EchoesCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-        self.cancel_button.setMinimumSize(QSize(96, 0))
-        self.cancel_button.setText(u"\U0001f6c7 Cancel")
-
-        self.footer_layout.addWidget(self.cancel_button)
-
-
-        self.verticalLayout_7.addLayout(self.footer_layout)
+        self.verticalLayout_7.addWidget(self.options_foldable)
 
 
         self.retranslateUi(EchoesCosmeticPatchesDialog)
-
-        self.accept_button.setDefault(True)
-
 
         QMetaObject.connectSlotsByName(EchoesCosmeticPatchesDialog)
     # setupUi
