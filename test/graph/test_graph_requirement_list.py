@@ -206,6 +206,19 @@ def test_satisfied_negate(mock_resources, blank_resource_db, has_resource, expec
     assert req.satisfied(resources, 100.0) == expected
 
 
+def test_negate_multiple_unmet_while_holding_one(mock_resources, blank_resource_db):
+    req = GraphRequirementList(blank_resource_db)
+    req.add_resource(mock_resources["item_a"], 1, True)
+    req.add_resource(mock_resources["item_b"], 1, True)
+
+    resources = blank_resource_db.create_resource_collection()
+    resources.add_resource_gain([(mock_resources["item_a"], 1)])
+
+    assert not req.satisfied(resources, 100.0)
+    assert req.satisfied_damage(resources) == float("inf")
+    assert req.isolate_damage_requirements(resources) is None
+
+
 @pytest.mark.parametrize(("has_item_b", "expected"), [(True, True), (False, False)])
 def test_satisfied_multiple(mock_resources, blank_resource_db, has_item_b, expected):
     """Test satisfaction with multiple requirements all met or one missing."""
