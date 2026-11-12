@@ -155,6 +155,19 @@
          </widget>
         </item>
         <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QCheckBox" name="suit_rando_shift_check">
           <property name="enabled">
            <bool>true</bool>
@@ -164,30 +177,8 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignmentFlag::AlignLeft">
-         <widget class="QCheckBox" name="suit_override_shift_check">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Override Hue Shift (min,max)</string>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item>
-         <widget class="QSpinBox" name="suit_override_shift_spin_min">
+         <widget class="QSpinBox" name="suit_shift_spin_min">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -206,7 +197,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="suit_override_shift_spin_max">
+         <widget class="QSpinBox" name="suit_shift_spin_max">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -245,6 +236,19 @@
          </widget>
         </item>
         <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QCheckBox" name="beam_rando_shift_check">
           <property name="enabled">
            <bool>true</bool>
@@ -254,18 +258,8 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignmentFlag::AlignLeft">
-         <widget class="QCheckBox" name="beam_override_shift_check">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Override Hue Shift (min,max)</string>
-          </property>
-         </widget>
-        </item>
         <item>
-         <widget class="QSpinBox" name="beam_override_shift_spin_min">
+         <widget class="QSpinBox" name="beam_shift_spin_min">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -284,7 +278,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="beam_override_shift_spin_max">
+         <widget class="QSpinBox" name="beam_shift_spin_max">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -317,6 +311,19 @@
          </widget>
         </item>
         <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QCheckBox" name="enemy_rando_shift_check">
           <property name="enabled">
            <bool>true</bool>
@@ -326,18 +333,8 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignmentFlag::AlignLeft">
-         <widget class="QCheckBox" name="enemy_override_shift_check">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Override Hue Shift (min,max)</string>
-          </property>
-         </widget>
-        </item>
         <item>
-         <widget class="QSpinBox" name="enemy_override_shift_spin_min">
+         <widget class="QSpinBox" name="enemy_shift_spin_min">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -356,7 +353,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="enemy_override_shift_spin_max">
+         <widget class="QSpinBox" name="enemy_shift_spin_max">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -389,6 +386,19 @@
          </widget>
         </item>
         <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QCheckBox" name="tileset_rando_shift_check">
           <property name="enabled">
            <bool>true</bool>
@@ -398,18 +408,8 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignmentFlag::AlignLeft">
-         <widget class="QCheckBox" name="tileset_override_shift_check">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Override Hue Shift (min,max)</string>
-          </property>
-         </widget>
-        </item>
         <item>
-         <widget class="QSpinBox" name="tileset_override_shift_spin_min">
+         <widget class="QSpinBox" name="tileset_shift_spin_min">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -434,7 +434,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="tileset_override_shift_spin_max">
+         <widget class="QSpinBox" name="tileset_shift_spin_max">
           <property name="enabled">
            <bool>false</bool>
           </property>

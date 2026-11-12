@@ -281,31 +281,22 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         cosmetics = self.cosmetic_patches
         palettes = {}
 
-        palette_type_dict = {
-            "suit": "SAMUS",
-            "beam": "BEAMS",
-            "enemy": "ENEMIES",
-            "tileset": "TILESETS",
+        palette_groupings = {
+            ("SAMUS", cosmetics.enable_suit_palette, cosmetics.suit_hue_min, cosmetics.suit_hue_max),
+            ("BEAMS", cosmetics.enable_beam_palette, cosmetics.beam_hue_min, cosmetics.beam_hue_max),
+            ("ENEMIES", cosmetics.enable_enemy_palette, cosmetics.enemy_hue_min, cosmetics.enemy_hue_max),
+            ("TILESETS", cosmetics.enable_tileset_palette, cosmetics.tileset_hue_min, cosmetics.tileset_hue_max),
         }
 
-        for attr_name, palettes_key in palette_type_dict.items():
-            if getattr(cosmetics, f"enable_{attr_name}_palette"):
-                palettes[palettes_key] = {
-                    "hue_min": getattr(cosmetics, f"{attr_name}_hue_min"),
-                    "hue_max": getattr(cosmetics, f"{attr_name}_hue_max"),
-                }
-            if getattr(cosmetics, f"enable_{attr_name}_palette") and getattr(
-                cosmetics, f"enable_{attr_name}_palette_override"
-            ):
-                palettes[palettes_key] = {
-                    "hue_min": getattr(cosmetics, f"{attr_name}_hue_override_min"),
-                    "hue_max": getattr(cosmetics, f"{attr_name}_hue_override_max"),
-                }
+        for palette_key, setting_enabled, palette_min, palette_max in palette_groupings:
+            if setting_enabled:
+                palettes[palette_key] = {"hue_min": palette_min, "hue_max": palette_max}
+
         palette_dict = {
             "seed": self.description.get_seed_for_world(self.worlds_config.world_index),
             "randomize": palettes,
             "color_space": cosmetics.color_space.long_name,
-            "symmetric": getattr(cosmetics, "enable_symmetric"),
+            "symmetric": cosmetics.enable_symmetric,
         }
         return palette_dict
 
