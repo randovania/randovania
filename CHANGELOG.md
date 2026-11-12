@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
 - Removed: Intel macOS devices are no longer supported.
 - Fixed: A failed connection attempt to a game connected via a socket no longer leaves the connection open, which could prevent any further connection until the game was restarted.
-- Fixed: Logic no longer ignores an alternative that uses an item when another alternative needs several of that item. For example, Metroid Fusion's logic expected 6 Missiles to kill a Geron, ignoring the options needing only 3 Missiles with a Missile Data upgrade.
-- Fixed: Logic no longer fasely considers paths which negate two resources when only one is satisfied. For example, Metroid Dread's Burenia Hub to Dairon expected crossing the water with only one of the two Water Blobs destroyed.
+- Fixed: Logic no longer falsely optimizes out the easier alternatives when the presence of a one resource lessens the amount required of another.
+- Fixed: A requirement that needs several resources to be absent is now unmet as soon as the player has any one of them. Previously, it was unmet only when the player had all of them.
 
 ### Metroid Dread
 
