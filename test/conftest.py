@@ -12,6 +12,7 @@ from unittest.mock import MagicMock, PropertyMock
 
 import pytest
 from frozendict import frozendict
+from hypothesis import settings
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
@@ -38,6 +39,11 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.graph.world_graph import WorldGraph
+
+
+# Fixed RNG, so a property test never passes or fails by chance
+settings.register_profile("randovania", derandomize=True)
+settings.load_profile("randovania")
 
 
 class TestFilesDir:

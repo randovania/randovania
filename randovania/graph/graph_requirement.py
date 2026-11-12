@@ -370,9 +370,8 @@ class GraphRequirementList:
         if not self._set_bitmask.is_subset_of(resources.resource_bitmask.data):
             return False
 
-        if not self._negate_bitmask.is_empty():
-            if self._negate_bitmask.is_subset_of(resources.resource_bitmask.data):
-                return False
+        if self._negate_bitmask.share_at_least_one_bit(resources.resource_bitmask.data):
+            return False
 
         for entry in self._other_resources:
             if resources.get_index(entry.first) < entry.second:
@@ -392,9 +391,8 @@ class GraphRequirementList:
         if not self._set_bitmask.is_subset_of(resources.resource_bitmask.data):
             return INF
 
-        if not self._negate_bitmask.is_empty():
-            if self._negate_bitmask.is_subset_of(resources.resource_bitmask.data):
-                return INF
+        if self._negate_bitmask.share_at_least_one_bit(resources.resource_bitmask.data):
+            return INF
 
         for entry in self._other_resources:
             if resources.get_index(entry.first) < entry.second:
@@ -579,15 +577,13 @@ class GraphRequirementList:
         :param resources:
         :return: None, if it's currently not satisfied.
         """
-        if not self._set_bitmask.is_empty():
-            # A satisfied resource requirement becomes Trivial, which is then discarded
-            # An unsatisfied resource requirement becomes Impossible, which means the entire And is impossible
-            if not self._set_bitmask.is_subset_of(resources.resource_bitmask.data):
-                return None
+        # A satisfied resource requirement becomes Trivial, which is then discarded
+        # An unsatisfied resource requirement becomes Impossible, which means the entire And is impossible
+        if not self._set_bitmask.is_subset_of(resources.resource_bitmask.data):
+            return None
 
-        if not self._negate_bitmask.is_empty():
-            if self._negate_bitmask.share_at_least_one_bit(resources.resource_bitmask.data):
-                return None
+        if self._negate_bitmask.share_at_least_one_bit(resources.resource_bitmask.data):
+            return None
 
         for entry in self._other_resources:
             if resources.get_index(entry.first) < entry.second:
@@ -701,21 +697,19 @@ class GraphRequirementList:
         """
         Specialized logic for GraphRequirementSet.optimize_alternatives.
 
-        :param single_req_mask: A bitmask used internally to keep track of single-requirement alternatives.
+        :param single_req_mask: The items of earlier alternatives that each need only one of a single item.
         :return:
-            0 if this requirement shares a requirement with a single-requirement alternative
-            1 if this is a single-requirement alternative
+            0 if this needs an item in single_req_mask, so it is redundant
+            1 if this needs only one of a single item, which is then added to single_req_mask
             2 if nothing was decided, calculate is_superset normally.
         """
         if self._set_bitmask.share_at_least_one_bit(single_req_mask.data):
-            # We already have a requirement that is just one of these resources
             return 0
 
-        if self.num_requirements() == 1 and not self._set_bitmask.is_empty():
+        if self.num_requirements() == 1 and not self._set_bitmask.is_empty() and self._other_resources.empty():
             single_req_mask.data.union(self._set_bitmask)
             return 1
-        else:
-            return 2
+        return 2
 
 
 TRIVIAL_LIST = cython.declare(GraphRequirementList, GraphRequirementList(None))
