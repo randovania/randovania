@@ -5366,12 +5366,24 @@
                             }
                         },
                         "Event - Boon Quest Finished": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "MainQuestStarted",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "MainQuestStarted",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Vacuum"
+                                    }
+                                ]
                             }
                         }
                     }
