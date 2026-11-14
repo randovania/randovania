@@ -5,10 +5,74 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [11.2.0] - 2026-11-01
+## [12.1.0] - 2026-12-XX
+
+- Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
+- Removed: Intel macOS devices are no longer supported.
+- Fixed: A failed connection attempt to a game connected via a socket no longer leaves the connection open, which could prevent any further connection until the game was restarted.
+- Fixed: Logic no longer falsely optimizes out the easier alternatives when the presence of one resource lessens the amount required of another.
+- Fixed: A requirement that needs several resources to be absent is now unmet as soon as the player has any one of them. Previously, it was unmet only when the player had all of them.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
+
+### Metroid Fusion
+
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
+
+#### Logic Database
+
+##### Sector 1 (SRX)
+
+- Changed: Lava Lake: Updated damage run logic and videos.
+- Changed: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
+
+##### Sector 2 (TRO)
+
+- Changed: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
+
+#### Sector 3 (PYR)
+
+- Changed: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
+- Changed: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
+
+##### Sector 4 (AQA)
+
+- Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
+
+### Metroid Prime
+
+- Changed: The description for Legacy Mode to be clearer.
+
+#### Logic Database
+
+##### Phendrana Drifts
+- Changed: Cleaned up the connections from Ruins Entryway to Courtyard Entryway:
+  - Added: Several videos and comments for the tricks involved.
+  - Added: Getting from the top of the ruined building to the stone archway is now possible with an Intermediate Damage Boost.
+  - Added: Several alternative methods on getting on top of the fallen down stalactite.
+  - Added: Getting from the stone archway to the middle-left rooftop via Beginner Momvement.
+  - Added: Dashing from the middle-left rooftop to Courtyard Entryway is now possible with an Intermediate Combat/Scan Dash by dashing off of either the Sheegoth or the items drops from a crate.
+  - Changed: Climbing the ruined building now requires Beginner Standable Terrain for the Beginner Bomb Jump. Doing it with only Bomb Jumps is now Intermediate.
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Enabling Door Lock Rando makes the Generator consider this instead of always assuming it's disabled.
+
+### Metroid Prime Hunters
+
+- Fixed: Subterranean: The platform sometimes being unusable after Cretaphid v4 is defeated.
+
+## [12.0.0] - 2026-11-01
 
 - Added: Logic databases can now make Event and Pickup nodes grant extra items or events when collected, on top of their own event or pickup. The generator and resolver take them into account, and each node grants them only once. They can be edited in the Data Editor.
 - Added: When used via a flatpak, Randovania now has a desktop context option to open the Auto Tracker directly.
+- Changed: Slightly visually improved the footer of the cosmetic dialogs.
 - Fixed: Exporting a preset now works again.
 - Fixed: Rare cases where a permalink for a randomized game that had pickup priorities with "very low" didn't import properly.
 
@@ -17,6 +81,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The chance for finding rare special items being lower than intended.
 
 ### Metroid Dread
+
+- Changed: Models of Wave Beam, Missile Launcher, Ice Missile, Storm Missile, Cross Bomb and Power Bomb.
+- Fixed: The death counter was incorrectly positioned in version 1.0.0 without the DNA HUD.
 
 #### Logic Database
 
@@ -30,9 +97,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The timer that determines how much time needs to pass in a cold environment for knockback to occur now resets if you're not affected by cold, such as when equipping Varia Suit or going through a Door Transition.
 - Changed: Security Shaft West will now always have the red Zeela present.
 - Changed: When using the "Unlock Save and Recharge Station Hatches" option, the hatches between Docking Bay Climb & Docking Bay Access, as well as the ones between Clogged Cavern & Cavern Save Access are now also unlocked.
+- Changed: Adjusted padding in the Hints, Goal and Gameplay preset tabs.
 - Fixed: The "Final Mission" song in Main Deck will no longer turn off when disabling Charge Beam or Missiles.
 - Fixed: Central Reactor Core now has the Kihunters only present after Yakuza was killed instead of them being there by default. Defeating Nettori makes them still dissapear.
 - Fixed: The chance for Bob's true colors, and gold-plated Power Bombs being lower than intended.
+- Fixed: Mono audio can now be selected when Stereo audio is enabled as the default option.
+- Changed: The following pickups will now be placed in bulk at the same step during generation when multiple pickups are necessary to progress:
+  - Missile Tank
+  - Power Bomb Tank
+  - Energy Tank
+
+#### Logic Database
+
+##### Sector 6 (NOC)
+
+- Changed: Geron's Crossing: The Shinespark trick to break the bottom left bomb block can now be expected in Door Lock Rando seeds.
+- Changed: Geron's Crossing: The Shinespark trick to destroy the Super Missile Geron can now be expected in Door Lock Rando seeds.
 
 ### Metroid Prime
 
@@ -46,6 +126,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Hint text being cut off if the text was too long.
 - Fixed: Sic Transit: The Shield Key pickup being unobtainable after defeating Slench 2.
+- Fixed: Council Chamber: The Artifact pickup can no longer be collected without the Shield Key if it becomes an Octolith.
 
 ## [11.1.1] - 2026-10-06
 

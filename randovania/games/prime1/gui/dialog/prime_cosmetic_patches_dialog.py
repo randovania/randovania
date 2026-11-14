@@ -10,7 +10,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 from randovania.gui.lib import color_lib, slider_updater
 from randovania.gui.lib.signal_handling import on_checked, set_combo_with_value
 
@@ -38,7 +38,7 @@ def _suit_render_path(file_name: str) -> Path:
     return RandovaniaGame.METROID_PRIME.data_path.joinpath("assets", "suit_renders", f"{file_name}.webp")
 
 
-class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches], Ui_PrimeCosmeticPatchesDialog):
+class PrimeCosmeticPatchesDialog(GameSpecificCosmeticWidget[PrimeCosmeticPatches], Ui_PrimeCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: PrimeCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -88,14 +88,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
         self.on_new_cosmetic_patches(current)
         self._update_color_squares()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[PrimeCosmeticPatches]:
-        return PrimeCosmeticPatches
-
     def connect_signals(self) -> None:
-        super().connect_signals()
-
         self._persist_check_field(self.open_map_check, "open_map")
         self._persist_check_field(self.pickup_markers_check, "pickup_markers")
         self._persist_check_field(self.force_fusion_check, "force_fusion")
@@ -260,10 +253,6 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
         self.custom_hud_color_square.setStyleSheet(style)
 
     @property
-    def cosmetic_patches(self) -> PrimeCosmeticPatches:
-        return self._cosmetic_patches
-
-    @property
     def preferences(self) -> PrimeUserPreferences:
         return self._cosmetic_patches.user_preferences
 
@@ -293,3 +282,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog[PrimeCosmeticPatches]
     def reset(self) -> None:
         self.on_new_cosmetic_patches(PrimeCosmeticPatches())
         self._update_color_squares()
+
+    @override
+    def default_size(self) -> tuple[int, int]:
+        return 600, 640

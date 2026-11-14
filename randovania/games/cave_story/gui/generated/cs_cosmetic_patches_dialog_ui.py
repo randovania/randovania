@@ -15,46 +15,21 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-    QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGridLayout,
+    QGroupBox, QHBoxLayout, QLabel, QPushButton,
+    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
 
 class Ui_CSCosmeticPatchesDialog(object):
     def setupUi(self, CSCosmeticPatchesDialog):
         if not CSCosmeticPatchesDialog.objectName():
             CSCosmeticPatchesDialog.setObjectName(u"CSCosmeticPatchesDialog")
         CSCosmeticPatchesDialog.resize(424, 421)
-        self.gridLayout = QGridLayout(CSCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.reset_button = QPushButton(CSCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-
-        self.gridLayout.addWidget(self.reset_button, 2, 2, 1, 1)
-
-        self.accept_button = QPushButton(CSCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-
-        self.gridLayout.addWidget(self.accept_button, 2, 0, 1, 1)
-
-        self.cancel_button = QPushButton(CSCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.gridLayout.addWidget(self.cancel_button, 2, 1, 1, 1)
-
-        self.scrollArea = QScrollArea(CSCosmeticPatchesDialog)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setWidgetResizable(True)
-        self.scroll_area_contents = QWidget()
-        self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 390, 390))
-        self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.mychar_box = QGroupBox(self.scroll_area_contents)
+        self.verticalLayout_2 = QVBoxLayout(CSCosmeticPatchesDialog)
+        self.verticalLayout_2.setSpacing(6)
+        self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.mychar_box = QGroupBox(CSCosmeticPatchesDialog)
         self.mychar_box.setObjectName(u"mychar_box")
         self.gridLayout_2 = QGridLayout(self.mychar_box)
         self.gridLayout_2.setSpacing(6)
@@ -119,9 +94,9 @@ class Ui_CSCosmeticPatchesDialog(object):
         self.gridLayout_2.addWidget(self.mychar_description_label, 1, 0, 1, 3)
 
 
-        self.verticalLayout.addWidget(self.mychar_box)
+        self.verticalLayout_2.addWidget(self.mychar_box)
 
-        self.music_box = QGroupBox(self.scroll_area_contents)
+        self.music_box = QGroupBox(CSCosmeticPatchesDialog)
         self.music_box.setObjectName(u"music_box")
         self.music_layout = QGridLayout(self.music_box)
         self.music_layout.setSpacing(6)
@@ -197,30 +172,20 @@ class Ui_CSCosmeticPatchesDialog(object):
         self.music_layout.addWidget(self.label, 5, 0, 1, 2)
 
 
-        self.verticalLayout.addWidget(self.music_box)
+        self.verticalLayout_2.addWidget(self.music_box)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.verticalLayout.addItem(self.horizontalSpacer)
-
-        self.scrollArea.setWidget(self.scroll_area_contents)
-
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
+        self.verticalLayout_2.addItem(self.horizontalSpacer)
 
 
         self.retranslateUi(CSCosmeticPatchesDialog)
-
-        self.accept_button.setDefault(True)
-
 
         QMetaObject.connectSlotsByName(CSCosmeticPatchesDialog)
     # setupUi
 
     def retranslateUi(self, CSCosmeticPatchesDialog):
         CSCosmeticPatchesDialog.setWindowTitle(QCoreApplication.translate("CSCosmeticPatchesDialog", u"Cave Story - Cosmetic Options", None))
-        self.reset_button.setText(QCoreApplication.translate("CSCosmeticPatchesDialog", u"Reset to Defaults", None))
-        self.accept_button.setText(QCoreApplication.translate("CSCosmeticPatchesDialog", u"Accept", None))
-        self.cancel_button.setText(QCoreApplication.translate("CSCosmeticPatchesDialog", u"Cancel", None))
         self.mychar_box.setTitle(QCoreApplication.translate("CSCosmeticPatchesDialog", u"MyChar", None))
         self.mychar_img_label.setText("")
         self.mychar_name_label.setText(QCoreApplication.translate("CSCosmeticPatchesDialog", u"Quote", None))

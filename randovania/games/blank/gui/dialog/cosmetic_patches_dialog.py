@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override
+from typing import TYPE_CHECKING
 
 from randovania.games.blank.gui.generated.blank_cosmetic_patches_dialog_ui import Ui_BlankCosmeticPatchesDialog
 from randovania.games.blank.layout.blank_cosmetic_patches import BlankCosmeticPatches
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
 
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog[BlankCosmeticPatches], Ui_BlankCosmeticPatchesDialog):
+class BlankCosmeticPatchesDialog(GameSpecificCosmeticWidget[BlankCosmeticPatches], Ui_BlankCosmeticPatchesDialog):
     def __init__(self, parent: QtWidgets.QWidget | None, current: BlankCosmeticPatches, options: Options):
         super().__init__(parent, current, options)
         self.setupUi(self)
@@ -20,22 +20,13 @@ class BlankCosmeticPatchesDialog(BaseCosmeticPatchesDialog[BlankCosmeticPatches]
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[BlankCosmeticPatches]:
-        return BlankCosmeticPatches
-
     def connect_signals(self) -> None:
-        super().connect_signals()
         # More signals here!
+        pass
 
     def on_new_cosmetic_patches(self, patches: BlankCosmeticPatches) -> None:
         # Update fields with the new values
         pass
-
-    @property
-    def cosmetic_patches(self) -> BlankCosmeticPatches:
-        return self._cosmetic_patches
 
     def reset(self) -> None:
         self.on_new_cosmetic_patches(BlankCosmeticPatches())

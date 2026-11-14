@@ -55,21 +55,12 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Travel to Landing Creepy Cavern": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": "TODO: Or Fosfor Skip",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PostalBadge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -77,17 +68,51 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "JuicyCoveMushroom",
+                                                        "name": "PostalBadge",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "JuicyCoveMushroom",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PoisonToadstool",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/yh5S8Ev51O4",
+                                            "items": [
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PoisonToadstool",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "FosforSkip",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -2600,26 +2625,51 @@
                                         "data": "Can Dive"
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": "Fosfor Skip would require none of the Mushrooms but it is also inaccurate because you only need one of them but the other is already consumed by entering this region from the vanilla path.",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PoisonToadstool",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PoisonToadstool",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "JuicyCoveMushroom",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "JuicyCoveMushroom",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "https://youtu.be/WgcF3G3sSh4",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FosforSkip",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]

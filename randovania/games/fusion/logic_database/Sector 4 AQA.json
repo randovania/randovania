@@ -16060,9 +16060,59 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Very lenient Missile kill",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "10+ DMG Missiles"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 20,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "20 DMG Missiles"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 15,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Kill with Missiles",
+                                                        "comment": "Less lenient Missile kill",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -16199,7 +16249,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Core-X Requirements",
+                                            "comment": "Core-X Requirements (50HP)",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -16254,35 +16304,9 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 110,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Hitless: https://youtu.be/1M1GCCa4jc0",
+                                                        "comment": "Hitless Cheese strat by hiding in the corner: https://youtu.be/1M1GCCa4jc0",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -16291,6 +16315,44 @@
                                                                     "name": "Combat",
                                                                     "amount": 3,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "NormalDamage",
+                                                                                            "amount": 45,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "30 DMG Missiles"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]

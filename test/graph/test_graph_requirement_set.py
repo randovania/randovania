@@ -98,6 +98,24 @@ def test_set_optimize_alternatives(mock_resources, blank_resource_db: ResourceDa
     assert req_set2.get_alternative(0) == req1
 
 
+def test_set_optimize_alternatives_keeps_fewer_of_item_with_another(
+    mock_resources, blank_resource_db: ResourceDatabase
+):
+    many_a = GraphRequirementList(blank_resource_db)
+    many_a.add_resource(mock_resources["item_a"], 6, False)
+
+    fewer_a_and_b = GraphRequirementList(blank_resource_db)
+    fewer_a_and_b.add_resource(mock_resources["item_a"], 3, False)
+    fewer_a_and_b.add_resource(mock_resources["item_b"], 1, False)
+
+    req_set = GraphRequirementSet()
+    req_set.add_alternative(copy.copy(many_a))
+    req_set.add_alternative(copy.copy(fewer_a_and_b))
+    req_set.optimize_alternatives()
+
+    assert req_set.alternatives == [many_a, fewer_a_and_b]
+
+
 def test_set_copy_then_and_with_set_trivial(mock_resources, blank_resource_db: ResourceDatabase):
     """Test copy_then_and_with_set with trivial sets (equivalent to test_trivial_merge)."""
     req1 = GraphRequirementList(blank_resource_db)

@@ -1,616 +1,657 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>FusionCosmeticPatchesDialog</class>
- <widget class="QDialog" name="FusionCosmeticPatchesDialog">
+ <widget class="QWidget" name="FusionCosmeticPatchesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>585</height>
+    <height>964</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Metroid Fusion - Cosmetic Options</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="2">
-    <widget class="QPushButton" name="reset_button">
-     <property name="text">
-      <string>Reset to Defaults</string>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="spacing">
+    <number>6</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="gameplay_box">
+     <property name="title">
+      <string>General Gameplay</string>
      </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QPushButton" name="cancel_button">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scroll_area_contents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>666</width>
-        <height>708</height>
-       </rect>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>6</number>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QGroupBox" name="gameplay_box">
-         <property name="title">
-          <string>General Gameplay</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="spacing">
-           <number>6</number>
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
+       <number>9</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="map_check">
+        <property name="text">
+         <string>Show unexplored map from start</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="map_label">
+        <property name="text">
+         <string>This setting reveals the entire map including item dots</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="reveal_blocks_check">
+        <property name="text">
+         <string>Reveal hidden blocks</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="reveal_blocks_label">
+        <property name="text">
+         <string>Blocks that normally need bombs to be revealed are now always visible</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="alt_health_display_check">
+        <property name="text">
+         <string>Use Alternative HUD Health Display</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="alt_health_display_label">
+        <property name="text">
+         <string>Changes the Health display on the HUD to &quot;Current Energy / Total Energy&quot;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="secondary_weapon_label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Secondary Weapon Selection Mode:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="secondary_weapon_layout">
+        <item>
+         <widget class="QRadioButton" name="secondary_weapon_hold_option">
+          <property name="text">
+           <string>Hold</string>
           </property>
-          <property name="leftMargin">
-           <number>9</number>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="secondary_weapon_toggle_option">
+          <property name="text">
+           <string>Toggle</string>
           </property>
-          <property name="topMargin">
-           <number>9</number>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="palette_box">
+     <property name="title">
+      <string>Color Rotation</string>
+     </property>
+     <layout class="QVBoxLayout" name="palette_layout">
+      <item>
+       <layout class="QHBoxLayout" name="suit_color_layout">
+        <item>
+         <widget class="QLabel" name="suit_palette_label">
+          <property name="text">
+           <string>Suit Palette</string>
           </property>
-          <property name="rightMargin">
-           <number>9</number>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="suit_rando_shift_check">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
-          <property name="bottomMargin">
-           <number>9</number>
+          <property name="text">
+           <string>Randomize Hue Shift</string>
           </property>
-          <item>
-           <widget class="QCheckBox" name="map_check">
-            <property name="text">
-             <string>Show unexplored map from start</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="map_label">
-            <property name="text">
-             <string>This setting reveals the entire map including item dots</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="reveal_blocks_check">
-            <property name="text">
-             <string>Reveal hidden blocks</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="reveal_blocks_label">
-            <property name="text">
-             <string>Blocks that normally need bombs to be revealed are now always visible</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="alt_health_display_check">
-            <property name="text">
-             <string>Use Alternative HUD Health Display</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="alt_health_display_label">
-            <property name="text">
-             <string>Changes the Health display on the HUD to &quot;Current Energy / Total Energy&quot;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="secondary_weapon_label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Secondary Weapon Selection Mode:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="secondary_weapon_layout">
-            <item>
-             <widget class="QRadioButton" name="secondary_weapon_hold_option">
-              <property name="text">
-               <string>Hold</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="secondary_weapon_toggle_option">
-              <property name="text">
-               <string>Toggle</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="palette_box">
-         <property name="title">
-          <string>Color Rotation</string>
-         </property>
-         <layout class="QVBoxLayout" name="palette_layout">
-          <item>
-           <layout class="QHBoxLayout" name="suit_color_layout">
-            <item>
-             <widget class="QLabel" name="suit_palette_label">
-              <property name="text">
-               <string>Suit Palette</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="suit_rando_shift_check">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Randomize Hue Shift</string>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignmentFlag::AlignLeft">
-             <widget class="QCheckBox" name="suit_override_shift_check">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="baseSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Override Hue Shift (min,max)</string>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>16</width>
-                <height>16</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="suit_override_shift_spin_min">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="suit_override_shift_spin_max">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="beam_color_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="beam_palette_label">
-              <property name="text">
-               <string>Beam Palette</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="beam_rando_shift_check">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Randomize Hue Shift</string>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignmentFlag::AlignLeft">
-             <widget class="QCheckBox" name="beam_override_shift_check">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Override Hue Shift (min,max)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="beam_override_shift_spin_min">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="beam_override_shift_spin_max">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="enemy_color_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="enemy_palette_label">
-              <property name="text">
-               <string>Enemy Palette</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="enemy_rando_shift_check">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Randomize Hue Shift</string>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignmentFlag::AlignLeft">
-             <widget class="QCheckBox" name="enemy_override_shift_check">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Override Hue Shift (min,max)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="enemy_override_shift_spin_min">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="enemy_override_shift_spin_max">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="tileset_color_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="tileset_palette_label">
-              <property name="text">
-               <string>Tileset Palette</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="tileset_rando_shift_check">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
-              <property name="text">
-               <string>Randomize Hue Shift</string>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignmentFlag::AlignLeft">
-             <widget class="QCheckBox" name="tileset_override_shift_check">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Override Hue Shift (min,max)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="tileset_override_shift_spin_min">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="value">
-               <number>0</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="tileset_override_shift_spin_max">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="maximum">
-               <number>360</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="color_space_layout">
-            <item row="0" column="0" alignment="Qt::AlignmentFlag::AlignLeft">
-             <widget class="QLabel" name="color_space_label">
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>20</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Color Space</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2" alignment="Qt::AlignmentFlag::AlignHCenter">
-             <widget class="QCheckBox" name="symmetric_check">
-              <property name="text">
-               <string>Enable Symmetric</string>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="color_space_combo">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="audio_box">
-         <property name="title">
-          <string>Audio Options</string>
-         </property>
-         <layout class="QVBoxLayout" name="audio_layout">
-          <item>
-           <widget class="QLabel" name="default_audio_label">
-            <property name="text">
-             <string>Default Audio Settings:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="stereo_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QRadioButton" name="mono_option">
-              <property name="text">
-               <string>Mono</string>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="stereo_option">
-              <property name="text">
-               <string>Stereo</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="audio_volume_label">
-            <property name="text">
-             <string>Audio Volume Settings:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="volume_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QCheckBox" name="disable_music_check">
-              <property name="text">
-               <string>Mute Music</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="music_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QCheckBox" name="disable_sfx_check">
-              <property name="text">
-               <string>Mute Sound Effects</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignmentFlag::AlignLeft">
+         <widget class="QCheckBox" name="suit_override_shift_check">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Override Hue Shift (min,max)</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="suit_override_shift_spin_min">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="suit_override_shift_spin_max">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="beam_color_layout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="beam_palette_label">
+          <property name="text">
+           <string>Beam Palette</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="beam_rando_shift_check">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Randomize Hue Shift</string>
+          </property>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignmentFlag::AlignLeft">
+         <widget class="QCheckBox" name="beam_override_shift_check">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Override Hue Shift (min,max)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="beam_override_shift_spin_min">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="beam_override_shift_spin_max">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="enemy_color_layout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="enemy_palette_label">
+          <property name="text">
+           <string>Enemy Palette</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="enemy_rando_shift_check">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Randomize Hue Shift</string>
+          </property>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignmentFlag::AlignLeft">
+         <widget class="QCheckBox" name="enemy_override_shift_check">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Override Hue Shift (min,max)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="enemy_override_shift_spin_min">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="enemy_override_shift_spin_max">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="tileset_color_layout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="tileset_palette_label">
+          <property name="text">
+           <string>Tileset Palette</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="tileset_rando_shift_check">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Randomize Hue Shift</string>
+          </property>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignmentFlag::AlignLeft">
+         <widget class="QCheckBox" name="tileset_override_shift_check">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Override Hue Shift (min,max)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="tileset_override_shift_spin_min">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="tileset_override_shift_spin_max">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="color_space_layout">
+        <item row="0" column="0" alignment="Qt::AlignmentFlag::AlignLeft">
+         <widget class="QLabel" name="color_space_label">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Color Space</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2" alignment="Qt::AlignmentFlag::AlignHCenter">
+         <widget class="QCheckBox" name="symmetric_check">
+          <property name="text">
+           <string>Enable Symmetric</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="color_space_combo">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="music_shuffle_box">
+     <property name="title">
+      <string>Music</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>9</number>
+      </property>
+      <property name="bottomMargin">
+       <number>9</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="music_sub_label">
+        <property name="text">
+         <string>Changes how music is shuffled.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="vanilla_shuffle_button">
+        <property name="text">
+         <string>Vanilla</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="vanilla_shuffle_label">
+        <property name="text">
+         <string>Does not shuffle any songs.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="type_shuffle_button">
+        <property name="text">
+         <string>Per Type</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="type_shuffle_label">
+        <property name="text">
+         <string>Shuffles songs within the same category. This ensures that you won't hear boss music while exploring, or an item jingle as the escape sequence. Certain songs, such as the Credits song, are excluded from shuffling.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="full_shuffle_button">
+        <property name="text">
+         <string>Full Random</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="full_shuffle_label">
+        <property name="text">
+         <string>Will shuffle all songs with each other. Jingles are shuffled separately. Certain songs, such as the Credits song, are excluded from shuffling.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="audio_box">
+     <property name="title">
+      <string>Audio Options</string>
+     </property>
+     <layout class="QVBoxLayout" name="audio_layout">
+      <item>
+       <widget class="QLabel" name="default_audio_label">
+        <property name="text">
+         <string>Default Audio Settings:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="stereo_layout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QRadioButton" name="mono_option">
+          <property name="text">
+           <string>Mono</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="stereo_option">
+          <property name="text">
+           <string>Stereo</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="audio_volume_label">
+        <property name="text">
+         <string>Audio Volume Settings:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="volume_layout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QCheckBox" name="disable_music_check">
+          <property name="text">
+           <string>Mute Music</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="music_layout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QCheckBox" name="disable_sfx_check">
+          <property name="text">
+           <string>Mute Sound Effects</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
