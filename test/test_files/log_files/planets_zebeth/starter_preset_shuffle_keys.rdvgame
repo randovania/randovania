@@ -1,16 +1,16 @@
 {
-    "schema_version": 29,
+    "schema_version": 44,
     "info": {
-        "randovania_version": "8.4.0.dev114",
-        "randovania_version_git": "ffbd61bc",
-        "permalink": "Da26_ux7Vv-9YbwMY6vNF4saRfuVLRR0ANnA",
+        "randovania_version": "11.1.0.dev372",
+        "randovania_version_git": "3d5d313a",
+        "permalink": "De8Gc5nGCz1dMToMoatB9aGmEwvobBVgAMeP",
         "has_spoiler": true,
-        "seed": 340891882,
-        "hash": "XL7OY62W",
-        "word_hash": "Wave Ice Brick",
+        "seed": 863833693,
+        "hash": "AZZZTRQL",
+        "word_hash": "Turret Metroid Key",
         "presets": [
             {
-                "schema_version": 88,
+                "schema_version": 122,
                 "base_preset_uuid": null,
                 "name": "Starter Preset (Shuffle Keys)",
                 "uuid": "dc33eec9-332f-4296-99d2-6404df5d4e39",
@@ -95,12 +95,10 @@
                     "pickup_model_data_source": "etm",
                     "logical_resource_action": "randomly",
                     "first_progression_must_be_local": false,
-                    "minimum_available_locations_for_hint_placement": 0,
-                    "minimum_location_weight_for_hint_placement": 0.0,
-                    "dock_rando": {
-                        "mode": "vanilla",
+                    "dock_weakness_distributor": {
                         "types_state": {
                             "door": {
+                                "mode": "original",
                                 "can_change_from": [
                                     "Missile Door",
                                     "Normal Door"
@@ -113,8 +111,16 @@
                         }
                     },
                     "single_set_for_pickups_that_solve": true,
-                    "staggered_multi_pickup_placement": true,
                     "check_if_beatable_after_base_patches": false,
+                    "logical_pickup_placement": "minimal",
+                    "hints": {
+                        "enable_random_hints": true,
+                        "enable_specific_location_hints": true,
+                        "specific_pickup_hints": {},
+                        "minimum_available_locations_for_hint_placement": 0,
+                        "minimum_location_weight_for_hint_placement": 0.0,
+                        "use_resolver_hints": false
+                    },
                     "artifacts": {
                         "vanilla_tourian_keys": false,
                         "required_artifacts": 9
@@ -146,86 +152,458 @@
                 "Tourian/Tourian Entrance/Teleporter to Brinstar": "Brinstar/Tourian Prelude/Teleporter to Tourian"
             },
             "dock_weakness": {},
-            "locations": {
-                "Brinstar": {
-                    "Blue Rocks East/Pickup (Energy Tank)": "Tourian Key 8",
-                    "Green Sanctuary E/Pickup (Energy Tank)": "Tourian Key 6",
-                    "Green Sanctuary E/Pickup (Missile Tank)": "Wave Beam",
-                    "Item Room (Bombs)/Pickup (Bombs)": "Ice Beam",
-                    "Item Room (Ice Beam)/Pickup (Ice Beam)": "Missile Tank",
-                    "Item Room (Long Beam)/Pickup (Long Beam)": "Ice Beam",
-                    "Item Room (Varia)/Pickup (Varia Suit)": "Missile Tank",
-                    "Maru Mari Hall/Pickup (Morph Ball)": "Morph Ball",
-                    "Orange Corridor/Pickup (Missile Launcher)": "Missile Tank",
-                    "The Overhang/Pickup (Energy Tank)": "Missile Tank"
+            "locations": [
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Blue Rocks East",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 7,
+                    "pickup": "Missile Tank",
+                    "owner": 0
                 },
-                "Kraid": {
-                    "Acid Pier/Pickup (Missile Tank)": "Energy Tank",
-                    "Arrival Chamber/Pickup (Missile Tank)": "Screw Attack",
-                    "Back Storage/Pickup (Missile Tank)": "Energy Tank",
-                    "Blue Closet/Pickup (Energy Tank)": "Missile Tank",
-                    "Kraid Arena/Pickup (Big Missile Tank)": "Tourian Key 5",
-                    "Kraid Arena/Pickup (Boss Key)": "Tourian Key 9",
-                    "Kraid Arena/Pickup (Energy Tank)": "Missile Tank",
-                    "Upper Hall/Pickup (Missile Tank)": "Energy Tank"
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Green Sanctuary E",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 5,
+                    "pickup": "Energy Tank",
+                    "owner": 0
                 },
-                "Norfair": {
-                    "Basalt Cache/Pickup (Missile Tank)": "Energy Tank",
-                    "Bubble Cache/Pickup (Missile Tank 2)": "Energy Tank",
-                    "Bubble Cache/Pickup (Missile Tank)": "Big Missile Tank",
-                    "Bubble Wall/Pickup (Missile Tank)": "Bombs",
-                    "Fire Sea/Pickup (Energy Tank)": "Tourian Key 2",
-                    "Gauntlet/Pickup (Missile Tank 2)": "Varia Suit",
-                    "Gauntlet/Pickup (Missile Tank)": "Missile Tank",
-                    "Hidden Cache/Pickup (Missile Tank 2)": "Big Missile Tank",
-                    "Hidden Cache/Pickup (Missile Tank)": "Missile Tank",
-                    "Item Room (High Jump)/Pickup (Hi-Jump)": "Energy Tank",
-                    "Item Room (Ice Beam)/Pickup (Ice Beam)": "Missile Tank",
-                    "Item Room (Screw Attack)/Pickup (Screw Attack)": "Tourian Key 1",
-                    "Item Room (Wave Beam)/Pickup (Wave Beam)": "Tourian Key 7",
-                    "Path of Destruction/Pickup (Missile Tank)": "Tourian Key 3",
-                    "Weapons Cache/Pickup (Missile Tank 2)": "Long Beam",
-                    "Weapons Cache/Pickup (Missile Tank 3)": "Tourian Key 4",
-                    "Weapons Cache/Pickup (Missile Tank)": "Hi-Jump Boots"
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Green Sanctuary E",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 4,
+                    "pickup": "Wave Beam",
+                    "owner": 0
                 },
-                "Ridley": {
-                    "Artificial Passage/Pickup (Energy Tank)": "Missile Tank",
-                    "Central Cache/Pickup (Missile Tank)": "Energy Tank",
-                    "Infinite Gauntlet/Pickup (Missile Tank)": "Missile Launcher",
-                    "Lava Reliquary/Pickup (Energy Tank)": "Energy Tank",
-                    "Purple Gauntlet/Pickup (Missile Tank)": "Missile Tank",
-                    "Ridley Arena/Pickup (Big Missile Tank)": "Missile Tank",
-                    "Ridley Arena/Pickup (Boss Key)": "Missile Tank"
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Item Room (Bombs)",
+                        "node": "Pickup (Bombs)"
+                    },
+                    "index": 6,
+                    "pickup": "Ice Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Item Room (Ice Beam)",
+                        "node": "Pickup (Ice Beam)"
+                    },
+                    "index": 8,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Item Room (Long Beam)",
+                        "node": "Pickup (Long Beam)"
+                    },
+                    "index": 2,
+                    "pickup": "Tourian Key 3",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Item Room (Varia)",
+                        "node": "Pickup (Varia Suit)"
+                    },
+                    "index": 3,
+                    "pickup": "Tourian Key 8",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Maru Mari Hall",
+                        "node": "Pickup (Morph Ball)"
+                    },
+                    "index": 0,
+                    "pickup": "Morph Ball",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "Orange Corridor",
+                        "node": "Pickup (Missile Launcher)"
+                    },
+                    "index": 9,
+                    "pickup": "Tourian Key 5",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Brinstar",
+                        "area": "The Overhang",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 1,
+                    "pickup": "Big Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Acid Pier",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 34,
+                    "pickup": "Ice Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Arrival Chamber",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 37,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Back Storage",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 33,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Blue Closet",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 35,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Kraid Arena",
+                        "node": "Pickup (Big Missile Tank)"
+                    },
+                    "index": 39,
+                    "pickup": "Long Beam",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Kraid Arena",
+                        "node": "Pickup (Boss Key)"
+                    },
+                    "index": 38,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Kraid Arena",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 32,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Kraid",
+                        "area": "Upper Hall",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 36,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Basalt Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 22,
+                    "pickup": "Tourian Key 4",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Bubble Cache",
+                        "node": "Pickup (Missile Tank 2)"
+                    },
+                    "index": 26,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Bubble Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 25,
+                    "pickup": "Tourian Key 1",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Bubble Wall",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 21,
+                    "pickup": "Hi-Jump Boots",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Fire Sea",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 17,
+                    "pickup": "Varia Suit",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Gauntlet",
+                        "node": "Pickup (Missile Tank 2)"
+                    },
+                    "index": 20,
+                    "pickup": "Missile Launcher",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Gauntlet",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 19,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Hidden Cache",
+                        "node": "Pickup (Missile Tank 2)"
+                    },
+                    "index": 15,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Hidden Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 14,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Item Room (High Jump)",
+                        "node": "Pickup (Hi-Jump)"
+                    },
+                    "index": 16,
+                    "pickup": "Big Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Item Room (Ice Beam)",
+                        "node": "Pickup (Ice Beam)"
+                    },
+                    "index": 10,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Item Room (Screw Attack)",
+                        "node": "Pickup (Screw Attack)"
+                    },
+                    "index": 23,
+                    "pickup": "Screw Attack",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Item Room (Wave Beam)",
+                        "node": "Pickup (Wave Beam)"
+                    },
+                    "index": 24,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Path of Destruction",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 18,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Weapons Cache",
+                        "node": "Pickup (Missile Tank 2)"
+                    },
+                    "index": 12,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Weapons Cache",
+                        "node": "Pickup (Missile Tank 3)"
+                    },
+                    "index": 13,
+                    "pickup": "Bombs",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Norfair",
+                        "area": "Weapons Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 11,
+                    "pickup": "Tourian Key 2",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Artificial Passage",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 28,
+                    "pickup": "Tourian Key 6",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Central Cache",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 31,
+                    "pickup": "Tourian Key 7",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Infinite Gauntlet",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 30,
+                    "pickup": "Tourian Key 9",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Lava Reliquary",
+                        "node": "Pickup (Energy Tank)"
+                    },
+                    "index": 29,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Purple Gauntlet",
+                        "node": "Pickup (Missile Tank)"
+                    },
+                    "index": 27,
+                    "pickup": "Energy Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Ridley Arena",
+                        "node": "Pickup (Big Missile Tank)"
+                    },
+                    "index": 41,
+                    "pickup": "Missile Tank",
+                    "owner": 0
+                },
+                {
+                    "node_identifier": {
+                        "region": "Ridley",
+                        "area": "Ridley Arena",
+                        "node": "Pickup (Boss Key)"
+                    },
+                    "index": 40,
+                    "pickup": "Missile Tank",
+                    "owner": 0
                 }
-            },
+            ],
             "hints": {},
             "game_specific": {}
         }
     ],
     "item_order": [
         "Morph Ball at Brinstar/Maru Mari Hall/Pickup (Morph Ball)",
-        "Bombs at Norfair/Bubble Wall/Pickup (Missile Tank)",
-        "Missile Launcher at Ridley/Infinite Gauntlet/Pickup (Missile Tank)",
-        "Energy Tank at Kraid/Acid Pier/Pickup (Missile Tank)",
-        "Ice Beam at Brinstar/Item Room (Long Beam)/Pickup (Long Beam)",
-        "Hi-Jump Boots at Norfair/Weapons Cache/Pickup (Missile Tank)",
-        "Missile Tank at Brinstar/The Overhang/Pickup (Energy Tank)",
-        "Energy Tank at Ridley/Lava Reliquary/Pickup (Energy Tank)",
-        "Missile Tank at Brinstar/Item Room (Ice Beam)/Pickup (Ice Beam)",
-        "Energy Tank at Norfair/Bubble Cache/Pickup (Missile Tank 2)",
-        "Missile Tank at Ridley/Ridley Arena/Pickup (Boss Key)",
+        "Hi-Jump Boots at Norfair/Bubble Wall/Pickup (Missile Tank)",
+        "Bombs at Norfair/Weapons Cache/Pickup (Missile Tank 3)",
+        "Missile Launcher at Norfair/Gauntlet/Pickup (Missile Tank 2)",
+        "Ice Beam at Brinstar/Item Room (Bombs)/Pickup (Bombs)",
+        "Big Missile Tank at Brinstar/The Overhang/Pickup (Energy Tank)",
+        "Varia Suit at Norfair/Fire Sea/Pickup (Energy Tank)",
+        "Energy Tank at Kraid/Upper Hall/Pickup (Missile Tank)",
+        "Tourian Key 1 at Norfair/Bubble Cache/Pickup (Missile Tank)",
+        "Energy Tank at Norfair/Gauntlet/Pickup (Missile Tank)",
+        "Energy Tank at Ridley/Purple Gauntlet/Pickup (Missile Tank)",
+        "Tourian Key 2 at Norfair/Weapons Cache/Pickup (Missile Tank)",
+        "Tourian Key 3 at Brinstar/Item Room (Long Beam)/Pickup (Long Beam)",
+        "Tourian Key 4 at Norfair/Basalt Cache/Pickup (Missile Tank)",
+        "Tourian Key 5 at Brinstar/Orange Corridor/Pickup (Missile Launcher)",
+        "Tourian Key 6 at Ridley/Artificial Passage/Pickup (Energy Tank)",
+        "Tourian Key 7 at Ridley/Central Cache/Pickup (Missile Tank)",
+        "Tourian Key 8 at Brinstar/Item Room (Varia)/Pickup (Varia Suit)",
+        "Tourian Key 9 at Ridley/Infinite Gauntlet/Pickup (Missile Tank)",
+        "Energy Tank at Kraid/Arrival Chamber/Pickup (Missile Tank)",
+        "Energy Tank at Kraid/Back Storage/Pickup (Missile Tank)",
+        "Energy Tank at Brinstar/Green Sanctuary E/Pickup (Energy Tank)",
+        "Energy Tank at Kraid/Kraid Arena/Pickup (Energy Tank)",
         "Missile Tank at Kraid/Blue Closet/Pickup (Energy Tank)",
-        "Tourian Key 5 at Kraid/Kraid Arena/Pickup (Big Missile Tank)",
-        "Tourian Key 2 at Norfair/Fire Sea/Pickup (Energy Tank)",
-        "Tourian Key 9 at Kraid/Kraid Arena/Pickup (Boss Key)",
-        "Tourian Key 3 at Norfair/Path of Destruction/Pickup (Missile Tank)",
-        "Tourian Key 1 at Norfair/Item Room (Screw Attack)/Pickup (Screw Attack)",
-        "Tourian Key 8 at Brinstar/Blue Rocks East/Pickup (Energy Tank)",
-        "Tourian Key 7 at Norfair/Item Room (Wave Beam)/Pickup (Wave Beam)",
-        "Tourian Key 4 at Norfair/Weapons Cache/Pickup (Missile Tank 3)",
-        "Tourian Key 6 at Brinstar/Green Sanctuary E/Pickup (Energy Tank)",
-        "Missile Tank at Brinstar/Orange Corridor/Pickup (Missile Launcher)",
-        "Missile Tank at Kraid/Kraid Arena/Pickup (Energy Tank)"
+        "Missile Tank at Norfair/Item Room (Ice Beam)/Pickup (Ice Beam)"
     ],
-    "checksum": "7b081b19713b66cefb2eb4c70ed892ce560cc22e36d3bc232eb96dcfd94c4b78d0eda7d994d749a0d3db54a149c97e6570499273dc1e74643cb7c3f3821797f5"
+    "checksum": "f5b37c2bdc0b718267d6ad107fa2e6832f4b6dea89d8f80c6b2dae778238bfe4d08320ec5398a19e18a1b3c5ba0c3fba5e2d153209926fd81956ad7bdf193e25"
 }
