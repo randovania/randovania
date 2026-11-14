@@ -196,7 +196,7 @@ def _remove_fusion_overrides(options: dict) -> None:
         if enabled_override in cosmetic_patches:
             del cosmetic_patches[enabled_override]
 
-        # Removes override_min/max, and if non-zero writes it to normal_min_max
+        # Removes override_min/max, and if it was enabled and non-zero writes it to normal_min_max
         for min_or_max in ("min", "max"):
             override = f"{group}_hue_override_{min_or_max}"
             if override in cosmetic_patches:
