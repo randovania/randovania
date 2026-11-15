@@ -114,38 +114,34 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.suit_color_layout.addWidget(self.suit_palette_label)
 
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.suit_color_layout.addItem(self.horizontalSpacer_2)
+
         self.suit_rando_shift_check = QCheckBox(self.palette_box)
         self.suit_rando_shift_check.setObjectName(u"suit_rando_shift_check")
         self.suit_rando_shift_check.setEnabled(True)
 
         self.suit_color_layout.addWidget(self.suit_rando_shift_check)
 
-        self.suit_override_shift_check = QCheckBox(self.palette_box)
-        self.suit_override_shift_check.setObjectName(u"suit_override_shift_check")
-        self.suit_override_shift_check.setEnabled(False)
-        self.suit_override_shift_check.setBaseSize(QSize(0, 0))
-        self.suit_override_shift_check.setIconSize(QSize(16, 16))
+        self.suit_shift_spin_min = QSpinBox(self.palette_box)
+        self.suit_shift_spin_min.setObjectName(u"suit_shift_spin_min")
+        self.suit_shift_spin_min.setEnabled(False)
+        self.suit_shift_spin_min.setMaximumSize(QSize(50, 16777215))
+        self.suit_shift_spin_min.setMaximum(360)
+        self.suit_shift_spin_min.setSingleStep(5)
 
-        self.suit_color_layout.addWidget(self.suit_override_shift_check, 0, Qt.AlignmentFlag.AlignLeft)
+        self.suit_color_layout.addWidget(self.suit_shift_spin_min)
 
-        self.suit_override_shift_spin_min = QSpinBox(self.palette_box)
-        self.suit_override_shift_spin_min.setObjectName(u"suit_override_shift_spin_min")
-        self.suit_override_shift_spin_min.setEnabled(False)
-        self.suit_override_shift_spin_min.setMaximumSize(QSize(50, 16777215))
-        self.suit_override_shift_spin_min.setMaximum(360)
-        self.suit_override_shift_spin_min.setSingleStep(5)
+        self.suit_shift_spin_max = QSpinBox(self.palette_box)
+        self.suit_shift_spin_max.setObjectName(u"suit_shift_spin_max")
+        self.suit_shift_spin_max.setEnabled(False)
+        self.suit_shift_spin_max.setMinimumSize(QSize(0, 0))
+        self.suit_shift_spin_max.setMaximumSize(QSize(50, 16777215))
+        self.suit_shift_spin_max.setMaximum(360)
+        self.suit_shift_spin_max.setSingleStep(5)
 
-        self.suit_color_layout.addWidget(self.suit_override_shift_spin_min)
-
-        self.suit_override_shift_spin_max = QSpinBox(self.palette_box)
-        self.suit_override_shift_spin_max.setObjectName(u"suit_override_shift_spin_max")
-        self.suit_override_shift_spin_max.setEnabled(False)
-        self.suit_override_shift_spin_max.setMinimumSize(QSize(0, 0))
-        self.suit_override_shift_spin_max.setMaximumSize(QSize(50, 16777215))
-        self.suit_override_shift_spin_max.setMaximum(360)
-        self.suit_override_shift_spin_max.setSingleStep(5)
-
-        self.suit_color_layout.addWidget(self.suit_override_shift_spin_max)
+        self.suit_color_layout.addWidget(self.suit_shift_spin_max)
 
 
         self.palette_layout.addLayout(self.suit_color_layout)
@@ -158,35 +154,33 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.beam_color_layout.addWidget(self.beam_palette_label)
 
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.beam_color_layout.addItem(self.horizontalSpacer_3)
+
         self.beam_rando_shift_check = QCheckBox(self.palette_box)
         self.beam_rando_shift_check.setObjectName(u"beam_rando_shift_check")
         self.beam_rando_shift_check.setEnabled(True)
 
         self.beam_color_layout.addWidget(self.beam_rando_shift_check)
 
-        self.beam_override_shift_check = QCheckBox(self.palette_box)
-        self.beam_override_shift_check.setObjectName(u"beam_override_shift_check")
-        self.beam_override_shift_check.setEnabled(False)
+        self.beam_shift_spin_min = QSpinBox(self.palette_box)
+        self.beam_shift_spin_min.setObjectName(u"beam_shift_spin_min")
+        self.beam_shift_spin_min.setEnabled(False)
+        self.beam_shift_spin_min.setMaximumSize(QSize(50, 16777215))
+        self.beam_shift_spin_min.setMaximum(360)
+        self.beam_shift_spin_min.setSingleStep(5)
 
-        self.beam_color_layout.addWidget(self.beam_override_shift_check, 0, Qt.AlignmentFlag.AlignLeft)
+        self.beam_color_layout.addWidget(self.beam_shift_spin_min)
 
-        self.beam_override_shift_spin_min = QSpinBox(self.palette_box)
-        self.beam_override_shift_spin_min.setObjectName(u"beam_override_shift_spin_min")
-        self.beam_override_shift_spin_min.setEnabled(False)
-        self.beam_override_shift_spin_min.setMaximumSize(QSize(50, 16777215))
-        self.beam_override_shift_spin_min.setMaximum(360)
-        self.beam_override_shift_spin_min.setSingleStep(5)
+        self.beam_shift_spin_max = QSpinBox(self.palette_box)
+        self.beam_shift_spin_max.setObjectName(u"beam_shift_spin_max")
+        self.beam_shift_spin_max.setEnabled(False)
+        self.beam_shift_spin_max.setMaximumSize(QSize(50, 16777215))
+        self.beam_shift_spin_max.setMaximum(360)
+        self.beam_shift_spin_max.setSingleStep(5)
 
-        self.beam_color_layout.addWidget(self.beam_override_shift_spin_min)
-
-        self.beam_override_shift_spin_max = QSpinBox(self.palette_box)
-        self.beam_override_shift_spin_max.setObjectName(u"beam_override_shift_spin_max")
-        self.beam_override_shift_spin_max.setEnabled(False)
-        self.beam_override_shift_spin_max.setMaximumSize(QSize(50, 16777215))
-        self.beam_override_shift_spin_max.setMaximum(360)
-        self.beam_override_shift_spin_max.setSingleStep(5)
-
-        self.beam_color_layout.addWidget(self.beam_override_shift_spin_max)
+        self.beam_color_layout.addWidget(self.beam_shift_spin_max)
 
 
         self.palette_layout.addLayout(self.beam_color_layout)
@@ -199,35 +193,33 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.enemy_color_layout.addWidget(self.enemy_palette_label)
 
+        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.enemy_color_layout.addItem(self.horizontalSpacer_4)
+
         self.enemy_rando_shift_check = QCheckBox(self.palette_box)
         self.enemy_rando_shift_check.setObjectName(u"enemy_rando_shift_check")
         self.enemy_rando_shift_check.setEnabled(True)
 
         self.enemy_color_layout.addWidget(self.enemy_rando_shift_check)
 
-        self.enemy_override_shift_check = QCheckBox(self.palette_box)
-        self.enemy_override_shift_check.setObjectName(u"enemy_override_shift_check")
-        self.enemy_override_shift_check.setEnabled(False)
+        self.enemy_shift_spin_min = QSpinBox(self.palette_box)
+        self.enemy_shift_spin_min.setObjectName(u"enemy_shift_spin_min")
+        self.enemy_shift_spin_min.setEnabled(False)
+        self.enemy_shift_spin_min.setMaximumSize(QSize(50, 16777215))
+        self.enemy_shift_spin_min.setMaximum(360)
+        self.enemy_shift_spin_min.setSingleStep(5)
 
-        self.enemy_color_layout.addWidget(self.enemy_override_shift_check, 0, Qt.AlignmentFlag.AlignLeft)
+        self.enemy_color_layout.addWidget(self.enemy_shift_spin_min)
 
-        self.enemy_override_shift_spin_min = QSpinBox(self.palette_box)
-        self.enemy_override_shift_spin_min.setObjectName(u"enemy_override_shift_spin_min")
-        self.enemy_override_shift_spin_min.setEnabled(False)
-        self.enemy_override_shift_spin_min.setMaximumSize(QSize(50, 16777215))
-        self.enemy_override_shift_spin_min.setMaximum(360)
-        self.enemy_override_shift_spin_min.setSingleStep(5)
+        self.enemy_shift_spin_max = QSpinBox(self.palette_box)
+        self.enemy_shift_spin_max.setObjectName(u"enemy_shift_spin_max")
+        self.enemy_shift_spin_max.setEnabled(False)
+        self.enemy_shift_spin_max.setMaximumSize(QSize(50, 16777215))
+        self.enemy_shift_spin_max.setMaximum(360)
+        self.enemy_shift_spin_max.setSingleStep(5)
 
-        self.enemy_color_layout.addWidget(self.enemy_override_shift_spin_min)
-
-        self.enemy_override_shift_spin_max = QSpinBox(self.palette_box)
-        self.enemy_override_shift_spin_max.setObjectName(u"enemy_override_shift_spin_max")
-        self.enemy_override_shift_spin_max.setEnabled(False)
-        self.enemy_override_shift_spin_max.setMaximumSize(QSize(50, 16777215))
-        self.enemy_override_shift_spin_max.setMaximum(360)
-        self.enemy_override_shift_spin_max.setSingleStep(5)
-
-        self.enemy_color_layout.addWidget(self.enemy_override_shift_spin_max)
+        self.enemy_color_layout.addWidget(self.enemy_shift_spin_max)
 
 
         self.palette_layout.addLayout(self.enemy_color_layout)
@@ -240,37 +232,35 @@ class Ui_FusionCosmeticPatchesDialog(object):
 
         self.tileset_color_layout.addWidget(self.tileset_palette_label)
 
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.tileset_color_layout.addItem(self.horizontalSpacer_5)
+
         self.tileset_rando_shift_check = QCheckBox(self.palette_box)
         self.tileset_rando_shift_check.setObjectName(u"tileset_rando_shift_check")
         self.tileset_rando_shift_check.setEnabled(True)
 
         self.tileset_color_layout.addWidget(self.tileset_rando_shift_check)
 
-        self.tileset_override_shift_check = QCheckBox(self.palette_box)
-        self.tileset_override_shift_check.setObjectName(u"tileset_override_shift_check")
-        self.tileset_override_shift_check.setEnabled(False)
+        self.tileset_shift_spin_min = QSpinBox(self.palette_box)
+        self.tileset_shift_spin_min.setObjectName(u"tileset_shift_spin_min")
+        self.tileset_shift_spin_min.setEnabled(False)
+        self.tileset_shift_spin_min.setMaximumSize(QSize(50, 16777215))
+        self.tileset_shift_spin_min.setMinimum(0)
+        self.tileset_shift_spin_min.setMaximum(360)
+        self.tileset_shift_spin_min.setSingleStep(5)
+        self.tileset_shift_spin_min.setValue(0)
 
-        self.tileset_color_layout.addWidget(self.tileset_override_shift_check, 0, Qt.AlignmentFlag.AlignLeft)
+        self.tileset_color_layout.addWidget(self.tileset_shift_spin_min)
 
-        self.tileset_override_shift_spin_min = QSpinBox(self.palette_box)
-        self.tileset_override_shift_spin_min.setObjectName(u"tileset_override_shift_spin_min")
-        self.tileset_override_shift_spin_min.setEnabled(False)
-        self.tileset_override_shift_spin_min.setMaximumSize(QSize(50, 16777215))
-        self.tileset_override_shift_spin_min.setMinimum(0)
-        self.tileset_override_shift_spin_min.setMaximum(360)
-        self.tileset_override_shift_spin_min.setSingleStep(5)
-        self.tileset_override_shift_spin_min.setValue(0)
+        self.tileset_shift_spin_max = QSpinBox(self.palette_box)
+        self.tileset_shift_spin_max.setObjectName(u"tileset_shift_spin_max")
+        self.tileset_shift_spin_max.setEnabled(False)
+        self.tileset_shift_spin_max.setMaximumSize(QSize(50, 16777215))
+        self.tileset_shift_spin_max.setMaximum(360)
+        self.tileset_shift_spin_max.setSingleStep(5)
 
-        self.tileset_color_layout.addWidget(self.tileset_override_shift_spin_min)
-
-        self.tileset_override_shift_spin_max = QSpinBox(self.palette_box)
-        self.tileset_override_shift_spin_max.setObjectName(u"tileset_override_shift_spin_max")
-        self.tileset_override_shift_spin_max.setEnabled(False)
-        self.tileset_override_shift_spin_max.setMaximumSize(QSize(50, 16777215))
-        self.tileset_override_shift_spin_max.setMaximum(360)
-        self.tileset_override_shift_spin_max.setSingleStep(5)
-
-        self.tileset_color_layout.addWidget(self.tileset_override_shift_spin_max)
+        self.tileset_color_layout.addWidget(self.tileset_shift_spin_max)
 
 
         self.palette_layout.addLayout(self.tileset_color_layout)
@@ -431,16 +421,12 @@ class Ui_FusionCosmeticPatchesDialog(object):
         self.palette_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Color Rotation", None))
         self.suit_palette_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Suit Palette", None))
         self.suit_rando_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Randomize Hue Shift", None))
-        self.suit_override_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Override Hue Shift (min,max)", None))
         self.beam_palette_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Beam Palette", None))
         self.beam_rando_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Randomize Hue Shift", None))
-        self.beam_override_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Override Hue Shift (min,max)", None))
         self.enemy_palette_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Enemy Palette", None))
         self.enemy_rando_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Randomize Hue Shift", None))
-        self.enemy_override_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Override Hue Shift (min,max)", None))
         self.tileset_palette_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Tileset Palette", None))
         self.tileset_rando_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Randomize Hue Shift", None))
-        self.tileset_override_shift_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Override Hue Shift (min,max)", None))
         self.color_space_label.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Color Space", None))
         self.symmetric_check.setText(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Enable Symmetric", None))
         self.music_shuffle_box.setTitle(QCoreApplication.translate("FusionCosmeticPatchesDialog", u"Music", None))
