@@ -201,7 +201,7 @@ def _remove_fusion_overrides(options: dict) -> None:
             override = f"{group}_hue_override_{min_or_max}"
             if override in cosmetic_patches:
                 val = cosmetic_patches.pop(override)
-                if val != 0 and enabled_override:
+                if enabled_override:
                     cosmetic_patches[f"{group}_hue_{min_or_max}"] = val
 
 
