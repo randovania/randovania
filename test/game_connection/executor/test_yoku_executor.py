@@ -12,7 +12,7 @@ from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 
 LAYOUT_UUID = "00000000-0000-1111-0000-000000000000"
-LOCATION_COUNT = 248
+LOCATION_COUNT = 249
 INVENTORY_SIZE = 51
 
 

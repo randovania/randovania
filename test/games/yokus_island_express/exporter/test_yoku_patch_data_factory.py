@@ -7,7 +7,15 @@ from randovania.games.yokus_island_express.layout import YokuCosmeticPatches
 from randovania.interface_common.worlds_configuration import WorldsConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
-TRACKERS = {"tracker_caves", "tracker_jungle", "tracker_peak", "tracker_scarabs", "tracker_springs"}
+STARTER_PRESET_ITEMS = {
+    "tracker_caves",
+    "tracker_jungle",
+    "tracker_peak",
+    "tracker_scarabs",
+    "tracker_springs",
+    "treasure_map",
+    "abilities/double_fruit",
+}
 
 
 def _create_data(test_files_dir, mocker, rdvgame: str, world_index: int = 0) -> tuple[YokuPatchDataFactory, dict]:
@@ -30,11 +38,11 @@ def test_create_data_starting_trackers(test_files_dir, mocker) -> None:
     _, data = _create_data(test_files_dir, mocker, "yokus_island_express/starter_preset.rdvgame")
     items = collections.Counter(pickup["item"] for pickup in data["pickups"])
 
-    assert data["starting_items"] == dict.fromkeys(sorted(TRACKERS), 1)
-    assert not TRACKERS & set(items)
+    assert data["starting_items"] == dict.fromkeys(sorted(STARTER_PRESET_ITEMS), 1)
+    assert not STARTER_PRESET_ITEMS & set(items)
     # The 5 locations freed by the starting trackers hold Nothing
     assert items["reward_fruit_medium"] == 39
-    assert items["nothing"] == 5
+    assert items["nothing"] == 7
     assert data["starting_fruit"] == 0
     assert data["required_beacons"] == 0
 
@@ -44,7 +52,7 @@ def test_create_data_shuffled_trackers_fruit_beacons(test_files_dir, mocker) -> 
     items = collections.Counter(pickup["item"] for pickup in data["pickups"])
 
     assert data["starting_items"] == {}
-    assert all(items[tracker] == 1 for tracker in TRACKERS)
+    assert all(items[tracker] == 1 for tracker in STARTER_PRESET_ITEMS)
     assert items["reward_fruit_medium"] == 39
     assert data["starting_fruit"] == 50
     assert data["required_beacons"] == 2
@@ -75,6 +83,10 @@ def test_create_data_multiworld(test_files_dir, mocker) -> None:
                 "location": pickup["location"],
                 "item": "nothing",
                 "caption": f"Sent {target.pickup.name} to World {target.world + 1}!",
+                "category": {
+                    "determiner": target.pickup.gui_category.hint_details.determiner,
+                    "noun": target.pickup.gui_category.hint_details.description,
+                },
             }
 
     assert other_worlds == {0, 1}
