@@ -40,6 +40,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             self.logical_pickup_placement_combo.setItemData(i, logical_placement_mode)
         signal_handling.on_combo(self.logical_pickup_placement_combo, self._on_logical_pickup_placement_mode_changed)
 
+        signal_handling.on_checked(self.place_filler_check, self._persist_place_filler)
+
         # Logic Settings
         self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
         self.dangerous_combo.setItemData(1, LayoutLogicalResourceAction.LAST_RESORT)
@@ -83,6 +85,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         )
 
         signal_handling.set_combo_with_value(self.logical_pickup_placement_combo, layout.logical_pickup_placement)
+
+        self.place_filler_check.setChecked(layout.place_filler_items)
 
         self.check_if_beatable_after_base_patches_check.setChecked(layout.check_if_beatable_after_base_patches)
 
@@ -131,6 +135,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _persist_logical_pickup_placement(self, value: LogicalPickupPlacementConfiguration) -> None:
         with self._editor as editor:
             editor.set_configuration_field("logical_pickup_placement", value)
+
+    def _persist_place_filler(self, value: bool) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("place_filler_items", value)
 
     def _on_dangerous_changed(self, value: LayoutLogicalResourceAction) -> None:
         with self._editor as editor:

@@ -229,6 +229,10 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
     modes = [preset.configuration.available_locations.randomization_mode for preset in presets]
 
     for world, filler_result in enumerate(filler_results.player_results):
+        if not presets[world].configuration.place_filler_items:
+            assignments.append([])
+            continue
+
         split_major = modes[world] is RandomizationMode.MAJOR_MINOR_SPLIT
         for pickup_node in get_unassigned_pickup_nodes(filler_result.game, filler_result.patches.pickup_assignment):
             if split_major and pickup_node.location_category == LocationCategory.MAJOR:

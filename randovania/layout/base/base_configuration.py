@@ -64,6 +64,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     check_if_beatable_after_base_patches: bool
     logical_pickup_placement: LogicalPickupPlacementConfiguration
     hints: HintConfiguration
+    place_filler_items: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

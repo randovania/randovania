@@ -37,7 +37,7 @@ class Ui_PresetGeneration(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, -335, 542, 884))
+        self.scroll_contents.setGeometry(QRect(0, 0, 542, 1162))
         self.verticalLayout_3 = QVBoxLayout(self.scroll_contents)
         self.verticalLayout_3.setSpacing(6)
         self.verticalLayout_3.setContentsMargins(11, 11, 11, 11)
@@ -124,6 +124,24 @@ class Ui_PresetGeneration(object):
         self.logical_pickup_placement_description.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.logical_pickup_placement_description)
+
+        self.line = QFrame(self.randomization_mode_group)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_2.addWidget(self.line)
+
+        self.place_filler_check = QCheckBox(self.randomization_mode_group)
+        self.place_filler_check.setObjectName(u"place_filler_check")
+
+        self.verticalLayout_2.addWidget(self.place_filler_check)
+
+        self.place_filler_label = QLabel(self.randomization_mode_group)
+        self.place_filler_label.setObjectName(u"place_filler_label")
+        self.place_filler_label.setWordWrap(True)
+
+        self.verticalLayout_2.addWidget(self.place_filler_label)
 
 
         self.verticalLayout_3.addWidget(self.randomization_mode_group)
@@ -245,6 +263,9 @@ class Ui_PresetGeneration(object):
         self.logical_pickup_placement_combo.setItemText(2, QCoreApplication.translate("PresetGeneration", u"All pickups", None))
 
         self.logical_pickup_placement_description.setText(QCoreApplication.translate("PresetGeneration", u"<html><head/><body><p><span style=\" font-weight:700;\">Minimal</span>: Only the pickups required to beat the game are guaranteed to be obtainable.</p></body></html>", None))
+        self.place_filler_check.setText(QCoreApplication.translate("PresetGeneration", u"Place filler", None))
+        self.place_filler_label.setText(QCoreApplication.translate("PresetGeneration", u"If this setting is enabled, all pickups from the pickup pool will be placed.\n"
+"If it is disabled, only pickups necessary to achieve the victory condition will be placed and everything else will be filled with Nothing pickups.", None))
         self.logic_group.setTitle(QCoreApplication.translate("PresetGeneration", u"Logic Settings", None))
         self.dangerous_label.setText(QCoreApplication.translate("PresetGeneration", u"Dangerous actions:", None))
         self.dangerous_combo.setItemText(0, QCoreApplication.translate("PresetGeneration", u"Randomly", None))
