@@ -13,6 +13,7 @@ from randovania.generator.pickup_pool import pickup_creator
 if TYPE_CHECKING:
     from randovania.exporter.hints.hint_namer import HintNamer
     from randovania.exporter.patch_data_factory import PatcherDataMeta
+    from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 NOTHING_ITEM = "nothing"
@@ -47,8 +48,17 @@ class YokuPatchDataFactory(PatchDataFactory[YokuConfiguration, YokuCosmeticPatch
                 pickup["caption"] = details.collection_text[0]
                 if details.model.game == self.game_enum():
                     pickup["model"] = details.model.name
+            pickup["category"] = self._category(details)
             pickups.append(pickup)
         return pickups
+
+    def _category(self, details: ExportedPickupDetails) -> dict[str, str]:
+        """What the NPC who hands out this pickup calls it; another player's item uses its own game's category."""
+        pickup = details.original_pickup
+        if not details.is_for_remote_player and pickup.gui_category == pickup_creator.USELESS_PICKUP_CATEGORY:
+            return {"determiner": "some ", "noun": "useless trash"}
+        hint_details = pickup.gui_category.hint_details
+        return {"determiner": hint_details.determiner, "noun": hint_details.description}
 
     def _create_starting_items(self) -> dict[str, int]:
         starting_items = {}
