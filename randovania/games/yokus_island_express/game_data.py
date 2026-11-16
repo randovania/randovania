@@ -133,7 +133,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     defaults_available_in_game_sessions=randovania.is_dev_version(),
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
-            "The 248 locations of the game's own randomizer",
+            "All 249 locations",
             "Abilities, keys, quest items, trackers, wallet upgrades, Wickerlings and fruit",
         ),
         need_to_play=("Yoku's Island Express for PC (GOG/Steam/Epic)",),
