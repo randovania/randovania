@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
-    QLabel, QPushButton, QRadioButton, QScrollArea,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
+    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
+    QPushButton, QRadioButton, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
@@ -26,24 +26,14 @@ class Ui_MSRCosmeticPatchesDialog(object):
     def setupUi(self, MSRCosmeticPatchesDialog):
         if not MSRCosmeticPatchesDialog.objectName():
             MSRCosmeticPatchesDialog.setObjectName(u"MSRCosmeticPatchesDialog")
-        MSRCosmeticPatchesDialog.resize(524, 546)
+        MSRCosmeticPatchesDialog.resize(524, 833)
         MSRCosmeticPatchesDialog.setMinimumSize(QSize(0, 0))
         self.verticalLayout_2 = QVBoxLayout(MSRCosmeticPatchesDialog)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.scrollArea = QScrollArea(MSRCosmeticPatchesDialog)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setWidgetResizable(True)
-        self.scroll_area_contents = QWidget()
-        self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 508, 865))
-        self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.samus_changes_box = QGroupBox(self.scroll_area_contents)
+        self.samus_changes_box = QGroupBox(MSRCosmeticPatchesDialog)
         self.samus_changes_box.setObjectName(u"samus_changes_box")
         self.verticalLayout_3 = QVBoxLayout(self.samus_changes_box)
         self.verticalLayout_3.setSpacing(6)
@@ -154,9 +144,9 @@ class Ui_MSRCosmeticPatchesDialog(object):
         self.verticalLayout_3.addWidget(self.use_fusion_models_cb)
 
 
-        self.verticalLayout.addWidget(self.samus_changes_box)
+        self.verticalLayout_2.addWidget(self.samus_changes_box)
 
-        self.groupBox = QGroupBox(self.scroll_area_contents)
+        self.groupBox = QGroupBox(MSRCosmeticPatchesDialog)
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout_2 = QGridLayout(self.groupBox)
         self.gridLayout_2.setSpacing(6)
@@ -279,9 +269,9 @@ class Ui_MSRCosmeticPatchesDialog(object):
         self.gridLayout_2.addWidget(self.reveal_map_cb, 5, 0, 1, 1)
 
 
-        self.verticalLayout.addWidget(self.groupBox)
+        self.verticalLayout_2.addWidget(self.groupBox)
 
-        self.audio_group = QGroupBox(self.scroll_area_contents)
+        self.audio_group = QGroupBox(MSRCosmeticPatchesDialog)
         self.audio_group.setObjectName(u"audio_group")
         self.gridLayout_5 = QGridLayout(self.audio_group)
         self.gridLayout_5.setSpacing(6)
@@ -336,9 +326,9 @@ class Ui_MSRCosmeticPatchesDialog(object):
         self.gridLayout_5.addLayout(self.music_group, 1, 1, 1, 1)
 
 
-        self.verticalLayout.addWidget(self.audio_group)
+        self.verticalLayout_2.addWidget(self.audio_group)
 
-        self.music_shuffle_group = QGroupBox(self.scroll_area_contents)
+        self.music_shuffle_group = QGroupBox(MSRCosmeticPatchesDialog)
         self.music_shuffle_group.setObjectName(u"music_shuffle_group")
         self.gridLayout_4 = QGridLayout(self.music_shuffle_group)
         self.gridLayout_4.setSpacing(6)
@@ -387,55 +377,10 @@ class Ui_MSRCosmeticPatchesDialog(object):
         self.gridLayout_4.addWidget(self.full_music_label, 11, 0, 1, 1)
 
 
-        self.verticalLayout.addWidget(self.music_shuffle_group)
-
-        self.scrollArea.setWidget(self.scroll_area_contents)
-
-        self.verticalLayout_2.addWidget(self.scrollArea)
-
-        self.line = QFrame(MSRCosmeticPatchesDialog)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout_2.addWidget(self.line)
-
-        self.footer_layout = QHBoxLayout()
-        self.footer_layout.setSpacing(6)
-        self.footer_layout.setObjectName(u"footer_layout")
-        self.footer_layout.setContentsMargins(6, 6, 6, 6)
-        self.reset_button = QPushButton(MSRCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-        self.reset_button.setText(u"\u2b8c Reset to Defaults")
-
-        self.footer_layout.addWidget(self.reset_button)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.footer_layout.addItem(self.horizontalSpacer)
-
-        self.accept_button = QPushButton(MSRCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-        self.accept_button.setMinimumSize(QSize(96, 0))
-        self.accept_button.setText(u"\U0001f5f8 Accept")
-
-        self.footer_layout.addWidget(self.accept_button)
-
-        self.cancel_button = QPushButton(MSRCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-        self.cancel_button.setMinimumSize(QSize(96, 0))
-        self.cancel_button.setText(u"\U0001f6c7 Cancel")
-
-        self.footer_layout.addWidget(self.cancel_button)
-
-
-        self.verticalLayout_2.addLayout(self.footer_layout)
+        self.verticalLayout_2.addWidget(self.music_shuffle_group)
 
 
         self.retranslateUi(MSRCosmeticPatchesDialog)
-
-        self.accept_button.setDefault(True)
-
 
         QMetaObject.connectSlotsByName(MSRCosmeticPatchesDialog)
     # setupUi

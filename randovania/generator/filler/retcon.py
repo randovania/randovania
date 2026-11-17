@@ -106,21 +106,33 @@ def _get_next_player(
     :param locations_weighted: Which locations are available and their weight.
     :return:
     """
-    all_uncollected: dict[PlayerState, set[PickupIndex]] = {
-        player_state: UncollectedState.pickup_indices_from_reach(player_state.reach) for player_state in player_states
+    all_ratios: dict[PlayerState, float] = {
+        player: (
+            len(player.reach.state.collected_pickup_indices(player.graph))
+            / player.original_game.region_list.num_pickup_nodes
+        )
+        for player in player_states
+        # Filter inactionable players out, since we don't want them to manipulate the sum
+        if not player.victory_condition_satisfied() and player.potential_actions(locations_weighted)
     }
 
-    max_actions = max(player_state.num_actions for player_state in player_states)
-    max_uncollected = max(len(uncollected) for uncollected in all_uncollected.values())
+    ratio_sum = sum(all_ratios.values())
+
+    # Can happen if all players at the start have no safe items,
+    # in which case change the sum to something positive so that everyone is equally likely to get pulled
+    if ratio_sum == 0:
+        ratio_sum = 1
 
     def _calculate_weight(player: PlayerState) -> float:
-        return 1 + (max_actions - player.num_actions) * (max_uncollected - len(all_uncollected[player]))
+        # If there's only one player, the calculation below will give a weight of 0 which fails, so just return 1
+        if len(all_ratios) == 1:
+            return 1.0
 
-    weighted_players = {
-        player_state: _calculate_weight(player_state)
-        for player_state in player_states
-        if not player_state.victory_condition_satisfied() and player_state.potential_actions(locations_weighted)
-    }
+        # Get the inverse of each ratio in comparison to the sum so that
+        # lower collection ratio => higher chance of being picked
+        return ratio_sum - all_ratios[player]
+
+    weighted_players = {player_state: _calculate_weight(player_state) for player_state in all_ratios.keys()}
     if weighted_players:
         if debug.debug_level() > debug.LogLevel.NORMAL:
             print(f">>>>> Player Weights: {weighted_players}")

@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [12.1.0] - 2026-12-XX
 
+- Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
 - Removed: Intel macOS devices are no longer supported.
+- Fixed: A failed connection attempt to a game connected via a socket no longer leaves the connection open, which could prevent any further connection until the game was restarted.
+- Fixed: Logic no longer falsely optimizes out the easier alternatives when the presence of one resource lessens the amount required of another.
+- Fixed: A requirement that needs several resources to be absent is now unmet as soon as the player has any one of them. Previously, it was unmet only when the player had all of them.
 
 ### Metroid Dread
 
@@ -18,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
 
 ### Metroid Fusion
+
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
 
 #### Logic Database
 
@@ -30,6 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
 
+#### Sector 3 (PYR)
+
+- Changed: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
+- Changed: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
+
 ##### Sector 4 (AQA)
 
 - Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
@@ -37,6 +48,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 6 (NOC)
 
 - Changed: The requirements for fighting Varia Core have been adjusted. Screw Attack and specific Beam upgrades now expect you to need less health to fight the boss.
+
+### Metroid Prime
+
+- Changed: The description for Legacy Mode to be clearer.
+
+#### Logic Database
+
+##### Phendrana Drifts
+- Changed: Cleaned up the connections from Ruins Entryway to Courtyard Entryway:
+  - Added: Several videos and comments for the tricks involved.
+  - Added: Getting from the top of the ruined building to the stone archway is now possible with an Intermediate Damage Boost.
+  - Added: Several alternative methods on getting on top of the fallen down stalactite.
+  - Added: Getting from the stone archway to the middle-left rooftop via Beginner Momvement.
+  - Added: Dashing from the middle-left rooftop to Courtyard Entryway is now possible with an Intermediate Combat/Scan Dash by dashing off of either the Sheegoth or the items drops from a crate.
+  - Changed: Climbing the ruined building now requires Beginner Standable Terrain for the Beginner Bomb Jump. Doing it with only Bomb Jumps is now Intermediate.
 
 ### Metroid Prime 2: Echoes
 

@@ -4855,23 +4855,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Wl. 54: Spider Cave Entry)": {
-                            "type": "or",
-                            "data": {
-                                "comment": "TODO: Add \"Has Vacuum\" with a trick",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Noisemaker",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Travel to Spacemonk Mystery": {
                             "type": "and",
                             "data": {
@@ -4946,7 +4929,7 @@
                     "hint_features": [],
                     "grants_on_collect": [],
                     "connections": {
-                        "Travel to Spider Fight": {
+                        "Travel to Spacemonk Mystery": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5048,6 +5031,13 @@
                             }
                         },
                         "Pickup (Fruit 88: Spider Cave)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Wl. 54: Spider Cave Entry)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5366,12 +5356,24 @@
                             }
                         },
                         "Event - Boon Quest Finished": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "MainQuestStarted",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "MainQuestStarted",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Vacuum"
+                                    }
+                                ]
                             }
                         }
                     }

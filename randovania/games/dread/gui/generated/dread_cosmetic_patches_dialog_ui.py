@@ -15,10 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
-    QFrame, QGroupBox, QHBoxLayout, QLabel,
-    QPushButton, QScrollArea, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGroupBox,
+    QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 from randovania.gui.widgets.scroll_protected import ScrollProtectedSlider
 
@@ -26,23 +25,13 @@ class Ui_DreadCosmeticPatchesDialog(object):
     def setupUi(self, DreadCosmeticPatchesDialog):
         if not DreadCosmeticPatchesDialog.objectName():
             DreadCosmeticPatchesDialog.setObjectName(u"DreadCosmeticPatchesDialog")
-        DreadCosmeticPatchesDialog.resize(624, 797)
+        DreadCosmeticPatchesDialog.resize(624, 896)
         self.verticalLayout_2 = QVBoxLayout(DreadCosmeticPatchesDialog)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.scrollArea = QScrollArea(DreadCosmeticPatchesDialog)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setWidgetResizable(True)
-        self.scroll_area_contents = QWidget()
-        self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 608, 910))
-        self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.game_changes_box = QGroupBox(self.scroll_area_contents)
+        self.game_changes_box = QGroupBox(DreadCosmeticPatchesDialog)
         self.game_changes_box.setObjectName(u"game_changes_box")
         self.game_changes_layout = QVBoxLayout(self.game_changes_box)
         self.game_changes_layout.setSpacing(6)
@@ -213,9 +202,9 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.game_changes_layout.addWidget(self.save_slots_description)
 
 
-        self.verticalLayout.addWidget(self.game_changes_box)
+        self.verticalLayout_2.addWidget(self.game_changes_box)
 
-        self.accessibility_options_box = QGroupBox(self.scroll_area_contents)
+        self.accessibility_options_box = QGroupBox(DreadCosmeticPatchesDialog)
         self.accessibility_options_box.setObjectName(u"accessibility_options_box")
         self.game_changes_layout_3 = QVBoxLayout(self.accessibility_options_box)
         self.game_changes_layout_3.setSpacing(6)
@@ -257,60 +246,10 @@ class Ui_DreadCosmeticPatchesDialog(object):
         self.game_changes_layout_3.addWidget(self.alt_closed)
 
 
-        self.verticalLayout.addWidget(self.accessibility_options_box)
-
-        self.scrollArea.setWidget(self.scroll_area_contents)
-
-        self.verticalLayout_2.addWidget(self.scrollArea)
-
-        self.line = QFrame(DreadCosmeticPatchesDialog)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.Shape.HLine)
-        self.line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout_2.addWidget(self.line)
-
-        self.footer_layout = QHBoxLayout()
-        self.footer_layout.setSpacing(6)
-        self.footer_layout.setObjectName(u"footer_layout")
-        self.footer_layout.setContentsMargins(6, 6, 6, 6)
-        self.reset_button = QPushButton(DreadCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-        self.reset_button.setText(u"\u2b8c Reset to Defaults")
-
-        self.footer_layout.addWidget(self.reset_button)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.footer_layout.addItem(self.horizontalSpacer)
-
-        self.accept_button = QPushButton(DreadCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-        self.accept_button.setMinimumSize(QSize(96, 0))
-        self.accept_button.setText(u"\U0001f5f8 Accept")
-
-        self.footer_layout.addWidget(self.accept_button)
-
-        self.cancel_button = QPushButton(DreadCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.cancel_button.sizePolicy().hasHeightForWidth())
-        self.cancel_button.setSizePolicy(sizePolicy1)
-        self.cancel_button.setMinimumSize(QSize(96, 0))
-        self.cancel_button.setText(u"\U0001f6c7 Cancel")
-
-        self.footer_layout.addWidget(self.cancel_button)
-
-
-        self.verticalLayout_2.addLayout(self.footer_layout)
+        self.verticalLayout_2.addWidget(self.accessibility_options_box)
 
 
         self.retranslateUi(DreadCosmeticPatchesDialog)
-
-        self.accept_button.setDefault(True)
-
 
         QMetaObject.connectSlotsByName(DreadCosmeticPatchesDialog)
     # setupUi
