@@ -45,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
 
+##### Sector 6 (NOC)
+
+- Added: X-B.O.X. Garage: Wall Jump (Intermediate) method to get from the bottom door to the top door.
+
 ### Metroid Prime
 
 - Changed: The description for Legacy Mode to be clearer.
