@@ -5483,11 +5483,15 @@
                         "Door to Aquarium Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "FIXME: don't require killing pirate to escape",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Power Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Aqua Pirate"
                                     },
                                     {
                                         "type": "or",
@@ -5641,10 +5645,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
                                     }
                                 ]
                             }
@@ -5689,16 +5689,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
+                                        "data": "Can Kill Aqua Pirate"
                                     },
                                     {
                                         "type": "and",
@@ -5727,47 +5718,72 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": "Avoid Pirate",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
+                                                        "comment": "With Gravity, jump above them",
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": "Dodge via Jumping",
+                                                                    "type": "items",
+                                                                    "name": "GravitySuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
                                                                     "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Combat",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 2,
+                                                                                "type": "items",
+                                                                                "name": "SpaceJump",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         }
                                                                     ]
                                                                 }
-                                                            },
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Jump to dodge the rush attack, then move after it and crouch when it tries doing another",
+                                                        "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -5825,8 +5841,17 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with Pirate",
+                                            "comment": "Deal with Pirate. It can't escape the tank, so can be treated as a tough underwater enemy",
                                             "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ChargeBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
                                                 {
                                                     "type": "template",
                                                     "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
@@ -5879,16 +5904,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
+                                        "data": "Can Kill Aqua Pirate"
                                     },
                                     {
                                         "type": "and",
@@ -5917,39 +5933,39 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": "Avoid Pirate",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Jump to dodge the rush attack, then move after it and crouch when it tries doing another",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "With gravity, jump above them",
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": "Dodge via jumping and crouching",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "GravitySuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {

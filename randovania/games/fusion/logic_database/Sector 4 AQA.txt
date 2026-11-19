@@ -834,7 +834,8 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}, {'x': 9, 'y': 12}, {'x': 10, 'y
   * Extra - infant_weight: 0.34
   > Door to Aquarium Shaft
       All of the following:
-          Can Kill Tough Underwater Beam-Resistant Enemy and Can Use Power Bombs
+          # FIXME: don't require killing pirate to escape
+          Can Kill Aqua Pirate and Can Use Power Bombs
           Any of the following:
               All of the following:
                   # Grav method
@@ -858,15 +859,16 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}, {'x': 9, 'y': 12}, {'x': 10, 'y
   * Extra - door_idx: [38]
   > Door to Aquarium Shaft
       Any of the following:
-          Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
+          Can Kill Aqua Pirate
           Damage Boosts (Intermediate) and Normal Damage ≥ 499
-          All of the following:
+          Any of the following:
               # Avoid Pirate
-              Gravity Suit
-              Any of the following:
-                  Space Jump
-                  # Dodge via Jumping
-                  Combat (Intermediate)
+              All of the following:
+                  # With Gravity, jump above them
+                  Gravity Suit
+                  Space Jump or Combat (Intermediate)
+              # Jump to dodge the rush attack, then move after it and crouch when it tries doing another
+              Combat (Advanced)
 
 > Door to Aquarium Shaft; Heals? False
   * Layers: default
@@ -876,20 +878,19 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 11}, {'x': 9, 'y': 12}, {'x': 10, 'y
       All of the following:
           Can Use Power Bombs
           Any of the following:
-              # Deal with Pirate
-              Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
+              # Deal with Pirate. It can't escape the tank, so can be treated as a tough underwater enemy
+              Charge Beam or Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
               Damage Boosts (Intermediate) and Normal Damage ≥ 499
   > Door to Evir Enclosure
       Any of the following:
-          Combat (Advanced) or Can Kill Tough Underwater Beam-Resistant Enemy
+          Can Kill Aqua Pirate
           Damage Boosts (Intermediate) and Normal Damage ≥ 499
-          All of the following:
+          Any of the following:
               # Avoid Pirate
-              Gravity Suit
-              Any of the following:
-                  Space Jump
-                  # Dodge via jumping and crouching
-                  Combat (Advanced)
+              # Jump to dodge the rush attack, then move after it and crouch when it tries doing another
+              Combat (Advanced)
+              # With gravity, jump above them
+              Gravity Suit and Space Jump
 
 ----------------
 Aquarium Hub Access
