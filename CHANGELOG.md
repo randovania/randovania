@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
+- Added: EMMI Zone Hub: Added Wall Jump (Intermediate) trick to get pickup from door to Batllspark Hallway with Spin Boost and Flash Shift.
 
 ### Metroid Fusion
 
