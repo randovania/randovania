@@ -726,6 +726,19 @@ Extra - polygon: [[-19640.0, -9968.0], [-13880.0, -9968.0], [-13880.0, -16624.0]
   > Door
       Trivial
 
+> Pickup (NPC: Tunguska); Heals? False
+  * Layers: default
+  * Pickup 248; Category? Major
+  * Extra - spawn_id: peak_filthy_flat:2632
+  * Extra - level: peak_filthy_flat
+  * Extra - level_number: 587
+  * Extra - object_id: 2632
+  * Extra - vanilla_item: tunguska_reward
+  * Extra - revealed_at_start: False
+  * Extra - tracker: 1808,-396
+  > Door
+      Trivial
+
 > Pickup (Mailbox 25: Lighthouse); Heals? False
   * Layers: default
   * Pickup 76; Category? Minor; Grants 1x Mails Delivered
@@ -834,6 +847,8 @@ Extra - polygon: [[-19640.0, -9968.0], [-13880.0, -9968.0], [-13880.0, -16624.0]
           Noisemaker
           # Tunguska allows to take it by delivering all Sootlings or you fall from the top to the chest
           Sootling ≥ 6 or Has Vacuum
+  > Pickup (NPC: Tunguska)
+      Sootling ≥ 6
   > Pickup (Scarab 46: Lighthouse I Right)
       Trivial
   > Pickup (Scarab 47: Lighthouse I Left)
@@ -1187,9 +1202,6 @@ Extra - polygon: [[14312.0, -3872.0], [18632.0, -3872.0], [18632.0, -11160.0], [
 > Travel to Spider Fight; Heals? False
   * Layers: default
   * Open to Spider Fight/Travel to Ice Cold Idol; Excluded from Dock Lock Rando
-  > Pickup (Wl. 54: Spider Cave Entry)
-      # TODO: Add "Has Vacuum" with a trick
-      Noisemaker
   > Travel to Spacemonk Mystery
       Trivial
 
@@ -1216,7 +1228,7 @@ Extra - polygon: [[14312.0, -3872.0], [18632.0, -3872.0], [18632.0, -11160.0], [
   * Extra - vanilla_item: wickerling
   * Extra - revealed_at_start: True
   * Extra - tracker: -1560,-7800
-  > Travel to Spider Fight
+  > Travel to Spacemonk Mystery
       Trivial
 
 > Event - Bucket Filled; Heals? False
@@ -1237,6 +1249,8 @@ Extra - polygon: [[14312.0, -3872.0], [18632.0, -3872.0], [18632.0, -11160.0], [
   > Travel to Spider Fight
       Trivial
   > Pickup (Fruit 88: Spider Cave)
+      Trivial
+  > Pickup (Wl. 54: Spider Cave Entry)
       Trivial
 
 ----------------
@@ -1300,7 +1314,7 @@ Extra - polygon: [[10320.0, -864.0], [18632.0, -864.0], [18632.0, -3872.0], [103
   > Travel to Ice Cold Idol
       After Main Quest Started
   > Event - Boon Quest Finished
-      After Main Quest Started
+      After Main Quest Started and Has Vacuum
 
 > Travel to Ice Cold Idol; Heals? False
   * Layers: default

@@ -78,7 +78,7 @@ def _hash_words() -> list[str]:
 
 def _test_data() -> randovania.game.game_test_data.GameTestData:
     return randovania.game.game_test_data.GameTestData(
-        expected_seed_hash="VOPMXFDV",
+        expected_seed_hash="PXFNIPIP",
     )
 
 
@@ -122,7 +122,13 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
         ),
         (
             "How is this different from the game's own randomizer?",
-            "TODO",
+            "The game's own randomizer is the base, with some additions. Tunguska rewards you for cleaning all six "
+            "Sootlings, which adds one more location. When an NPC gives you an item, they mention its category "
+            "rather than the item they would give in the original game. The Traitor Spirit quest is shortened to "
+            "5 drains instead of 50. A preset can require a number of lit beacons before the final boss. The pause "
+            "menu gains 'Warp to Start' and 'Warp to Village'. Some NPC lines that no longer fit a randomized game "
+            "are fixed. A location can also hold Nothing, or in multiworld another player's item. The game's text "
+            "is always in English.",
         ),
         (
             "How do I remove the mod?",
@@ -133,7 +139,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     defaults_available_in_game_sessions=randovania.is_dev_version(),
     web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=(
-            "The 248 locations of the game's own randomizer",
+            "All 249 locations",
             "Abilities, keys, quest items, trackers, wallet upgrades, Wickerlings and fruit",
         ),
         need_to_play=("Yoku's Island Express for PC (GOG/Steam/Epic)",),

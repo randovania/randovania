@@ -2990,6 +2990,43 @@
                         }
                     }
                 },
+                "Pickup (NPC: Tunguska)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16216.0,
+                        "y": -15412.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "spawn_id": "peak_filthy_flat:2632",
+                        "level": "peak_filthy_flat",
+                        "level_number": 587,
+                        "object_id": 2632,
+                        "vanilla_item": "tunguska_reward",
+                        "revealed_at_start": false,
+                        "tracker": "1808,-396"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 248,
+                    "location_category": "major",
+                    "custom_index_group": null,
+                    "hint_features": [],
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Door": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
                 "Pickup (Mailbox 25: Lighthouse)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -3339,6 +3376,23 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (NPC: Tunguska)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Sootling",
+                                            "amount": 6,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -4855,23 +4909,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Wl. 54: Spider Cave Entry)": {
-                            "type": "or",
-                            "data": {
-                                "comment": "TODO: Add \"Has Vacuum\" with a trick",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Noisemaker",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Travel to Spacemonk Mystery": {
                             "type": "and",
                             "data": {
@@ -4946,7 +4983,7 @@
                     "hint_features": [],
                     "grants_on_collect": [],
                     "connections": {
-                        "Travel to Spider Fight": {
+                        "Travel to Spacemonk Mystery": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5048,6 +5085,13 @@
                             }
                         },
                         "Pickup (Fruit 88: Spider Cave)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Wl. 54: Spider Cave Entry)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5366,12 +5410,24 @@
                             }
                         },
                         "Event - Boon Quest Finished": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "MainQuestStarted",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "MainQuestStarted",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Vacuum"
+                                    }
+                                ]
                             }
                         }
                     }

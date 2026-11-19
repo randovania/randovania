@@ -40,7 +40,7 @@ class Ui_PresetPrimeChaos(object):
         self.scroll_area.setWidgetResizable(True)
         self.scroll_contents = QWidget()
         self.scroll_contents.setObjectName(u"scroll_contents")
-        self.scroll_contents.setGeometry(QRect(0, 0, 487, 1190))
+        self.scroll_contents.setGeometry(QRect(0, 0, 487, 1334))
         self.scroll_layout = QVBoxLayout(self.scroll_contents)
         self.scroll_layout.setSpacing(6)
         self.scroll_layout.setContentsMargins(11, 11, 11, 11)
@@ -202,8 +202,8 @@ class Ui_PresetPrimeChaos(object):
         self.superheated_slider.setObjectName(u"superheated_slider")
         self.superheated_slider.setMaximum(1000)
         self.superheated_slider.setPageStep(2)
-        self.superheated_slider.setOrientation(Qt.Horizontal)
-        self.superheated_slider.setTickPosition(QSlider.TicksBelow)
+        self.superheated_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.superheated_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
 
         self.superheated_slider_layout.addWidget(self.superheated_slider)
 
@@ -215,7 +215,7 @@ class Ui_PresetPrimeChaos(object):
         sizePolicy.setHeightForWidth(self.superheated_slider_label.sizePolicy().hasHeightForWidth())
         self.superheated_slider_label.setSizePolicy(sizePolicy)
         self.superheated_slider_label.setMinimumSize(QSize(20, 0))
-        self.superheated_slider_label.setAlignment(Qt.AlignCenter)
+        self.superheated_slider_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.superheated_slider_layout.addWidget(self.superheated_slider_label)
 
@@ -235,8 +235,8 @@ class Ui_PresetPrimeChaos(object):
         self.submerged_slider.setObjectName(u"submerged_slider")
         self.submerged_slider.setMaximum(1000)
         self.submerged_slider.setPageStep(2)
-        self.submerged_slider.setOrientation(Qt.Horizontal)
-        self.submerged_slider.setTickPosition(QSlider.TicksBelow)
+        self.submerged_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.submerged_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
 
         self.submerged_slider_layout.addWidget(self.submerged_slider)
 
@@ -245,7 +245,7 @@ class Ui_PresetPrimeChaos(object):
         sizePolicy.setHeightForWidth(self.submerged_slider_label.sizePolicy().hasHeightForWidth())
         self.submerged_slider_label.setSizePolicy(sizePolicy)
         self.submerged_slider_label.setMinimumSize(QSize(20, 0))
-        self.submerged_slider_label.setAlignment(Qt.AlignCenter)
+        self.submerged_slider_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.submerged_slider_layout.addWidget(self.submerged_slider_label)
 
@@ -271,7 +271,7 @@ class Ui_PresetPrimeChaos(object):
         self.chaos_label.setText(QCoreApplication.translate("PresetPrimeChaos", u"<html><head/><body><p>This page contains experimental settings which do not yet have (or will never have) logic support. This means that games generated with anything other than this tab's default settings may result in incompletable seeds.</p></body></html>", None))
         self.legacy_mode_group.setTitle(QCoreApplication.translate("PresetPrimeChaos", u"Legacy Mode", None))
         self.legacy_mode_check.setText(QCoreApplication.translate("PresetPrimeChaos", u"Enable Legacy Mode", None))
-        self.legacy_mode_label.setText(QCoreApplication.translate("PresetPrimeChaos", u"<html><head/><body><p>Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. This includes:</p><p>Fixed crashes, Fixed softlocks, Fast item acquisition, Better pickup scans, Undo non-NTSC sequence break patches, Varia-only heat protection and &quot;General&quot; QoL</p></body></html>", None))
+        self.legacy_mode_label.setText(QCoreApplication.translate("PresetPrimeChaos", u"<html><head/><body><p>Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. Enabling this setting:</p><p>Introduces crashes and ways to brick a game, makes multiple sequence breaks 0-00 NTSC-exclusive, gives every suit heat protection, skips all &quot;General&quot; QoL additions and more.</p></body></html>", None))
         self.room_rando_group.setTitle(QCoreApplication.translate("PresetPrimeChaos", u"Room Rando", None))
         self.room_rando_combo.setItemText(0, QCoreApplication.translate("PresetPrimeChaos", u"None", None))
         self.room_rando_combo.setItemText(1, QCoreApplication.translate("PresetPrimeChaos", u"One-way", None))

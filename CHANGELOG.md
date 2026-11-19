@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
 - Removed: Intel macOS devices are no longer supported.
+- Fixed: A failed connection attempt to a game connected via a socket no longer leaves the connection open, which could prevent any further connection until the game was restarted.
+- Fixed: Logic no longer falsely optimizes out the easier alternatives when the presence of one resource lessens the amount required of another.
+- Fixed: A requirement that needs several resources to be absent is now unmet as soon as the player has any one of them. Previously, it was unmet only when the player had all of them.
 
 ### Metroid Dread
 
@@ -50,6 +53,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Flooded Access: When going down, the damage boost through the Aqua Pirate has been bumped down to Beginner Damage Boost.
 - Changed: Zebesian Waters: Adjusted the requirements for fighting the Aqua Pirates to be less lenient.
 - Changed: Flooded Airlock: Adjusted the requirements for fighting the Aqua Pirates in Zebesian Waters to be less lenient.
+
+##### Sector 6 (NOC)
+
+- Added: X-B.O.X. Garage: Wall Jump (Intermediate) method to get from the bottom door to the top door.
+
+### Metroid Prime
+
+- Changed: The description for Legacy Mode to be clearer.
+
+#### Logic Database
+
+##### Phendrana Drifts
+- Changed: Cleaned up the connections from Ruins Entryway to Courtyard Entryway:
+  - Added: Several videos and comments for the tricks involved.
+  - Added: Getting from the top of the ruined building to the stone archway is now possible with an Intermediate Damage Boost.
+  - Added: Several alternative methods on getting on top of the fallen down stalactite.
+  - Added: Getting from the stone archway to the middle-left rooftop via Beginner Momvement.
+  - Added: Dashing from the middle-left rooftop to Courtyard Entryway is now possible with an Intermediate Combat/Scan Dash by dashing off of either the Sheegoth or the items drops from a crate.
+  - Changed: Climbing the ruined building now requires Beginner Standable Terrain for the Beginner Bomb Jump. Doing it with only Bomb Jumps is now Intermediate.
 
 ### Metroid Prime 2: Echoes
 

@@ -8,7 +8,7 @@ from randovania.lib import enum_lib
 
 
 def test_gui(skip_qtbot, game_enum):
-    from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+    from randovania.gui.dialog.base_cosmetic_patches_dialog import GameSpecificCosmeticWidget
     from randovania.gui.dialog.game_export_dialog import GameExportDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
 
@@ -18,7 +18,7 @@ def test_gui(skip_qtbot, game_enum):
 
     # Assert
     if g.cosmetic_dialog is not None:
-        assert issubclass(g.cosmetic_dialog, BaseCosmeticPatchesDialog)
+        assert issubclass(g.cosmetic_dialog, GameSpecificCosmeticWidget)
     assert issubclass(g.export_dialog, GameExportDialog)
     for v in g.spoiler_visualizer:
         assert issubclass(v, GameDetailsTab)

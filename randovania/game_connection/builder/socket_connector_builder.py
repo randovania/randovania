@@ -46,6 +46,7 @@ class SocketConnectorBuilder[ExecutorT: ExecutorProtocol](ConnectorBuilder):
         self._status_message(f"Connecting to {self.ip}", log=False)
         connect_error = await self.executor.connect()
         if connect_error is not None:
+            self.logger.info("Unable to connect to %s: %s", self._game_display_name, connect_error)
             self._status_message(f"Unable to connect to {self._game_display_name}", log=False)
             return None
         self._status_message(f"Connected to {self.ip}")

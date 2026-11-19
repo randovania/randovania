@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania import monitoring
+from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.lib import async_dialog
 from randovania.gui.preset_settings.customize_description_tab import PresetCustomizeDescription
 
@@ -35,7 +36,7 @@ async def customize_cosmetic_patcher_button(
     per_game_options: PerGameOptions = options.generic_per_game_options(game)
 
     assert game.gui.cosmetic_dialog is not None
-    dialog = game.gui.cosmetic_dialog(parent, per_game_options.cosmetic_patches, options)
+    dialog = BaseCosmeticPatchesDialog(parent, per_game_options.cosmetic_patches, options, game.gui.cosmetic_dialog)
     result = await async_dialog.execute_dialog(dialog)
 
     if result == QtWidgets.QDialog.DialogCode.Accepted:
