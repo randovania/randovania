@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sector 6 (NOC)
 
+- Changed: The requirements for fighting Varia Core have been adjusted. Screw Attack and specific Beam upgrades now expect you to need less health to fight the boss.
 - Added: X-B.O.X. Garage: Wall Jump (Intermediate) method to get from the bottom door to the top door.
 
 ### Metroid Prime
