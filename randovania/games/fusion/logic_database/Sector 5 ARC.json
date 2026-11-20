@@ -11312,7 +11312,7 @@
                     "hint_features": [],
                     "grants_on_collect": [],
                     "connections": {
-                        "Door to Zebesian Waters": {
+                        "Destroy middle Speed Blocks": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11352,103 +11352,51 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Power Bomb Tank)": {
+                        "Destroy middle Speed Blocks": {
                             "type": "and",
                             "data": {
-                                "comment": "This can safely not have Door Lock Rando check",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Some way to kill the pirates: https://youtu.be/fN0Ko4V7X2s",
+                                            "comment": "This can safely not have Door Lock Rando",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Kill Aqua Pirate"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GravitySuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 4,
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Area Transition to Sector 4 (AQA)": {
-                            "type": "and",
-                            "data": {
-                                "comment": "This can safely not have Door Lock Rando check",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
                                     },
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Some way to kill the pirates: https://youtu.be/fN0Ko4V7X2s",
+                                            "comment": "Some way to deal with Pirates: https://youtu.be/fN0Ko4V7X2s",
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Kill Aqua Pirate"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -11457,6 +11405,10 @@
                                                         "amount": 4,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Aqua Pirate"
                                                 }
                                             ]
                                         }
@@ -11497,20 +11449,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Zebesian Waters": {
+                        "Destroy middle Speed Blocks": {
                             "type": "and",
                             "data": {
-                                "comment": "This can safely not have Door Lock Rando check",
+                                "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -11528,8 +11471,55 @@
                                             "amount": 1,
                                             "negate": true
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "GravitySuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Destroy middle Speed Blocks": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 289.13475177304963,
+                        "y": 31.6784869976359,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Zebesian Waters": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Area Transition to Sector 4 (AQA)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
