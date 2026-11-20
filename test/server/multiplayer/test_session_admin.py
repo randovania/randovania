@@ -1286,9 +1286,12 @@ async def test_admin_player_blocked_for_race_session(mock_sa, race_team_session,
 
 
 async def test_admin_player_claim_allowed_before_start(
-    mock_sa, race_team_session, mock_audit, mock_emit_session_update
+    mock_sa, race_team_session, mock_audit, mock_emit_session_update, mocker
 ):
     mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
+    mock_emit_room_update = mocker.patch(
+        "randovania.server.async_race.room_api.emit_async_room_update", new_callable=mocker.AsyncMock
+    )
 
     w3 = database.World.create(
         session=race_team_session,
@@ -1303,6 +1306,7 @@ async def test_admin_player_claim_allowed_before_start(
 
     # Assert
     assert database.WorldUserAssociation.get_by_ids(user_id=1234, world_uid=w3.uuid)
+    mock_emit_room_update.assert_awaited_once_with(mock_sa, race_team_session.get_race_team().room, "TheSid")
 
 
 @pytest.mark.parametrize("action", [SessionAdminUserAction.CLAIM, SessionAdminUserAction.UNCLAIM])

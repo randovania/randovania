@@ -620,6 +620,8 @@ async def join_team(sa: ServerAppDep, user: UserDep, room_id: int, join_code: st
         database.AsyncRaceEntry.create(room=room, user=user, team=team)
         database.AsyncRaceAuditEntry.create(room=room, user=user, message=f"Joined team {team.name}.")
 
+    await emit_async_room_update(sa, room, user)
+
     return await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, user)
 
 
@@ -660,6 +662,8 @@ async def leave_team(sa: ServerAppDep, user: UserDep, room_id: int) -> AsyncRace
                 user=user,
                 message=f"{remaining[0].user.name} is now the captain of team {team.name}.",
             )
+
+    await _emit_async_room_update_to(sa, room, [member.user for member in remaining])
 
     return await AsyncRaceRoom.get_by_id(room_id).create_session_entry(sa, user)
 
@@ -933,6 +937,7 @@ _livesplit_event_mapping = {
 
 
 async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user: str | User) -> None:
+    """Pushes the room to the user's whole team, or just to them when they have none."""
     changed_by = await sa.get_current_user(sid_or_user) if isinstance(sid_or_user, str) else sid_or_user
 
     users = [changed_by]
@@ -940,6 +945,11 @@ async def emit_async_room_update(sa: ServerApp, room: AsyncRaceRoom, sid_or_user
     if entry is not None and entry.team is not None:
         users = [member.user for member in entry.team.all_members()]
 
+    await _emit_async_room_update_to(sa, room, users)
+
+
+async def _emit_async_room_update_to(sa: ServerApp, room: AsyncRaceRoom, users: Sequence[User]) -> None:
+    """Pushes the room to each of the given users."""
     for user in users:
         await client_signals.AsyncRaceRoomUpdate.emit(
             sa,
