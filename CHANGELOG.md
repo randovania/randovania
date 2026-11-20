@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Flooded Access: When going down, the damage boost through the Aqua Pirate has been bumped down to Beginner Damage Boost.
 - Changed: Zebesian Waters: Adjusted the requirements for fighting the Aqua Pirates to be less lenient.
 - Changed: Flooded Airlock: Adjusted the requirements for fighting the Aqua Pirates in Zebesian Waters to be less lenient.
+- Fixed: Flooded Airlock: When coming from Cargo Hold, getting the item doesn't expect anymore dealing with the Pirates in Zebesian Waters.
 
 ##### Sector 6 (NOC)
 
