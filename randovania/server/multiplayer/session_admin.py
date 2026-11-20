@@ -165,7 +165,10 @@ async def _rename_world(
 ) -> None:
     world = World.get_by_uuid(world_uid)
     _verify_world_has_session(world, session)
-    await verify_has_admin_or_claimed(sa, sid, world)
+    if session.is_race_session:
+        await session_common.get_membership_for(sa, session, sid)
+    else:
+        await verify_has_admin_or_claimed(sa, sid, world)
 
     if WORLD_NAME_RE.match(new_name) is None:
         raise error.InvalidActionError("Invalid world name")
@@ -428,7 +431,10 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
     action_ = SessionAdminGlobalAction(action)
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
 
-    if session.is_race_session and action_ not in [SessionAdminGlobalAction.CREATE_PATCHER_FILE]:
+    if session.is_race_session and action_ not in [
+        SessionAdminGlobalAction.CREATE_PATCHER_FILE,
+        SessionAdminGlobalAction.RENAME_WORLD,
+    ]:
         raise error.NotAuthorizedForActionError("This session belongs to an async race room")
 
     if action_ == SessionAdminGlobalAction.CREATE_WORLD:

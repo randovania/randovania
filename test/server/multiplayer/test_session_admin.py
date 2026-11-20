@@ -1256,10 +1256,14 @@ async def test_admin_error_on_disabling_abandoned_worlds_when_abandoned_worlds_e
 
 @pytest.mark.parametrize(
     "action",
-    [action for action in SessionAdminGlobalAction if action != SessionAdminGlobalAction.CREATE_PATCHER_FILE],
+    [
+        action
+        for action in SessionAdminGlobalAction
+        if action not in (SessionAdminGlobalAction.CREATE_PATCHER_FILE, SessionAdminGlobalAction.RENAME_WORLD)
+    ],
 )
 async def test_admin_session_blocked_for_race_session(mock_sa, race_team_session, action):
-    # room decides a race session's settings and layout. only export is allowed for its members
+    # room decides a race session's settings and layout. only export and renaming worlds are allowed for its members
     mock_sa.get_current_user.return_value = database.User.get_by_id(1234)
 
     with pytest.raises(error.NotAuthorizedForActionError):
