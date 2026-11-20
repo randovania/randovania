@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In an async race played in teams, every member of a team can now rename their team's worlds.
 - Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
 - Removed: Intel macOS devices are no longer supported.
+- Fixed: In an async race played in teams, the room window now updates immediately for the whole team when someone joins or leaves the team, or when a world is renamed, claimed, unclaimed or abandoned in the team's session.
 - Fixed: A failed connection attempt to a game connected via a socket no longer leaves the connection open, which could prevent any further connection until the game was restarted.
 - Fixed: Logic no longer falsely optimizes out the easier alternatives when the presence of one resource lessens the amount required of another.
 - Fixed: A requirement that needs several resources to be absent is now unmet as soon as the player has any one of them. Previously, it was unmet only when the player had all of them.

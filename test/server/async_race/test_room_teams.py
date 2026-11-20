@@ -43,6 +43,7 @@ def sa() -> MagicMock:
     """
     sa = MagicMock()
     sa.get_current_user = AsyncMock()
+    sa.sio.emit = AsyncMock()
 
     codes: dict[str, dict] = {}
 
@@ -629,6 +630,8 @@ async def test_emit_async_room_update_reaches_whole_team(sa, team_room, mocker: 
     await create_team(sa, team_room, 1235, "The Team")
     team = AsyncRaceTeam.get_by_id(1)
     await join_team(sa, team_room, 1236, team)
+    # reset pushes by joining a team
+    mock_emit.reset_mock()
 
     # Run
     await room_api.emit_async_room_update(sa, AsyncRaceRoom.get_by_id(team_room.id), User.get_by_id(1235))
