@@ -82,7 +82,7 @@ def _test_data() -> randovania.game.game_test_data.GameTestData:
 game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Planets Zebeth",
     long_name="Metroid Planets (Zebeth)",
-    development_state=randovania.game.development_state.DevelopmentState.SOURCE_ONLY,
+    development_state=randovania.game.development_state.DevelopmentState.STAGING,
     presets=[
         "starter_preset.rdvpreset",
         "starter_preset_shuffle_keys.rdvpreset",
