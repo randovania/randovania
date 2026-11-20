@@ -531,10 +531,15 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 world_id,
             )
 
-        if owner == self.your_id or self.is_admin():
+        can_manage_world = owner == self.your_id or self.is_admin()
+
+        # A race session has no admins, so every member of the team may rename the team's worlds.
+        if can_manage_world or self._session.is_race_session:
+            world_menu.addSeparator()
+            connect_to(world_menu.addAction("Rename"), self._world_rename, world_id)
+
+        if can_manage_world:
             if not self._session.is_race_session:
-                world_menu.addSeparator()
-                connect_to(world_menu.addAction("Rename"), self._world_rename, world_id)
                 delete_action = world_menu.addAction("Delete")
                 delete_action.setEnabled(can_change_preset)
                 connect_to(delete_action, self._world_delete, world_id)
