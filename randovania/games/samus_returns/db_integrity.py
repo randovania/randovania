@@ -36,6 +36,18 @@ combined_resources = {
 }
 
 
+def check_starting_locations_have_actor(game: GameDescription) -> Iterator[str]:
+    for region in game.region_list.regions:
+        for area in region.areas:
+            for node in area.nodes:
+                if node.valid_starting_location and not node.extra.get("start_point_actor_name"):
+                    yield (
+                        f"{node.full_name()} is a valid starting location, "
+                        "but has no `start_point_actor_name` in its extra fields."
+                    )
+
+
 def find_msr_db_errors(game: GameDescription) -> Iterator[str]:
     yield from check_for_items_to_be_replaced_by_templates(game, use_templates_over_items)
     yield from check_for_resources_to_use_together(game, combined_resources)
+    yield from check_starting_locations_have_actor(game)
