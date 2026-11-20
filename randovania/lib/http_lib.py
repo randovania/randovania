@@ -31,11 +31,20 @@ def http_session(
     headers: LooseHeaders | None = None,
     *,
     context: ssl.SSLContext | None = None,
+    max_line_size: int = 8190,
+    max_field_size: int = 8190,
 ) -> aiohttp.ClientSession:
     """
     Create an aiohttp.ClientSession, configured to use certificates from `certifi` instead of the host.
 
     :param headers: Headers to include in every request made with this session.
     :param context: The SSLContext to use. Defaults to `ssl_context()`.
+    :param max_line_size: Maximum size of a response's status line or header line. Defaults to aiohttp's default.
+    :param max_field_size: Maximum size of a single response header. Defaults to aiohttp's default.
     """
-    return aiohttp.ClientSession(headers=headers, connector=aiohttp.TCPConnector(ssl=context or ssl_context()))
+    return aiohttp.ClientSession(
+        headers=headers,
+        connector=aiohttp.TCPConnector(ssl=context or ssl_context()),
+        max_line_size=max_line_size,
+        max_field_size=max_field_size,
+    )

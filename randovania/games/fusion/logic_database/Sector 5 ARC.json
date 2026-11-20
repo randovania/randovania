@@ -992,6 +992,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Training Grounds": {
                             "type": "and",
@@ -1026,6 +1027,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Training Grounds": {
                             "type": "and",
@@ -2448,6 +2450,23 @@
                                     }
                                 ]
                             }
+                        },
+                        "Red Zeela": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: fill this out properly",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2631,6 +2650,40 @@
                             }
                         }
                     }
+                },
+                "Red Zeela": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 193.4498933901919,
+                        "y": 814.7718550106609,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Security Save Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: fill this out properly",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2762,6 +2815,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Security Shaft East": {
                             "type": "and",
@@ -3010,6 +3064,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Frozen Tower": {
                             "type": "or",
@@ -3865,6 +3920,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Flooded Tower": {
                             "type": "and",
@@ -4171,6 +4227,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Data Checkpoint": {
                             "type": "and",
@@ -4393,6 +4450,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Nightmare Recharge Room": {
                             "type": "and",
@@ -5597,6 +5655,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "event_name": "Nightmare",
+                    "grants_on_collect": [],
                     "connections": {
                         "Pickup (Gravity Suit)": {
                             "type": "and",
@@ -5631,6 +5690,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Arena": {
                             "type": "and",
@@ -5703,6 +5763,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Subway": {
                             "type": "and",
@@ -6351,6 +6412,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Security Shaft East": {
                             "type": "and",
@@ -6864,6 +6926,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Arctic Containment": {
                             "type": "and",
@@ -7323,7 +7386,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageBoosts",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -7333,7 +7396,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Dodge: https://youtu.be/kOpnmbaRKDc",
+                                            "comment": "Dodge by jumping down + holding right and crouching in the corner: https://youtu.be/kOpnmbaRKDc",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7348,8 +7411,25 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Standing on the topmost ledges allows you to treat it like any other tough underwater enemy.",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ChargeBeam",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -7411,7 +7491,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageBoosts",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -7421,14 +7501,14 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Dodge: https://youtu.be/ApteCyerZVo",
+                                            "comment": "Dodge by holding left: https://youtu.be/ApteCyerZVo",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -7437,7 +7517,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
+                                        "data": "Can Kill Aqua Pirate"
                                     }
                                 ]
                             }
@@ -7623,6 +7703,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Entrance Lobby": {
                             "type": "and",
@@ -8011,6 +8092,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Entrance Lobby": {
                             "type": "and",
@@ -8416,6 +8498,7 @@
                     "location_category": "major",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Nightmare Arena": {
                             "type": "and",
@@ -8772,6 +8855,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Sector 5 (ARC) Eastbound Glass Tube": {
                             "type": "and",
@@ -10640,56 +10724,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PlasmaBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "WaveBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "WideBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Kill Aqua Pirate"
                                     },
                                     {
                                         "type": "and",
@@ -10716,86 +10752,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 20,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "45 DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
                                     }
                                 ]
                             }
@@ -10856,56 +10812,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "No template, because these pirates are stronger and there are 2 of them",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PlasmaBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "WaveBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "WideBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Kill Aqua Pirate"
                                     },
                                     {
                                         "type": "and",
@@ -10932,86 +10840,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 20,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "45 DMG Missiles"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Power Bombs"
                                     }
                                 ]
                             }
@@ -11019,7 +10847,7 @@
                         "Door to Flooded Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Pirate shouldn't transform into an Aqua Pirate on this connection. May require reloading the room.",
                                 "items": [
                                     {
                                         "type": "and",
@@ -11107,7 +10935,7 @@
                         "Door to Flooded Airlock": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Pirate doesn't transform into an Aqua Pirate on this connection",
                                 "items": [
                                     {
                                         "type": "template",
@@ -11203,6 +11031,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Nightmare Hub": {
                             "type": "and",
@@ -11481,6 +11310,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Door to Zebesian Waters": {
                             "type": "and",
@@ -11561,7 +11391,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
+                                                    "data": "Can Kill Aqua Pirate"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -11617,7 +11447,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Kill Tough Underwater Beam-Resistant Enemy"
+                                                    "data": "Can Kill Aqua Pirate"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -11756,6 +11586,7 @@
                     "location_category": "minor",
                     "custom_index_group": null,
                     "hint_features": [],
+                    "grants_on_collect": [],
                     "connections": {
                         "Other to Frozen Tower": {
                             "type": "and",

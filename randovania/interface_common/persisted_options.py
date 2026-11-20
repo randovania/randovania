@@ -184,6 +184,27 @@ def _split_tracker_theme(options: dict) -> None:
     pass
 
 
+def _remove_fusion_overrides(options: dict) -> None:
+    cosmetic_patches = options.get("game_fusion", {}).get("cosmetic_patches", {})
+    if not cosmetic_patches:
+        return
+
+    groups = ("suit", "beam", "enemy", "tileset")
+    for group in groups:
+        # Removes the override variables outright
+        enabled_override = f"enable_{group}_palette_override"
+        if enabled_override in cosmetic_patches:
+            del cosmetic_patches[enabled_override]
+
+        # Removes override_min/max, and if it was enabled and non-zero writes it to normal_min_max
+        for min_or_max in ("min", "max"):
+            override = f"{group}_hue_override_{min_or_max}"
+            if override in cosmetic_patches:
+                val = cosmetic_patches.pop(override)
+                if enabled_override:
+                    cosmetic_patches[f"{group}_hue_{min_or_max}"] = val
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -219,7 +240,7 @@ _CONVERTER_FOR_VERSION = [
     _msr_exheader_path,  # adds empty exheader path for MSR
     _msr_room_names_visible,  # forces room name display to be on by default
     _only_new_fields,  # Adds tileset+background rotation for AM2R
-    _only_new_fields,  # added MSR's music shuffle cosemetic option
+    _only_new_fields,  # added MSR's music shuffle cosmetic option
     _only_new_fields,  # added MSR's music sliders
     _remove_msr_fields,  # removes MSR's exheader and input field
     _only_new_fields,  # added last_changelog_displayed_dev
@@ -232,6 +253,8 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # enabled field for builders
     _only_new_fields,  # split trackers into structure+theme
     _prime1_fusion_suit_color_rotations,  # prime1: suit colors are now remembered per Fusion Suit state
+    _only_new_fields,  # fusion: added able to switch secondary weapon selection from toggle to hold
+    _remove_fusion_overrides,  # fusion: removes variables for nicer ux
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

@@ -41,7 +41,7 @@ def test_edit_connections_impossible_to_impossible(game_editor):
     assert target not in landing_site.connections[source]
 
     # Run
-    game_editor.edit_connections(landing_site, source, target, None)
+    game_editor.edit_connections(landing_site, source, target, Requirement.impossible())
 
     # Assert
     assert target not in landing_site.connections[source]

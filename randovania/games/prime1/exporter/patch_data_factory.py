@@ -36,7 +36,7 @@ if TYPE_CHECKING:
     from randovania.layout.layout_description import LayoutDescription
     from randovania.lib.json_lib import JsonObject
 
-_EASTER_EGG_SHINY_MISSILE = 1024
+_EASTER_EGG_SHINY_MISSILE = 1023
 
 _SAVE_NAME_MAX_LENGTH = 24
 

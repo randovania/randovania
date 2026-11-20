@@ -15,30 +15,21 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QGridLayout,
-    QGroupBox, QHBoxLayout, QLabel, QPushButton,
-    QScrollArea, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QGroupBox, QHBoxLayout,
+    QLabel, QPushButton, QSizePolicy, QVBoxLayout,
+    QWidget)
 
 class Ui_HuntersCosmeticPatchesDialog(object):
     def setupUi(self, HuntersCosmeticPatchesDialog):
         if not HuntersCosmeticPatchesDialog.objectName():
             HuntersCosmeticPatchesDialog.setObjectName(u"HuntersCosmeticPatchesDialog")
         HuntersCosmeticPatchesDialog.resize(483, 568)
-        self.gridLayout = QGridLayout(HuntersCosmeticPatchesDialog)
-        self.gridLayout.setSpacing(6)
-        self.gridLayout.setContentsMargins(11, 11, 11, 11)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.scrollArea = QScrollArea(HuntersCosmeticPatchesDialog)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setWidgetResizable(True)
-        self.scroll_area_contents = QWidget()
-        self.scroll_area_contents.setObjectName(u"scroll_area_contents")
-        self.scroll_area_contents.setGeometry(QRect(0, 0, 463, 521))
-        self.verticalLayout = QVBoxLayout(self.scroll_area_contents)
-        self.verticalLayout.setSpacing(6)
-        self.verticalLayout.setContentsMargins(11, 11, 11, 11)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.cosmetic_patches_box = QGroupBox(self.scroll_area_contents)
+        self.verticalLayout_2 = QVBoxLayout(HuntersCosmeticPatchesDialog)
+        self.verticalLayout_2.setSpacing(6)
+        self.verticalLayout_2.setContentsMargins(11, 11, 11, 11)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.cosmetic_patches_box = QGroupBox(HuntersCosmeticPatchesDialog)
         self.cosmetic_patches_box.setObjectName(u"cosmetic_patches_box")
         self.verticalLayout_4 = QVBoxLayout(self.cosmetic_patches_box)
         self.verticalLayout_4.setSpacing(6)
@@ -129,32 +120,10 @@ class Ui_HuntersCosmeticPatchesDialog(object):
         self.verticalLayout_4.addWidget(self.suit_box)
 
 
-        self.verticalLayout.addWidget(self.cosmetic_patches_box)
-
-        self.scrollArea.setWidget(self.scroll_area_contents)
-
-        self.gridLayout.addWidget(self.scrollArea, 1, 0, 1, 3)
-
-        self.reset_button = QPushButton(HuntersCosmeticPatchesDialog)
-        self.reset_button.setObjectName(u"reset_button")
-
-        self.gridLayout.addWidget(self.reset_button, 2, 2, 1, 1)
-
-        self.cancel_button = QPushButton(HuntersCosmeticPatchesDialog)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.gridLayout.addWidget(self.cancel_button, 2, 1, 1, 1)
-
-        self.accept_button = QPushButton(HuntersCosmeticPatchesDialog)
-        self.accept_button.setObjectName(u"accept_button")
-
-        self.gridLayout.addWidget(self.accept_button, 2, 0, 1, 1)
+        self.verticalLayout_2.addWidget(self.cosmetic_patches_box)
 
 
         self.retranslateUi(HuntersCosmeticPatchesDialog)
-
-        self.accept_button.setDefault(True)
-
 
         QMetaObject.connectSlotsByName(HuntersCosmeticPatchesDialog)
     # setupUi
@@ -169,8 +138,5 @@ class Ui_HuntersCosmeticPatchesDialog(object):
         self.name_label.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Player 1", None))
         self.img_label.setText("")
         self.right_button.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u">", None))
-        self.reset_button.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Reset to Defaults", None))
-        self.cancel_button.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Cancel", None))
-        self.accept_button.setText(QCoreApplication.translate("HuntersCosmeticPatchesDialog", u"Accept", None))
     # retranslateUi
 

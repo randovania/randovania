@@ -215,10 +215,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def select_region(self, region: Region) -> None:
         self.region = region
-        image_path = (
-            self.game.data_path.joinpath("assets", "maps", f"{region.name}.png") if self.game is not None else None
-        )
-        if image_path is not None and image_path.exists():
+        image_path = None
+        if self.game is not None:
+            base_path = self.game.data_path.joinpath("assets", "maps")
+            for ext in ("webp", "png"):
+                potential_path = base_path.joinpath(f"{region.name}.{ext}")
+                if potential_path.is_file():
+                    image_path = potential_path
+                    break
+
+        if image_path is not None:
             self._region_image = QtGui.QImage(os.fspath(image_path))
             self._manual_region_image_bounds = BoundsInt(
                 min_x=region.extra.get("map_min_x", 0),

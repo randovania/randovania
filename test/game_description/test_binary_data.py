@@ -163,3 +163,15 @@ def test_encode_resource_database():
 
     # Assert
     assert encoded == b"\x00\x00\x00\x00\x00\x00\x01\x03Foo\x03Foo\x02\x00\x00\x00\x00"
+
+
+def test_round_trip_grants_on_collect(blank_game_data):
+    b = io.BytesIO()
+    binary_data.encode(blank_game_data, b)
+
+    b.seek(0)
+    decoded = binary_data.decode(b)
+
+    boss = decoded["regions"][0]["areas"]["Boss Arena"]["nodes"]["Event - Boss"]
+    assert boss["grants_on_collect"] == [{"resource_type": "items", "resource_name": "Useless", "amount": 2}]
+    assert decoded == blank_game_data

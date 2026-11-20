@@ -15,7 +15,6 @@ from randovania.game_description.pickup.pickup_entry import StartingPickupBehavi
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.layout.base.standard_pickup_state import (
     DEFAULT_MAXIMUM_SHUFFLED,
-    PRIORITY_LIMITS,
     StandardPickupState,
 )
 
@@ -27,38 +26,38 @@ if TYPE_CHECKING:
 
 @pytest.fixture(
     params=[
-        {"encoded": b"\x10", "bit_count": 4, "json": {}},
-        {"encoded": b"P", "bit_count": 4, "json": {"num_shuffled_pickups": 1}},
-        {"encoded": b"\x81", "bit_count": 8, "json": {"num_shuffled_pickups": 2}},
-        {"encoded": b"\x85", "bit_count": 8, "json": {"num_shuffled_pickups": 3}},
-        {"encoded": b"\xa2\xca", "bit_count": 15, "json": {"num_shuffled_pickups": 99}},
-        {"encoded": b"\x842", "bit_count": 15, "json": {"num_shuffled_pickups": 3, "priority": 2.5}},
+        {"encoded": b"\x08", "bit_count": 6, "json": {}},
+        {"encoded": b"H", "bit_count": 6, "json": {"num_shuffled_pickups": 1}},
+        {"encoded": b"\x80\x80", "bit_count": 10, "json": {"num_shuffled_pickups": 2}},
+        {"encoded": b"\x84\x80", "bit_count": 10, "json": {"num_shuffled_pickups": 3}},
+        {"encoded": b"\xa2\xc9\x00", "bit_count": 17, "json": {"num_shuffled_pickups": 99}},
+        {"encoded": b"\x85\x00", "bit_count": 10, "json": {"num_shuffled_pickups": 3, "priority": "very-high"}},
         # Energy Tank
         {
-            "encoded": b"\x92\x88",
-            "bit_count": 13,
+            "encoded": b"\x92\x84",
+            "bit_count": 15,
             "progression": "EnergyTank",
             "json": {"num_shuffled_pickups": 6, "num_included_in_starting_pickups": 10},
         },
         # Ammo
-        {"encoded": b"\x1b\x80", "bit_count": 9, "ammo_index": ("PowerBomb",), "json": {"included_ammo": [7]}},
-        {"encoded": b"\x10", "bit_count": 5, "ammo_index": ("DarkAmmo",), "json": {"included_ammo": [0]}},
-        {"encoded": b"\x18(", "bit_count": 13, "ammo_index": ("DarkAmmo",), "json": {"included_ammo": [5]}},
+        {"encoded": b"\n\xe0", "bit_count": 11, "ammo_index": ("PowerBomb",), "json": {"included_ammo": [7]}},
+        {"encoded": b"\x08", "bit_count": 7, "ammo_index": ("DarkAmmo",), "json": {"included_ammo": [0]}},
+        {"encoded": b"\n\n", "bit_count": 15, "ammo_index": ("DarkAmmo",), "json": {"included_ammo": [5]}},
         {
-            "encoded": b"\x10",
-            "bit_count": 5,
+            "encoded": b"\x08",
+            "bit_count": 7,
             "ammo_index": ("DarkAmmo", "LightAmmo"),
             "json": {"included_ammo": [0, 0]},
         },
         {
-            "encoded": b"\x1eX",
-            "bit_count": 14,
+            "encoded": b"\x0b\x96",
+            "bit_count": 16,
             "ammo_index": ("DarkAmmo", "LightAmmo"),
             "json": {"included_ammo": [150, 150]},
         },
         {
-            "encoded": b"\x1b\x9b ",
-            "bit_count": 22,
+            "encoded": b"\n\xe6\xc8",
+            "bit_count": 24,
             "ammo_index": ("DarkAmmo", "LightAmmo"),
             "json": {"included_ammo": [230, 200]},
         },
@@ -190,20 +189,6 @@ def test_vanilla_pickup_locations():
     pickup.starting_condition = StartingPickupBehavior.CAN_BE_STARTING
     state = StandardPickupState(include_copy_in_original_location=True)
     expected_error = f"No vanilla location defined. ({pickup.name})"
-
-    _check_consistency(state, pickup, expected_error)
-
-
-@pytest.mark.parametrize(("priority"), [11.0, -1.0])
-def test_pickup_priority_range(priority: float):
-    pickup = MagicMock()
-    pickup.game = RandovaniaGame.BLANK
-    pickup.name = "Item with broken priority"
-    state = StandardPickupState(priority=priority)
-    expected_error = "Priority must be between {min} and {max}, got {priority}".format(
-        priority=state.priority,
-        **PRIORITY_LIMITS,
-    )
 
     _check_consistency(state, pickup, expected_error)
 

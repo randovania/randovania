@@ -6,6 +6,7 @@ cdef extern from * nogil:
     #include <utility>
     #include <functional>
     #include <queue>
+    #include "randovania/lib/native/pool.hpp"
 
     namespace std {
         template<>
@@ -20,7 +21,7 @@ cdef extern from * nogil:
     }
 
     template <typename T>
-    using min_priority_queue = std::priority_queue<T, std::vector<T>, std::greater<T>>;
+    using min_priority_queue = std::priority_queue<T, rdv::pvector<T>, std::greater<T>>;
 
     struct SearchHeapEntry {
         int cost;

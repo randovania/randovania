@@ -42,6 +42,16 @@ def test_suit_cosmetics(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> N
     assert dialog.cosmetic_patches == EchoesCosmeticPatches()
 
 
+def test_foldable_properties_come_from_ui_file(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
+    dialog = EchoesCosmeticPatchesDialog(None, EchoesCosmeticPatches(), options)
+    skip_qtbot.addWidget(dialog)
+
+    assert dialog.suits_foldable.title == "Suit Colors"
+    assert dialog.suits_foldable.folded is True
+    assert dialog.options_foldable.title == "In-Game Options"
+    assert dialog.options_foldable.folded is True
+
+
 def test_change_sound_mode(skip_qtbot: pytestqt.qtbot.QtBot, options: Options) -> None:
     preferences = EchoesCosmeticPatches(user_preferences=EchoesUserPreferences(sound_mode=SoundMode.MONO))
 

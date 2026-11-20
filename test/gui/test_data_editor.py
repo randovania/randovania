@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 from unittest.mock import ANY, AsyncMock, MagicMock
@@ -307,3 +308,40 @@ def test_node_details(identifier: tuple[str, str], expected: str, skip_qtbot, tm
 
     # Assert
     assert result == expected
+
+
+def test_on_resource_changed_updates_grants_on_collect(skip_qtbot, tmp_path, blank_game_data):
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+    window = DataEditorWindow(blank_game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+    skip_qtbot.addWidget(window)
+
+    region_list = window.game_description.region_list
+    boss_identifier = NodeIdentifier.create("Intro", "Boss Arena", "Event - Boss")
+    loot_identifier = NodeIdentifier.create("Intro", "Boss Arena", "Pickup (Free Loot)")
+    useless = window.game_description.resource_database.get_item("Useless")
+
+    # Run
+    window._on_resource_changed(dataclasses.replace(useless, long_name="Pointless"))
+
+    # Assert
+    [(boss_granted, boss_amount)] = region_list.node_by_identifier(boss_identifier).grants_on_collect
+    [(loot_granted, loot_amount)] = region_list.node_by_identifier(loot_identifier).grants_on_collect
+    assert (boss_granted.long_name, boss_amount) == ("Pointless", 2)
+    assert (loot_granted.long_name, loot_amount) == ("Pointless", 1)
+
+
+def test_on_resource_changed_ignores_other_resource_types(skip_qtbot, tmp_path, blank_game_data, mocker):
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+    window = DataEditorWindow(blank_game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+    skip_qtbot.addWidget(window)
+    mock_replace = mocker.patch.object(window, "replace_node_with")
+
+    trick = window.game_description.resource_database.get_trick("Combat")
+
+    # Run
+    window._on_resource_changed(dataclasses.replace(trick, long_name="Fighting"))
+
+    # Assert
+    mock_replace.assert_not_called()

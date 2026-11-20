@@ -27,6 +27,8 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
               Can Break Single Bomb Blocks
               # Currently logically useless: but maybe if we have an option to remove screw blocks https://youtu.be/Ifde8nknvYk
               Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+  > Event - Entrance Lobby Visited
+      Trivial
 
 > Door to Geron's Crossing; Heals? False
   * Layers: default
@@ -72,6 +74,12 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
               Movement (Intermediate)
               # Make Menus clip through: https://youtu.be/iu21O6E7tCQ
               Knowledge (Advanced) and Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
+
+> Event - Entrance Lobby Visited; Heals? False
+  * Layers: default
+  * Event Sector 6 Entrance Lobby Visited
+  > Door to Entrance Recharge Room
+      Trivial
 
 ----------------
 Entrance Save Room
@@ -178,8 +186,8 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 7, 'y': 
           Any of the following:
               # Destroy the Bomb Block
               Can Break Single Bomb Blocks
-              # Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0
-              Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0 - this can safely not have a DLR check. With the event visited, either you can go through the open door. Or if its locked, go around which requires having Screw and thus makes the Shinespark unnecessary.
+              Speed Booster and After Sector 6 Entrance Lobby Visited and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Entrance Rando
           Any of the following:
               # Enter the tunnel
               Can Bounce in Ball
@@ -188,8 +196,8 @@ Extra - minimap_coordinates: [{'x': 6, 'y': 2}, {'x': 6, 'y': 3}, {'x': 7, 'y': 
       Any of the following:
           Can Kill Super Geron
           After Boss Varia Core-X Defeated and Knowledge (Intermediate)
-          # Shinespark from Nav Room: https://youtu.be/u7c-Kq7AaXk
-          Level 0 Keycard and Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark from Entrance Lobby: https://youtu.be/u7c-Kq7AaXk - this can safely not have a DLR check, as if you are expected to do this connection then you can already enter this room from Entrance Lobby
+          Level 0 Keycard and Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando
 
 > Lower Right; Heals? False
   * Layers: default
@@ -630,23 +638,40 @@ Hint Features - Core-X
       After Boss Varia Core-X Defeated
   > Event - Varia Core-X
       All of the following:
-          # Mega-X Requirements
+          # Varia Core Requirements (100 HP)
           Charge Beam
           All of the following:
               # Core-X Requirements (180HP)
               Missiles
               Combat (Beginner) or 20 DMG Missiles
-              # A way to dodge
-              Combat (Intermediate) or Have Any Jump Upgrade
+              Any of the following:
+                  # A way to dodge
+                  Combat (Intermediate) or Have Any Jump Upgrade
+                  Screw Attack and Combat (Beginner)
           Any of the following:
-              # Health Requirements
-              Normal Damage ≥ 315
-              # Fight Boss Damageless: https://youtu.be/CfgKTcobo0s
-              Combat (Ludicrous)
-              Combat (Beginner) and Normal Damage ≥ 250
-              Combat (Intermediate) and Normal Damage ≥ 180
-              Combat (Advanced) and Normal Damage ≥ 120
-              Combat (Expert) and Normal Damage ≥ 60
+              # Health Requirements. Whole fight damageless: https://youtu.be/CfgKTcobo0s
+              Any of the following:
+                  # Base Charge-Only
+                  Normal Damage ≥ 240
+                  # Strat for first phase: https://youtu.be/SBrWsD2O3sA
+                  Combat (Ludicrous)
+                  Combat (Beginner) and Normal Damage ≥ 190
+                  Combat (Intermediate) and Normal Damage ≥ 80
+                  Combat (Advanced) and Normal Damage ≥ 60
+              All of the following:
+                  # At least one charge upgrade that makes it easier to hit through the shield
+                  Plasma Beam or Wave Beam or Wide Beam
+                  Any of the following:
+                      Combat (Expert) or Normal Damage ≥ 150
+                      Combat (Beginner) and Normal Damage ≥ 100
+              All of the following:
+                  # Screw Attack makes you invincible. Combined with R-Shooting makes it easy to not get hit
+                  Screw Attack
+                  Any of the following:
+                      # Keep Space Jumping and never leave invincibility state
+                      Space Jump and Combat (Beginner)
+                      # Time your jumps correctly
+                      Combat (Intermediate)
 
 ----------------
 X-B.O.X. Arena Access
@@ -905,7 +930,12 @@ Hint Features - Multiple Pickups, 1-way Shutter
   > Pickup (Missile Tank)
       Wave Beam
   > Door to X-B.O.X. Arena (Upper)
-      Screw Attack and Have Any Jump Upgrade
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Have Any Jump Upgrade
+              # Wall Jump using the stalactite: https://youtu.be/chH6Rjb2ylo
+              Wall Jump (Intermediate)
 
 > Door to X-B.O.X. Arena (Upper); Heals? False
   * Layers: default
@@ -1555,6 +1585,7 @@ Cavern Save Access
 Extra - map_name: Sector 640
 Extra - room_id: [40]
 Extra - minimap_coordinates: [{'x': 9, 'y': 8}, {'x': 10, 'y': 8}]
+Extra - unlocked_save_recharge_station: True
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Cavern Save Access

@@ -33,7 +33,7 @@ class Ui_PresetFusionGoal(object):
         self.goal_layout.setSpacing(6)
         self.goal_layout.setContentsMargins(11, 11, 11, 11)
         self.goal_layout.setObjectName(u"goal_layout")
-        self.goal_layout.setContentsMargins(4, 8, 4, 8)
+        self.goal_layout.setContentsMargins(6, 6, 6, 6)
         self.scrollArea = QScrollArea(self.centralWidget)
         self.scrollArea.setObjectName(u"scrollArea")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -44,11 +44,12 @@ class Ui_PresetFusionGoal(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 760, 454))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 756, 458))
         self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(6, 6, 6, 6)
         self.description_label = QLabel(self.scrollAreaWidgetContents)
         self.description_label.setObjectName(u"description_label")
         self.description_label.setWordWrap(True)
@@ -64,12 +65,13 @@ class Ui_PresetFusionGoal(object):
         self.placed_slider_layout = QHBoxLayout()
         self.placed_slider_layout.setSpacing(6)
         self.placed_slider_layout.setObjectName(u"placed_slider_layout")
+        self.placed_slider_layout.setContentsMargins(6, 6, 6, 6)
         self.placed_slider = ScrollProtectedSlider(self.scrollAreaWidgetContents)
         self.placed_slider.setObjectName(u"placed_slider")
         self.placed_slider.setMaximum(20)
         self.placed_slider.setPageStep(2)
-        self.placed_slider.setOrientation(Qt.Horizontal)
-        self.placed_slider.setTickPosition(QSlider.TicksBelow)
+        self.placed_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.placed_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
 
         self.placed_slider_layout.addWidget(self.placed_slider)
 
@@ -81,7 +83,7 @@ class Ui_PresetFusionGoal(object):
         sizePolicy1.setHeightForWidth(self.placed_slider_label.sizePolicy().hasHeightForWidth())
         self.placed_slider_label.setSizePolicy(sizePolicy1)
         self.placed_slider_label.setMinimumSize(QSize(150, 0))
-        self.placed_slider_label.setAlignment(Qt.AlignCenter)
+        self.placed_slider_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.placed_slider_layout.addWidget(self.placed_slider_label)
 
@@ -97,12 +99,13 @@ class Ui_PresetFusionGoal(object):
         self.required_slider_layout = QHBoxLayout()
         self.required_slider_layout.setSpacing(6)
         self.required_slider_layout.setObjectName(u"required_slider_layout")
+        self.required_slider_layout.setContentsMargins(6, 6, 6, 6)
         self.required_slider = ScrollProtectedSlider(self.scrollAreaWidgetContents)
         self.required_slider.setObjectName(u"required_slider")
         self.required_slider.setMaximum(20)
         self.required_slider.setPageStep(2)
-        self.required_slider.setOrientation(Qt.Horizontal)
-        self.required_slider.setTickPosition(QSlider.TicksBelow)
+        self.required_slider.setOrientation(Qt.Orientation.Horizontal)
+        self.required_slider.setTickPosition(QSlider.TickPosition.TicksBelow)
 
         self.required_slider_layout.addWidget(self.required_slider)
 
@@ -111,16 +114,16 @@ class Ui_PresetFusionGoal(object):
         sizePolicy1.setHeightForWidth(self.required_slider_label.sizePolicy().hasHeightForWidth())
         self.required_slider_label.setSizePolicy(sizePolicy1)
         self.required_slider_label.setMinimumSize(QSize(150, 0))
-        self.required_slider_label.setAlignment(Qt.AlignCenter)
+        self.required_slider_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.required_slider_layout.addWidget(self.required_slider_label)
 
 
         self.verticalLayout.addLayout(self.required_slider_layout)
 
-        self.spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout.addItem(self.spacer)
+        self.verticalLayout.addItem(self.verticalSpacer)
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 

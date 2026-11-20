@@ -20,11 +20,6 @@ class EchoesOPRCosmeticPatchesDialog(BaseEchoesCosmeticPatchesDialog[EchoesOPRCo
         self.pickup_markers_check.setVisible(False)
         self.unvisited_room_names_check.setVisible(False)
 
-    @classmethod
-    @override
-    def cosmetic_patches_type(cls) -> type[EchoesOPRCosmeticPatches]:
-        return EchoesOPRCosmeticPatches
-
     @override
     def connect_signals(self) -> None:
         super().connect_signals()

@@ -153,6 +153,10 @@ if should_compile:
         else []
     )
 
+    # Headers included by cython_helper.pxd's `cdef extern from "randovania/lib/native/..."` blocks.
+    # Listed as `depends` so a header-only change triggers a rebuild of every extension.
+    native_headers = [str(p) for p in parent.joinpath("randovania", "lib", "native").glob("*.hpp")]
+
     def make_extension(file: str) -> Extension:
         link_args = list(extra_link_args)
         if sys.platform == "win32":
@@ -163,6 +167,8 @@ if should_compile:
             file.replace("/", ".")[:-3],
             sources=[file],
             language="c++",
+            include_dirs=[str(parent)],
+            depends=native_headers,
             extra_compile_args=extra_compile_args,
             extra_link_args=link_args,
             define_macros=define_macros,

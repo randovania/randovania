@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QGroupBox, QLabel,
-    QMainWindow, QScrollArea, QSizePolicy, QVBoxLayout,
-    QWidget)
+    QMainWindow, QScrollArea, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_PresetFusionHints(object):
     def setupUi(self, PresetFusionHints):
@@ -31,24 +31,25 @@ class Ui_PresetFusionHints(object):
         self.hint_layout.setSpacing(6)
         self.hint_layout.setContentsMargins(11, 11, 11, 11)
         self.hint_layout.setObjectName(u"hint_layout")
-        self.hint_layout.setContentsMargins(4, 8, 4, 0)
+        self.hint_layout.setContentsMargins(6, 6, 6, 6)
         self.scrollArea = QScrollArea(self.centralWidget)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 564, 451))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 546, 512))
         self.verticalLayout = QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(6, 6, 6, 6)
         self.hint_artifact_group = QGroupBox(self.scrollAreaWidgetContents)
         self.hint_artifact_group.setObjectName(u"hint_artifact_group")
         self.verticalLayout_9 = QVBoxLayout(self.hint_artifact_group)
         self.verticalLayout_9.setSpacing(6)
         self.verticalLayout_9.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.verticalLayout_9.setContentsMargins(9, 9, 9, 9)
+        self.verticalLayout_9.setContentsMargins(6, 6, 6, 6)
         self.hint_artifact_label = QLabel(self.hint_artifact_group)
         self.hint_artifact_label.setObjectName(u"hint_artifact_label")
         self.hint_artifact_label.setWordWrap(True)
@@ -72,7 +73,7 @@ class Ui_PresetFusionHints(object):
         self.verticalLayout_10.setSpacing(6)
         self.verticalLayout_10.setContentsMargins(11, 11, 11, 11)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.verticalLayout_10.setContentsMargins(9, 9, 9, 9)
+        self.verticalLayout_10.setContentsMargins(6, 6, 6, 6)
         self.charge_beam_hint_label = QLabel(self.charge_beam_hint_group)
         self.charge_beam_hint_label.setObjectName(u"charge_beam_hint_label")
         self.charge_beam_hint_label.setWordWrap(True)
@@ -89,6 +90,10 @@ class Ui_PresetFusionHints(object):
 
 
         self.verticalLayout.addWidget(self.charge_beam_hint_group)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 

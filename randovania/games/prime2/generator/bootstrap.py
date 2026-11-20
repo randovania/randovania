@@ -138,6 +138,9 @@ class EchoesBootstrap(BaseEchoesBootstrap[EchoesConfiguration]):
             # Vanilla Great Temple Emerald Translator Gate
             enabled_resources.add("VanillaGreatTempleEmeraldGate")
 
+        if configuration.dock_weakness_distributor.is_enabled_for_any_type():
+            enabled_resources.add("DoorRando")
+
         return enabled_resources
 
 
