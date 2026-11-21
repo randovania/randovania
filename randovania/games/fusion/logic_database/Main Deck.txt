@@ -315,6 +315,9 @@ Extra - minimap_coordinates:
   * Extra - door_idx: [22, 175]
   > Door to Operations Deck Navigation Room
       After Main Deck Operations Deck Missile Shield
+  > Beside Operations Room Hatch
+      # Start at the edge of the crumble block and store spark in this room
+      Speed Booster and After Main Deck Operations Deck Maintenance Shaft Upper Missile Geron and After Main Deck Operations Deck Missile Shield and Shinespark Tricks (Advanced) and Disabled Entrance Rando and All Infants Collected
   > Event - Missile Shield
       Any of the following:
           # Kill the Shield from the reverse side
@@ -607,10 +610,10 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 7}, {'x': 13, 'y': 8}, {'x': 13, 'y
               # Shinespark and recharge in Hornoad Hallway
               Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
-                  # With HJ: https://www.youtube.com/watch?v=EJ2G6thP16E
-                  Hi-Jump and Shinespark Tricks (Expert) and Wall Jump (Intermediate)
                   # HJ-less: https://www.youtube.com/watch?v=yCRL0Pgeb3A
                   Shinespark Tricks (Ludicrous) and Wall Jump (Advanced)
+                  # With HJ: https://www.youtube.com/watch?v=EJ2G6thP16E
+                  Hi-Jump and Shinespark Tricks (Expert) and Wall Jump (Intermediate)
   > Event - Central Nexus PB Geron
       Any of the following:
           Can Kill PB Geron
@@ -644,7 +647,7 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 7}, {'x': 13, 'y': 8}, {'x': 13, 'y
   > Door to Station Entrance
       After Main Deck Power Bomb Geron Destroyed
   > Event - Central Nexus PB Geron
-      Can Kill PB Geron
+      Movement (Intermediate) and Can Kill PB Geron
 
 > Other to Dark Stairwell; Heals? False
   * Layers: default
@@ -713,6 +716,7 @@ Extra - minimap_coordinates: [{'x': 11, 'y': 8}, {'x': 11, 'y': 9}, {'x': 11, 'y
   > Door to Nexus Navigation Room
       All of the following:
           Morph Ball and Screw Attack and Knowledge (Beginner)
+          # Get into Tunnel
           Mid-Air Morph (Advanced) or Can Bounce in Ball
 
 ----------------
@@ -786,7 +790,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 8}, {'x': 10, 'y': 8}, {'x': 10, 'y'
   > Door to Main Elevator Access
       Any of the following:
           Morph Ball
-          # Shinespark from the Navigation Station: https://www.youtube.com/watch?v=QcD2-t9UDrg
+          # Shinespark from the Station Entrance: https://www.youtube.com/watch?v=QcD2-t9UDrg
           Speed Booster and Shinespark Tricks (Intermediate) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
   > Door to Quarantine Bay
       Trivial
@@ -799,7 +803,7 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 8}, {'x': 10, 'y': 8}, {'x': 10, 'y'
       Any of the following:
           Morph Ball
           # Speedboost from other room. This can safely not have DLR check; either you come from here in which case you opened the door, or you arrived here, in which case you can go back the way you came from.
-          Level 0 Keycard and Speed Booster and Disabled Entrance Rando
+          Speed Booster and Disabled Entrance Rando
 
 > Door to Quarantine Bay; Heals? False
   * Layers: default
@@ -1315,7 +1319,7 @@ Hint Features - Multiple Pickups
   > Arena
       Trivial
   > Beside Door
-      Wall Jump (Beginner)
+      Space Jump or Wall Jump (Beginner)
 
 ----------------
 Operations Deck Data Room
@@ -1482,9 +1486,7 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 11}, {'x': 9, 'y': 11}, {'x': 10, 'y
   * Extra - blocky: 3
   * Extra - infant_weight: 0.4
   > Other to Station Entrance
-      All of the following:
-          Morph Ball
-          Wall Jump (Beginner) or Have Any Jump Upgrade
+      Morph Ball
 
 > Other to Station Entrance; Heals? False
   * Layers: default
@@ -1498,8 +1500,11 @@ Extra - minimap_coordinates: [{'x': 8, 'y': 11}, {'x': 9, 'y': 11}, {'x': 10, 'y
               Can Use Power Bombs
               # These blocks require two PBs because one doesn't destroy all of them.
               Power Bombs ≥ 2 or Can Use Bombs
-          # Get up to item
-          Wall Jump (Beginner) or Have Any Jump Upgrade
+          Any of the following:
+              # Get up to item
+              Wall Jump (Beginner) or Have Any Jump Upgrade
+              # JBJ up
+              Jump Bombjump (Intermediate) and Can Use Bombs
 
 ----------------
 Silo Entry
@@ -1562,8 +1567,11 @@ Extra - minimap_coordinates:
   * Open Hatch to Silo Catwalk/Door to Central Reactor Core
   * Extra - door_idx: [113, 136]
   > Door to Silo Entry
-      # Jump to platform, don't fall down: https://youtu.be/tVICpkQOEh0?t=18
-      Movement (Beginner)
+      Any of the following:
+          # Jump to platform, don't fall down: https://youtu.be/tVICpkQOEh0?t=18
+          Movement (Beginner)
+          # Be able to retry infinitely by getting back up from the bottom
+          Wall Jump (Beginner) or Have Any Jump Upgrade
   > Door to Silo Save Room
       Trivial
 
@@ -1594,6 +1602,11 @@ Extra - minimap_coordinates:
   * Layers: default
   * Tunnel to Silo Tunnel/Other to Central Reactor Core
   * Extra - door_idx: [125, 135]
+  > Door to Silo Catwalk
+      All of the following:
+          # Jump from left highest platform, and jump extend via shooting/respinning
+          Jump Extends (Intermediate)
+          After Boss Nettori Defeated or Can Use Any Bombs
   > Door to Silo Save Room
       After Boss Nettori Defeated or Can Use Any Bombs
 
@@ -1607,7 +1620,10 @@ Extra - minimap_coordinates:
           # Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4 .  Can safely not have DLR check as Save Station is a dead-end
           Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
   > Door to Silo Catwalk
-      Wall Jump (Beginner) or Have Any Jump Upgrade
+      Any of the following:
+          Wall Jump (Beginner) or Have Any Jump Upgrade
+          # Shinespark from Save Station. Can safely not have DLR check as Save Station is a dead-end
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
   > Door to Silo Checkpoint
       Trivial
   > Other to Silo Tunnel
@@ -1638,8 +1654,10 @@ Extra - minimap_coordinates: [{'x': 18, 'y': 16}, {'x': 19, 'y': 16}, {'x': 20, 
   > Beside Pickup
       Any of the following:
           Space Jump or Can Kill Tough Beam-Resistant Enemy
-          # Dodge Pirates: https://www.youtube.com/watch?v=QAffTKp5seU
-          Combat (Intermediate)
+          Any of the following:
+              # Dodge Pirates: https://www.youtube.com/watch?v=QAffTKp5seU
+              Combat (Intermediate)
+              Hi-Jump and Combat (Beginner)
           # Damage Boost
           Damage Boosts (Beginner) and Normal Damage ≥ 158
 
@@ -1984,8 +2002,16 @@ Extra - minimap_coordinates: [{'x': 9, 'y': 23}, {'x': 9, 'y': 24}]
               Space Jump
               # SWJ
               Wall Jump (Beginner) and Can Single Walljump
-              # Disable Screw during the walljump to ledge grab on the left side and jump to the right side
-              Wall Jump (Beginner) and Enabled Equipment Manipulation
+              All of the following:
+                  Wall Jump (Beginner)
+                  All of the following:
+                      # Walljump with HJ
+                      Hi-Jump
+                      Any of the following:
+                          # Disable Screw during the walljump to ledge grab on the left side and jump to the right side
+                          Enabled Equipment Manipulation
+                          # Similar as above but shoot beam to cancel screw
+                          Movement (Beginner)
 
 ----------------
 Restricted Save Room
