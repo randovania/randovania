@@ -317,7 +317,7 @@ Extra - minimap_coordinates:
       After Main Deck Operations Deck Missile Shield
   > Beside Operations Room Hatch
       # Start at the edge of the crumble block and store spark in this room
-      Speed Booster and After Main Deck Operations Deck Maintenance Shaft Upper Missile Geron and After Main Deck Operations Deck Missile Shield and Shinespark Tricks (Advanced) and Disabled Entrance Rando and All Infants Collected
+      Speed Booster and After Main Deck Operations Deck Maintenance Shaft Upper Missile Geron and After Main Deck Operations Deck Missile Shield and Shinespark Tricks (Advanced) and Disabled Entrance Rando
   > Event - Missile Shield
       Any of the following:
           # Kill the Shield from the reverse side
@@ -355,18 +355,16 @@ Extra - minimap_coordinates:
   > Door to Operations Deck Recharge Room
       Trivial
   > Beside Operations Room Hatch
-      All of the following:
-          All Infants Collected
-          Any of the following:
-              Have Any Jump Upgrade
-              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check
-              Speed Booster and After Main Deck Operations Deck Save Visited and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
-              # Single Wall Jump
-              Wall Jump (Beginner) and Can Single Walljump
-              # Jump 2-BombJump: https://youtu.be/416jYaEuveg
-              Jump Bombjump (Ludicrous) and Can Use Bombs
-              # Morph Jump Extend: https://youtu.be/hbxt0FJyjWs
-              Morph Ball and Jump Extends (Ludicrous) and Wall Jump (Ludicrous)
+      Any of the following:
+          Have Any Jump Upgrade
+          # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY . This can safely have no DLR check
+          Speed Booster and After Main Deck Operations Deck Save Visited and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
+          # Single Wall Jump
+          Wall Jump (Beginner) and Can Single Walljump
+          # Jump 2-BombJump: https://youtu.be/416jYaEuveg
+          Jump Bombjump (Ludicrous) and Can Use Bombs
+          # Morph Jump Extend: https://youtu.be/hbxt0FJyjWs
+          Morph Ball and Jump Extends (Ludicrous) and Wall Jump (Ludicrous)
 
 > Door to Operations Room; Heals? False
   * Layers: default
@@ -390,6 +388,7 @@ Extra - minimap_coordinates:
       After Boss SA-X Defeated
   > Event - SA-X
       All of the following:
+          All Infants Collected
           All of the following:
               # SA-X Requirements
               Charge Beam
@@ -610,10 +609,10 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 7}, {'x': 13, 'y': 8}, {'x': 13, 'y
               # Shinespark and recharge in Hornoad Hallway
               Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
-                  # HJ-less: https://www.youtube.com/watch?v=yCRL0Pgeb3A
-                  Shinespark Tricks (Ludicrous) and Wall Jump (Advanced)
                   # With HJ: https://www.youtube.com/watch?v=EJ2G6thP16E
                   Hi-Jump and Shinespark Tricks (Expert) and Wall Jump (Intermediate)
+                  # HJ-less: https://www.youtube.com/watch?v=yCRL0Pgeb3A
+                  Shinespark Tricks (Ludicrous) and Wall Jump (Advanced)
   > Event - Central Nexus PB Geron
       Any of the following:
           Can Kill PB Geron
@@ -621,10 +620,10 @@ Extra - minimap_coordinates: [{'x': 13, 'y': 7}, {'x': 13, 'y': 8}, {'x': 13, 'y
               # Shinespark and recharge in Hornoad Hallway
               Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
-                  # HJ-less: https://www.youtube.com/watch?v=cjf9wNjAbEY
-                  Shinespark Tricks (Ludicrous) and Wall Jump (Advanced)
                   # With HJ: https://www.youtube.com/watch?v=lDKp1H8k7oM
                   Hi-Jump and Shinespark Tricks (Expert) and Wall Jump (Intermediate)
+                  # HJ-less: https://www.youtube.com/watch?v=cjf9wNjAbEY
+                  Shinespark Tricks (Ludicrous) and Wall Jump (Advanced)
 
 > Door to Hornoad Hallway; Heals? False
   * Layers: default
@@ -1618,12 +1617,12 @@ Extra - minimap_coordinates:
       Any of the following:
           Space Jump
           # Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4 .  Can safely not have DLR check as Save Station is a dead-end
-          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
+          Speed Booster and After Main Deck Central Reactor Core Save Visited and Shinespark Tricks (Beginner) and Disabled Entrance Rando
   > Door to Silo Catwalk
       Any of the following:
           Wall Jump (Beginner) or Have Any Jump Upgrade
           # Shinespark from Save Station. Can safely not have DLR check as Save Station is a dead-end
-          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
+          Speed Booster and After Main Deck Central Reactor Core Save Visited and Shinespark Tricks (Beginner) and Disabled Entrance Rando
   > Door to Silo Checkpoint
       Trivial
   > Other to Silo Tunnel
@@ -1935,6 +1934,14 @@ Extra - unlocked_save_recharge_station: True
   * Extra - X: 10
   * Extra - Y: 10
   > Door to Central Reactor Core
+      Trivial
+  > Event - Save Station Visited
+      Trivial
+
+> Event - Save Station Visited; Heals? False
+  * Layers: default
+  * Event Main Deck Central Reactor Core Save Visited
+  > Save Station
       Trivial
 
 ----------------

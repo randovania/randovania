@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Central Reactor Core: Going from the Silo Catwalk door to Silo Entry is now trickless if you're able to go back up to Silo Catwalk should you fail the jump.
 - Added: Central Reactor Core: It is now possible to get from Silo Tunnel to Silo Catwalk by using Intermediate Jump Extends.
 - Fixed: Central Reactor Core: It is now possible to logically reach Silo Catwalk as well with a Shinespark instead of only being limited to reaching Silo Entry.
+- Fixed: Central Reactor Core: It is now expected to only Shinespark up to Silo Entry if you're able to reach the Save Station.
 - Changed: Silo Catwalk: Going from Central Reactor Core to Silo Scaffolding with Hi-Jump is now Beginner Combat.
 - Fixed: Restricted Back Door: Doing the Screw Attack Equipment Manipulation now requires Hi-Jump.
 - Added: Restricted Back Door: A way to go up by using Hi-Jump, a Beginner Walljump and Beginner Movement.
