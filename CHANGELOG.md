@@ -30,6 +30,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Main Deck
+
+- Added: Operations Deck: A way to reach the Operations Room ledge by doing an Advanced Shinespark from Operations Ventilation.
+- Changed: Central Nexus: Destroying the Power Bomb Geron from Nexus Storager now requires Intermediate Movement.
+- Fixed: Quarantine Junction: Using Speed Booster to go through the Speed Booster Blocks from Main Elevator Access now doesn't need the Level-0 Keycard in Door Lock Rando.
+- Fixed: Arachnus Arena: Going from the upper Item to the door can now be done with Space Jump.
+- Fixed: Genesis Speedway: Escaping the room from the item does not need Beginner Wall Jump or a jump upgrade anymore.
+- Added: Genesis Speedway: Getting up to the item can now also be done with an Intermediate Jump Bombjump.
+- Changed: Central Reactor Core: Going from the Silo Catwalk door to Silo Entry is now trickless if you're able to go back up to Silo Catwalk should you fail the jump.
+- Added: Central Reactor Core: It is now possible to get from Silo Tunnel to Silo Catwalk by using Intermediate Jump Extends.
+- Fixed: Central Reactor Core: It is now possible to logically reach Silo Catwalk as well with a Shinespark instead of only being limited to reaching Silo Entry.
+- Fixed: Central Reactor Core: It is now expected to only Shinespark up to Silo Entry if you're able to reach the Save Station.
+- Changed: Silo Catwalk: Going from Central Reactor Core to Silo Scaffolding with Hi-Jump is now Beginner Combat.
+- Fixed: Restricted Back Door: Doing the Screw Attack Equipment Manipulation now requires Hi-Jump.
+- Added: Restricted Back Door: A way to go up by using Hi-Jump, a Beginner Walljump and Beginner Movement.
+
 ##### Sector 1 (SRX)
 
 - Changed: Lava Lake: Updated damage run logic and videos.
