@@ -32,21 +32,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 1 (SRX)
 
 - Changed: Lava Lake: Updated damage run logic and videos.
-- Changed: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
+- Changed: Charge Core Arena: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
+- Changed: Atmospheric Stabilizer Northwest: Shinesparking the Stabilizer from Yameba Corridor can now be expected in Door Lock Rando.
+- Fixed: Atmospheric Stabilizer Northeast: Shinesparking the Stabilizer only being expected if the Primary Geron Weakness setting was disabled.
+- Fixed: Charge Core Lower Access: Breaking the Bomb Blocks with Speed Booster expecting you to need Level-0 Keycard in Door Lock Rando.
+- Fixed: Charge Core Arena: The Shinespark to get the item from Hornoad Housing expecting you to need Level-0 Keycard in Door Lock Rando.
 
 ##### Sector 2 (TRO)
 
-- Changed: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
+- Changed: Zazabi Arena: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
 
 #### Sector 3 (PYR)
 
-- Changed: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
-- Changed: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
+- Changed: B.O.X. Arena: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
+- Changed: Main Boiler Control Room: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
 
 ##### Sector 4 (AQA)
 
 - Changed: Aquarium Pirate Tank: Adjusted the requirements for fighting the Aqua Pirates to be less lenient.
-- Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
+- Changed: Serris Arena: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
 
 ##### Sector 5 (ARC)
 
@@ -59,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Sector 6 (NOC)
 
-- Changed: The requirements for fighting Varia Core have been adjusted. Screw Attack and specific Beam upgrades now expect you to need less health to fight the boss.
+- Changed: Varia Core Arena: The requirements for fighting Varia Core have been adjusted. Screw Attack and specific Beam upgrades now expect you to need less health to fight the boss.
 - Added: X-B.O.X. Garage: Wall Jump (Intermediate) method to get from the bottom door to the top door.
 
 ### Metroid Prime
