@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sector 1 (SRX)
 
 - Changed: Lava Lake: Updated damage run logic and videos.
+- Fixed: Lava Lake Annex: Scenarios where doing the damage runs with Varia Suit would expect only 40% of the necessary HP.
 - Changed: Charge Core Arena: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
 - Changed: Atmospheric Stabilizer Northwest: Shinesparking the Stabilizer from Yameba Corridor can now be expected in Door Lock Rando.
 - Fixed: Atmospheric Stabilizer Northeast: Shinesparking the Stabilizer only being expected if the Primary Geron Weakness setting was disabled.
