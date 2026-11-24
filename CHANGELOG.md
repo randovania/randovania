@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Cataris
 
 - Added: Green EMMI Introduction: Trick to break the blob from below after destroying the EMMI, by shooting through the open tunnel. Requires Knowledge (Beginner) and Movement (Beginner).
+- Added: Green EMMI Introducton: It is now logical to destroy the blob from below after destroying the EMMI using Diffusion Beam without tricks.
 
 ### Metroid Fusion
 

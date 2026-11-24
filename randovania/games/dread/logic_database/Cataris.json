@@ -9079,7 +9079,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/ymjLP-g9pG0 Jump and shoot through the open tunnel at just the right angle",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9091,25 +9091,45 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam"
-                                                },
-                                                {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Diffusion Beam"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/ymjLP-g9pG0 Jump and shoot through the open tunnel at just the right angle",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Beam"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
