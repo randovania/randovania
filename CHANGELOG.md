@@ -25,6 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
 - Added: EMMI Zone Hub: Added Wall Jump (Intermediate) trick to get pickup from door to Ballspark Hallway with Spin Boost and Flash Shift.
 
+##### Cataris
+
+- Added: Green EMMI Introduction: Trick to break the blob from below after destroying the EMMI, by shooting through the open tunnel. Requires Knowledge (Beginner) and Movement (Beginner).
+- Added: Green EMMI Introducton: It is now logical to destroy the blob from below after destroying the EMMI using Diffusion Beam without tricks.
+
 ### Metroid Fusion
 
 - Added: Cosmetic option to shuffle music either by song type or full shuffle.
