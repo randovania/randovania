@@ -515,7 +515,32 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         return textwrap.wrap(text, width=30)
 
     def _create_credits_text(self) -> list:
-        credits_array = []
+        WHITE_BIG = "WHITE_BIG"
+        WHITE = "WHITE"
+        BLUE = "BLUE"
+        RED = "RED"
+
+        rdv_credits = [
+            (WHITE_BIG, 2, "Randovania"),
+            (BLUE, 2, "INTEGRATION"),
+            (WHITE_BIG, 1, "JeffGainsNGames"),
+            (WHITE_BIG, 1, "Miepee"),
+            (WHITE_BIG, 1, "m4rkersm4sk"),
+            (WHITE_BIG, 3, "cluekitty"),
+            (BLUE, 2, "LOGIC DATABASE"),
+            (WHITE_BIG, 1, "cluekitty"),
+            (WHITE_BIG, 1, "HerculesBenchPress"),
+            (WHITE_BIG, 1, "HyperBola"),
+            (WHITE_BIG, 1, "JaggerG"),
+            (WHITE_BIG, 1, "JeffGainsNGames"),
+            (WHITE_BIG, 1, "Schwartz Ghandi"),
+            (WHITE_BIG, 1, "m4rkersm4sk"),
+            (WHITE_BIG, 1, "Miepee"),
+            (WHITE_BIG, 3, "Sharky"),
+        ]
+
+        # Have credits start with people who contributed to RDV implementation
+        credits_array = [{"line_type": color, "text": text, "blank_lines": lines} for color, lines, text in rdv_credits]
         spoiler_dict = self._credits_elements()
 
         major_pickup_name_order = {
@@ -526,10 +551,10 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
         def sort_pickup(p: str) -> tuple[int | float, str]:
             return major_pickup_name_order.get(p, math.inf), p
 
-        credits_array.append({"line_type": "WHITE_BIG", "text": "Item Locations", "blank_lines": 2})
+        credits_array.append({"line_type": WHITE_BIG, "text": "Item Locations", "blank_lines": 2})
 
         for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
-            credits_array.append({"line_type": "RED", "text": pickup, "blank_lines": 1})
+            credits_array.append({"line_type": RED, "text": pickup, "blank_lines": 1})
             for location in spoiler_dict[pickup]:
                 region_name = location["Region"]
                 area_name = location["Area"]
@@ -543,19 +568,19 @@ class FusionPatchDataFactory(PatchDataFactory[FusionConfiguration, FusionCosmeti
                 area_lines = self._wrap_text_for_credits(area_name)
                 world_lines = self._wrap_text_for_credits(world_name)
                 for line in world_lines:
-                    credits_array.append({"line_type": "BLUE", "text": line, "blank_lines": 0})
+                    credits_array.append({"line_type": BLUE, "text": line, "blank_lines": 0})
                 for line in region_lines:
-                    credits_array.append({"line_type": "WHITE", "text": line, "blank_lines": 0})
+                    credits_array.append({"line_type": WHITE, "text": line, "blank_lines": 0})
                 for line in area_lines:
-                    credits_array.append({"line_type": "WHITE", "text": line, "blank_lines": 0})
+                    credits_array.append({"line_type": WHITE, "text": line, "blank_lines": 0})
                 credits_array[-1]["blank_lines"] = 1
 
         # Have last item give more space
         credits_array[-1]["blank_lines"] = 3
 
         # Self plug, for streaming/showcasing.
-        credits_array.append({"line_type": "BLUE", "text": "Play this Randomizer at", "blank_lines": 0})
-        credits_array.append({"line_type": "WHITE", "text": "randovania.org", "blank_lines": 3})
+        credits_array.append({"line_type": BLUE, "text": "Play this Randomizer at", "blank_lines": 0})
+        credits_array.append({"line_type": WHITE, "text": "randovania.org", "blank_lines": 3})
 
         return credits_array
 
