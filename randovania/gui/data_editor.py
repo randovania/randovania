@@ -597,14 +597,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         requirement = self.current_area.connections[current_node].get(current_connection_node, Requirement.impossible())
         if self._collection_for_filtering is not None:
             db = self.game_description.resource_database
-            before_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
             requirement = _ui_patch_and_simplify(requirement, self._collection_for_filtering, db)
-            after_count = sum(1 for _ in requirement.iterate_resource_requirements(db))
-
-            filtered_count_item = QtWidgets.QTreeWidgetItem(self.other_node_alternatives_contents)
-            filtered_count_item.setText(
-                0, f"A total of {before_count - after_count} requirements were hidden due to filters."
-            )
 
         create_tree_items_for_requirement(
             self.other_node_alternatives_contents,
