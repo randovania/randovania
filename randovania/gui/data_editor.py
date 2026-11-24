@@ -955,6 +955,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_edit_button.setVisible(self.edit_mode)
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)
+        self.hint_feature_editor.set_allow_edits(self.edit_mode)
         self.connection_filters.set_edit_mode(self.edit_mode)
         self.setWindowTitle("Data Editor" if self.edit_mode else "Data Visualizer")
 
