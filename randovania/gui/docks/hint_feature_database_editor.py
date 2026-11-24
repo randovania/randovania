@@ -73,6 +73,4 @@ class HintFeatureDatabaseEditor(QtWidgets.QDockWidget, Ui_HintFeatureDatabaseEdi
             self.HintFeatureChanged.emit(self.db[list(self.db.keys())[first_row]])
 
     def set_allow_edits(self, value: bool) -> None:
-        model = self.feature_table.model()
-        assert isinstance(model, HintFeatureDatabaseModel)
-        model.set_allow_edits(value)
+        self.setVisible(value)
