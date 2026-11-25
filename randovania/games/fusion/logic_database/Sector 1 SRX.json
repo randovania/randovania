@@ -888,17 +888,8 @@
                         "Event - Stabilizer 1 Online": {
                             "type": "and",
                             "data": {
-                                "comment": "Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M",
+                                "comment": "Kill with Shinespark from Yameba Corridor - https://youtu.be/DpeSE126r3M . Can safely not have DLR check as you either come from the door, or Stabilizer is dead",
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "L0Locks",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -924,15 +915,6 @@
                                             "name": "ShinesparkTrick",
                                             "amount": 3,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -3617,7 +3599,7 @@
                         "Event - Stabilizer 4 Online": {
                             "type": "and",
                             "data": {
-                                "comment": "Shinespark from Tourian Trapdoor or Zebesian Zag: https://youtu.be/SrshBBv-MCw . This can safely not have DLR check, as both lower doors cannot be permanently locked, so once you reach this room you have the spark",
+                                "comment": "Shinespark from Tourian Trapdoor or Zebesian Zag: https://youtu.be/SrshBBv-MCw . This can safely not have DLR check, as you need to enter this room from one door which is enough for a spark.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4359,7 +4341,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damge Run with a ledge grab jump: https://youtu.be/MCiLT2kbrJQ",
+                                            "comment": "Damage Run with a ledge grab jump: https://youtu.be/MCiLT2kbrJQ",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5544,6 +5526,41 @@
                                     {
                                         "type": "and",
                                         "data": {
+                                            "comment": "Gravity Damage Run",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GravitySuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "LavaDamage",
+                                                        "amount": 25,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
                                             "comment": "Suitless Damage Run: https://youtu.be/jfuH3Epvxh8",
                                             "items": [
                                                 {
@@ -5561,36 +5578,6 @@
                                                         "type": "damage",
                                                         "name": "LavaDamage",
                                                         "amount": 55,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Suit Upgrade"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 25,
                                                         "negate": false
                                                     }
                                                 }
@@ -5693,6 +5680,41 @@
                                     {
                                         "type": "and",
                                         "data": {
+                                            "comment": "Gravity Damage Run",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GravitySuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "LavaDamage",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
                                             "comment": "Suitless Damage Run: https://youtu.be/pu2I2jaMrjI",
                                             "items": [
                                                 {
@@ -5710,36 +5732,6 @@
                                                         "type": "damage",
                                                         "name": "LavaDamage",
                                                         "amount": 100,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Suit Upgrade"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "LavaDamage",
-                                                        "amount": 50,
                                                         "negate": false
                                                     }
                                                 }
@@ -9039,7 +9031,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get past the Gerubus",
+                                            "comment": "Get past the Gerubus (45HP x2)",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9480,15 +9472,6 @@
                                             "name": "L0Locks",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "NerfGerons",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     }
                                 ]
@@ -10846,15 +10829,6 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "L0Locks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
@@ -11489,15 +11463,6 @@
                             "data": {
                                 "comment": "Shinespark from Hornoad Housing -> Access. This can safely not have DLR check because this door cannot be permanently locked, unless in the future a way to leave Lower Access is added",
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "L0Locks",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -13360,7 +13325,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Gerubus",
+                                            "comment": "Gerubus (45 HP)",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -13377,10 +13342,6 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "10+ DMG Missiles"
-                                                            },
-                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
@@ -13388,6 +13349,10 @@
                                                                     "amount": 15,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "10+ DMG Missiles"
                                                             }
                                                         ]
                                                     }
@@ -13398,10 +13363,6 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "45 DMG Missiles"
-                                                            },
-                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
@@ -13409,6 +13370,10 @@
                                                                     "amount": 5,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "45 DMG Missiles"
                                                             }
                                                         ]
                                                     }
@@ -13419,7 +13384,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Golden Zebesian",
+                                            "comment": "Golden Zebesian (135HP)",
                                             "items": [
                                                 {
                                                     "type": "resource",

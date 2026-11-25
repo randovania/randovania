@@ -16,6 +16,7 @@ from randovania.network_common.multiplayer_session import MAX_SESSION_NAME_LENGT
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 from randovania.network_common.signals import server_signals
 from randovania.server import database, lib
+from randovania.server.async_race import room_api
 from randovania.server.database import (
     AsyncRaceTeam,
     MultiplayerAuditEntry,
@@ -165,7 +166,10 @@ async def _rename_world(
 ) -> None:
     world = World.get_by_uuid(world_uid)
     _verify_world_has_session(world, session)
-    await verify_has_admin_or_claimed(sa, sid, world)
+    if session.is_race_session:
+        await session_common.get_membership_for(sa, session, sid)
+    else:
+        await verify_has_admin_or_claimed(sa, sid, world)
 
     if WORLD_NAME_RE.match(new_name) is None:
         raise error.InvalidActionError("Invalid world name")
@@ -420,6 +424,12 @@ def _check_race_claim_allowed(session: MultiplayerSession, user_id: int, *, uncl
             raise error.InvalidActionError("Can't unclaim a world after exporting it")
 
 
+async def _emit_race_room_update(sa: ServerApp, sid: str, session: MultiplayerSession) -> None:
+    team = session.get_race_team()
+    if team is not None:
+        await room_api.emit_async_room_update(sa, team.room, sid)
+
+
 async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *args: typing.Any) -> typing.Any:
     # FIXME: break this out into separate functions for each action
 
@@ -428,7 +438,10 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
     action_ = SessionAdminGlobalAction(action)
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
 
-    if session.is_race_session and action_ not in [SessionAdminGlobalAction.CREATE_PATCHER_FILE]:
+    if session.is_race_session and action_ not in [
+        SessionAdminGlobalAction.CREATE_PATCHER_FILE,
+        SessionAdminGlobalAction.RENAME_WORLD,
+    ]:
         raise error.NotAuthorizedForActionError("This session belongs to an async race room")
 
     if action_ == SessionAdminGlobalAction.CREATE_WORLD:
@@ -484,6 +497,7 @@ async def admin_session(sa: ServerApp, sid: str, session_id: int, action: str, *
         await _set_allow_abandon_worlds(sa, sid, session, *args)
 
     await session_common.emit_session_meta_update(sa, session)
+    await _emit_race_room_update(sa, sid, session)
 
 
 async def _kick_user(
@@ -817,6 +831,7 @@ async def admin_player(sa: ServerApp, sid: str, session_id: int, user_id: int, a
         await _abandon_world(sa, sid, session, *args)
 
     await session_common.emit_session_meta_update(sa, session)
+    await _emit_race_room_update(sa, sid, session)
 
 
 def setup_app(sa: ServerApp) -> None:

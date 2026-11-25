@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [12.1.0] - 2026-12-XX
 
+- Added: In an async race played in teams, every member of a team can now rename their team's worlds.
 - Changed: Adjusted how the generator decides on when each player should get progression in a Multiworld.
+- Changed: In the Data Visualizer, the "Hint Features"-tab is no longer visible.
 - Removed: Intel macOS devices are no longer supported.
+- Fixed: In an async race played in teams, the room window now updates immediately for the whole team when someone joins or leaves the team, or when a world is renamed, claimed, unclaimed or abandoned in the team's session.
 - Fixed: A failed connection attempt to a game connected via a socket no longer leaves the connection open, which could prevent any further connection until the game was restarted.
 - Fixed: Logic no longer falsely optimizes out the easier alternatives when the presence of one resource lessens the amount required of another.
 - Fixed: A requirement that needs several resources to be absent is now unmet as soon as the player has any one of them. Previously, it was unmet only when the player had all of them.
@@ -20,31 +23,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Added: EMMI Zone Hub: Added two trick paths for using Spin Boost to get to the Wave Door from the tunnel left open after breaking the Speed Booster Blocks.
+- Added: EMMI Zone Hub: Added Wall Jump (Intermediate) trick to get pickup from door to Ballspark Hallway with Spin Boost and Flash Shift.
+
+##### Cataris
+
+- Added: Green EMMI Introduction: Trick to break the blob from below after destroying the EMMI, by shooting through the open tunnel. Requires Knowledge (Beginner) and Movement (Beginner).
+- Added: Green EMMI Introducton: It is now logical to destroy the blob from below after destroying the EMMI using Diffusion Beam without tricks.
 
 ### Metroid Fusion
 
 - Added: Cosmetic option to shuffle music either by song type or full shuffle.
+- Fixed: Being unable to use Missiles as intended if the player has a multiple of 256.
+- Fixed: the liquid-taking-damage sound effect is now playing continously instead of regularly cutting out
+- Changed: When an environmental hazard is configured to do 0 damage, then no SFX indicating that you're taking damage will play.
+- Changed: When taking damage in cold environments, Samus will now only grunt when taking knockback.
+- Fixed: In Sector 2 - Cathedral, there is now an enemy stop block, to stop the Zero from crawling over the door in Door Lock Rando.
 
 #### Logic Database
+
+##### Main Deck
+
+- Added: Operations Deck: A way to reach the Operations Room ledge by doing an Advanced Shinespark from Operations Ventilation.
+- Changed: Central Nexus: Destroying the Power Bomb Geron from Nexus Storager now requires Intermediate Movement.
+- Fixed: Quarantine Junction: Using Speed Booster to go through the Speed Booster Blocks from Main Elevator Access now doesn't need the Level-0 Keycard in Door Lock Rando.
+- Fixed: Arachnus Arena: Going from the upper Item to the door can now be done with Space Jump.
+- Fixed: Genesis Speedway: Escaping the room from the item does not need Beginner Wall Jump or a jump upgrade anymore.
+- Added: Genesis Speedway: Getting up to the item can now also be done with an Intermediate Jump Bombjump.
+- Changed: Central Reactor Core: Going from the Silo Catwalk door to Silo Entry is now trickless if you're able to go back up to Silo Catwalk should you fail the jump.
+- Added: Central Reactor Core: It is now possible to get from Silo Tunnel to Silo Catwalk by using Intermediate Jump Extends.
+- Fixed: Central Reactor Core: It is now possible to logically reach Silo Catwalk as well with a Shinespark instead of only being limited to reaching Silo Entry.
+- Fixed: Central Reactor Core: It is now expected to only Shinespark up to Silo Entry if you're able to reach the Save Station.
+- Changed: Silo Catwalk: Going from Central Reactor Core to Silo Scaffolding with Hi-Jump is now Beginner Combat.
+- Fixed: Restricted Back Door: Doing the Screw Attack Equipment Manipulation now requires Hi-Jump.
+- Added: Restricted Back Door: A way to go up by using Hi-Jump, a Beginner Walljump and Beginner Movement.
 
 ##### Sector 1 (SRX)
 
 - Changed: Lava Lake: Updated damage run logic and videos.
-- Changed: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
+- Fixed: Lava Lake Annex: Scenarios where doing the damage runs with Varia Suit would expect only 40% of the necessary HP by making Damage Runs with Varia Suit Intermediate.
+- Changed: Charge Core Arena: The requirements for fighting Charge Core-X have been lowered to require 60 damage on trickless, and hitless on Beginner Combat.
+- Changed: Atmospheric Stabilizer Northwest: Shinesparking the Stabilizer from Yameba Corridor can now be expected in Door Lock Rando.
+- Fixed: Atmospheric Stabilizer Northeast: Shinesparking the Stabilizer only being expected if the Primary Geron Weakness setting was disabled.
+- Fixed: Charge Core Lower Access: Breaking the Bomb Blocks with Speed Booster expecting you to need Level-0 Keycard in Door Lock Rando.
+- Fixed: Charge Core Arena: The Shinespark to get the item from Hornoad Housing expecting you to need Level-0 Keycard in Door Lock Rando.
 
 ##### Sector 2 (TRO)
 
-- Changed: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
+- Changed: Zazabi Arena: The requirements for fighting Zazabi have been lowered. Fighting it with only Missiles can now be expected on trickless, with Beginner you now need 15 Missiles, and Health requirements have been lowered to 100 and 55 for trickless and Beginner Combat respectively.
 
 #### Sector 3 (PYR)
 
-- Changed: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
-- Changed: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
+- Changed: B.O.X. Arena: The requirements for fighting B.O.X. have been adjusted. It is now expected on Beginner Combat to fight it with fewer Missiles, on Advanced Combat to not miss a Missile. Additionally, dodging B.O.X. without Screw Attack or a Jump Upgrade is now expected on Intermediate Combat, and less health is for all Combat levels.
+- Changed: Main Boiler Control Room: The requirements for fighting Wide Core-X have been lowered. Doing it hitless is now beginner, and the required health for trickless has been lowered to 100.
 
 ##### Sector 4 (AQA)
 
 - Changed: Aquarium Pirate Tank: Adjusted the requirements for fighting the Aqua Pirates to be less lenient.
-- Changed: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
+- Changed: Serris Arena: The requirements for fighting Serris have been adjusted. It is now expected on trickless to fight it with only Missiles, and Intermediate Combat now expects you to take either less damage or none at all.
 
 ##### Sector 5 (ARC)
 
@@ -53,10 +88,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Flooded Access: When going down, the damage boost through the Aqua Pirate has been bumped down to Beginner Damage Boost.
 - Changed: Zebesian Waters: Adjusted the requirements for fighting the Aqua Pirates to be less lenient.
 - Changed: Flooded Airlock: Adjusted the requirements for fighting the Aqua Pirates in Zebesian Waters to be less lenient.
+- Fixed: Flooded Airlock: When coming from Cargo Hold, getting the item doesn't expect anymore dealing with the Pirates in Zebesian Waters.
 
 ##### Sector 6 (NOC)
 
-- Changed: The requirements for fighting Varia Core have been adjusted. Screw Attack and specific Beam upgrades now expect you to need less health to fight the boss.
+- Changed: Varia Core Arena: The requirements for fighting Varia Core have been adjusted. Screw Attack and specific Beam upgrades now expect you to need less health to fight the boss.
 - Added: X-B.O.X. Garage: Wall Jump (Intermediate) method to get from the bottom door to the top door.
 
 ### Metroid Prime
@@ -81,6 +117,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime Hunters
 
 - Fixed: Subterranean: The platform sometimes being unusable after Cretaphid v4 is defeated.
+
+### Metroid: Samus Returns
+
+#### Logic Database
+
+##### Area 5 Tower Lobby
+
+- Removed: Meboid Millpond: The starting location, as exporting a game that started there always failed.
 
 ## [12.0.0] - 2026-11-01
 
