@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Green EMMI Introduction: Trick to break the blob from below after destroying the EMMI, by shooting through the open tunnel. Requires Knowledge (Beginner) and Movement (Beginner).
 - Added: Green EMMI Introducton: It is now logical to destroy the blob from below after destroying the EMMI using Diffusion Beam without tricks.
-- Added: Teleport to Artaria (Red): Climbing the slope puzzle with just Spin Boost using Climb Sloped Tunnels (beginner) and Wall Jump (intermediate) tricks.
+- Added: Teleport to Artaria (Red): Climbing the slope puzzle with just Spin Boost using Climb Sloped Surfaces (beginner) and Wall Jump (intermediate) tricks.
 
 ### Metroid Fusion
 
