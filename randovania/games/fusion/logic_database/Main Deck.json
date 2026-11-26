@@ -3040,7 +3040,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Kill Fune, then WJ and Jump extend over: https://youtu.be/C56BsRG_eKY",
+                                                                    "comment": "Jump to where Fune would spawn, then WJ and Jump extend over: https://youtu.be/C56BsRG_eKY",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -3059,10 +3059,6 @@
                                                                                 "amount": 3,
                                                                                 "negate": false
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Kill Tough Beam-Resistant Enemy"
                                                                         }
                                                                     ]
                                                                 }
@@ -5171,6 +5167,50 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Start running with Samus outer foot barely touching the furthest background door in Habitation Deck's middle layer",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "MainDeckHabitationDeckMiddleLayer",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -13037,6 +13077,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Habitation Deck Middle Layer Visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -13110,6 +13157,40 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Habitation Deck Middle Layer Visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 352.82,
+                        "y": 328.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MainDeckHabitationDeckMiddleLayer",
+                    "grants_on_collect": [],
+                    "connections": {
+                        "Above Pickup": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
