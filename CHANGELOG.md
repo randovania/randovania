@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cosmetic option to shuffle music either by song type or full shuffle.
 - Fixed: Being unable to use Missiles as intended if the player has a multiple of 256.
 - Fixed: the liquid-taking-damage sound effect is now playing continously instead of regularly cutting out
+- Changed: The description for Jump Bombjumps now mentions that you need to hold the A-Button in order for the trick to work.
 - Changed: When an environmental hazard is configured to do 0 damage, then no SFX indicating that you're taking damage will play.
 - Changed: When taking damage in cold environments, Samus will now only grunt when taking knockback.
 - Fixed: In Sector 2 - Cathedral, there is now an enemy stop block, to stop the Zero from crawling over the door in Door Lock Rando.
