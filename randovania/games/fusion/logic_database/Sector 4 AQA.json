@@ -8806,24 +8806,35 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Movement: https://youtu.be/f4waigffjDA",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Hi-Jump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "No punishments for failing and needing to retry",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Have Any Jump Upgrade"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Movement: https://youtu.be/f4waigffjDA",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
