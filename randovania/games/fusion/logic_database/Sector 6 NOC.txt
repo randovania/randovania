@@ -20,15 +20,13 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
   * Extra - door_idx: [1]
   > Door to Geron's Crossing
       Trivial
-  > Door to Sector 6 (NOC) Westbound Glass Tube
-      All of the following:
-          Screw Attack
-          Any of the following:
-              Can Break Single Bomb Blocks
-              # Currently logically useless: but maybe if we have an option to remove screw blocks https://youtu.be/Ifde8nknvYk
-              Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Event - Entrance Lobby Visited
       Trivial
+  > Event - Entrance Lobby Bomb Blocks Destroyed
+      Any of the following:
+          Can Break Single Bomb Blocks
+          # Break Bomb Blocks by starting speedboost in navigation room and jumping before transitioning to Entrance Lobby https://youtu.be/Ifde8nknvYk
+          Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Geron's Crossing; Heals? False
   * Layers: default
@@ -48,11 +46,12 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
   * Layers: default
   * L0 Hatch to Sector 6 (NOC) Westbound Glass Tube/Door to Entrance Lobby
   * Extra - door_idx: [79]
-  > Door to Entrance Recharge Room
+  > Event - Entrance Lobby Bomb Blocks Destroyed
       All of the following:
           Screw Attack
           Any of the following:
               # Break single bomb blocks
+              After Sector 6 Entrance Lobby Bomb Blocks Destroyed
               Screw Attack and Knowledge (Beginner)
               All of the following:
                   # Jump Bomb Jump to break the blocks: https://youtu.be/mZe9Ht3o19w
@@ -72,14 +71,24 @@ Extra - minimap_coordinates: [{'x': 3, 'y': 3}, {'x': 4, 'y': 2}, {'x': 4, 'y': 
               Speed Booster and Shinespark Tricks (Beginner)
               # Break only the top 2 rows of Screw Blocks and jump to ledge: https://youtu.be/iAHhW0NjQtk
               Movement (Intermediate)
-              # Make Menus clip through: https://youtu.be/iu21O6E7tCQ
-              Knowledge (Advanced) and Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
+              All of the following:
+                  # Make Menus clip through: https://youtu.be/iu21O6E7tCQ
+                  Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon
+                  After Sector 6 Entrance Lobby Bomb Blocks Destroyed or Knowledge (Advanced) or Can Use Power Bombs
 
 > Event - Entrance Lobby Visited; Heals? False
   * Layers: default
   * Event Sector 6 Entrance Lobby Visited
   > Door to Entrance Recharge Room
       Trivial
+
+> Event - Entrance Lobby Bomb Blocks Destroyed; Heals? False
+  * Layers: default
+  * Event Sector 6 Entrance Lobby Bomb Blocks Destroyed
+  > Door to Entrance Recharge Room
+      Trivial
+  > Door to Sector 6 (NOC) Westbound Glass Tube
+      Screw Attack
 
 ----------------
 Entrance Save Room
