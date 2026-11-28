@@ -168,6 +168,10 @@ Integration written by [Thanatos](https://github.com/ThanatosGit).
 
 # Developer Help
 
+Want to contribute? Please read our [contributing guidelines](CONTRIBUTING.md) before opening a pull request.
+They cover how to write a good pull request, which branch to target, when and how to add a changelog entry,
+and our static typing practices.
+
 ## Dependencies
 
 * [Git](https://git-scm.com/downloads)
@@ -260,6 +264,7 @@ uvx pre-commit run qtui -a
 
 # Documentation
 
+- Opening a pull request? Read the [contributing guidelines](CONTRIBUTING.md).
 - Unfamiliar with a term? Check the [glossary](docs/Glossary.md).
 - Writing or fixing tests? Check the [testing guide](docs/Testing.md).
 - Adding a new game? Check the [dedicated guide](docs/New%20Game.md).
