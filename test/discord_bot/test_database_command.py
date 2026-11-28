@@ -161,3 +161,34 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
     mock_embed.assert_has_calls(
         [call(title=name, description=ANY) for name in sorted([area.nodes[0].name, area.nodes[2].name])]
     )
+
+
+def test_render_area_with_pillow_crops_region_image(tmp_path):
+    import PIL.Image
+
+    from randovania.discord_bot.database_command import render_area_with_pillow
+    from randovania.game_description.db.region import Region
+
+    maps = tmp_path / "assets" / "maps"
+    maps.mkdir(parents=True)
+    PIL.Image.new("RGBA", (1000, 1000), (10, 20, 30, 255)).save(maps / "Reg.png")
+
+    area = MagicMock()
+    area.map_name = "A"
+    area.extra = {"total_boundings": {"x1": 0, "x2": 100, "y1": 0, "y2": 100}}
+    other = MagicMock()
+    other.extra = {"total_boundings": {"x1": 0, "x2": 1000, "y1": 0, "y2": 1000}}
+    area.nodes = []
+    area.actual_nodes = []
+    area.connections = {}
+    region = MagicMock(spec=Region)
+    region.name = "Reg"
+    region.extra = {}
+    region.areas = [area, other]
+
+    result = render_area_with_pillow(area, region, tmp_path)
+
+    assert result is not None
+    with PIL.Image.open(result) as im:
+        # 100x100 world units -> 100x100 pixels, plus padding on each side, zoomed to the target width
+        assert im.size == (900, 900)
